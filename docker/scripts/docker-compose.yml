@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  tc_sf_fullstack_test:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    image: tc_sf_fullstack_test:1.0
+    ports:
+      - "8888:8888"
+    working_dir: /app
+    volumes:
+      - /tc_sf_fullstack_test:/app/tc_sf_fullstack_test/
+    command: /bin/bash /app/tc_sf_fullstack_test/docker/scripts/docker_command_script.sh
