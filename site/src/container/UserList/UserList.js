@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
+
 import UserCard from "../../components/UserCard/UserCard";
+import { UsersActions } from "../../redux/Users/UsersActions";
 
 const UserListPanel = styled.div`
   display: flex;
@@ -17,22 +19,33 @@ const UserList = (props) => {
   return (
     <UserListPanel>
       {props.users.map((item) => {
-        return userCard(item);
+        return userCard(item, props.openModalFunc);
       })}
     </UserListPanel>
   );
 };
 
-function userCard(item) {
-  return <UserCard key={item.id} user={item} />;
+function userCard(item, openModalFunc) {
+  return <UserCard key={item.id} user={item} onClick={openModalFunc} />;
 }
 
-const UserListMapStateToProps = function (state) {
+const UserListMapStateToProps = (state) => {
   return {
     users: state.users,
   };
 };
 
-const UserListContainer = connect(UserListMapStateToProps)(UserList);
+const UserListMapActionToProps = (dispatch) => {
+  return {
+    setCurrentUser: (user) => {
+      dispatch(UsersActions.setCurrentUser(user));
+    },
+  };
+};
+
+const UserListContainer = connect(
+  UserListMapStateToProps,
+  UserListMapActionToProps
+)(UserList);
 
 export default UserListContainer;

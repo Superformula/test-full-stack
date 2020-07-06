@@ -1,7 +1,6 @@
-const UsersActionsThunk = {};
-
 const UsersActions = {
   SET_USERS: "SET_USERS",
+  REMOVE_USER: "REMOVE_USER",
   SET_CURRENT_EDIT_USER: "SET_CURRENT_EDIT_USER",
 
   setUsers(users) {
@@ -11,12 +10,19 @@ const UsersActions = {
     };
   },
 
-  setDocumentId(user) {
+  removeUser(user) {
+    return {
+      type: this.REMOVE_USER,
+      user: user,
+    };
+  },
+
+  setCurrentUser(user) {
     return {
       type: this.SET_CURRENT_EDIT_USER,
-      users: user,
+      user: user,
     };
   },
 };
 
-export { UsersActions, UsersActionsThunk };
+export { UsersActions };

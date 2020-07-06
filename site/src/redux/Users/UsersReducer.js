@@ -13,6 +13,16 @@ const UsersReducer = (state = initialState, action) => {
         ...state,
         users: users,
       };
+    case UsersActions.REMOVE_USER:
+      let index = state.users.findIndex((item) => {
+        return item.id === action.user.id;
+      });
+      if (index > -1) {
+        state.users.splice(index, 1);
+        let userArray = state.users;
+        return { ...state, users: [...userArray] };
+      }
+      return state;
     case UsersActions.SET_CURRENT_EDIT_USER:
       return {
         ...state,
@@ -23,8 +33,9 @@ const UsersReducer = (state = initialState, action) => {
   return initialState;
 };
 
-function mergeUsers(currentUsers, users) {
+const mergeUsers = (currentUsers, users) => {
   if (currentUsers.length === 0) {
+    users.forEach((item) => (item.image = randomImage()));
     return users;
   }
   let newUsers = [];
@@ -33,18 +44,31 @@ function mergeUsers(currentUsers, users) {
     for (let j = 0; j < currentUsers.length; j++) {
       if (users[i].id === currentUsers[j].id) {
         donHaveUser = false;
+        users[i].image = currentUsers[j].image;
         currentUsers[j] = users[i];
         break;
       }
-      if (donHaveUser) {
-        newUsers.push(users[i]);
-      }
+    }
+    if (donHaveUser) {
+      users[i].image = randomImage();
+      newUsers.push(users[i]);
     }
   }
 
   return [...currentUsers, ...newUsers].sort((a, b) => {
-    return b.id.localeCompare(a.id);
+    return b.createdAt - a.createdAt;
   });
-}
+};
+
+const randomImage = () => {
+  let number = Math.floor(Math.random() * 1000);
+  let result = number % 2;
+  let type = "women";
+  if (result === 1) {
+    type = "men";
+  }
+  let imgNum = number % 26;
+  return `https://randomuser.me/api/portraits/${type}/${imgNum}.jpg`;
+};
 
 export default UsersReducer;

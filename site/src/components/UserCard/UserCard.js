@@ -56,9 +56,15 @@ const UserCardPanelInfoArea = styled.div`
 
 const UserCard = (props) => {
   return (
-    <UserCardPanel>
+    <UserCardPanel
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick(props.user);
+        }
+      }}
+    >
       <UserCardPanelImageArea>
-        <img alt={props.user.name} src={randomImage()} />
+        <img alt={props.user.name} src={props.user.image} />
       </UserCardPanelImageArea>
       <UserCardPanelInfoArea>
         <div>
@@ -73,16 +79,5 @@ const UserCard = (props) => {
     </UserCardPanel>
   );
 };
-
-function randomImage() {
-  let number = new Date().valueOf();
-  let result = number % 2;
-  let type = "women";
-  if (result === 1) {
-    type = "men";
-  }
-  let imgNum = number % 26;
-  return `https://randomuser.me/api/portraits/${type}/${imgNum}.jpg`;
-}
 
 export default UserCard;

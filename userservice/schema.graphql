@@ -21,7 +21,7 @@ type Mutation {
 
 type Subscription {
     addedUser: User @aws_subscribe(mutations: ["addUser"])
-    updateduser: User @aws_subscribe(mutations: ["updateUser"])
+    updatedUser: User @aws_subscribe(mutations: ["updateUser"])
     deletedUser: User @aws_subscribe(mutations: ["deleteUser"])
 }
 
