@@ -1,10 +1,11 @@
 type Schema {
     query: Query
     mutation: Mutation
+    subscription: Subscription
 }
 
 type Query {
-    getUsers(filter: String, limit: Int, nextToken: StartKeyInput): Users
+    getUsers(filter: String, limit: Int, startKey: StartKeyInput): Users
 }
 
 type Users {
@@ -18,14 +19,20 @@ type Mutation {
     deleteUser(input: UserInput): User
 }
 
+type Subscription {
+    addedUser: User @aws_subscribe(mutations: ["addUser"])
+    updateduser: User @aws_subscribe(mutations: ["updateUser"])
+    deletedUser: User @aws_subscribe(mutations: ["deleteUser"])
+}
+
 type User {
     id: ID
     name: String
-    dateOfBirth: Int
+    dateOfBirth: Float
     address: String
     description: String
-    createdAt: Int
-    updatedAt: Int
+    createdAt: Float
+    updatedAt: Float
 }
 
 type StartKey {
@@ -39,7 +46,7 @@ input StartKeyInput {
 input UserInput {
     id: ID
     name: String
-    dateOfBirth: Int
+    dateOfBirth: Float
     address: String
     description: String
 }

@@ -103,15 +103,3 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-#        GlobalSecondaryIndexes:
-#          - IndexName: createdAt_GSI
-#            KeySchema:
-#            - AttributeName: id
-#              KeyType: HASH
-#            - AttributeName: createdAt
-#              KeyType: RANGE
-#            Projection:
-#              ProjectionType: ALL
-#            ProvisionedThroughput:
-#              ReadCapacityUnits: 1
-#              WriteCapacityUnits: 1

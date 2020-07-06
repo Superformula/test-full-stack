@@ -77,7 +77,7 @@ describe("getUsers", () => {
 
     let result = await handle({
       input: {
-        filter: "2 users",
+        filter: "2 Users",
         limit: 6,
         startKey: null,
       },
