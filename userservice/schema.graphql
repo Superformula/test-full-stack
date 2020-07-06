@@ -1,0 +1,45 @@
+type Schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    getUsers(filter: String, limit: Int, nextToken: StartKeyInput): Users
+}
+
+type Users {
+    items: [User]
+    startKey: StartKey
+}
+
+type Mutation {
+    addUser(input: UserInput): User
+    updateUser(input: UserInput): User
+    deleteUser(input: UserInput): User
+}
+
+type User {
+    id: ID
+    name: String
+    dateOfBirth: Int
+    address: String
+    description: String
+    createdAt: Int
+    updatedAt: Int
+}
+
+type StartKey {
+    id: ID
+}
+
+input StartKeyInput {
+    id: ID
+}
+
+input UserInput {
+    id: ID
+    name: String
+    dateOfBirth: Int
+    address: String
+    description: String
+}

@@ -1,0 +1,117 @@
+service: user
+
+plugins:
+  - serverless-appsync-plugin
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: default
+  region: us-east-1
+  timeout: 120
+  stage: ${opt:stage, "dev"}
+  environment:
+    USER_TABLE: users_${opt:stage, "dev"}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        Fn::GetAtt:
+          - usersTable
+          - Arn
+
+functions:
+  GetUsers:
+    handler: src/lambda/getUsers.handle
+  AddUser:
+    handler: src/lambda/addUser.handle
+  UpdateUser:
+    handler: src/lambda/updateUser.handle
+  DeleteUser:
+    handler: src/lambda/deleteUser.handle
+
+custom:
+  appSync:
+    name: ${self:service}_${self:provider.stage}
+    authenticationType: API_KEY
+    mappingTemplates:
+      - dataSource: getUsers
+        type: Query
+        field: getUsers
+        request: "getUsers-request.vtl"
+        response: "getUsers-response.vtl"
+      - dataSource: addUser
+        type: Mutation
+        field: addUser
+        request: "addUser-request.vtl"
+        response: "addUser-response.vtl"
+      - dataSource: updateUser
+        type: Mutation
+        field: updateUser
+        request: "updateUser-request.vtl"
+        response: "updateUser-response.vtl"
+      - dataSource: deleteUser
+        type: Mutation
+        field: deleteUser
+        request: "deleteUser-request.vtl"
+        response: "deleteUser-response.vtl"
+    dataSources:
+      - type: AWS_LAMBDA
+        name: getUsers
+        description: 'Lambda getUsers DataSource'
+        config:
+          functionName: GetUsers
+      - type: AWS_LAMBDA
+        name: addUser
+        description: 'Lambda addUser DataSource'
+        config:
+          functionName: AddUser
+      - type: AWS_LAMBDA
+        name: updateUser
+        description: 'Lambda updateUser DataSource'
+        config:
+          functionName: UpdateUser
+      - type: AWS_LAMBDA
+        name: deleteUser
+        description: 'Lambda deleteUser DataSource'
+        config:
+          functionName: DeleteUser
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users_${self:provider.stage}
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: id
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+#        GlobalSecondaryIndexes:
+#          - IndexName: createdAt_GSI
+#            KeySchema:
+#            - AttributeName: id
+#              KeyType: HASH
+#            - AttributeName: createdAt
+#              KeyType: RANGE
+#            Projection:
+#              ProjectionType: ALL
+#            ProvisionedThroughput:
+#              ReadCapacityUnits: 1
+#              WriteCapacityUnits: 1
