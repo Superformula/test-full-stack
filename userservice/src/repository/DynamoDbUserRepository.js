@@ -21,9 +21,8 @@ export default class DynamoDbUserRepository {
     }
 
     if (filter) {
-      params.FilterExpression = "contains (#name, :name)";
-      params.ExpressionAttributeValues[":name"] = filter;
-      params.ExpressionAttributeNames = { "#name": "name" };
+      params.FilterExpression = "contains (searchName, :name)";
+      params.ExpressionAttributeValues[":name"] = filter.toLowerCase();
     }
 
     let data = null;
@@ -90,7 +89,8 @@ export default class DynamoDbUserRepository {
       Key: userToKey(item),
       TableName: getTableName(),
       UpdateExpression: `
-        set #name = :name,          
+        set #name = :name,         
+        searchName = :searchName, 
         dateOfBirth = :dateOfBirth, 
         address = :address,
         description = :description,
@@ -98,6 +98,7 @@ export default class DynamoDbUserRepository {
         createdAt = :createdAt`,
       ExpressionAttributeValues: {
         ":name": item.name,
+        ":searchName": item.searchName,
         ":dateOfBirth": item.dateOfBirth,
         ":address": item.address,
         ":description": item.description,
@@ -118,6 +119,7 @@ function userToItem(user) {
     pk: "REGULAR_USER",
     id: user.id ? user.id : `${now}_${uuidv4()}`,
     name: user.name,
+    searchName: user.name.toLowerCase(),
     dateOfBirth: user.dateOfBirth,
     address: user.address,
     description: user.description,

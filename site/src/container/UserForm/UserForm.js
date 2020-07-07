@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import moment from "moment";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
+import Map from "../../components/Map/Map.js";
 
 const UserFormPanel = styled.div`
   display: flex;
@@ -30,6 +31,7 @@ const UserFormPanelArea = styled.div`
 const UserFormPanelImageAndMapArea = styled.div`
   flex-direction: column;
   flex-basis: 400px;
+  display: flex;
   align-items: center;
 `;
 
@@ -118,11 +120,15 @@ const UserForm = (props) => {
     );
   }
 
+  const [mapAddress, setMapAddress] = React.useState(address);
+
   return (
     <UserFormPanel>
       <h1>{label}</h1>
       <UserFormPanelArea>
-        <UserFormPanelImageAndMapArea></UserFormPanelImageAndMapArea>
+        <UserFormPanelImageAndMapArea>
+          <Map address={mapAddress} />
+        </UserFormPanelImageAndMapArea>
         <UserFormPanelInputArea>
           <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
             <UserFormRow>
@@ -162,6 +168,9 @@ const UserForm = (props) => {
                 ref={register({
                   required: false,
                 })}
+                onBlur={(e) => {
+                  setMapAddress(e.target.value);
+                }}
               />
             </UserFormRow>
             <UserFormRow>

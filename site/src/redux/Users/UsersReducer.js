@@ -9,7 +9,11 @@ const initialState = {
 const UsersReducer = (state = initialState, action) => {
   switch (action.type) {
     case UsersActions.SET_USERS:
-      let users = mergeUsers(state.users, action.users);
+      let users = mergeUsers(
+        state.users,
+        action.users,
+        state.currentSearchTerm
+      );
       return {
         ...state,
         users: users,
@@ -36,12 +40,13 @@ const UsersReducer = (state = initialState, action) => {
         ...state,
         currentSearchTerm: action.currentSearchTerm,
       };
+    default:
   }
 
   return initialState;
 };
 
-const mergeUsers = (currentUsers, users) => {
+const mergeUsers = (currentUsers, users, currentSearchText) => {
   if (currentUsers.length === 0) {
     users.forEach((item) => (item.image = randomImage()));
     return users;
@@ -59,7 +64,16 @@ const mergeUsers = (currentUsers, users) => {
     }
     if (donHaveUser) {
       users[i].image = randomImage();
-      newUsers.push(users[i]);
+
+      if (
+        !currentSearchText ||
+        currentSearchText.trim() === "" ||
+        users[i].name
+          .toLowerCase()
+          .includes(currentSearchText.toLowerCase().trim())
+      ) {
+        newUsers.push(users[i]);
+      }
     }
   }
 

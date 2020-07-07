@@ -1,6 +1,7 @@
 import getAppSyncClient from "./getAppSyncClient.js";
 import gql from "graphql-tag";
 import { UsersActions } from "../redux/Users/UsersActions.js";
+import { toast } from "react-toastify";
 
 class AppSyncUserServiceProvider {
   async init(store) {
@@ -105,9 +106,10 @@ class AppSyncUserServiceProvider {
 
   async deleteUser(input) {
     const deleteUser = gql`
-      mutation deleteUserMutation($id: ID) {
-        deleteUser(input: { id: $id }) {
+      mutation deleteUserMutation($id: ID, $name: String) {
+        deleteUser(input: { id: $id, name: $name }) {
           id
+          name
         }
       }
     `;
@@ -116,6 +118,7 @@ class AppSyncUserServiceProvider {
       fetchPolicy: "no-cache",
       variables: {
         id: input.id,
+        name: input.name,
       },
     });
   }
@@ -191,6 +194,7 @@ const attachUpdateSub = (client, store) => {
 
   updateUserObservable.subscribe({
     next: (response) => {
+      toast(`🦄 Update to ${response.data.updatedUser.name}!`);
       store.dispatch(UsersActions.setUsers([response.data.updatedUser]));
     },
     complete: console.log,
@@ -220,6 +224,7 @@ const attachAddSub = (client, store) => {
 
   addUserObservable.subscribe({
     next: (response) => {
+      toast(`🦄 ${response.data.addedUser.name} Added!`);
       store.dispatch(UsersActions.setUsers([response.data.addedUser]));
     },
     complete: console.log,
@@ -249,6 +254,7 @@ const attachDeleteSub = (client, store) => {
 
   deleteUserObservable.subscribe({
     next: (response) => {
+      toast(`🦄 ${response.data.deletedUser.name} Deleted!`);
       store.dispatch(UsersActions.removeUser(response.data.deletedUser));
     },
     complete: console.log,

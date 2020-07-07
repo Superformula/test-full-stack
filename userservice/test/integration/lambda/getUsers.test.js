@@ -88,6 +88,18 @@ describe("getUsers", () => {
     expect(result.items.length).toBe(2);
   });
 
+  test(`Input with a limit of 6 and filter with the name "2 uSeRs", 2 users return`, async () => {
+    let result = await handle({
+      input: {
+        filter: "2 uSeRs",
+        limit: 6,
+        startKey: null,
+      },
+    });
+
+    expect(result.items.length).toBe(2);
+  });
+
   test(`Input with a limit of 100 and filter with the name that does not exist, 0 user return`, async () => {
     let result = await handle({
       input: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as Fa from "react-icons/fa";
 import Modal from "styled-react-modal";
 import styled from "styled-components";
