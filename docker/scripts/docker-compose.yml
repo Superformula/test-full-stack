@@ -9,5 +9,5 @@ services:
       - "8888:8888"
     working_dir: /app
     volumes:
-      - /tc_sf_fullstack_test:/app/tc_sf_fullstack_test/
+      - ${LOCAL_PROJECT_PATH}:/app/tc_sf_fullstack_test/
     command: /bin/bash /app/tc_sf_fullstack_test/docker/scripts/docker_command_script.sh
