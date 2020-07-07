@@ -10,6 +10,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router": "^5.1.8",
     "cra-template-typescript": "1.0.3",
+    "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -24,7 +25,6 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "react": "^16.13.1",
-    "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
@@ -32,7 +32,6 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "styled-jsx": "^3.3.0",
     "typescript": "^3.9.6"
   },
   "scripts": {
