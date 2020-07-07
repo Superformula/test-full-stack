@@ -28,30 +28,13 @@ const UserFormStyledModalToolBar = styled.div`
 `;
 
 const UserFormModal = (props) => {
-  const [opacity, setOpacity] = useState(0);
-
-  let afterOpen = () => {
-    setTimeout(() => {
-      setOpacity(1);
-    }, 10);
-  };
-
-  let beforeClose = () => {
-    return new Promise((resolve) => {
-      setOpacity(0);
-      setTimeout(resolve, 200);
-    });
-  };
-
   return (
     <UserFormStyledModal
       isOpen={props.isOpen}
-      afterOpen={afterOpen}
-      beforeClose={beforeClose}
-      onBackgroundClick={props.closeModal}
-      onEscapeKeydown={props.closeModal}
-      opacity={opacity}
-      backgroundProps={{ opacity }}
+      afterOpen={props.afterOpen}
+      beforeClose={props.beforeClose}
+      opacity={props.opacity}
+      backgroundProps={props.opacity}
     >
       <UserFormStyledModalToolBar>
         <Fa.FaWindowClose onClick={props.closeModal} />

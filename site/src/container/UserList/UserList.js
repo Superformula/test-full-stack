@@ -1,27 +1,53 @@
 import React from "react";
+import * as Fa from "react-icons/fa";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import UserCard from "../../components/UserCard/UserCard";
-import { UsersActions } from "../../redux/Users/UsersActions";
+import UserCard from "../../components/UserCard/UserCard.js";
+import { UsersActions } from "../../redux/Users/UsersActions.js";
+
+import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
 
 const UserListPanel = styled.div`
   display: flex;
   flex-wrap: wrap;
-  position: absolute;
   min-width: 100%;
   justify-content: center;
-  top: 81px;
-  height: calc(100% - 81px);
+`;
+
+const CurrentFilterHeader = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const UserList = (props) => {
+  let currentSearchTerm = "";
+  if (props.currentSearchTerm) {
+    currentSearchTerm = (
+      <CurrentFilterHeader>
+        Current Filter: {props.currentSearchTerm} &nbsp;
+        <Fa.FaTimes
+          onClick={() => {
+            return AppSyncUserServiceProvider.doSearch("");
+          }}
+        />
+      </CurrentFilterHeader>
+    );
+  }
   return (
-    <UserListPanel>
-      {props.users.map((item) => {
-        return userCard(item, props.openModalFunc);
-      })}
-    </UserListPanel>
+    <>
+      {currentSearchTerm}
+      <UserListPanel>
+        <br />
+        {props.users.map((item) => {
+          return userCard(item, props.openModalFunc);
+        })}
+      </UserListPanel>
+    </>
   );
 };
 
@@ -32,6 +58,7 @@ function userCard(item, openModalFunc) {
 const UserListMapStateToProps = (state) => {
   return {
     users: state.users,
+    currentSearchTerm: state.currentSearchTerm,
   };
 };
 

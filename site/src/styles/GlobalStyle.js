@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
   }  
   
   *, *:focus {
-    font-family: Helvetica;   
+    font-family: cursive;   
     border-radius: 0;    
     outline: none;
   }

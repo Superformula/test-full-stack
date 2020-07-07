@@ -3,6 +3,7 @@ import { UsersActions } from "./UsersActions.js";
 const initialState = {
   users: [],
   currentEditUser: null,
+  currentSearchTerm: null,
 };
 
 const UsersReducer = (state = initialState, action) => {
@@ -13,6 +14,8 @@ const UsersReducer = (state = initialState, action) => {
         ...state,
         users: users,
       };
+    case UsersActions.CLEAR_ALL_USERS:
+      return { ...state, users: [] };
     case UsersActions.REMOVE_USER:
       let index = state.users.findIndex((item) => {
         return item.id === action.user.id;
@@ -27,6 +30,11 @@ const UsersReducer = (state = initialState, action) => {
       return {
         ...state,
         currentEditUser: action.user,
+      };
+    case UsersActions.SET_CURRENT_SEARCH_TERM:
+      return {
+        ...state,
+        currentSearchTerm: action.currentSearchTerm,
       };
   }
 

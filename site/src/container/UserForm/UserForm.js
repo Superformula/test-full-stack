@@ -14,14 +14,17 @@ const UserFormPanel = styled.div`
   align-items: center;
   h1 {
     text-align: center;
-  }
-
-  form {
     display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
+    button {
+      margin-left: 5px;
+    }
   }
+`;
+const UserFormPanelArea = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
 `;
 
 const UserFormPanelImageAndMapArea = styled.div`
@@ -99,11 +102,15 @@ const UserForm = (props) => {
     description = props.currentUser.description;
     removeButton = (
       <button
-        onClick={async () => {
+        type="button"
+        onClick={async (e) => {
           await AppSyncUserServiceProvider.deleteUser(props.currentUser);
           if (props.onSubmitted) {
             props.onSubmitted();
           }
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
         }}
       >
         Delete
@@ -113,69 +120,70 @@ const UserForm = (props) => {
 
   return (
     <UserFormPanel>
-      <h1>
-        {label} {removeButton}
-      </h1>
-
-      <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+      <h1>{label}</h1>
+      <UserFormPanelArea>
         <UserFormPanelImageAndMapArea></UserFormPanelImageAndMapArea>
         <UserFormPanelInputArea>
-          <UserFormRow>
-            <label>Name:</label>
-            <br />
-            <input
-              type="text"
-              name="name"
-              defaultValue={name}
-              ref={register({
-                required: true,
-              })}
-            />
-            {errors.name && (
-              <span className="danger-text">Name cannot be empty!</span>
-            )}
-          </UserFormRow>
-          <UserFormRow>
-            <label>Date Of Birth:</label>
-            <br />
-            <input
-              type="date"
-              name="dateOfBirth"
-              defaultValue={dateOfBirth}
-              ref={register({
-                required: false,
-              })}
-            />
-          </UserFormRow>
-          <UserFormRow>
-            <label>Address:</label>
-            <br />
-            <input
-              type="text"
-              name="address"
-              defaultValue={address}
-              ref={register({
-                required: false,
-              })}
-            />
-          </UserFormRow>
-          <UserFormRow>
-            <label>Description:</label>
-            <br />
-            <textarea
-              name="description"
-              defaultValue={description}
-              ref={register({
-                required: false,
-              })}
-            />
-          </UserFormRow>
-          <UserFormRow>
-            <input type="submit" value="Submit" />
-            <input type="reset" />
-          </UserFormRow>
+          <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+            <UserFormRow>
+              <label>Name:</label>
+              <br />
+              <input
+                type="text"
+                name="name"
+                defaultValue={name}
+                ref={register({
+                  required: true,
+                })}
+              />
+              {errors.name && (
+                <span className="danger-text">Name cannot be empty!</span>
+              )}
+            </UserFormRow>
+            <UserFormRow>
+              <label>Date Of Birth:</label>
+              <br />
+              <input
+                type="date"
+                name="dateOfBirth"
+                defaultValue={dateOfBirth}
+                ref={register({
+                  required: false,
+                })}
+              />
+            </UserFormRow>
+            <UserFormRow>
+              <label>Address:</label>
+              <br />
+              <input
+                type="text"
+                name="address"
+                defaultValue={address}
+                ref={register({
+                  required: false,
+                })}
+              />
+            </UserFormRow>
+            <UserFormRow>
+              <label>Description:</label>
+              <br />
+              <textarea
+                name="description"
+                defaultValue={description}
+                ref={register({
+                  required: false,
+                })}
+              />
+            </UserFormRow>
+            <UserFormRow>
+              <input type="submit" value="Submit" />
+              <input type="reset" />
+
+              {removeButton}
+            </UserFormRow>
+          </form>
         </UserFormPanelInputArea>
-      </form>
+      </UserFormPanelArea>
     </UserFormPanel>
   );
 };

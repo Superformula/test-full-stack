@@ -1,6 +1,6 @@
 import getAppSyncClient from "./getAppSyncClient.js";
 import gql from "graphql-tag";
-import { UsersActions } from "../redux/Users/UsersActions";
+import { UsersActions } from "../redux/Users/UsersActions.js";
 
 class AppSyncUserServiceProvider {
   async init(store) {
@@ -10,8 +10,27 @@ class AppSyncUserServiceProvider {
     this.hasBeenCall = true;
     this._store = store;
     this._client = await getAppSyncClient();
-    await this.listUsers(null, 6, null);
+    await this.listUsers(null, 100, null);
     initSubscription(this._client, this._store);
+  }
+
+  async doSearch(searchTerm) {
+    this._store.dispatch(UsersActions.clearAllUsers());
+    this._store.dispatch(UsersActions.setCurrentSearchTerm(searchTerm));
+    return this.listUsers(searchTerm, 100, null);
+  }
+
+  async loadMore() {
+    let currentSearchTerm = this._store.getState().currentSearchTerm;
+    let startKey = null;
+    if (this._store.getState().users.length > 0) {
+      startKey = {
+        id: this._store.getState().users[
+          this._store.getState().users.length - 1
+        ].id,
+      };
+    }
+    return this.listUsers(currentSearchTerm, 100, startKey);
   }
 
   async listUsers(filter, limit, startKey) {
