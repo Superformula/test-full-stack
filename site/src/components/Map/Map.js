@@ -7,6 +7,8 @@ const containerStyle = {
   top: "20px",
 };
 
+let markers = [];
+
 const Map = (props) => {
   const [map, setMap] = React.useState(null);
   const onLoad = React.useCallback((map) => {
@@ -16,36 +18,52 @@ const Map = (props) => {
     pointToLocation(props.address, map);
   }, []);
 
-  pointToLocation(props.address, map);
-
   const onUnmount = React.useCallback((map) => {
     setMap(null);
   }, []);
 
-  return (
-    <GoogleMap
-      options={{ disableDefaultUI: true }}
-      mapContainerStyle={containerStyle}
-      zoom={10}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-    />
-  );
-};
+  let pointToLocation = (address, map) => {
+    if (markers) {
+      markers.forEach((item) => {
+        item.setMap(null);
+      });
+      markers.splice(-1);
+    }
+    if (address) {
+      let geoCoder = new window.google.maps.Geocoder();
+      geoCoder.geocode({ address: address }, (results, status) => {
+        if (status === "OK") {
+          map.setCenter(results[0].geometry.location);
+          markers.push(
+            new window.google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location,
+            })
+          );
+        }
+      });
+    } else {
+      map.setCenter({
+        lat: 0,
+        lng: 0,
+      });
+    }
+  };
 
-const pointToLocation = (address, map) => {
-  if (address) {
-    let geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ address: address }, (results, status) => {
-      if (status == "OK") {
-        map.setCenter(results[0].geometry.location);
-        let marker = new window.google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location,
-        });
-      }
-    });
+  if (map) {
+    pointToLocation(props.address, map);
   }
+  return (
+    <>
+      <GoogleMap
+        options={{ disableDefaultUI: true }}
+        mapContainerStyle={containerStyle}
+        zoom={10}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      />
+    </>
+  );
 };
 
 export default Map;
