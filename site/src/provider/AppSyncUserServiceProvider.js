@@ -11,14 +11,14 @@ class AppSyncUserServiceProvider {
     this.hasBeenCall = true;
     this._store = store;
     this._client = await getAppSyncClient();
-    await this.listUsers(null, 100, null);
+    await this.listUsers(null, 10, null);
     initSubscription(this._client, this._store);
   }
 
   async doSearch(searchTerm) {
     this._store.dispatch(UsersActions.clearAllUsers());
     this._store.dispatch(UsersActions.setCurrentSearchTerm(searchTerm));
-    return this.listUsers(searchTerm, 100, null);
+    return this.listUsers(searchTerm, 10, null);
   }
 
   async loadMore() {
@@ -31,7 +31,7 @@ class AppSyncUserServiceProvider {
         ].id,
       };
     }
-    return this.listUsers(currentSearchTerm, 100, startKey);
+    return this.listUsers(currentSearchTerm, 10, startKey);
   }
 
   async listUsers(filter, limit, startKey) {
@@ -63,6 +63,8 @@ class AppSyncUserServiceProvider {
       variables: { filter: filter, limit: limit, startKey: startKey },
       fetchPolicy: "network-only",
     });
+
+    toast(`🦄 ${result.data.getUsers.items.length} user(s) loaded`);
     this._store.dispatch(UsersActions.setUsers(result.data.getUsers.items));
   }
 

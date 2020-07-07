@@ -12,6 +12,8 @@ const UserListPanel = styled.div`
   display: flex;
   flex-wrap: wrap;
   min-width: 100%;
+  position: relative;
+  top: 130px;
   justify-content: center;
 `;
 
