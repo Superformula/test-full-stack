@@ -1,8 +1,9 @@
 import "../IntegrationTestEnvironment.js";
 import "@jest/globals";
-import { handle } from "../../../src/lambda/getUser.js";
 import { expect } from "@jest/globals";
-import UserServiceError from "../../../src/error/UserServiceError";
+
+import UserServiceError from "../../../src/error/UserServiceError.js";
+import { handle } from "../../../src/lambda/getUser.js";
 
 describe("getUsers", () => {
   beforeAll(async () => {

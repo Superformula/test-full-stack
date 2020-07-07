@@ -1,9 +1,10 @@
 import "../IntegrationTestEnvironment.js";
 import "@jest/globals";
+import { afterAll, expect } from "@jest/globals";
+
 import { handle } from "../../../src/lambda/getUsers.js";
 import { handle as addUserHandle } from "../../../src/lambda/addUser.js";
 import { handle as deleteUserHandle } from "../../../src/lambda/deleteUser.js";
-import { afterAll, expect } from "@jest/globals";
 
 describe("getUsers", () => {
   let seedItems = [];

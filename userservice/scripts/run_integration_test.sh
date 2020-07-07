@@ -3,4 +3,4 @@
 sls remove --stage test
 sls deploy --stage test
 
-#jest --testPathPattern=./test/integration
+jest --testPathPattern=./test/integration

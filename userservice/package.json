@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "build-watch": "webpack --mode production --watch",
-    "run-integration-test": "./scripts/run_integration_test.sh",
-    "run-unit-test": "jest --testPathPattern=./test/unit"
+    "integration-test": "./scripts/run_integration_test.sh",
+    "unit-test": "jest --testPathPattern=./test/unit"
   },
   "author": "",
   "license": "ISC",

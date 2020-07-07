@@ -6,7 +6,7 @@ import { handle as addUserHandle } from "../../../src/lambda/addUser.js";
 import { handle } from "../../../src/lambda/deleteUser";
 import { v4 as uuidv4 } from "uuid";
 import { expect } from "@jest/globals";
-import UserServiceError from "../../../src/error/UserServiceError";
+import UserServiceError from "../../../src/error/UserServiceError.js";
 
 describe("deleteUser", () => {
   beforeAll(async () => {
