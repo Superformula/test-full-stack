@@ -17,7 +17,7 @@ export default class DynamoDbUserRepository {
     };
 
     if (startKey) {
-      params.ExclusiveStartKey = startKey;
+      params.ExclusiveStartKey = fromJsonToKey(startKey);
     }
 
     if (filter) {
@@ -46,7 +46,7 @@ export default class DynamoDbUserRepository {
     let db = getDynamoDb();
 
     const param = {
-      Key: userToKey(user),
+      Key: fromJsonToKey(user),
       TableName: getTableName(),
     };
 
@@ -69,7 +69,7 @@ export default class DynamoDbUserRepository {
   async deleteUser(user) {
     let db = getDynamoDb();
     const param = {
-      Key: userToKey(user),
+      Key: fromJsonToKey(user),
       TableName: getTableName(),
       ReturnValues: "ALL_OLD",
     };
@@ -86,7 +86,7 @@ export default class DynamoDbUserRepository {
     let db = getDynamoDb();
 
     const param = {
-      Key: userToKey(item),
+      Key: fromJsonToKey(item),
       TableName: getTableName(),
       UpdateExpression: `
         set #name = :name,         
@@ -128,7 +128,7 @@ function userToItem(user) {
   };
 }
 
-function userToKey(user) {
+function fromJsonToKey(user) {
   return {
     pk: "REGULAR_USER",
     id: user.id,

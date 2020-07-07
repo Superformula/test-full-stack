@@ -69,7 +69,7 @@ describe("getUsers", () => {
       input: {
         filter: null,
         limit: 1,
-        startKey: { pk: "REGULAR_USER", id: seedItems[7].id },
+        startKey: { id: seedItems[7].id },
       },
     });
 
