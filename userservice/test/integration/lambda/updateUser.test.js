@@ -28,7 +28,6 @@ describe("updateUser", () => {
     await handle({
       input: {
         id: item.id,
-        createdAt: item.createdAt,
         name: `updated user`,
         dateOfBirth: newDateOfBirth,
         address: `updated address`,

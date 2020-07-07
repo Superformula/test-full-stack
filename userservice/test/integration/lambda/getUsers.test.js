@@ -20,6 +20,26 @@ describe("getUsers", () => {
       });
       seedItems.push(item);
     }
+
+    let item = await addUserHandle({
+      input: {
+        name: `2 users`,
+        dateOfBirth: new Date().valueOf(),
+        address: ``,
+        description: ``,
+      },
+    });
+    seedItems.push(item);
+
+    item = await addUserHandle({
+      input: {
+        name: `2 users`,
+        dateOfBirth: new Date().valueOf(),
+        address: ``,
+        description: ``,
+      },
+    });
+    seedItems.push(item);
   });
 
   afterAll(async () => {
@@ -40,10 +60,10 @@ describe("getUsers", () => {
     });
 
     expect(result.items.length).toBe(6);
-    expect(result.items[5].id).toBe(seedItems[5].id);
+    expect(result.items[5].id).toBe(seedItems[6].id);
   });
 
-  test(`Input with a limit of 1 and a start key seedItem in index 7, User at index 8 return`, async () => {
+  test(`Input with a limit of 1 and a start key seedItem in index 7, User at index 6 return`, async () => {
     let result = await handle({
       input: {
         filter: null,
@@ -53,45 +73,19 @@ describe("getUsers", () => {
     });
 
     expect(result.items.length).toBe(1);
-    expect(result.items[0].id).toBe(seedItems[8].id);
+    expect(result.items[0].id).toBe(seedItems[6].id);
   });
 
   test(`Input with a limit of 6 and filter with the name "2 users", 2 users return`, async () => {
-    let itemOne = await addUserHandle({
-      input: {
-        name: `2 users`,
-        dateOfBirth: new Date().valueOf(),
-        address: ``,
-        description: ``,
-      },
-    });
-
-    let itemTwo = await addUserHandle({
-      input: {
-        name: `2 users`,
-        dateOfBirth: new Date().valueOf(),
-        address: ``,
-        description: ``,
-      },
-    });
-
     let result = await handle({
       input: {
-        filter: "2 Users",
+        filter: "2 users",
         limit: 6,
         startKey: null,
       },
     });
 
     expect(result.items.length).toBe(2);
-
-    await deleteUserHandle({
-      input: itemOne,
-    });
-
-    await deleteUserHandle({
-      input: itemTwo,
-    });
   });
 
   test(`Input with a limit of 100 and filter with the name that does not exist, 0 user return`, async () => {

@@ -12,6 +12,7 @@ export default class DynamoDbUserRepository {
       TableName: getTableName(),
       KeyConditionExpression: "pk = :REGULAR_USER",
       ExpressionAttributeValues: { ":REGULAR_USER": "REGULAR_USER" },
+      ScanIndexForward: false,
       Limit: limit,
     };
 
@@ -80,6 +81,7 @@ export default class DynamoDbUserRepository {
   }
 
   async updateUser(user) {
+    let currentUser = await this.getUser(user);
     let item = userToItem(user);
 
     let db = getDynamoDb();
@@ -100,7 +102,7 @@ export default class DynamoDbUserRepository {
         ":address": item.address,
         ":description": item.description,
         ":updatedAt": item.updatedAt,
-        ":createdAt": item.createdAt,
+        ":createdAt": currentUser ? currentUser.createdAt : item.createdAt,
       },
       ExpressionAttributeNames: { "#name": "name" },
     };
