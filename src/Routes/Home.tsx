@@ -3,31 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { State, ThunkDispatch } from "Store";
 import { UsersState } from "Store/users/reducer";
 import { getUsers } from "Store/users/thinks";
+import UsersList from "Components/UsersList";
+import UsersErrors from "Components/UsersErrors";
 
 const Home = () => {
-  const {
-    data,
-    errors,
-    isGetRequestLoading,
-    isMutationRequestLoading,
-  } = useSelector((state: State): UsersState => state.users);
+  const { errors, isGetRequestLoading } = useSelector(
+    (state: State): UsersState => state.users
+  );
   const dispatch: ThunkDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers(undefined));
+    dispatch(getUsers());
   }, []);
 
   return (
-    <>
-      <h1>Header</h1>
-      <h2>Subheader</h2>
-      <p>{JSON.stringify(data, null, 2)}</p>
-      <label>Label</label>
-      <input type="text" placeholder="Placeholder" />
-      <button>
-        <span>TEXT</span>
-      </button>
-    </>
+    <div id="home" className="page-container">
+      {isGetRequestLoading ? <progress /> : <UsersList />}
+      {errors.length > 0 && <UsersErrors />}
+    </div>
   );
 };
 

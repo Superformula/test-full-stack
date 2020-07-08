@@ -10,6 +10,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
+    "@types/redux-logger": "^3.0.8",
     "aws-appsync": "^3.0.4",
     "aws-appsync-react": "^3.0.4",
     "cra-template-typescript": "1.0.3",
@@ -25,6 +26,7 @@
     "graphql-tag": "^2.10.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "react": "^16.13.1",
@@ -35,6 +37,7 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "typescript": "^3.9.6"
   },

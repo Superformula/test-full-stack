@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware, {
   ThunkDispatch as ThunkDispatchType,
 } from "redux-thunk";
+import logger from "redux-logger";
 import { combineReducers } from "redux";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
@@ -26,6 +27,6 @@ export default (client: any) =>
   createStore(
     rootReducer,
     composeWithDevTools({})(
-      applyMiddleware(thunkMiddleware.withExtraArgument(client))
+      applyMiddleware(thunkMiddleware.withExtraArgument(client), logger)
     )
   );

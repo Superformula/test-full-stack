@@ -1,22 +1,20 @@
-export interface User {
-  UserID: string;
-  name: string;
-  dob?: string;
-  address: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { CreateUserInput } from "API";
+
+export type User = CreateUserInput;
 
 export interface UsersState {
-  data: Array<User>;
+  limit: number;
+  nextToken: string | undefined;
+  items: Array<User>;
   errors: Array<string>;
   isGetRequestLoading: boolean;
   isMutationRequestLoading: boolean;
 }
 
 const initialState: UsersState = {
-  data: [],
+  limit: 6,
+  nextToken: undefined,
+  items: [],
   errors: [],
   isGetRequestLoading: false,
   isMutationRequestLoading: false,
@@ -28,13 +26,16 @@ export const USERS_GET_REQUEST_ERROR = "USERS_GET_REQUEST_ERROR";
 export const USER_MUTATION_REQUEST_START = "USER_MUTATION_REQUEST_START";
 export const USER_MUTATION_REQUEST_SUCCESS = "USER_MUTATION_REQUEST_SUCCESS";
 export const USER_MUTATION_REQUEST_ERROR = "USER_MUTATION_REQUEST_ERROR";
+export const USERS_RELOAD_REQUESTS_START = "USERS_RELOAD_REQUESTS_START";
+export const USERS_RELOAD_REQUESTS_SUCCESS = "USERS_RELOAD_REQUESTS_SUCCESS";
+export const USERS_RELOAD_REQUESTS_ERROR = "USERS_RELOAD_REQUESTS_ERROR";
 export const DISMISS_ERRORS = "DISMISS_ERRORS";
 
 export type UsersActions =
-  | { type: typeof USERS_GET_REQUEST_START }
+  | { type: typeof USERS_GET_REQUEST_START; payload: number }
   | {
       type: typeof USERS_GET_REQUEST_SUCCESS;
-      payload: Array<User>;
+      payload: { items: Array<User>; nextToken: string };
     }
   | {
       type: typeof USERS_GET_REQUEST_ERROR;
@@ -67,7 +68,8 @@ export default (
     case USERS_GET_REQUEST_SUCCESS:
       return {
         ...state,
-        data: action.payload,
+        items: action.payload.items,
+        nextToken: action.payload.nextToken,
         isGetRequestLoading: false,
       };
 
@@ -87,7 +89,7 @@ export default (
     case USER_MUTATION_REQUEST_SUCCESS:
       return {
         ...state,
-        data: action.payload,
+        items: action.payload,
         isMutationRequestLoading: false,
       };
 
