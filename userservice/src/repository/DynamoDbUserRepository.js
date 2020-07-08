@@ -81,6 +81,9 @@ export default class DynamoDbUserRepository {
 
   async updateUser(user) {
     let currentUser = await this.getUser(user);
+    if (currentUser) {
+      user.createdAt = currentUser.createdAt;
+    }
     let item = userToItem(user);
 
     let db = getDynamoDb();
@@ -103,7 +106,7 @@ export default class DynamoDbUserRepository {
         ":address": item.address,
         ":description": item.description,
         ":updatedAt": item.updatedAt,
-        ":createdAt": currentUser ? currentUser.createdAt : item.createdAt,
+        ":createdAt": item.createdAt,
       },
       ExpressionAttributeNames: { "#name": "name" },
     };

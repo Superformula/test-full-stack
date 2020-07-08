@@ -25,7 +25,7 @@ describe("updateUser", () => {
     });
 
     let newDateOfBirth = new Date().valueOf();
-    await handle({
+    let updatedItem = await handle({
       input: {
         id: item.id,
         name: `updated user`,
@@ -41,6 +41,7 @@ describe("updateUser", () => {
 
     expect(returnItem.id).toBe(item.id);
     expect(returnItem.createdAt).toBe(item.createdAt);
+    expect(returnItem.createdAt).toBe(updatedItem.createdAt);
     expect(returnItem.name).toBe("updated user");
     expect(returnItem.dateOfBirth).toBe(newDateOfBirth);
     expect(returnItem.address).toBe("updated address");
