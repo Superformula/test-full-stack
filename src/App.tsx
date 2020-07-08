@@ -1,23 +1,12 @@
 // @ts-nocheck
 import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
 import appSyncConfig from "./aws-exports";
-import { ApolloProvider, Query } from "react-apollo";
+import { ApolloProvider, ApolloConsumer } from "react-apollo";
 import AWSAppSyncClient, { defaultDataIdFromObject } from "aws-appsync";
 import { Rehydrated } from "aws-appsync-react";
-
-import gql from "graphql-tag";
-import { listUsers } from "./graphql/queries";
-import { useDispatch, useSelector } from "react-redux";
-import reducer, { State, Question, Answer } from "./reducer";
-import { answerQuestion } from "./thinks";
-
-const composeEnhancers = composeWithDevTools({});
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+import createStore from "Store";
+import Routes from "Routes";
 
 const client = new AWSAppSyncClient({
   url: appSyncConfig.aws_appsync_graphqlEndpoint,
@@ -45,76 +34,26 @@ const client = new AWSAppSyncClient({
   },
 });
 
-function App() {
+export type AppSyncClient = typeof client;
+
+const WithAppSync = ({ component }) => {
   return (
     <ApolloProvider client={client}>
       <Rehydrated>
-        <Provider store={store}>
-          <Router>
-            <Route exact path="/" component={Component} />
-            <Redirect to="/" />
-          </Router>
-        </Provider>
+        <ApolloConsumer>{(client) => component({ client })}</ApolloConsumer>
       </Rehydrated>
     </ApolloProvider>
   );
-}
+};
 
-const Component = () => {
-  const { questions, answers } = useSelector((state: State): State => state);
-  const getAnswer = (question: Question) =>
-    answers.find((answer) => answer.key === question.key)?.value;
+const App = ({ client }) => {
+  const store = createStore(client);
 
   return (
-    <Query
-      query={gql`
-        ${listUsers}
-      `}
-    >
-      {({ loading, error, data }) => {
-        console.log({ loading, error, data });
-
-        return questions.map((question) => (
-          <QuestionComponent
-            key={question.key}
-            question={question}
-            answerValue={getAnswer(question)}
-          />
-        ));
-      }}
-    </Query>
+    <Provider store={store}>
+      <Routes />
+    </Provider>
   );
 };
 
-const QuestionComponent = ({
-  question,
-  answerValue,
-}: {
-  question: Question;
-  answerValue: string | undefined;
-}) => {
-  const { key, allowed_answers } = question;
-  const dispatch = useDispatch();
-  const handleAnswerSelect = (answer: Answer) => (e: React.ChangeEvent) =>
-    dispatch(answerQuestion({ question, answer }));
-
-  return (
-    <>
-      <h1>{key}</h1>
-      <ul>
-        {allowed_answers.map((value) => (
-          <pre key={value}>
-            <h6>{value}</h6>
-            <input
-              type="checkbox"
-              checked={answerValue === value}
-              onChange={handleAnswerSelect({ key, value })}
-            />
-          </pre>
-        ))}
-      </ul>
-    </>
-  );
-};
-
-export default App;
+export default () => <WithAppSync component={App} />;
