@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import { Provider } from "react-redux";
 import appSyncConfig from "./aws-exports";
@@ -8,10 +7,11 @@ import { Rehydrated } from "aws-appsync-react";
 import createStore from "Store";
 import Routes from "Routes";
 
-const client = new AWSAppSyncClient({
+const AppSyncClientObject = new AWSAppSyncClient({
   url: appSyncConfig.aws_appsync_graphqlEndpoint,
   region: appSyncConfig.aws_appsync_region,
   auth: {
+    // @ts-ignore
     type: appSyncConfig.aws_appsync_authenticationType,
     apiKey: appSyncConfig.aws_appsync_apiKey,
   },
@@ -22,7 +22,7 @@ const client = new AWSAppSyncClient({
       if (!id) {
         const { __typename: typename } = obj;
         switch (typename) {
-          case "User":
+          case "User": // @ts-ignore
             return `${typename}:${obj.UserID}`;
           default:
             return id;
@@ -34,26 +34,48 @@ const client = new AWSAppSyncClient({
   },
 });
 
-export type AppSyncClient = typeof client;
+export type AppSyncClient = typeof AppSyncClientObject;
 
-const WithAppSync = ({ component }) => {
+const WithAppSync = (Component: Function) => {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={AppSyncClientObject}>
       <Rehydrated>
-        <ApolloConsumer>{(client) => component({ client })}</ApolloConsumer>
+        <ApolloConsumer>
+          {(APIClient) => Component({ APIClient })}
+        </ApolloConsumer>
       </Rehydrated>
     </ApolloProvider>
   );
 };
 
-const App = ({ client }) => {
-  const store = createStore(client);
+const WithReduxProvider = ({
+  APIClient,
+  children,
+}: {
+  APIClient: AppSyncClient;
+  children: JSX.Element;
+}) => {
+  const store = createStore({ APIClient });
 
-  return (
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  );
+  return <Provider store={store}>{children}</Provider>;
 };
 
-export default () => <WithAppSync component={App} />;
+const App = () => {
+  // const { appSetupLoading } = useSelector(state => state.App);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(setupApp());
+  // }, []);
+
+  // return appSetupLoading ? <progress /> : <Routes />;
+
+  return <Routes />;
+};
+
+export default () =>
+  WithAppSync(({ APIClient }: { APIClient: AppSyncClient }) => (
+    <WithReduxProvider APIClient={APIClient}>
+      <App />
+    </WithReduxProvider>
+  ));

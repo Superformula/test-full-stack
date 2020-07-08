@@ -8,9 +8,11 @@ import { combineReducers } from "redux";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppSyncClient } from "App";
+// import App from './App/reducer';
 import users from "./users/reducer";
 
 const rootReducer = combineReducers({
+  // App,
   users,
 });
 
@@ -23,10 +25,10 @@ export type Thunk<ReturnType = void> = ThunkAction<
 >;
 export type ThunkDispatch = ThunkDispatchType<State, AppSyncClient, Action>;
 
-export default (client: any) =>
+export default ({ APIClient }: { APIClient: AppSyncClient }) =>
   createStore(
     rootReducer,
     composeWithDevTools({})(
-      applyMiddleware(thunkMiddleware.withExtraArgument(client), logger)
+      applyMiddleware(thunkMiddleware.withExtraArgument(APIClient), logger)
     )
   );

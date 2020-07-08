@@ -1,10 +1,14 @@
 import gql from "graphql-tag";
 import { Thunk } from "Store";
+import { AppSyncClient } from "App";
 import {
   User,
-  USERS_GET_REQUEST_START,
-  USERS_GET_REQUEST_SUCCESS,
-  USERS_GET_REQUEST_ERROR,
+  USERS_GET_INITIAL_REQUEST_START,
+  USERS_GET_INITIAL_REQUEST_SUCCESS,
+  USERS_GET_INITIAL_REQUEST_ERROR,
+  USERS_GET_MORE_REQUEST_START,
+  USERS_GET_MORE_REQUEST_SUCCESS,
+  USERS_GET_MORE_REQUEST_ERROR,
   USER_MUTATION_REQUEST_START,
   USER_MUTATION_REQUEST_SUCCESS,
   USER_MUTATION_REQUEST_ERROR,
@@ -13,40 +17,86 @@ import {
 import { listUsers, getUser } from "graphql/queries";
 import { updateUser } from "graphql/mutations";
 
-export const getUsers = (): Thunk => async (
+export const getInitialUsers = (): Thunk => async (
   dispatch,
   getState,
-  client
+  APIClient
 ): Promise<any> => {
   const { limit, nextToken } = getState().users;
 
   dispatch({
-    type: USERS_GET_REQUEST_START,
+    type: USERS_GET_INITIAL_REQUEST_START,
   });
 
   try {
+    const resultData = await fetchUsers({ APIClient, limit, nextToken });
+
+    dispatch({
+      type: USERS_GET_INITIAL_REQUEST_SUCCESS,
+      payload: { items: resultData.items, nextToken: resultData.nextToken },
+    });
+  } catch (e) {
+    dispatch({
+      type: USERS_GET_INITIAL_REQUEST_ERROR,
+      payload: e.message,
+    });
+  }
+};
+
+export const getMoreUsers = (): Thunk => async (
+  dispatch,
+  getState,
+  APIClient
+): Promise<any> => {
+  const { limit, nextToken } = getState().users;
+
+  dispatch({
+    type: USERS_GET_MORE_REQUEST_START,
+  });
+
+  try {
+    const resultData = await fetchUsers({ APIClient, limit, nextToken });
+
+    dispatch({
+      type: USERS_GET_MORE_REQUEST_SUCCESS,
+      payload: { items: resultData.items, nextToken: resultData.nextToken },
+    });
+  } catch (e) {
+    dispatch({
+      type: USERS_GET_MORE_REQUEST_ERROR,
+      payload: e.message,
+    });
+  }
+};
+
+const userItemFormatter = (item: User) => ({
+  ...item,
+  __typename: undefined,
+});
+
+const fetchUsers = async ({
+  APIClient,
+  limit,
+  nextToken,
+}: {
+  APIClient: AppSyncClient;
+  limit: number;
+  nextToken: string | undefined;
+}) => {
+  try {
     const query = gql(listUsers);
-    const result: any = await client.query({
+    const result: any = await APIClient.query({
       query,
       variables: { limit, nextToken },
       fetchPolicy: "network-only",
     });
     const { data } = result;
-    const formattedItems = data.listUsers.items.map((item: User) => ({
-      ...item,
-      __typename: undefined,
-    }));
+    const formattedItems = data.listUsers.items.map(userItemFormatter);
     const resultNextToken = data.listUsers.nextToken;
 
-    dispatch({
-      type: USERS_GET_REQUEST_SUCCESS,
-      payload: { items: formattedItems, nextToken: resultNextToken },
-    });
+    return { items: formattedItems, nextToken: resultNextToken };
   } catch (e) {
-    dispatch({
-      type: USERS_GET_REQUEST_ERROR,
-      payload: e.message,
-    });
+    throw e;
   }
 };
 
@@ -62,7 +112,7 @@ export const mutateUser = ({
   user: User;
   updatedData: { name: string; address: string; description: string };
   callback: Function;
-}): Thunk => async (dispatch, getState, client): Promise<any> => {
+}): Thunk => async (dispatch, getState, APIClient): Promise<any> => {
   dispatch({
     type: USER_MUTATION_REQUEST_START,
   });
@@ -71,7 +121,7 @@ export const mutateUser = ({
     const mutation = gql(updateUser);
     const input = { ...user, ...updatedData };
 
-    await client.mutate({
+    await APIClient.mutate({
       mutation,
       variables: { input },
       fetchPolicy: "no-cache",
@@ -89,7 +139,7 @@ export const mutateUser = ({
 const reloadAllUsers = (callback: Function): Thunk => async (
   dispatch,
   getState,
-  client
+  APIClient
 ): Promise<any> => {
   const { items } = getState().users;
 
@@ -97,17 +147,16 @@ const reloadAllUsers = (callback: Function): Thunk => async (
     const query = gql(getUser);
     const result: any = await Promise.all(
       items.map(({ UserID }: { UserID: string }) =>
-        client.query({
+        APIClient.query({
           query,
           variables: { UserID },
           fetchPolicy: "network-only",
         })
       )
     );
-    const resultsData = result.map(({ data }: any) => ({
-      ...data.getUser,
-      __typename: undefined,
-    }));
+    const resultsData = result.map(({ data }: any) =>
+      userItemFormatter(data.getUser)
+    );
 
     dispatch({
       type: USER_MUTATION_REQUEST_SUCCESS,

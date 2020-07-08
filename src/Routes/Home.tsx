@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State, ThunkDispatch } from "Store";
 import { UsersState } from "Store/users/reducer";
-import { getUsers } from "Store/users/thinks";
+import { getInitialUsers } from "Store/users/thinks";
+import "Styles/Home.scss";
 import UsersList from "Components/UsersList";
 import UsersErrors from "Components/UsersErrors";
 
@@ -13,7 +14,7 @@ const Home = () => {
   const dispatch: ThunkDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getInitialUsers());
   }, []);
 
   return (
