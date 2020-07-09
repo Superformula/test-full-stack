@@ -8,13 +8,12 @@ import createStore from "Store";
 import Routes from "Routes";
 
 const AppSyncClientObject = new AWSAppSyncClient({
-  url: appSyncConfig.aws_appsync_graphqlEndpoint,
-  region: appSyncConfig.aws_appsync_region,
+  url:
+    "https://ns724lxro5hxle4t447lnvi334.appsync-api.us-east-2.amazonaws.com/graphql",
+  region: "us-east-2",
   auth: {
-    // @ts-ignore
-    type: appSyncConfig.aws_appsync_authenticationType,
-    apiKey:
-      "https://ns724lxro5hxle4t447lnvi334.appsync-api.us-east-2.amazonaws.com/graphql",
+    type: "API_KEY",
+    apiKey: "da2-2xctvnmecnenxi5agtixfibd2e",
   },
   cacheOptions: {
     dataIdFromObject: (obj) => {
