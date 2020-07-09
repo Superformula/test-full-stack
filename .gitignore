@@ -1,0 +1,17 @@
+# IDE
+**/.vs
+**/.vscode
+
+# Secrets
+**/secrets.*
+
+# Package Management
+**/node_modules
+**/package-lock.json
+
+# Build Artifacts
+**/build
+**/dist
+
+# Deployment Artifacts
+**/.serverless
