@@ -163,11 +163,9 @@ const userMutateItemFormatted = (user: User) => ({
 export const mutateUser = ({
   user,
   updatedData,
-  callback,
 }: {
   user: User;
   updatedData: { name: string; address: string; description: string };
-  callback: Function;
 }): Thunk => async (dispatch, getState, APIClient): Promise<any> => {
   dispatch({
     type: USER_MUTATION_REQUEST_START,
@@ -183,7 +181,7 @@ export const mutateUser = ({
       fetchPolicy: "no-cache",
     });
 
-    dispatch(reloadAllUsers(callback));
+    dispatch(reloadAllUsers());
   } catch (e) {
     dispatch({
       type: USER_MUTATION_REQUEST_ERROR,
@@ -192,7 +190,7 @@ export const mutateUser = ({
   }
 };
 
-const reloadAllUsers = (callback: Function): Thunk => async (
+const reloadAllUsers = (): Thunk => async (
   dispatch,
   getState,
   APIClient
@@ -224,8 +222,6 @@ const reloadAllUsers = (callback: Function): Thunk => async (
       type: USER_MUTATION_REQUEST_SUCCESS,
       payload: formattedWithGeolocations,
     });
-
-    callback();
   } catch (e) {
     dispatch({
       type: USER_MUTATION_REQUEST_ERROR,

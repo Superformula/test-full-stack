@@ -3,7 +3,7 @@ import { User } from "Store/users/reducer";
 
 const UserCard = ({ user, onClick }: { user: User; onClick: any }) => {
   return (
-    <div className="card user" onClick={(e) => onClick(user)}>
+    <div className="card user" onClick={(e) => onClick(user.UserID)}>
       <img
         className="edit-icon"
         src={`${process.env.PUBLIC_URL}/edit-icon.png`}

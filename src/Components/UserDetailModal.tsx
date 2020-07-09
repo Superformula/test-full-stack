@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { useTransition, animated } from "react-spring";
 import { useDispatch } from "react-redux";
 import mapboxgl from "mapbox-gl";
-import { ThunkDispatch } from "Store";
+import { State, ThunkDispatch } from "Store";
+import { User } from "Store/users/reducer";
 import { mutateUser } from "Store/users/thinks";
 import ExteriorClickWrapper from "Components/Util/ExteriorClickWrapper";
 
@@ -11,10 +13,12 @@ mapboxgl.accessToken =
 
 const UserDetailModal = ({
   user,
+  busy,
   closeHandler,
 }: {
-  user: any;
-  closeHandler: any;
+  user: User;
+  busy: boolean;
+  closeHandler: (event: React.MouseEvent<HTMLElement>) => void;
 }) => {
   const [isModalShown, setShowModal] = useState(true);
   const transitions = useTransition(isModalShown, null, {
@@ -34,7 +38,11 @@ const UserDetailModal = ({
           ({ item, key, props }) =>
             item && (
               <animated.div key={key} style={props}>
-                <ModalContent user={user} closeHandler={handleClose} />
+                <ModalContent
+                  user={user}
+                  closeHandler={handleClose}
+                  busy={busy}
+                />
               </animated.div>
             )
         )}
@@ -45,12 +53,15 @@ const UserDetailModal = ({
 
 const ModalContent = ({
   user,
+  busy,
   closeHandler,
 }: {
-  user: any;
-  closeHandler: any;
+  user: User;
+  busy: boolean;
+  closeHandler: (event: React.MouseEvent<HTMLElement>) => void;
 }) => {
   const { name, address, description, geolocation } = user;
+  const [mapObj, setMapObj] = useState(undefined);
   const [formState, setFormState] = useState({ name, address, description });
   const dispatch: ThunkDispatch = useDispatch();
   const handleFormFieldChange = (key: string) => (e: any) => {
@@ -61,18 +72,31 @@ const ModalContent = ({
   const formSubmitHandler = (e: any) => {
     e.preventDefault();
     dispatch(
-      mutateUser({ user, updatedData: formState, callback: closeHandler })
+      mutateUser({
+        user,
+        updatedData: formState,
+      })
     );
   };
   const mapContainerRef = useCallback(
     (node) => {
       if (node) {
-        const map = new mapboxgl.Map({
-          container: node,
-          style: "mapbox://styles/mapbox/streets-v11",
-          center: geolocation,
-          zoom: 12,
-        });
+        if (!mapObj) {
+          const map = new mapboxgl.Map({
+            container: node,
+            style: "mapbox://styles/mapbox/streets-v11",
+            center: geolocation,
+            zoom: 12,
+            interactive: false,
+          });
+          // @ts-ignore
+          setMapObj(map);
+        } else {
+          // @ts-ignore
+          mapObj.on("moveend", closeHandler);
+          // @ts-ignore
+          mapObj.flyTo({ center: geolocation, essential: true });
+        }
       }
     },
     [geolocation]
@@ -85,7 +109,7 @@ const ModalContent = ({
       <div className="content">
         <div className="map-container" ref={mapContainerRef} />
 
-        <form onSubmit={formSubmitHandler}>
+        <form onSubmit={busy ? () => {} : formSubmitHandler}>
           <div className="field">
             <label>Name</label>
             <input
@@ -93,6 +117,7 @@ const ModalContent = ({
               placeholder="Name..."
               value={formState.name}
               onChange={handleFormFieldChange("name")}
+              disabled={busy}
             />
           </div>
 
@@ -103,6 +128,7 @@ const ModalContent = ({
               placeholder="Address..."
               value={formState.address}
               onChange={handleFormFieldChange("address")}
+              disabled={busy}
             />
           </div>
 
@@ -112,14 +138,19 @@ const ModalContent = ({
               placeholder="Description..."
               value={formState.description}
               onChange={handleFormFieldChange("description")}
+              disabled={busy}
             />
           </div>
 
           <div className="buttons">
-            <button type="submit">
+            <button type="submit" disabled={busy}>
               <span>SAVE</span>
             </button>
-            <button onClick={closeHandler} className="secondary">
+            <button
+              onClick={closeHandler}
+              className="secondary"
+              disabled={busy}
+            >
               <span>CANCEL</span>
             </button>
           </div>

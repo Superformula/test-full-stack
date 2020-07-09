@@ -8,16 +8,18 @@ import UserCard from "./UserCard";
 import UserDetailModal from "./UserDetailModal";
 
 const UsersList = ({ currentPage }: { currentPage: number }) => {
-  const [selectedUser, setSelectedUser] = useState(undefined);
+  const [selectedUserID, setSelectedUserID] = useState(undefined);
   const {
     items,
     isGetMoreRequestLoading,
     filter,
     apiFilteredItems,
     isGetFilteredRequestLoading,
+    isMutationRequestLoading,
   } = useSelector((state: State): UsersState => state.users);
+  const selectedUser = items.find((user) => user.UserID === selectedUserID);
   const dispatch: ThunkDispatch = useDispatch();
-  const modalCloseHandler = () => setSelectedUser(undefined);
+  const modalCloseHandler = () => setSelectedUserID(undefined);
   const searchInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
@@ -45,12 +47,16 @@ const UsersList = ({ currentPage }: { currentPage: number }) => {
       </div>
       <div className="users-list">
         {displayItems.map((item) => (
-          <UserCard key={item.UserID} user={item} onClick={setSelectedUser} />
+          <UserCard key={item.UserID} user={item} onClick={setSelectedUserID} />
         ))}
       </div>
       {!hasDisplayItems && hasFilterText && <h2>No matching items.</h2>}
       {selectedUser && (
-        <UserDetailModal user={selectedUser} closeHandler={modalCloseHandler} />
+        <UserDetailModal
+          user={selectedUser}
+          closeHandler={modalCloseHandler}
+          busy={isMutationRequestLoading}
+        />
       )}
       <div className="actions">
         {isGetMoreRequestLoading && (
