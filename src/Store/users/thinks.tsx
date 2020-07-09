@@ -9,6 +9,10 @@ import {
   USERS_GET_MORE_REQUEST_START,
   USERS_GET_MORE_REQUEST_SUCCESS,
   USERS_GET_MORE_REQUEST_ERROR,
+  FILTER_VALUE_CHANGED,
+  USERS_FILTER_GET_REQUEST_START,
+  USERS_FILTER_GET_REQUEST_SUCCESS,
+  USERS_FILTER_GET_REQUEST_ERROR,
   USER_MUTATION_REQUEST_START,
   USER_MUTATION_REQUEST_SUCCESS,
   USER_MUTATION_REQUEST_ERROR,
@@ -34,14 +38,6 @@ export const getUsers = (page: number): Thunk => async (
       (i) => i + 1 + lastPageFetched
     ),
   ];
-
-  console.log({
-    page,
-    lastPageFetched,
-    usersStatePagesFetched: userReducerState.pagesFetched,
-    additionalPagesNeeded,
-    pagesFetched,
-  });
 
   dispatch({
     type:
@@ -235,5 +231,102 @@ const reloadAllUsers = (callback: Function): Thunk => async (
       type: USER_MUTATION_REQUEST_ERROR,
       payload: e.message,
     });
+  }
+};
+
+const getUniqueByUserID = (items: Array<User>): Array<User> =>
+  items.reduce(
+    (acc, item) => {
+      const { accumulatedUserIDs, uniqueUsers } = acc;
+
+      if (!accumulatedUserIDs.has(item.UserID)) {
+        accumulatedUserIDs.add(item.UserID);
+
+        return {
+          accumulatedUserIDs, // @ts-ignore
+          uniqueUsers: uniqueUsers.concat([item]),
+        };
+      }
+
+      return {
+        accumulatedUserIDs,
+        uniqueUsers,
+      };
+    },
+    { accumulatedUserIDs: new Set(), uniqueUsers: [] }
+  ).uniqueUsers;
+
+export const setFilterInputValue = (value: string): Thunk => async (
+  dispatch,
+  getState,
+  APIClient
+): Promise<any> => {
+  const trimmedSearchValue = value.trim();
+
+  dispatch({ type: FILTER_VALUE_CHANGED, payload: value });
+
+  if (trimmedSearchValue) {
+    dispatch({ type: USERS_FILTER_GET_REQUEST_START });
+
+    try {
+      const query = gql(listUsers);
+      const [
+        nameResult,
+        descriptionResult,
+        addressResult,
+      ]: any = await Promise.all([
+        APIClient.query({
+          query,
+          variables: {
+            filter: {
+              name: { contains: trimmedSearchValue },
+            },
+          },
+          fetchPolicy: "network-only",
+        }),
+        APIClient.query({
+          query,
+          variables: {
+            filter: {
+              description: { contains: trimmedSearchValue },
+            },
+          },
+          fetchPolicy: "network-only",
+        }),
+        APIClient.query({
+          query,
+          variables: {
+            filter: {
+              address: { contains: trimmedSearchValue },
+            },
+          },
+          fetchPolicy: "network-only",
+        }),
+      ]);
+      const items = getUniqueByUserID(
+        nameResult.data.listUsers.items.concat(
+          descriptionResult.data.listUsers.items.concat(
+            addressResult.data.listUsers.items
+          )
+        )
+      );
+      const formattedItems: Array<User> = items.map(userItemFormatter);
+      const formattedWithAvatars: Array<User> = await Promise.all(
+        formattedItems.map(attachUserAvatar)
+      );
+      const formattedWithGeolocations: Array<User> = await Promise.all(
+        formattedWithAvatars.map(attachUserGeolocation(APIClient))
+      );
+
+      dispatch({
+        type: USERS_FILTER_GET_REQUEST_SUCCESS,
+        payload: formattedWithGeolocations,
+      });
+    } catch (e) {
+      dispatch({
+        type: USERS_FILTER_GET_REQUEST_ERROR,
+        payload: e.message,
+      });
+    }
   }
 };
