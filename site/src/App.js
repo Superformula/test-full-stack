@@ -20,12 +20,6 @@ const FadingBackground = styled(BaseModalBackground)`
 const userStore = createStore(UsersReducer, applyMiddleware(ReduxThunk));
 AppSyncUserServiceProvider.init(userStore);
 
-const LoadMoreArea = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 150px;
-`;
-
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
@@ -50,15 +44,6 @@ const App = () => {
       <Provider store={userStore}>
         <HeaderBar onNewUserClick={openModalFunc} />
         <UserListContainer openModalFunc={openModalFunc} />
-        <LoadMoreArea>
-          <button
-            onClick={async () => {
-              return AppSyncUserServiceProvider.loadMore();
-            }}
-          >
-            Load More
-          </button>
-        </LoadMoreArea>
         <ModalProvider backgroundComponent={FadingBackground}>
           <UserFormModal
             opacity={opacity}

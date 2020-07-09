@@ -18,6 +18,8 @@ const UserListPanel = styled.div`
 `;
 
 const CurrentFilterHeader = styled.div`
+  position: relative;
+  top: 120px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -26,8 +28,15 @@ const CurrentFilterHeader = styled.div`
   }
 `;
 
+const LoadMoreArea = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+`;
+
 const UserList = (props) => {
   let currentSearchTerm = "";
+
   if (props.currentSearchTerm) {
     currentSearchTerm = (
       <CurrentFilterHeader>
@@ -40,6 +49,21 @@ const UserList = (props) => {
       </CurrentFilterHeader>
     );
   }
+  let loadMoreArea = "";
+  if (props.users.length && props.users.length % 10 === 0) {
+    loadMoreArea = (
+      <LoadMoreArea>
+        <button
+          onClick={async () => {
+            return AppSyncUserServiceProvider.loadMore();
+          }}
+        >
+          Load More
+        </button>
+      </LoadMoreArea>
+    );
+  }
+
   return (
     <>
       {currentSearchTerm}
@@ -49,6 +73,7 @@ const UserList = (props) => {
           return userCard(item, props.openModalFunc);
         })}
       </UserListPanel>
+      {loadMoreArea}
     </>
   );
 };

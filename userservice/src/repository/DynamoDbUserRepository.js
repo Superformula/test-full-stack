@@ -71,7 +71,6 @@ export default class DynamoDbUserRepository {
     const param = {
       Key: fromJsonToKey(user),
       TableName: getTableName(),
-      ReturnValues: "ALL_OLD",
     };
 
     await db.delete(param).promise();

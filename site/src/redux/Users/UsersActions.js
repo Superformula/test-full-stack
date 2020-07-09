@@ -1,9 +1,9 @@
 const UsersActions = {
   SET_USERS: "SET_USERS",
   CLEAR_ALL_USERS: "CLEAR_ALL_USERS",
-  REMOVE_USER: "REMOVE_USER",
   SET_CURRENT_EDIT_USER: "SET_CURRENT_EDIT_USER",
   SET_CURRENT_SEARCH_TERM: "SET_CURRENT_SEARCH_TERM",
+  SET_MAX_USER_LIMIT: "EXTEND_MAX_USER_LIMIT",
 
   setUsers(users) {
     return {
@@ -18,13 +18,6 @@ const UsersActions = {
     };
   },
 
-  removeUser(user) {
-    return {
-      type: this.REMOVE_USER,
-      user: user,
-    };
-  },
-
   setCurrentUser(user) {
     return {
       type: this.SET_CURRENT_EDIT_USER,
@@ -36,6 +29,13 @@ const UsersActions = {
     return {
       type: this.SET_CURRENT_SEARCH_TERM,
       currentSearchTerm: currentSearchTerm,
+    };
+  },
+
+  setMaxUserLimit(userNumberLimit) {
+    return {
+      type: this.SET_MAX_USER_LIMIT,
+      userNumberLimit: userNumberLimit,
     };
   },
 };
