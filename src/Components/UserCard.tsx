@@ -4,10 +4,22 @@ import { User } from "Store/users/reducer";
 const UserCard = ({ user, onClick }: { user: User; onClick: any }) => {
   return (
     <div className="card user" onClick={(e) => onClick(user)}>
+      <img
+        className="edit-icon"
+        src={`${process.env.PUBLIC_URL}/edit-icon.png`}
+      />
       <div className="avatar">
         <article style={{ backgroundImage: `url(${user.avatarHref})` }} />
       </div>
-      <h2>{user.name}</h2>
+      <div className="name-created">
+        <h2>{user.name}</h2>
+        <span className="created">
+          created{" "}
+          <strong className="date">
+            {new Date(Number(user.createdAt)).toLocaleDateString()}
+          </strong>
+        </span>
+      </div>
       <p>{user.description}</p>
     </div>
   );

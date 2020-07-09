@@ -49,6 +49,7 @@
   .card.user {
     text-align: left;
     margin-bottom: 4rem;
+    position: relative;
 
     .avatar {
       margin-bottom: 2rem;
@@ -60,6 +61,34 @@
 
     p {
       margin-bottom: 0.5rem;
+    }
+
+    .name-created {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .created {
+      display: none;
+
+      .date {
+        color: #b32b2a;
+      }
+    }
+
+    .edit-icon {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      display: none;
+    }
+
+    &:hover {
+      .created,
+      .edit-icon {
+        display: block;
+      }
     }
   }
 
