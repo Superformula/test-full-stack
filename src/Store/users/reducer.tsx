@@ -6,6 +6,7 @@ export interface User extends CreateUserInput {
 }
 
 export interface UsersState {
+  pagesFetched: Array<number>;
   limit: number;
   nextToken: string | undefined;
   items: Array<User>;
@@ -16,6 +17,7 @@ export interface UsersState {
 }
 
 const initialState: UsersState = {
+  pagesFetched: [],
   limit: 6,
   nextToken: undefined,
   items: [],
@@ -25,12 +27,9 @@ const initialState: UsersState = {
   isMutationRequestLoading: false,
 };
 
-export const USERS_GET_INITIAL_REQUEST_START =
-  "USERS_GET_INITIAL_REQUEST_START";
-export const USERS_GET_INITIAL_REQUEST_SUCCESS =
-  "USERS_GET_INITIAL_REQUEST_SUCCESS";
-export const USERS_GET_INITIAL_REQUEST_ERROR =
-  "USERS_GET_INITIAL_REQUEST_ERROR";
+export const USERS_GET_REQUEST_START = "USERS_GET_REQUEST_START";
+export const USERS_GET_REQUEST_SUCCESS = "USERS_GET_REQUEST_SUCCESS";
+export const USERS_GET_REQUEST_ERROR = "USERS_GET_REQUEST_ERROR";
 export const USERS_GET_MORE_REQUEST_START = "USERS_GET_MORE_REQUEST_START";
 export const USERS_GET_MORE_REQUEST_SUCCESS = "USERS_GET_MORE_REQUEST_SUCCESS";
 export const USERS_GET_MORE_REQUEST_ERROR = "USERS_GET_MORE_REQUEST_ERROR";
@@ -43,13 +42,17 @@ export const USERS_RELOAD_REQUESTS_ERROR = "USERS_RELOAD_REQUESTS_ERROR";
 export const DISMISS_ERRORS = "DISMISS_ERRORS";
 
 export type UsersActions =
-  | { type: typeof USERS_GET_INITIAL_REQUEST_START }
+  | { type: typeof USERS_GET_REQUEST_START }
   | {
-      type: typeof USERS_GET_INITIAL_REQUEST_SUCCESS;
-      payload: { items: Array<User>; nextToken: string };
+      type: typeof USERS_GET_REQUEST_SUCCESS;
+      payload: {
+        items: Array<User>;
+        nextToken: string;
+        pagesFetched: Array<number>;
+      };
     }
   | {
-      type: typeof USERS_GET_INITIAL_REQUEST_ERROR;
+      type: typeof USERS_GET_REQUEST_ERROR;
       payload: string;
     }
   | { type: typeof USERS_GET_MORE_REQUEST_START }
@@ -79,21 +82,24 @@ export default (
   action: UsersActions
 ): UsersState => {
   switch (action.type) {
-    case USERS_GET_INITIAL_REQUEST_START:
+    case USERS_GET_REQUEST_START:
       return {
         ...state,
         isGetRequestLoading: true,
       };
 
-    case USERS_GET_INITIAL_REQUEST_SUCCESS:
+    case USERS_GET_REQUEST_SUCCESS:
       return {
         ...state,
-        items: action.payload.items,
+        items: state.items.concat(action.payload.items),
         nextToken: action.payload.nextToken,
+        pagesFetched: state.pagesFetched
+          .concat(action.payload.pagesFetched)
+          .sort((a: number, b: number): number => a - b),
         isGetRequestLoading: false,
       };
 
-    case USERS_GET_INITIAL_REQUEST_ERROR:
+    case USERS_GET_REQUEST_ERROR:
       return {
         ...state,
         errors: state.errors.concat([action.payload]),

@@ -28,22 +28,33 @@ p {
   margin: 0;
 }
 
+.spacer {
+  height: 0.5rem;
+}
+
 .card {
   background: #ffffff;
   border-radius: 0.5rem;
   padding: 2rem;
-}
-.card:hover {
-  box-shadow: 0px 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+  width: 21rem;
+
+  &:hover {
+    box-shadow: 0px 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
 }
 
 .avatar {
-  border-radius: 100%;
-  width: 10.5rem;
-  height: 10.5rem;
-  background-size: cover;
-  background-position: center center;
+  text-align: center;
+
+  article {
+    display: inline-block;
+    border-radius: 100%;
+    width: 10.5rem;
+    height: 10.5rem;
+    background-size: cover;
+    background-position: center center;
+  }
 }
 
 button {
@@ -56,40 +67,41 @@ button {
   width: 17.5rem;
   height: 5.625rem;
   cursor: pointer;
+
+  span {
+    font-family: "Source Sans Pro";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+
+  &:focus {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
+  &:disabled {
+    border-color: rgba(0, 0, 0, 0.1);
+
+    span {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+  }
 }
 
-button > span {
-  font-family: "Source Sans Pro";
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-button:hover {
-  border-color: rgba(0, 0, 0, 0.4);
-}
-
-button:focus {
-  border-color: rgba(0, 0, 0, 0.5);
-}
-
-button:disabled {
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-button:disabled > span {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-button.secondary {
-  background: transparent;
-}
-
-input {
+input,
+textarea {
   font-family: "Source Sans Pro";
   font-weight: 300;
   font-size: 1.5rem;
@@ -98,6 +110,7 @@ input {
   border: 0.0625rem solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   padding: 1rem;
+  display: block;
 }
 
 label {
@@ -105,12 +118,13 @@ label {
   font-weight: 600;
   font-size: 1.125rem;
   line-height: 1.4375rem;
+  display: block;
 }
 
 .page-container {
-  width: 74.18994413%;
+  width: 73.77777778%;
   max-width: 83rem;
-  margin: auto;
+  margin: 12.0625rem auto 4rem auto;
 }
 
 .modal-background {
@@ -120,6 +134,7 @@ label {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 
   .modal {
     position: absolute;

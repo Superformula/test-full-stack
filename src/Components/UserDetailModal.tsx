@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import mapboxgl from "mapbox-gl";
 import { ThunkDispatch } from "Store";
 import { mutateUser } from "Store/users/thinks";
+import ExteriorClickWrapper from "Components/Util/ExteriorClickWrapper";
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiYWRhbS16aHUiLCJhIjoiY2tjZHNzcGwyMDFuNzJ3cnFkNmRlMWc1ZyJ9.ouRBRpNS2ThQW6kuWgQb0w";
 
 const UserDetailModal = ({
   user,
@@ -10,7 +15,7 @@ const UserDetailModal = ({
   user: any;
   closeHandler: any;
 }) => {
-  const { name, address, description } = user;
+  const { name, address, description, geolocation } = user;
   const [formState, setFormState] = useState({ name, address, description });
   const dispatch: ThunkDispatch = useDispatch();
   const handleFormFieldChange = (key: string) => (e: any) => {
@@ -24,42 +29,71 @@ const UserDetailModal = ({
       mutateUser({ user, updatedData: formState, callback: closeHandler })
     );
   };
+  const mapContainerRef = useCallback(
+    (node) => {
+      if (node) {
+        const map = new mapboxgl.Map({
+          container: node,
+          style: "mapbox://styles/mapbox/streets-v11",
+          center: geolocation,
+          zoom: 12,
+        });
+      }
+    },
+    [geolocation]
+  );
 
   return (
     <div className="modal-background">
-      <div className="inner">
+      <ExteriorClickWrapper exterior_click_handler={closeHandler}>
         <div className="modal">
-          <form onSubmit={formSubmitHandler}>
-            <label>Name</label>
-            <input
-              type="text"
-              placeholder="type a name..."
-              value={formState.name}
-              onChange={handleFormFieldChange("name")}
-            />
-            <label>Location</label>
-            <input
-              type="text"
-              placeholder="type an address..."
-              value={formState.address}
-              onChange={handleFormFieldChange("address")}
-            />
-            <label>Description</label>
-            <input
-              type="text"
-              placeholder="type a description..."
-              value={formState.description}
-              onChange={handleFormFieldChange("description")}
-            />
-            <button onClick={closeHandler}>
-              <span>CANCEL</span>
-            </button>
-            <button type="submit">
-              <span>SAVE</span>
-            </button>
-          </form>
+          <h1>Edit user</h1>
+
+          <div className="content">
+            <div className="map-container" ref={mapContainerRef} />
+
+            <form onSubmit={formSubmitHandler}>
+              <div className="field">
+                <label>Name</label>
+                <input
+                  type="text"
+                  placeholder="Name..."
+                  value={formState.name}
+                  onChange={handleFormFieldChange("name")}
+                />
+              </div>
+
+              <div className="field">
+                <label>Location</label>
+                <input
+                  type="text"
+                  placeholder="Address..."
+                  value={formState.address}
+                  onChange={handleFormFieldChange("address")}
+                />
+              </div>
+
+              <div className="field">
+                <label>Description</label>
+                <textarea
+                  placeholder="Description..."
+                  value={formState.description}
+                  onChange={handleFormFieldChange("description")}
+                />
+              </div>
+
+              <div className="buttons">
+                <button type="submit">
+                  <span>SAVE</span>
+                </button>
+                <button onClick={closeHandler} className="secondary">
+                  <span>CANCEL</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </ExteriorClickWrapper>
     </div>
   );
 };

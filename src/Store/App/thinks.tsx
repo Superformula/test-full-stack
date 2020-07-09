@@ -1,4 +1,4 @@
-import { getInitialUsers } from "Store/users/thinks";
+import { getUsers } from "Store/users/thinks";
 
 /*
 
@@ -16,4 +16,4 @@ the current project is simpler to maintain if logic is implemented local to feat
 
 */
 
-export const setupApp = getInitialUsers;
+export const setupApp = getUsers;

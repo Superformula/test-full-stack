@@ -1,4 +1,16 @@
 #home.page-container {
+  text-align: center;
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+
+    input {
+      width: 23rem;
+    }
+  }
+
   #users-errors {
     position: fixed;
     top: 0;
@@ -6,6 +18,7 @@
     opacity: 0.9;
     background: red;
     color: white;
+    text-align: left;
 
     h1 {
       padding-left: 1rem;
@@ -23,6 +36,67 @@
 
       &:hover {
         border-color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+
+  .users-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card.user {
+    text-align: left;
+    margin-bottom: 4rem;
+
+    .avatar {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .modal {
+    text-align: left;
+
+    h1 {
+      margin-bottom: 4rem;
+    }
+
+    .content {
+      display: flex;
+
+      .map-container {
+        width: 32.375rem;
+        height: 21rem;
+        margin-right: 3.75rem;
+      }
+
+      form {
+        flex-grow: 1;
+
+        .buttons {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        label {
+          margin-bottom: 0.5rem;
+        }
+
+        input,
+        textarea {
+          width: calc(100% - 2rem - 2px);
+          margin-bottom: 2.25rem;
+        }
       }
     }
   }

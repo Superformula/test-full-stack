@@ -4,8 +4,7 @@ import Home from "./Home";
 
 const Routes = () => (
   <Router>
-    <Route exact path="/" component={Home} />
-    <Redirect to="/" />
+    <Route path="/" component={Home} />
   </Router>
 );
 

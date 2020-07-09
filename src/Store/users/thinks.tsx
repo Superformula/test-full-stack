@@ -3,9 +3,9 @@ import { Thunk } from "Store";
 import { AppSyncClient } from "App";
 import {
   User,
-  USERS_GET_INITIAL_REQUEST_START,
-  USERS_GET_INITIAL_REQUEST_SUCCESS,
-  USERS_GET_INITIAL_REQUEST_ERROR,
+  USERS_GET_REQUEST_START,
+  USERS_GET_REQUEST_SUCCESS,
+  USERS_GET_REQUEST_ERROR,
   USERS_GET_MORE_REQUEST_START,
   USERS_GET_MORE_REQUEST_SUCCESS,
   USERS_GET_MORE_REQUEST_ERROR,
@@ -17,53 +17,63 @@ import {
 import { listUsers, getUser, getUserGeolocation } from "graphql/queries";
 import { updateUser } from "graphql/mutations";
 
-export const getInitialUsers = (): Thunk => async (
+export const getUsers = (page: number): Thunk => async (
   dispatch,
   getState,
   APIClient
 ): Promise<any> => {
-  const { limit, nextToken } = getState().users;
+  const userReducerState = getState().users;
+  const lastPageFetched =
+    userReducerState.pagesFetched.length > 0
+      ? userReducerState.pagesFetched[userReducerState.pagesFetched.length - 1]
+      : 0;
+  const additionalPagesNeeded = page - lastPageFetched;
+  const limit = additionalPagesNeeded * userReducerState.limit;
+  const pagesFetched = [
+    ...Array.from(new Array(additionalPagesNeeded).keys()).map(
+      (i) => i + 1 + lastPageFetched
+    ),
+  ];
+
+  console.log({
+    page,
+    lastPageFetched,
+    usersStatePagesFetched: userReducerState.pagesFetched,
+    additionalPagesNeeded,
+    pagesFetched,
+  });
 
   dispatch({
-    type: USERS_GET_INITIAL_REQUEST_START,
+    type:
+      lastPageFetched === 0
+        ? USERS_GET_REQUEST_START
+        : USERS_GET_MORE_REQUEST_START,
   });
 
   try {
-    const resultData = await fetchUsers({ APIClient, limit, nextToken });
+    const resultData = await fetchUsers({
+      APIClient,
+      limit,
+      nextToken: userReducerState.nextToken,
+    });
 
     dispatch({
-      type: USERS_GET_INITIAL_REQUEST_SUCCESS,
-      payload: { items: resultData.items, nextToken: resultData.nextToken },
+      type:
+        lastPageFetched === 0
+          ? USERS_GET_REQUEST_SUCCESS
+          : USERS_GET_MORE_REQUEST_SUCCESS,
+      payload: {
+        items: resultData.items,
+        nextToken: resultData.nextToken,
+        pagesFetched,
+      },
     });
   } catch (e) {
     dispatch({
-      type: USERS_GET_INITIAL_REQUEST_ERROR,
-      payload: e.message,
-    });
-  }
-};
-
-export const getMoreUsers = (): Thunk => async (
-  dispatch,
-  getState,
-  APIClient
-): Promise<any> => {
-  const { limit, nextToken } = getState().users;
-
-  dispatch({
-    type: USERS_GET_MORE_REQUEST_START,
-  });
-
-  try {
-    const resultData = await fetchUsers({ APIClient, limit, nextToken });
-
-    dispatch({
-      type: USERS_GET_MORE_REQUEST_SUCCESS,
-      payload: { items: resultData.items, nextToken: resultData.nextToken },
-    });
-  } catch (e) {
-    dispatch({
-      type: USERS_GET_MORE_REQUEST_ERROR,
+      type:
+        lastPageFetched === 0
+          ? USERS_GET_REQUEST_ERROR
+          : USERS_GET_MORE_REQUEST_ERROR,
       payload: e.message,
     });
   }
@@ -148,6 +158,12 @@ export const dismissErrors = () => ({
   type: DISMISS_ERRORS,
 });
 
+const userMutateItemFormatted = (user: User) => ({
+  ...user,
+  avatarHref: undefined,
+  geolocation: undefined,
+});
+
 export const mutateUser = ({
   user,
   updatedData,
@@ -163,7 +179,7 @@ export const mutateUser = ({
 
   try {
     const mutation = gql(updateUser);
-    const input = { ...user, ...updatedData };
+    const input = userMutateItemFormatted({ ...user, ...updatedData });
 
     await APIClient.mutate({
       mutation,
@@ -201,10 +217,16 @@ const reloadAllUsers = (callback: Function): Thunk => async (
     const resultsData = result.map(({ data }: any) =>
       userItemFormatter(data.getUser)
     );
+    const formattedWithAvatars: Array<User> = await Promise.all(
+      resultsData.map(attachUserAvatar)
+    );
+    const formattedWithGeolocations: Array<User> = await Promise.all(
+      formattedWithAvatars.map(attachUserGeolocation(APIClient))
+    );
 
     dispatch({
       type: USER_MUTATION_REQUEST_SUCCESS,
-      payload: resultsData,
+      payload: formattedWithGeolocations,
     });
 
     callback();
