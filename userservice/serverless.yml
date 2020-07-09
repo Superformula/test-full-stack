@@ -1,8 +1,10 @@
 service: user
 
 plugins:
-  - serverless-appsync-plugin
   - serverless-webpack
+  - serverless-appsync-plugin
+  - serverless-dynamodb-local
+  - serverless-offline
 
 provider:
   name: aws
@@ -13,6 +15,7 @@ provider:
   stage: ${opt:stage, "dev"}
   environment:
     USER_TABLE: users_${opt:stage, "dev"}
+    MAP_BOX_API_KEY: ${opt:mapBoxApiKey, ""}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -29,13 +32,24 @@ provider:
 
 functions:
   GetUsers:
-    handler: src/lambda/getUsers.handle
+    handler: src/lambda/getUsers.handler
   AddUser:
-    handler: src/lambda/addUser.handle
+    handler: src/lambda/addUser.handler
   UpdateUser:
-    handler: src/lambda/updateUser.handle
+    handler: src/lambda/updateUser.handler
   DeleteUser:
-    handler: src/lambda/deleteUser.handle
+    handler: src/lambda/deleteUser.handler
+  graphql:
+    handler: src/graphql/graphql.graphqlHandler
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true
+      - http:
+          path: graphql
+          method: get
+          cors: true
 
 custom:
   appSync:
@@ -83,6 +97,17 @@ custom:
         description: 'Lambda deleteUser DataSource'
         config:
           functionName: DeleteUser
+  dynamodb:
+    stages:
+      - test
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
 
 resources:
   Resources:

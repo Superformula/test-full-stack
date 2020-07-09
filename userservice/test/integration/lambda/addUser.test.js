@@ -1,10 +1,10 @@
-import "../IntegrationTestEnvironment.js";
+import "../EnvironmentVariable.js";
 import "@jest/globals";
 import { expect } from "@jest/globals";
 
-import { handle } from "../../../src/lambda/addUser.js";
-import { handle as getUserHandle } from "../../../src/lambda/getUser.js";
-import { handle as deleteUserHandle } from "../../../src/lambda/deleteUser.js";
+import { handler } from "../../../src/lambda/addUser.js";
+import { handler as getUserHandler } from "../../../src/lambda/getUser.js";
+import { handler as deleteUserHandle } from "../../../src/lambda/deleteUser.js";
 import UserServiceError from "../../../src/error/UserServiceError.js";
 
 describe("addUser", () => {
@@ -13,7 +13,7 @@ describe("addUser", () => {
   });
 
   test(`Valid input pass in, user successfully created on the backend`, async () => {
-    let user = await handle({
+    let user = await handler({
       input: {
         name: `New valid user`,
         dateOfBirth: new Date().valueOf(),
@@ -22,7 +22,7 @@ describe("addUser", () => {
       },
     });
 
-    let returnItem = await getUserHandle({
+    let returnItem = await getUserHandler({
       input: user,
     });
 
@@ -38,7 +38,7 @@ describe("addUser", () => {
 
   test(`Invalid input with empty name pass in, UserServiceError Thrown`, async () => {
     await expect(
-      handle({
+      handler({
         input: {
           name: null,
         },
@@ -48,7 +48,7 @@ describe("addUser", () => {
 
   test(`Invalid input with id pass in, UserServiceError Thrown`, async () => {
     await expect(
-      handle({
+      handler({
         input: {
           id: "some id",
           name: "some name",

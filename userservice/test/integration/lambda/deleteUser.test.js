@@ -1,9 +1,9 @@
-import "../IntegrationTestEnvironment.js";
+import "../EnvironmentVariable.js";
 import "@jest/globals";
 
-import { handle as getUserHandle } from "../../../src/lambda/getUser.js";
-import { handle as addUserHandle } from "../../../src/lambda/addUser.js";
-import { handle } from "../../../src/lambda/deleteUser";
+import { handler as getUserHandler } from "../../../src/lambda/getUser.js";
+import { handler as addUserHandler } from "../../../src/lambda/addUser.js";
+import { handler } from "../../../src/lambda/deleteUser";
 import { v4 as uuidv4 } from "uuid";
 import { expect } from "@jest/globals";
 import UserServiceError from "../../../src/error/UserServiceError.js";
@@ -14,7 +14,7 @@ describe("deleteUser", () => {
   });
 
   test(`Valid input pass in, user successfully deleted on the backend`, async () => {
-    let item = await addUserHandle({
+    let item = await addUserHandler({
       input: {
         name: `user to be deleted`,
         dateOfBirth: new Date().valueOf(),
@@ -23,11 +23,11 @@ describe("deleteUser", () => {
       },
     });
 
-    await handle({
+    await handler({
       input: item,
     });
 
-    let returnItem = await getUserHandle({
+    let returnItem = await getUserHandler({
       input: item,
     });
 
@@ -35,7 +35,7 @@ describe("deleteUser", () => {
   });
 
   test(`Valid input pass in with a id that does not exist, nothing happens in the backend`, async () => {
-    await handle({
+    await handler({
       input: {
         id: uuidv4(),
       },
@@ -44,7 +44,7 @@ describe("deleteUser", () => {
 
   test(`Invalid input pass in with a empty id, UserServiceError thrown`, async () => {
     await expect(
-      handle({
+      handler({
         input: {
           id: null,
         },

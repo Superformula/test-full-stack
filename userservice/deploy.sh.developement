@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+sls deploy --stage dev --mapBoxApiKey {youmapboxapikey}

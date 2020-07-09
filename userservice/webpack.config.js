@@ -9,4 +9,8 @@ module.exports = {
     minimize: false,
   },
   devtool: "inline-cheap-module-source-map",
+  externals: {
+    bufferutil: "bufferutil",
+    "utf-8-validate": "utf-8-validate",
+  },
 };

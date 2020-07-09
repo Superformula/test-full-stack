@@ -1,9 +1,9 @@
-import "../IntegrationTestEnvironment.js";
+import "../EnvironmentVariable.js";
 import "@jest/globals";
 import { expect } from "@jest/globals";
 
 import UserServiceError from "../../../src/error/UserServiceError.js";
-import { handle } from "../../../src/lambda/getUser.js";
+import { handler } from "../../../src/lambda/getUser.js";
 
 describe("getUsers", () => {
   beforeAll(async () => {
@@ -12,7 +12,7 @@ describe("getUsers", () => {
 
   test(`Invalid input pass in with a empty id, UserServiceError thrown`, async () => {
     await expect(
-      handle({
+      handler({
         input: {
           id: null,
         },

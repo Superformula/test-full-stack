@@ -4,5 +4,11 @@ jspm_packages
 
 # Serverless directories
 .serverless
+.webpack
+.dynamodb
 
+#files
 .graphqlconfig
+.env
+test/integration/EnvironmentVariable.js
+deploy.sh

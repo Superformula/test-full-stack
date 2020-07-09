@@ -1,12 +1,12 @@
-import "../IntegrationTestEnvironment.js";
+import "../EnvironmentVariable.js";
 import "@jest/globals";
 import { expect } from "@jest/globals";
 import { v4 as uuidv4 } from "uuid";
 
-import { handle } from "../../../src/lambda/updateUser.js";
-import { handle as addUserHandle } from "../../../src/lambda/addUser.js";
-import { handle as getUserHandle } from "../../../src/lambda/getUser.js";
-import { handle as deleteUserHandle } from "../../../src/lambda/deleteUser.js";
+import { handler } from "../../../src/lambda/updateUser.js";
+import { handler as addUserHandler } from "../../../src/lambda/addUser.js";
+import { handler as getUserHandler } from "../../../src/lambda/getUser.js";
+import { handler as deleteUserHandler } from "../../../src/lambda/deleteUser.js";
 import UserServiceError from "../../../src/error/UserServiceError.js";
 
 describe("updateUser", () => {
@@ -15,7 +15,7 @@ describe("updateUser", () => {
   });
 
   test(`Valid input pass in, user successfully updated on the backend`, async () => {
-    let item = await addUserHandle({
+    let item = await addUserHandler({
       input: {
         name: `update user test`,
         dateOfBirth: new Date().valueOf(),
@@ -25,7 +25,7 @@ describe("updateUser", () => {
     });
 
     let newDateOfBirth = new Date().valueOf();
-    let updatedItem = await handle({
+    let updatedItem = await handler({
       input: {
         id: item.id,
         name: `updated user`,
@@ -35,7 +35,7 @@ describe("updateUser", () => {
       },
     });
 
-    let returnItem = await getUserHandle({
+    let returnItem = await getUserHandler({
       input: item,
     });
 
@@ -47,13 +47,13 @@ describe("updateUser", () => {
     expect(returnItem.address).toBe("updated address");
     expect(returnItem.description).toBe("updated description");
 
-    await deleteUserHandle({ input: returnItem });
+    await deleteUserHandler({ input: returnItem });
   });
 
   test(`Valid input pass in with a new id, user successfully created on the backend`, async () => {
     let dateOfBirth = new Date().valueOf();
     let now = new Date().valueOf();
-    let newUser = await handle({
+    let newUser = await handler({
       input: {
         id: `${now}_${uuidv4()}`,
         name: `new user`,
@@ -63,7 +63,7 @@ describe("updateUser", () => {
       },
     });
 
-    let returnItem = await getUserHandle({
+    let returnItem = await getUserHandler({
       input: newUser,
     });
 
@@ -74,12 +74,12 @@ describe("updateUser", () => {
     expect(returnItem.address).toBe("new address");
     expect(returnItem.description).toBe("new description");
 
-    await deleteUserHandle({ input: returnItem });
+    await deleteUserHandler({ input: returnItem });
   });
 
   test(`Invalid input pass in with a null id, UserServiceError thrown`, async () => {
     await expect(
-      handle({
+      handler({
         input: {
           id: null,
           createdAt: new Date().valueOf(),
