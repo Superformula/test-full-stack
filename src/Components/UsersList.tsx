@@ -47,7 +47,12 @@ const UsersList = ({ currentPage }: { currentPage: number }) => {
       </div>
       <div className="users-list">
         {displayItems.map((item) => (
-          <UserCard key={item.UserID} user={item} onClick={setSelectedUserID} />
+          <UserCard
+            key={item.UserID}
+            user={item}
+            onClick={setSelectedUserID}
+            data-testid="user-card"
+          />
         ))}
       </div>
       {!hasDisplayItems && hasFilterText && <h2>No matching items.</h2>}

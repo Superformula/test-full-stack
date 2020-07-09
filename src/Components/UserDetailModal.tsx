@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
 import { useTransition, animated } from "react-spring";
 import { useDispatch } from "react-redux";
 import mapboxgl from "mapbox-gl";
-import { State, ThunkDispatch } from "Store";
+import { ThunkDispatch } from "Store";
 import { User } from "Store/users/reducer";
 import { mutateUser } from "Store/users/thinks";
 import ExteriorClickWrapper from "Components/Util/ExteriorClickWrapper";
@@ -32,7 +31,10 @@ const UserDetailModal = ({
   };
 
   return (
-    <div className="modal-background">
+    <div
+      className="modal-background"
+      data-testid="user-detail-modal-background"
+    >
       <ExteriorClickWrapper exterior_click_handler={handleClose}>
         {transitions.map(
           ({ item, key, props }) =>
@@ -103,7 +105,7 @@ const ModalContent = ({
   );
 
   return (
-    <div className="modal">
+    <div className="modal" data-testid="user-detail-modal-content">
       <h1>Edit user</h1>
 
       <div className="content">
@@ -111,35 +113,42 @@ const ModalContent = ({
 
         <form onSubmit={busy ? () => {} : formSubmitHandler}>
           <div className="field">
-            <label>Name</label>
-            <input
-              type="text"
-              placeholder="Name..."
-              value={formState.name}
-              onChange={handleFormFieldChange("name")}
-              disabled={busy}
-            />
+            <label>
+              Name
+              <input
+                type="text"
+                placeholder="Name..."
+                value={formState.name}
+                onChange={handleFormFieldChange("name")}
+                disabled={busy}
+              />
+            </label>
           </div>
 
           <div className="field">
-            <label>Location</label>
-            <input
-              type="text"
-              placeholder="Address..."
-              value={formState.address}
-              onChange={handleFormFieldChange("address")}
-              disabled={busy}
-            />
+            <label>
+              Location
+              <input
+                type="text"
+                name="address"
+                placeholder="Address..."
+                value={formState.address}
+                onChange={handleFormFieldChange("address")}
+                disabled={busy}
+              />
+            </label>
           </div>
 
           <div className="field">
-            <label>Description</label>
-            <textarea
-              placeholder="Description..."
-              value={formState.description}
-              onChange={handleFormFieldChange("description")}
-              disabled={busy}
-            />
+            <label>
+              Description
+              <textarea
+                placeholder="Description..."
+                value={formState.description}
+                onChange={handleFormFieldChange("description")}
+                disabled={busy}
+              />
+            </label>
           </div>
 
           <div className="buttons">

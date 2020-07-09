@@ -3,7 +3,11 @@ import { User } from "Store/users/reducer";
 
 const UserCard = ({ user, onClick }: { user: User; onClick: any }) => {
   return (
-    <div className="card user" onClick={(e) => onClick(user.UserID)}>
+    <div
+      className="card user"
+      onClick={(e) => onClick(user.UserID)}
+      data-testid="user-card"
+    >
       <img
         className="edit-icon"
         src={`${process.env.PUBLIC_URL}/edit-icon.png`}

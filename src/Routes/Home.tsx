@@ -23,8 +23,12 @@ const Home = () => {
   }, [page]);
 
   return (
-    <div id="home" className="page-container">
-      {isGetRequestLoading ? <progress /> : <UsersList currentPage={page} />}
+    <div id="home" className="page-container" data-testid="home-page-container">
+      {isGetRequestLoading ? (
+        <progress data-testid="home-page-loading-indicator" />
+      ) : (
+        <UsersList currentPage={page} />
+      )}
       {errors.length > 0 && <UsersErrors />}
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import appSyncConfig from "./aws-exports";
+// import appSyncConfig from "./aws-exports"; // this is breaking build
 import { ApolloProvider, ApolloConsumer } from "react-apollo";
 import AWSAppSyncClient, { defaultDataIdFromObject } from "aws-appsync";
 import { Rehydrated } from "aws-appsync-react";
