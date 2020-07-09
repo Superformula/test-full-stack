@@ -1,6 +1,6 @@
 # Superformula Full Stack Developer Test
 
-To run this code, first pull the repo, `cd` into it, install dependencies with `yarn install`, then run the project with `yarn start`.
+To run this code, first `git clone git@github.com:adam-zhu/test-full-stack.git`, `cd test-full-stack`, install dependencies with `yarn install`, then run the project with `yarn start`.
 
 ## Backend Design
 

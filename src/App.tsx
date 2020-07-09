@@ -13,6 +13,7 @@ const AppSyncClientObject = new AWSAppSyncClient({
   auth: {
     // @ts-ignore
     type: appSyncConfig.aws_appsync_authenticationType,
+    // @ts-ignore
     apiKey: appSyncConfig.aws_appsync_apiKey,
   },
   cacheOptions: {
