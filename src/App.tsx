@@ -13,8 +13,8 @@ const AppSyncClientObject = new AWSAppSyncClient({
   auth: {
     // @ts-ignore
     type: appSyncConfig.aws_appsync_authenticationType,
-    // @ts-ignore
-    apiKey: appSyncConfig.aws_appsync_apiKey,
+    apiKey:
+      "https://ns724lxro5hxle4t447lnvi334.appsync-api.us-east-2.amazonaws.com/graphql",
   },
   cacheOptions: {
     dataIdFromObject: (obj) => {
