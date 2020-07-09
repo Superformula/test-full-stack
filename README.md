@@ -28,4 +28,6 @@ There is an additional GraphQL Query defined that does not follow from the Dynam
 
 This frontend is built on `create-react-app` in `typescript` using `redux` as a global state store. All business logic is contained inside the `Store` folder.
 
+Business logic is isolated to the `Store/${dataModelElement}/thinks.tsx` file. This is to colocate state modifying logic with the relevant slice of state.
+
 The app generally functions via using the React component tree as the controller for business logic triggers. `useEffect` hooks are placed inside components, and when they are mounted to the tree, effects are triggered.
