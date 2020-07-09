@@ -140,6 +140,18 @@ export type ListUsersQuery = {
   } | null,
 };
 
+export type GetUserGeolocationQueryVariables = {
+  address: string,
+};
+
+export type GetUserGeolocationQuery = {
+  getUserGeolocation:  {
+    __typename: "Geolocation",
+    longitude: number,
+    latitude: number,
+  } | null,
+};
+
 export type OnCreateUserSubscriptionVariables = {
   UserID?: string | null,
   name?: string | null,

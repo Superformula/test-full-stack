@@ -1,3 +1,29 @@
 #home.page-container {
-  // styles
+  #users-errors {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+    background: red;
+    color: white;
+
+    h1 {
+      padding-left: 1rem;
+    }
+
+    li {
+      font-weight: 600;
+    }
+
+    button {
+      margin: 0.5rem;
+      color: white;
+      border-color: rgba(255, 255, 255, 0.5);
+      background-color: transparent;
+
+      &:hover {
+        border-color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
 }

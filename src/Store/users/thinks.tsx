@@ -14,7 +14,7 @@ import {
   USER_MUTATION_REQUEST_ERROR,
   DISMISS_ERRORS,
 } from "./reducer";
-import { listUsers, getUser } from "graphql/queries";
+import { listUsers, getUser, getUserGeolocation } from "graphql/queries";
 import { updateUser } from "graphql/mutations";
 
 export const getInitialUsers = (): Thunk => async (
@@ -91,13 +91,57 @@ const fetchUsers = async ({
       fetchPolicy: "network-only",
     });
     const { data } = result;
-    const formattedItems = data.listUsers.items.map(userItemFormatter);
+    const formattedItems: Array<User> = data.listUsers.items.map(
+      userItemFormatter
+    );
+    const formattedWithAvatars: Array<User> = await Promise.all(
+      formattedItems.map(attachUserAvatar)
+    );
+    const formattedWithGeolocations: Array<User> = await Promise.all(
+      formattedWithAvatars.map(attachUserGeolocation(APIClient))
+    );
     const resultNextToken = data.listUsers.nextToken;
 
-    return { items: formattedItems, nextToken: resultNextToken };
+    return { items: formattedWithGeolocations, nextToken: resultNextToken };
   } catch (e) {
     throw e;
   }
+};
+
+const attachUserAvatar = async (user: User): Promise<User> => {
+  const machoManAvatarData = {
+    urls: {
+      thumb:
+        "https://popgun.blob.core.windows.net/popgunv3resize/macho-man-champion-2017-05-11.jpg",
+    },
+  };
+  const avatarResult = await window.fetch(
+    `https://api.unsplash.com/photos/random?client_id=LtRzXOc8vfRgfRE10dqHzXNNdHbvQ3ZF2LfVGV9nXDo&randomizer=${user.UserID}`
+  );
+  const avatarData = await (avatarResult.ok // rate limiting for unsplash free tier
+    ? avatarResult.json()
+    : Promise.resolve(machoManAvatarData));
+  const avatarHref = avatarData.urls.thumb;
+
+  return { ...user, avatarHref };
+};
+
+const attachUserGeolocation = (APIClient: AppSyncClient) => async (
+  user: User
+): Promise<User> => {
+  const { address } = user;
+  const query = gql(getUserGeolocation);
+  const result: any = await APIClient.query({
+    query,
+    variables: { address },
+    fetchPolicy: "network-only",
+  });
+  const { longitude, latitude } = result.data.getUserGeolocation;
+
+  return {
+    ...user,
+    geolocation: [longitude, latitude],
+  };
 };
 
 export const dismissErrors = () => ({

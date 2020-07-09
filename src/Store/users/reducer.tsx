@@ -1,6 +1,9 @@
 import { CreateUserInput } from "API";
 
-export type User = CreateUserInput;
+export interface User extends CreateUserInput {
+  avatarHref: string | undefined;
+  geolocation: [number, number] | undefined;
+}
 
 export interface UsersState {
   limit: number;

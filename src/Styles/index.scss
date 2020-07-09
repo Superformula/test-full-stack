@@ -55,10 +55,6 @@ button {
   position: relative;
   width: 17.5rem;
   height: 5.625rem;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  position: relative;
   cursor: pointer;
 }
 
@@ -135,4 +131,8 @@ label {
     padding: 4rem;
     width: calc(74.18994413% - 8rem);
   }
+}
+
+.actions {
+  text-align: center;
 }

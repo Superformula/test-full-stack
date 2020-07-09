@@ -35,3 +35,11 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getUserGeolocation = /* GraphQL */ `
+  query GetUserGeolocation($address: String!) {
+    getUserGeolocation(address: $address) {
+      longitude
+      latitude
+    }
+  }
+`;

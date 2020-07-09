@@ -11,15 +11,17 @@ const UsersErrors = () => {
 
   return (
     <dialog open id="users-errors">
-      <h2>Error</h2>
+      <h1>Error</h1>
       <ul>
         {errors.map((message: string, i: number) => (
           <li key={message + i}>{message}</li>
         ))}
       </ul>
-      <button onClick={dismissHandler}>
-        <span>Dismiss</span>
-      </button>
+      <div className="actions">
+        <button onClick={dismissHandler}>
+          <span>DISMISS</span>
+        </button>
+      </div>
     </dialog>
   );
 };
