@@ -23,6 +23,12 @@ Ensure that these credentials have the correct permissions to deploy a lambda.
 
 Finally, install `serverless`, `npm install -g serverless`.
 
+Once you have all the necessary tools installed and your 'sf' AWS Credentials configured, you can deploy the lambda using `npm run deploy`. Once complete, this will print out the url for the API - make note of it!
+
+Before continuing with testing, be sure to perform the __deployment configuration__.
+
+### Deployment Configuration
+
 Since the lambda has access to other resources on AWS, it needs credentials to do so.
 
 You must set the following environment variables in the lambda after deploy. At the moment, navigate to the created lambda in the console, and add the credentials.
@@ -56,26 +62,28 @@ TODO:
 Unit tests are provided for the endpoints in the graphql. They use jest.
 
 Before running your test you must set the environment variables needed by the lambda. See deploy.
-
 E.g. Using cross-env
 
 ```
 node_modules/.bin/cross-env CONFIG_ACCESS_KEY_ID='<>' CONFIG_SECRET_KEY='<>' CONFIG_MAPS_KEY='<>' npm run test
 ```
 
+During the tests, the lambda handler will be invoked. It will attempt to connect to the dynamoDb database.
+NOTE! At this time, the tests utilize the production database. 
+
 ```
 Todo:
 -- Allow a dynamo db endpoint to be passed in rather than use global.
 -- Find a better way to pass in AWS CLI credentials.
+-- Parameterize the database.
 ```
 
 ## Exploration
 
-There are saved `postman` requests in `tools/postman`. To help understand this API, give those a look!
+There are saved `postman` requests in `tools/postman`. To help understand this API, give those a look! You can import `/tools/postman/Lambda-Backend.postman_collection.json` into Postman! __Be sure to update the lambda base url!__ The base url is the url provided the deployment procedure.
 
 ```
 TODO:
--- Parameterise my postman requests and save them there.
 -- Use an API doc generator
 ```
 

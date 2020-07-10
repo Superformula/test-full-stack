@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "75d623bf-6a2d-498d-9413-f54d5dfb223d",
+		"name": "SF",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GraphQL Lambda Get All Users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query allUsers {\r\n  getAllUsers {\r\n    id\r\n    name\r\n  }\r\n}\r\n",
+						"variables": ""
+					},
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/graphql",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL Lambda Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createUser($createInput: CreateUserInput!){\r\n  createUser(input: $createInput) {\r\n    id\r\n  }\r\n}",
+						"variables": "{\r\n  \"createInput\": {\r\n    \"name\": \"Test6\"\r\n  }\r\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/graphql",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL Lambda Delete User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation deleteUser($user: DeleteUserInput!){\r\n  deleteUser(input: $user)\r\n}",
+						"variables": "{\r\n  \"user\": {\r\n    \"id\": \"6b46c4d8-d9af-4ee0-bb3c-691c07c77b88\"\r\n  }\r\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/graphql",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL Lambda Update User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createUser($updateUserInput: UpdateUserInput!){\r\n  updateUser(input: $updateUserInput) {\r\n    id\r\n    name\r\n    dob\r\n    address\r\n    description\r\n  }\r\n}",
+						"variables": "{\r\n  \"updateUserInput\": {\r\n    \"id\": \"e679c943-6669-4a5e-a34c-7c1b4f7fd669\",\r\n    \"name\": \"AdjustedName\",\r\n    \"dob\": \"1-10-1994\",\r\n    \"address\": \"2702 Sterling Ct. Elgin Il\",\r\n    \"description\": \"Cool guy\"\r\n  }\r\n}"
+					},
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/graphql",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL Lambda GetPage",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query getPage($pageCount: Int, $filter: String) {\r\n  getPages(pageCount: $pageCount, filter: $filter) {\r\n    users {\r\n      id\r\n      name\r\n      address\r\n      dob\r\n    }\r\n    nextToken {\r\n      id\r\n    }\r\n  }\r\n}",
+						"variables": "{\r\n  \"pageCount\": 2,\r\n  \"filter\": \"dsfa\"\r\n}"
+					},
+					"options": {
+						"graphql": {}
+					}
+				},
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/graphql",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQL Lambda GetNextPage",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query getPage($nextToken: NextTokenInput, $filter: String) {\r\n  getNextPage(nextToken: $nextToken, filter: $filter) {\r\n    users {\r\n      id\r\n      name\r\n    }\r\n    nextToken {\r\n      id\r\n    }\r\n  }\r\n}",
+						"variables": "{\r\n  \"nextToken\": {\r\n    \"id\": \"350eedb6-67bd-4854-89c5-73cd51b68fe5\"\r\n  },\r\n  \"filter\": \"dsfa\"\r\n}"
+					},
+					"options": {
+						"graphql": {}
+					}
+				},
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/graphql",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REST Lambda Geocode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/geocode?address=2702 Sterling Ct. Elgin Il",
+					"protocol": "https",
+					"host": [
+						"0dgcwbc735",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "2702 Sterling Ct. Elgin Il"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
