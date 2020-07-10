@@ -13,6 +13,7 @@
   "author": "Matthew Evers",
   "license": "ISC",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.4",
     "apollo-server-lambda": "^2.15.1",
     "aws-serverless-express": "^3.3.8",
     "dynamoose": "^2.2.1",

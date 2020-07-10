@@ -29,8 +29,9 @@ You must set the following environment variables in the lambda after deploy. At 
 Note! These can be the same keys that you used to configure the aws-cli, however, you may want a more restrictive role for this.
 
 ```
-CONFIG_ACCESS_KEY_ID := Role Access Key
-CONFIG_SECRET_KEY := Role Secret Key
+CONFIG_ACCESS_KEY_ID := AWS Role Access Key
+CONFIG_SECRET_KEY := AWS Role Secret Key
+CONFIG_MAPS_KEY := Google maps API key
 ```
 
 Permissions needed by lambda credentials. Note! The lambda creates the table.
@@ -74,5 +75,46 @@ There are saved `postman` requests in `tools/postman`. To help understand this A
 
 ```
 TODO:
--- Parameterise my postman requests and save them there
+-- Parameterise my postman requests and save them there.
+-- Use an API doc generator
+```
+
+### API Documentation
+
+There are 2 endpoints available on this backend. All paths are relative to the base host url provided by AWS API Endpoint.
+
+Note! See the graphql schema for request/response information.
+
+```
+Geocode
+=======
+Request
+~~~~~~~
+GET /geocode?address=<address string>
+
+Response
+~~~~~~~~
+200 OK
+Content-Type: application/json
+
+{
+    "lat": float,
+    "lng": float
+}
+
+=============
+
+GraphQl
+=======
+Request
+~~~~~~~
+POST /graphql
+Content-Type: application/json
+
+<graphql query>
+
+Response
+~~~~~~~~
+<graphql>
+
 ```
