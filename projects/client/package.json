@@ -1,0 +1,37 @@
+{
+  "name": "code-sample-client",
+  "version": "1.0.0",
+  "description": "Client side full stack code sample.",
+  "main": "src/index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node tools/webpack/dev-server/dev-server.js",
+    "lint": "node ./node_modules/eslint/bin/eslint --no-error-on-unmatched-pattern --fix --ext .ts **/*.ts **/*.tsx",
+    "build:dev": "webpack --config ./tools/webpack/configs/webpack-dev.config.js --progress --profile --colors"
+  },
+  "author": "Matthew Evers",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "argparse": "^1.0.10",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-plugin-react": "^7.20.3",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.0",
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
