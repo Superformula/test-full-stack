@@ -25,7 +25,7 @@ Finally, install `serverless`, `npm install -g serverless`.
 
 Since the lambda has access to other resources on AWS, it needs credentials to do so.
 
-You must set the following environment variables in the lambda after deploy.
+You must set the following environment variables in the lambda after deploy. At the moment, navigate to the created lambda in the console, and add the credentials.
 Note! These can be the same keys that you used to configure the aws-cli, however, you may want a more restrictive role for this.
 
 ```
@@ -33,9 +33,21 @@ CONFIG_ACCESS_KEY_ID := Role Access Key
 CONFIG_SECRET_KEY := Role Secret Key
 ```
 
+Permissions needed by lambda credentials. Note! The lambda creates the table.
+
+```
+dynamodb:Query
+dynamodb:Scan
+dynamodb:GetItem
+dynamodb:PutItem
+dynamodb:UpdateItem
+dynamodb:DeleteItem
+dynamodb:CreateTable
+```
+
 ```
 TODO:
--- Surely there is a better way to deploy credentials?
+-- Serverless.yml should specify role so we don't need to manually input credentials?
 ```
 
 ## Tests

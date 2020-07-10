@@ -7,13 +7,14 @@ provider:
   profile: sf
 functions:
   graphql:
-    handler: build/src/index.graphqlHandler
+    handler: build/src/index.lambda
     events:
     - http:
         path: graphql
         method: post
         cors: true
     - http:
-        path: graphql
+        path: geocode
         method: get
         cors: true
+    
