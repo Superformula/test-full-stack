@@ -35,8 +35,51 @@ describe("GraphQL endpoint", () => {
         });
     });
 
+    it("Can update a user", async (done) => {
+        if (!createdUserId) {
+            done(new Error("Unable to test delete user!"));
+        }
+        
+        const COMPARE_NAME = "AdjustedName";
+        await LambdaTester(lambda).event(createRequest("/graphql", {
+            bodyString: JSON.stringify({
+                "query":"mutation createUser($updateUserInput: UpdateUserInput!){\r\n  updateUser(input: $updateUserInput) {\r\n    id\r\n    name\r\n    dob\r\n    address\r\n    description\r\n  }\r\n}",
+                "variables":{
+                    "updateUserInput":{
+                        "id":createdUserId,
+                        "name":COMPARE_NAME,
+                        "dob":"1-10-1994",
+                        "address":"2702 Sterling Ct. Elgin Il",
+                        "description":"Cool guy"}
+                    }
+                })
+        })).expectResult((arg) => {
+            console.log(JSON.stringify(arg));
+            if (arg.statusCode !== 200) {
+                done(new Error(`Failed to update user.`));
+            }
+
+            const parsedData = JSON.parse(arg.body);
+
+            if (parsedData?.data?.updateUser?.name === null) {
+                done(new Error(`No user returned!`))
+            }
+
+            let changedName = parsedData.data.updateUser.name;
+
+            if (changedName !== COMPARE_NAME) {
+                done(new Error('User data did not update properly.'));
+            }
+
+            done();
+        });
+    });
     
     it("Can fetch a page", async (done) => {
+        if (!createdUserId) {
+            done(new Error("Unable to test delete user!"));
+        }
+
         await LambdaTester(lambda).event(createRequest("/graphql", {
             bodyString: JSON.stringify({
                 "query":"query getPage($pageCount: Int, $filter: String) {\r\n  getPages(pageCount: $pageCount, filter: $filter) {\r\n    users {\r\n      id\r\n      name\r\n    }\r\n    nextToken {\r\n      id\r\n    }\r\n  }\r\n}",
