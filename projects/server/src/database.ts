@@ -1,7 +1,6 @@
 import * as dynamoose from "dynamoose";
+import { configApiHost, configApiKey } from "./config";
 
-const configApiHost = process.env['CONFIG_ACCESS_KEY_ID'];
-const configApiKey = process.env['CONFIG_SECRET_KEY'];
 
 const dynamo = new dynamoose.aws.sdk.DynamoDB({
     accessKeyId: configApiHost,
