@@ -6,9 +6,18 @@ const PAGE_SIZE = 6;
 
 export const resolvers = {
     Query: {
-        getUserPage: async (parent, args: schema.GetUserPageInput, context, info) => {
-            const { pageStart, filter } = args;
-            const baseQuery = await UserModel.scan().startAt(pageStart).limit(PAGE_SIZE).exec();
+        getPages: async (parent, args: schema.GetPagesInput, context, info) => {
+            const { pageCount, filter } = args;
+            const baseQuery = await UserModel.scan().limit(PAGE_SIZE*pageCount).exec();
+
+            return {
+                users: baseQuery,
+                nextToken: baseQuery.lastKey
+            };
+        },
+        getNextPage: async (parent, args: schema.GetNextPageInput, context, info) => {
+            const { nextToken, filter } = args;
+            const baseQuery = await UserModel.scan().startAt(nextToken).limit(PAGE_SIZE).exec();
 
             return {
                 users: baseQuery,

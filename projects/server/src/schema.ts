@@ -51,7 +51,8 @@ type Mutation {
 
 type Query {
     getAllUsers: [User]!
-  	getUserPage(pageStart: NextTokenInput, filter: String): GetUserPageResult
+    getPages(pageCount: Int, filter: String): GetUserPageResult
+    getNextPage(nextToken: NextTokenInput, filter: String): GetUserPageResult
 }
 `;
 
@@ -67,10 +68,15 @@ export interface UserModel {
     updatedAt?: number;
 }
 
-export interface GetUserPageInput {
-    pageStart?: {
+export interface GetNextPageInput {
+    nextToken?: {
         id: string;
     };
+    filter?: string;
+}
+
+export interface GetPagesInput {
+    pageCount?: number;
     filter?: string;
 }
 
