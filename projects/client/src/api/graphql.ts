@@ -12,8 +12,8 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
     let captureParametersString = "";
 
     if (pageStart) {
-        captureVariables.push('$pageStart: NextTokenInput');
-        captureParameters.push('pageStart: $pageStart');
+        captureVariables.push('$pageCount: Int');
+        captureParameters.push('pageCount: $pageCount');
     }
     
     if (filter) {
@@ -35,10 +35,12 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
         body: JSON.stringify({
             query: `
                 query getPage${captureVariablesString} {
-                    getUserPage${captureParametersString} {
+                    getPages${captureParametersString} {
                         users {
                             id
                             name
+                            address
+                            dob
                         }
                         nextToken {
                             id
