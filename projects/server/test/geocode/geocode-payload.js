@@ -1,7 +1,7 @@
 module.exports = {
-    "resource": "/graphql",
-    "path": "/graphql",
-    "httpMethod": "POST",
+    "resource": "/geocode",
+    "path": "/geocode",
+    "httpMethod": "GET",
     "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -12,12 +12,13 @@ module.exports = {
         "CloudFront-Is-SmartTV-Viewer": "false",
         "CloudFront-Is-Tablet-Viewer": "false",
         "CloudFront-Viewer-Country": "US",
-        "Content-Type": "application/graphql",
         "Host": "0dgcwbc735.execute-api.us-east-1.amazonaws.com",
-        "Postman-Token": "43f1a5a8-beeb-4c40-b501-130cd225f4f3",
+        "Postman-Token": "6d27ad87-81a2-4d68-ba16-e710ce3527ea",
         "User-Agent": "PostmanRuntime/7.26.1",
-        "Via": "1.1 4168db18cb18c32c335e4bb2cb3ef977.cloudfront.net (CloudFront)",
-        "X-Forwarded-For": "136.32.196.195, 70.132.57.74",
+        "Via": "1.1 35e07c95316db9000ef0d713d9fb2e2d.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "5t3ORUiIuy8bAdiWvt1KKAbqGSov58Qsitwef8YbO-HVs-b8_UAeMQ==",
+        "X-Amzn-Trace-Id": "Root=1-5f08821c-9130bb09e9d2db82f7b4adbf",
+        "X-Forwarded-For": "23.228.143.102, 130.176.5.77",
         "X-Forwarded-Port": "443",
         "X-Forwarded-Proto": "https"
     },
@@ -49,23 +50,26 @@ module.exports = {
         "CloudFront-Viewer-Country": [
             "US"
         ],
-        "Content-Type": [
-            "application/graphql"
-        ],
         "Host": [
             "0dgcwbc735.execute-api.us-east-1.amazonaws.com"
         ],
         "Postman-Token": [
-            "43f1a5a8-beeb-4c40-b501-130cd225f4f3"
+            "6d27ad87-81a2-4d68-ba16-e710ce3527ea"
         ],
         "User-Agent": [
             "PostmanRuntime/7.26.1"
         ],
         "Via": [
-            "1.1 4168db18cb18c32c335e4bb2cb3ef977.cloudfront.net (CloudFront)"
+            "1.1 35e07c95316db9000ef0d713d9fb2e2d.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "5t3ORUiIuy8bAdiWvt1KKAbqGSov58Qsitwef8YbO-HVs-b8_UAeMQ=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5f08821c-9130bb09e9d2db82f7b4adbf"
         ],
         "X-Forwarded-For": [
-            "136.32.196.195, 70.132.57.74"
+            "23.228.143.102, 130.176.5.77"
         ],
         "X-Forwarded-Port": [
             "443"
@@ -74,29 +78,35 @@ module.exports = {
             "https"
         ]
     },
-    "queryStringParameters": null,
-    "multiValueQueryStringParameters": null,
+    "queryStringParameters": {
+        "address": "2702 Sterling Ct. Elgin Il"
+    },
+    "multiValueQueryStringParameters": {
+        "address": [
+            "2702 Sterling Ct. Elgin Il"
+        ]
+    },
     "pathParameters": null,
     "stageVariables": null,
     "requestContext": {
-        "resourceId": "22z8a2",
-        "resourcePath": "/graphql",
-        "httpMethod": "POST",
-        "extendedRequestId": "PbWJyGiiIAMFaOg=",
-        "requestTime": "09/Jul/2020:22:42:57 +0000",
-        "path": "/dev/graphql",
+        "resourceId": "pwe3lj",
+        "resourcePath": "/geocode",
+        "httpMethod": "GET",
+        "extendedRequestId": "PdlEcEf2IAMFbBA=",
+        "requestTime": "10/Jul/2020:14:58:36 +0000",
+        "path": "/dev/geocode",
         "accountId": "913855206210",
         "protocol": "HTTP/1.1",
         "stage": "dev",
         "domainPrefix": "0dgcwbc735",
-        "requestTimeEpoch": 1594334577796,
-        "requestId": "75543606-06e0-433e-8966-1559fa80e88c",
+        "requestTimeEpoch": 1594393116347,
+        "requestId": "8d42a20b-3201-4849-baaa-8c63df0ef8bb",
         "identity": {
             "cognitoIdentityPoolId": null,
             "accountId": null,
             "cognitoIdentityId": null,
             "caller": null,
-            "sourceIp": "136.32.196.195",
+            "sourceIp": "23.228.143.102",
             "principalOrgId": null,
             "accessKey": null,
             "cognitoAuthenticationType": null,
@@ -108,6 +118,6 @@ module.exports = {
         "domainName": "0dgcwbc735.execute-api.us-east-1.amazonaws.com",
         "apiId": "0dgcwbc735"
     },
-    "body": "{\"query\":\"mutation createUser($createInput: CreateUserInput!){\\r\\n  createUser(input: $createInput) {\\r\\n    id\\r\\n  }\\r\\n}\",\"variables\":{\r\n  \"createInput\": {\r\n    \"name\": \"Mark\"\r\n  }\r\n}}",
+    "body": null,
     "isBase64Encoded": false
 }

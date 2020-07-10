@@ -27,7 +27,13 @@ export const resolvers = {
         getAllUsers: async (parent, args, context, info) => {
             const users = await UserModel.scan().exec();
             return users;
-        }
+        },
+        getUser: async (parent, args: schema.GetUserInput, context, info) => {
+            const { id } = args;
+            const user = await UserModel.get(id);
+
+            return user;
+        },
     },
     Mutation: {
         createUser: async (parent, args: schema.CreateUserInput, context, info) => {

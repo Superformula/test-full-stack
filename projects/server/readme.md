@@ -60,7 +60,7 @@ Before running your test you must set the environment variables needed by the la
 E.g. Using cross-env
 
 ```
-node_modules/.bin/cross-env CONFIG_ACCESS_KEY_ID='<>' CONFIG_SECRET_KEY='<>' npm run test
+node_modules/.bin/cross-env CONFIG_ACCESS_KEY_ID='<>' CONFIG_SECRET_KEY='<>' CONFIG_MAPS_KEY='<>' npm run test
 ```
 
 ```

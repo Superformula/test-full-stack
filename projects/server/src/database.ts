@@ -1,3 +1,4 @@
+// https://dynamoosejs.com/
 import * as dynamoose from "dynamoose";
 import { configApiHost, configApiKey } from "./config";
 

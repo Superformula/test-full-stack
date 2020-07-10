@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server-lambda';
 
-const userSchema = gql`
+/**
+ * TODO:
+ * There are probably autogenerators for this type of stuff.
+ */
+
+export const schemaTemplate = `
 type User {
 	id: ID!
 	name: String!
@@ -51,12 +56,13 @@ type Mutation {
 
 type Query {
     getAllUsers: [User]!
+    getUser(id: ID!): User
     getPages(pageCount: Int, filter: String): GetUserPageResult
     getNextPage(nextToken: NextTokenInput, filter: String): GetUserPageResult
 }
 `;
 
-export const schema = userSchema;
+export const schema = gql(schemaTemplate);
 
 export interface UserModel {
     id: string; // UUID whatever that rfc is.
@@ -66,6 +72,10 @@ export interface UserModel {
     description?: string;
     createdAt: number;
     updatedAt?: number;
+}
+
+export interface GetUserInput {
+    id: string;
 }
 
 export interface GetNextPageInput {

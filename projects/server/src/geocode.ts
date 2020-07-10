@@ -29,8 +29,8 @@ export function geocode(req: IncomingMessage, res: ServerResponse) : void {
         const query = req.url.substr(req.url.indexOf('?')+1);
 
         if (query.startsWith('address=')) {
-            let [addressKey, address] = query.split('=');
-            address = decodeURIComponent(address);
+            const [, encodedAddress] = query.split('=');
+            const address = decodeURIComponent(encodedAddress);
             console.log(address);
 
             client.geocode({
@@ -55,6 +55,7 @@ export function geocode(req: IncomingMessage, res: ServerResponse) : void {
                 }
             }, (reason: any) => {
                 error(`Unfulfilled`);
+                error(reason);
             }).catch((reason) => {
                 error(`Catch`);
             });
