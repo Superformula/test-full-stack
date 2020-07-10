@@ -9,6 +9,7 @@
     overflow-y: scroll;
     height: calc(100% - 47px);
     scrollbar-width: none;
+    padding: 5% 10% 0% 10%;
 }
 
 .users-list-body-infinite-scroll-container-inner {

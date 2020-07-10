@@ -2,9 +2,7 @@ import * as React from 'react';
 
 import './button.css';
 
-interface ButtonProps {
-    className?: string;
-}
+type ButtonProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
 const Button: React.FunctionComponent<React.PropsWithChildren<ButtonProps>> =
 (props: React.PropsWithChildren<ButtonProps>) => {
