@@ -9,7 +9,7 @@ const Application: React.FunctionComponent = () => {
                         <h1 className="application-header-title">Users list</h1>
                     </div>
                     <div className="user-card-grid-element">
-                        <div style={{flexGrow: 1}}></div>
+                        <div style={{ flexGrow: 1 }}></div>
                     </div>
                     <div className="user-card-grid-element">
                         <input className="search-input" type="text" placeholder="Search..."></input>

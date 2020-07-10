@@ -8,6 +8,9 @@
         "target": "ES3",
         "lib": [
             "DOM"
+        ],
+        "types": [
+            "jest", "node"
         ]
     },
     "include": [

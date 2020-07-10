@@ -1,0 +1,12 @@
+{
+    "testEnvironment": "jsdom",
+    "transform": {
+        "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "test/*/*.*.test.(js|jsx|ts|tsx)",
+    "globals": {
+        "__SYS_BACKEND_HOST_URI__": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev"
+    },
+    "setupFilesAfterEnv": "<rootDir>/test/setup/setupEnzyme.ts",
+    "testPathIgnorePatterns": ["<rootDir>/test/setup/"]
+}

@@ -5,6 +5,7 @@ const buildOptions = require('../build-config-options');
 
 const { BACKEND_HOST_URI } = buildOptions;
 
+const testDirectory = path.join(__dirname, '../../../test');
 const sourceDirectory = path.join(__dirname, '../../../src');
 const modulesDirectory = path.join(__dirname, '../../../node_modules');
 
@@ -27,7 +28,7 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
         // Absolute paths to where modules can be resolved.
         modules: [sourceDirectory, modulesDirectory]
     },
@@ -53,7 +54,8 @@ module.exports = {
                     {
                         loader: 'ts-loader'
                     }
-                ]
+                ],
+                include: [sourceDirectory, testDirectory]
             },
             {
                 test: /\.css$/,
