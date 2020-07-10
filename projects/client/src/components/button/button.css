@@ -1,0 +1,21 @@
+.default-button {
+    border: 3px solid rgb(229, 229, 229);
+    width: 176px;
+    height: 52px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: auto;
+    border-radius: 7px;
+    transition: all .3s;
+    background-color: white;
+}
+
+.default-button:hover:enabled {
+    border: 3px solid rgb(153, 153, 153);
+}
+
+.default-button:focus:enabled {
+    outline: none;
+    border: 3px solid rgb(128, 128, 128);
+}

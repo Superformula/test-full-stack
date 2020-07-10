@@ -2,11 +2,6 @@
     --default-background-color: rgb(248, 248, 248);
 }
 
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
-
 body {
     margin: 0px;
 }
@@ -29,21 +24,6 @@ p {
     font-size: 16px;
 }
 
-.application-container {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--default-background-color);
-}
-
-.application-container-style {
-    padding: 5% 10% 0% 10%;
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    overflow: auto;
-}
 
 .application-header-title {
     margin-left: 8px;
@@ -53,30 +33,6 @@ p {
 .application-header {
     display: flex;
     flex-direction: row;
-}
-
-.default-input {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
-    color: black;
-    line-height: 1.5rem;
-    width: 100%;
-    height: 48px;
-    padding: .608rem .75rem;
-    border: 1px solid #c6d2d9;
-    border-radius: 7px;
-    box-sizing: border-box;
-}
-
-.default-input:focus {
-    outline: none;
-}
-
-.default-input-label {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
 }
 
 .search-input {
@@ -112,51 +68,6 @@ p {
     box-shadow: 0 2px 7px 3px rgba(13, 13, 13, .06);
 }
 
-.infinite-scroll-box {
-    flex-grow: 1;
-    overflow-y: scroll;
-    height: calc(100% - 47px);
-    scrollbar-width: none;
-}
-
-.infinite-scroll-box-inner {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.infinite-scroll-box-load {
-    height: 84px;
-}
-
-.default-button-container {
-    display: flex;
-    flex-direction: row;
-    align-content: space-around;
-    flex-grow: 1;
-}
-
-.default-button {
-    border: 3px solid rgb(229, 229, 229);
-    width: 176px;
-    height: 52px;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    margin: auto;
-    border-radius: 7px;
-    transition: all .3s;
-    background-color: white;
-}
-
-.default-button:hover:enabled {
-    border: 3px solid rgb(153, 153, 153);
-}
-
-.default-button:focus:enabled {
-    outline: none;
-    border: 3px solid rgb(128, 128, 128);
-}
 
 
 .modal-overlay {

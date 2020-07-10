@@ -58,8 +58,12 @@ module.exports = {
                 include: [sourceDirectory, testDirectory]
             },
             {
+                // https://webpack.js.org/loaders/style-loader/#injecttype
                 test: /\.css$/,
-                loader: 'style-loader!css-loader',
+                use: [
+                    { loader: 'style-loader', options: { injectType: 'singletonStyleTag' } },
+                    'css-loader'
+                ],
                 include: [sourceDirectory]
             },
             {
