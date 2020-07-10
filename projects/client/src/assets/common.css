@@ -1,0 +1,143 @@
+:root {
+    --default-background-color: rgb(248, 248, 248);
+}
+
+body {
+    margin: 0px;
+}
+
+h1 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    font-size: 48px;
+}
+
+h2 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+}
+
+p {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.application-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--default-background-color);
+}
+
+.application-container-style {
+    padding: 5% 10%;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.application-header-title {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.application-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-input {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+    line-height: 1.5rem;
+    width: 90%;
+    height: 48px;
+    margin: 32px 8px;
+    padding: .608rem .75rem;
+    border: 1px solid #c6d2d9;
+    border-radius: 7px;
+    box-sizing: border-box;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-input-container {
+    float: right;
+}
+
+.user-card-grid-element {
+    flex-basis: 33.33333333%;
+    flex-grow: 0;
+    display: flex;
+}
+
+.user-card-grid-element-row-element {
+    height: 316px;
+}
+
+.user-card {
+    background-color: white;
+    border-radius: 7px;
+    transition: box-shadow .3s;
+    box-shadow: none;
+    width: 90%;
+    height: 80%;
+    margin: 8px
+}
+
+.user-card:hover {
+    box-shadow: 0 2px 7px 3px rgba(13, 13, 13, .06);
+}
+
+.infinite-scroll-box {
+    flex-grow: 1;
+    overflow-y: scroll;
+    height: calc(100% - 47px);
+}
+
+.infinite-scroll-box-inner {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.infinite-scroll-box-load {
+    height: 84px;
+}
+
+.load-more-button-container {
+    display: flex;
+    flex-direction: row;
+    align-content: space-around;
+    flex-grow: 1;
+}
+
+.load-more-button {
+    border: 3px solid rgb(229, 229, 229);
+    width: 176px;
+    height: 52px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: auto;
+    border-radius: 7px;
+    transition: all .3s;
+    background-color: white;
+}
+
+.load-more-button:hover[disabled=false] {
+    border: 3px solid rgb(153, 153, 153);
+}
+
+.load-more-button:focus[disabled=false] {
+    outline: none;
+    border: 3px solid rgb(128, 128, 128);
+}
