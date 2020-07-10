@@ -41,6 +41,7 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
                             name
                             address
                             dob
+                            description
                         }
                         nextToken {
                             id

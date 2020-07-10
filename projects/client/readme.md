@@ -53,8 +53,7 @@ TODO:
 
 Unit tests use jest.
 
-
-Before running your test you must set the environment variables needed by the build pipeline. `npm run test:dev` will build the code prior to running the tests. See build.
+`npm run test` will build the code prior to running the tests. See build.
 
 E.g. Using cross-env
 
@@ -87,3 +86,22 @@ enableFetchMocks();
 ```
 
 The same is done for the redux store and many other variables.
+
+## Infinite scroll notes
+
+Webkit based browsers can use 
+
+```
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+```
+
+but this is not supported on mozilla, you can use the following on the element with the scrollbar in mozilla.
+
+```
+element {
+   scrollbar-width: none;
+}
+```

@@ -102,8 +102,8 @@ Content-Type: application/json
     "lng": float
 }
 
-=============
-
+```
+```
 GraphQl
 =======
 Request
