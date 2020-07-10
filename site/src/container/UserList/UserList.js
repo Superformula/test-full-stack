@@ -1,5 +1,5 @@
 import React from "react";
-import * as Fa from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -7,19 +7,17 @@ import UserCard from "../../components/UserCard/UserCard.js";
 import { UsersActions } from "../../redux/Users/UsersActions.js";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
+import { SfButton } from "../../styles/HtmlElementStyle";
 
 const UserListPanel = styled.div`
   display: flex;
   flex-wrap: wrap;
-  min-width: 100%;
-  position: relative;
-  top: 130px;
+  padding-left: 236px;
+  padding-right: 236px;
   justify-content: center;
 `;
 
 const CurrentFilterHeader = styled.div`
-  position: relative;
-  top: 120px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -31,7 +29,8 @@ const CurrentFilterHeader = styled.div`
 const LoadMoreArea = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 150px;
+  margin-top: 32px;
+  margin-bottom: 62px;
 `;
 
 const UserList = (props) => {
@@ -41,7 +40,7 @@ const UserList = (props) => {
     currentSearchTerm = (
       <CurrentFilterHeader>
         Current Filter: {props.currentSearchTerm} &nbsp;
-        <Fa.FaTimes
+        <FaTimes
           onClick={() => {
             return AppSyncUserServiceProvider.doSearch("");
           }}
@@ -53,13 +52,13 @@ const UserList = (props) => {
   if (props.users.length && props.users.length % 10 === 0) {
     loadMoreArea = (
       <LoadMoreArea>
-        <button
+        <SfButton
           onClick={async () => {
             return AppSyncUserServiceProvider.loadMore();
           }}
         >
-          Load More
-        </button>
+          LOAD MORE
+        </SfButton>
       </LoadMoreArea>
     );
   }
@@ -70,7 +69,7 @@ const UserList = (props) => {
       <UserListPanel>
         <br />
         {props.users.map((item) => {
-          return userCard(item, props.openModalFunc);
+          return userCard(item, props.onUserCardClick);
         })}
       </UserListPanel>
       {loadMoreArea}
@@ -78,8 +77,8 @@ const UserList = (props) => {
   );
 };
 
-function userCard(item, openModalFunc) {
-  return <UserCard key={item.id} user={item} onClick={openModalFunc} />;
+function userCard(item, onUserCardClick) {
+  return <UserCard key={item.id} user={item} onClick={onUserCardClick} />;
 }
 
 const UserListMapStateToProps = (state) => {

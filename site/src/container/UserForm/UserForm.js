@@ -3,9 +3,16 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import moment from "moment";
+import { FaUserMinus } from "react-icons/fa";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
 import Map from "../../components/Map/Map.js";
+import {
+  SfButton,
+  SfH1,
+  SfH2,
+  SfTextInput,
+} from "../../styles/HtmlElementStyle.js";
 
 const UserFormPanel = styled.div`
   display: flex;
@@ -14,57 +21,55 @@ const UserFormPanel = styled.div`
   flex-direction: column;
   align-items: center;
   h1 {
-    text-align: center;
-    display: flex;
-    button {
-      margin-left: 5px;
+    margin-top: 24px;
+    width: 100%;
+    margin-left: 132px;
+    svg {
+      position: relative;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
     }
   }
 `;
+
 const UserFormPanelArea = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
   width: 100%;
+  margin: 0 64px 64px;
 `;
 
 const UserFormPanelImageAndMapArea = styled.div`
   flex-direction: column;
-  flex-basis: 400px;
+  flex-basis: 50%;
   display: flex;
   align-items: center;
 `;
 
 const UserFormPanelInputArea = styled.div`
   flex-direction: column;
-  flex-basis: 400px;
+  flex-basis: 50%;
   align-items: center;
 `;
 
 const UserFormRow = styled.div`
-  width: 95%;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  width: calc(100% - 64px);
+  padding-right: 64px;
+  margin-top: 18px;
+  margin-bottom: 18px;
 
-  textarea,
   input[type="text"],
   input[type="date"] {
-    width: 99%;
-    height: 26px;
-    padding: 2px 2px 2px 2px;
-    border: solid 1px #cecece;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  textarea {
-    height: 80px;
-    resize: none;
+  .resetButton {
+    margin-left: 40px;
   }
-
-  label {
-    font-weight: bold;
-    font-size: 15px;
-  }
-
   .danger-text {
     color: #e08181;
   }
@@ -103,20 +108,15 @@ const UserForm = (props) => {
     address = props.currentUser.address;
     description = props.currentUser.description;
     removeButton = (
-      <button
+      <FaUserMinus
         type="button"
-        onClick={async (e) => {
+        onClick={async () => {
           await AppSyncUserServiceProvider.deleteUser(props.currentUser);
-          if (props.onSubmitted) {
-            props.onSubmitted();
-          }
-          e.stopPropagation();
-          e.preventDefault();
-          return false;
+          props.onSubmitted();
         }}
       >
         Delete
-      </button>
+      </FaUserMinus>
     );
   }
 
@@ -124,7 +124,9 @@ const UserForm = (props) => {
 
   return (
     <UserFormPanel>
-      <h1>{label}</h1>
+      <SfH1>
+        {label} {removeButton}
+      </SfH1>
       <UserFormPanelArea>
         <UserFormPanelImageAndMapArea>
           <Map address={mapAddress} />
@@ -132,9 +134,8 @@ const UserForm = (props) => {
         <UserFormPanelInputArea>
           <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
             <UserFormRow>
-              <label>Name:</label>
-              <br />
-              <input
+              <SfH2>Name:</SfH2>
+              <SfTextInput
                 type="text"
                 name="name"
                 defaultValue={name}
@@ -143,13 +144,12 @@ const UserForm = (props) => {
                 })}
               />
               {errors.name && (
-                <span className="danger-text">Name cannot be empty!</span>
+                <SfH2 className="danger-text">Name cannot be empty!</SfH2>
               )}
             </UserFormRow>
             <UserFormRow>
-              <label>Date Of Birth:</label>
-              <br />
-              <input
+              <SfH2>Date Of Birth:</SfH2>
+              <SfTextInput
                 type="date"
                 name="dateOfBirth"
                 defaultValue={dateOfBirth}
@@ -159,9 +159,8 @@ const UserForm = (props) => {
               />
             </UserFormRow>
             <UserFormRow>
-              <label>Address:</label>
-              <br />
-              <input
+              <SfH2>Address:</SfH2>
+              <SfTextInput
                 type="text"
                 name="address"
                 defaultValue={address}
@@ -174,9 +173,9 @@ const UserForm = (props) => {
               />
             </UserFormRow>
             <UserFormRow>
-              <label>Description:</label>
-              <br />
-              <textarea
+              <SfH2>Description:</SfH2>
+              <SfTextInput
+                type="text"
                 name="description"
                 defaultValue={description}
                 ref={register({
@@ -185,10 +184,10 @@ const UserForm = (props) => {
               />
             </UserFormRow>
             <UserFormRow>
-              <input type="submit" value="Submit" />
-              <input type="reset" />
-
-              {removeButton}
+              <SfButton type="submit">Submit</SfButton>
+              <SfButton className="resetButton" type="reset">
+                Reset
+              </SfButton>
             </UserFormRow>
           </form>
         </UserFormPanelInputArea>

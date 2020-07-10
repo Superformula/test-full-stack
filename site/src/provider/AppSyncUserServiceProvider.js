@@ -5,10 +5,10 @@ import GraphQLUserQueries from "../graphqlQueries/GraphQLUserQueries";
 
 class AppSyncUserServiceProvider {
   async init(store) {
-    if (this.hasBeenCall) {
+    if (this._hasBeenCall) {
       return;
     }
-    this.hasBeenCall = true;
+    this._hasBeenCall = true;
     this._store = store;
     this._client = await getAppSyncClient();
     await this.loadUsers(null, null);
@@ -42,7 +42,14 @@ class AppSyncUserServiceProvider {
     }
   }
 
-  async loadUsers(filter, startKey) {
+  async loadUsersFromState(filter, limit) {
+    this._store.dispatch(UsersActions.clearAllUsers());
+    this._store.dispatch(UsersActions.setCurrentSearchTerm(filter));
+    this._store.dispatch(UsersActions.setMaxUserLimit(limit));
+    return this.loadUsers(filter, null, false);
+  }
+
+  async loadUsers(filter, startKey, pushToState = true) {
     let state = this._store.getState();
     let limit = state.userNumberLimit - state.users.length;
     let result = await this._client.query({
@@ -64,10 +71,9 @@ class AppSyncUserServiceProvider {
     );
     toast(`🦄 ${numberOfUsersLoaded} user(s) loaded`);
     this._store.dispatch(UsersActions.setUsers(users));
-
-    let userNumberLimit = this._store.getState().userNumberLimit;
-
-    pushUrlState(filter, userNumberLimit);
+    if (pushToState) {
+      pushUrlState(filter, state.userNumberLimit);
+    }
     return numberOfUsersLoaded;
   }
 
@@ -175,9 +181,10 @@ const attachDeleteSub = (client, store) => {
       let index = users.findIndex((item) => {
         return item.id === response.data.deletedUser.id;
       });
+      console.log(index);
       if (index > -1) {
         users.splice(index, 1);
-        store.dispatch(UsersActions.setUsers(users));
+        store.dispatch(UsersActions.setUsers([...users]));
       }
     },
     complete: console.log,
@@ -243,10 +250,13 @@ const pushUrlState = (filter, userNumberLimit) => {
     window.history.pushState(
       "",
       "",
-      `/?limit=${userNumberLimit}&filter=${encodeURIComponent(filter)}`
+      `/?limit=${userNumberLimit}&filter=${
+        filter ? encodeURIComponent(filter) : ""
+      }`
     );
   } else {
     window.history.pushState("", "", "/");
   }
 };
+
 export default new AppSyncUserServiceProvider();

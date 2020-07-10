@@ -7,12 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import App from "./App";
 import GlobalStyle from "./styles/GlobalStyle.js";
+import initializeGoogleMap from "./utils/initializeGoogleMap.js";
 
-const script = document.createElement("script");
-script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`;
-script.defer = true;
-script.async = true;
-document.head.appendChild(script);
+initializeGoogleMap();
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,29 +1,25 @@
 import React from "react";
-import * as Fa from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 import Modal from "styled-react-modal";
-import styled from "styled-components";
 
 import UserFormContainer from "./UserForm.js";
 
 const UserFormStyledModal = Modal.styled`
-  width: 800px;
-  height: 530px;
+  width: 1328px;
+  height: 725px;
+  border-radius: 8px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;    
   background-color: white;
   opacity: ${(props) => props.opacity};
   transition: opacity ease 500ms;
-`;
-
-const UserFormStyledModalToolBar = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: row-reverse;
-  svg {
+  position: relative;
+  .closeButton {
     padding-right: 10px;
     cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
   }
 `;
 
@@ -36,9 +32,9 @@ const UserFormModal = (props) => {
       opacity={props.opacity}
       backgroundProps={props.opacity}
     >
-      <UserFormStyledModalToolBar>
-        <Fa.FaWindowClose onClick={props.closeModal} />
-      </UserFormStyledModalToolBar>
+      <span className="closeButton">
+        <FaWindowClose onClick={props.closeModal} />
+      </span>
       <UserFormContainer onSubmitted={props.closeModal} />
     </UserFormStyledModal>
   );

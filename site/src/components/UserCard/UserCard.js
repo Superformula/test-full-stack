@@ -1,19 +1,26 @@
 import styled from "styled-components";
 import React from "react";
-import moment from "moment";
+import moment from "moment/min/moment.min.js";
+import { SfH2, SfP } from "../../styles/HtmlElementStyle.js";
+import { SfPenIcon } from "../../utils/SfIcons.js";
 
 const UserCardPanel = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  flex-basis: 300px;
-  color: #cbeeff;
-  height: 300px;
-  margin: 10px;
-  background-color: rgba(146, 146, 146, 0.3);
-  border: solid 1px white;
-  cursor: pointer;
+  flex-basis: 400px;
+  background-color: white;
+  height: 336px;
+  margin: 32px;
+  border-radius: 8px;
   :hover {
-    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.97);
+    box-shadow: 0 6px 9px 2px #e4e4e4;
+  }
+  svg {
+    cursor: pointer;
+    position: absolute;
+    right: 23px;
+    top: 18px;
   }
 `;
 
@@ -23,54 +30,60 @@ const UserCardPanelImageArea = styled.div`
   justify-items: center;
   justify-content: center;
   width: 100%;
-  height: 230px;
+  height: 243px;
   img {
-    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.97);
     border-radius: 50%;
+    width: 168px;
+    height: 168px;
   }
 `;
 
 const UserCardPanelInfoArea = styled.div`
-  font-size: 13px;
-  width: 100%;
+  font-size: 21px;
   height: 70px;
+  margin-left: 32px;
+  margin-right: 32px;
   .nameLabel {
-    font-weight: bold;
-    padding: 8px;
+    display: inline-block;
   }
   .descriptionLabel {
-    font-size: 12px;
-    padding: 8px;
+    padding-top: 8px;
+    font-weight: 300;
+    font-size: 16px;
   }
 
   .createdAtLabel {
     float: right;
-    padding-right: 8px;
+    font-size: 16px;
+    padding-top: 5px;
+    p {
+      display: inline;
+    }
     label {
       margin-left: 5px;
-      font-weight: bold;
-      color: greenyellow;
+      color: #b42320;
     }
   }
 `;
 
 const UserCard = (props) => {
   return (
-    <UserCardPanel
-      onClick={() => {
-        if (props.onClick) {
-          props.onClick(props.user);
-        }
-      }}
-    >
+    <UserCardPanel>
+      <SfPenIcon
+        onClick={() => {
+          if (props.onClick) {
+            props.onClick(props.user);
+          }
+        }}
+      />
       <UserCardPanelImageArea>
         <img alt={props.user.name} src={props.user.image} />
       </UserCardPanelImageArea>
       <UserCardPanelInfoArea>
         <div>
-          <label className="nameLabel">{props.user.name}</label>
+          <SfH2 className="nameLabel">{props.user.name}</SfH2>
           <div className="createdAtLabel">
-            Created
+            <SfP> Created</SfP>
             <label>{moment(props.user.createdAt).format("YYYY-MM-DD")}</label>
           </div>
         </div>
