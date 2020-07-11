@@ -6,11 +6,6 @@ Generic server full stack sample.
 
 Requires `npm` and `Nodejs >= 12.x`. (npm is usually installed with node.)
 
-The Graphql server for this full stack example simply uses AWS Appsync. Since AWS Appsync is a managed Graphql API, this repository simply stores configuration.
-
-For 'local' installation of the Graphql, you can use the development deployment code.
-https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
-
 To install the necessary packages for development and deployment, run `npm install` in this directory.
 
 ## Deploy
@@ -29,10 +24,15 @@ Before continuing with testing, be sure to perform the __deployment configuratio
 
 ### Deployment Configuration
 
+__Keep your keys secret!__
+
 Since the lambda has access to other resources on AWS, it needs credentials to do so.
 
 You must set the following environment variables in the lambda after deploy. At the moment, navigate to the created lambda in the console, and add the credentials.
+
 Note! These can be the same keys that you used to configure the aws-cli, however, you may want a more restrictive role for this.
+
+You will additionally need a Google Geocoding API key, you can create a key on the Google Cloud Platform and managing credentials there. 
 
 ```
 CONFIG_ACCESS_KEY_ID := AWS Role Access Key
@@ -40,7 +40,7 @@ CONFIG_SECRET_KEY := AWS Role Secret Key
 CONFIG_MAPS_KEY := Google maps API key
 ```
 
-Permissions needed by lambda credentials. Note! The lambda creates the table.
+Permissions needed by lambda credentials (CONFIG_ACCESS_KEY_ID and CONFIG_SECRET_KEY). Note! The lambda creates the table.
 
 ```
 dynamodb:Query
@@ -52,9 +52,17 @@ dynamodb:DeleteItem
 dynamodb:CreateTable
 ```
 
+Permissions needed by CONFIG_MAPS_KEY.
+
+```
+GCP Key Permissions:
+- Geocoding API
+```
+
 ```
 TODO:
 -- Serverless.yml should specify role so we don't need to manually input credentials?
+-- Perhaps build the Google key into the build?
 ```
 
 ## Tests

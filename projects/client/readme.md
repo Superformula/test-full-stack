@@ -27,12 +27,14 @@ or (development server)
 node_modules/.bin/cross-env BACKEND_HOST_URI='<>' GOOGLE_MAPS_API_KEY='<>' npm start
 ```
 
-The Backend Host uri is the URI provided by the Backend in this repo. The google maps API key is required to use google maps. You can create this key on the Google Cloud platform. If you choose to 'restrict' your key, the permissions needed are...
+The Backend Host uri is the URI provided by the Backend in this repo - see the BE readme. The google maps API key is required to use google maps. You can create this key on the Google Cloud platform. If you choose to 'restrict' your key (you should), the permissions needed are below. Additionally, you should restrict the usage of the key to your target domains - e.g. `application-sf.github.io`.
 
 ```
 GCP Key Permissions:
 - Maps JavaScript API
 ```
+
+Note! The BE requires access to the Geocoding API. You should use a separate key for that!
 
 ## Deployment
 
@@ -49,11 +51,12 @@ For free hosting with a github account, https://pages.github.com/.
 
 This repository includes a webpack development server. 
 
-You can start the development server using `npm start`. This will compile and hotreload while you are developing.
+You can start the development server after setting the appropriate environment variables using `npm start`. This will compile and hotreload while you are developing.
 
 The default dev-server port is `4040`.
 
-You can specify the backend URI with environment variables (just like in build)
+You can specify the backend URI with environment variables (see build). 
+Note! You should NOT use your production key for development. You should create a key solely for development and keep it secret!
 
 E.g. using `cross-env`
 
@@ -80,20 +83,12 @@ Optional arguments:
 Additionally, you can use cross env.
 
 ```
-node_modules/.bin/cross-env BACKEND_HOST_URI='https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev' npm start -- --webpack-config <config_path>
+node_modules/.bin/cross-env BACKEND_HOST_URI='<>' GOOGLE_MAPS_API_KEY='<>' npm start -- --webpack-config <config_path>
 ```
 
 ## Tests
 
 Unit tests use jest.
-
-`npm run test` will build the code prior to running the tests. It will capture the backend. See build.
-
-E.g. Using cross-env
-
-```
-node_modules/.bin/cross-env BACKEND_HOST_URI='https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev/' npm run test
-```
 
 ### Tests Installation - Notes
 
