@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { connect, ConnectedProps } from "react-redux";
 import { getPages } from "../UsersListActionCreators";
-import getPageStateQuery from "../../../../state/get-page-state-query";
+import { getPageStateQuery } from "../../../../state/page-state-query";
 import UserCard from '../../../../components/user-card/UserCard';
 
 import type { RootState } from '../../../../store/configure-store'

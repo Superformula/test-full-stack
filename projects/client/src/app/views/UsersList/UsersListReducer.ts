@@ -1,8 +1,8 @@
-import type { APINextToken, APIUserModel } from "../../../api/api-types";
 import { UsersListActionTypes, UsersListFilterAction } from './UsersListRedux';
-import type { UsersListState, UsersListAction, UsersListFetchAction } from './UsersListRedux';
 import { AsynchronousActionStatus } from "../../../store/AsynchronousRedux";
 
+import type { APINextToken, APIUserModel } from "../../../api/api-types";
+import type { UsersListState, UsersListAction, UsersListFetchAction } from './UsersListRedux';
 /**
  * Store needs the following
  * 

@@ -1,6 +1,6 @@
 import { UsersListActionTypes, UsersListFetchAction, UsersListFilterAction } from './UsersListRedux';
 import { AsynchronousActionStatus } from '../../../store/AsynchronousRedux';
-
+import { incrementPageStateQuery, initializePageState } from '../../../state/page-state-query';
 import { fetchGetPages } from "../../../api/graphql/fetch-get-pages";
 import { fetchGetNextPage } from "../../../api/graphql/fetch-get-next-page";
 import { APIUserModel, APINextToken } from '../../../api/api-types';
@@ -47,6 +47,7 @@ export function getPages(pageCount: number, filter: string) {
             clearTimeout(errorTimeout);
 
             dispatch(getPagesSuccess(resp.users, resp.nextToken));
+            initializePageState();
         }).catch((err) => {
             console.error(err);
 
@@ -67,6 +68,7 @@ export function getNextPage(nextToken: APINextToken, filter: string) {
             clearTimeout(errorTimeout);
 
             dispatch(getPagesSuccess(resp.users, resp.nextToken));
+            incrementPageStateQuery();
         }).catch((err) => {
             console.error(err);
 
