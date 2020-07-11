@@ -7,7 +7,7 @@
     "start": "node tools/webpack/dev-server/dev-server.js",
     "clean": "rimraf node_modules",
     "lint": "node ./node_modules/eslint/bin/eslint --no-error-on-unmatched-pattern --fix --ext .ts **/*.ts **/*.tsx",
-    "build:dev": "rimraf ./dist && webpack --config ./tools/webpack/configs/webpack-dev.config.js --progress --profile --colors",
+    "build": "rimraf ./dist && webpack --config ./tools/webpack/configs/webpack-dev.config.js --progress --profile --colors",
     "test:dev": "npm run build:dev && jest --ci --config ./.jestrc.json",
     "test": "jest --config ./.jestrc.json"
   },
@@ -18,7 +18,8 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",
@@ -27,6 +28,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",
     "argparse": "^1.0.10",

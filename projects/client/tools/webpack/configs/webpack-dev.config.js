@@ -8,9 +8,7 @@ const { BACKEND_HOST_URI } = buildOptions;
 const testDirectory = path.join(__dirname, '../../../test');
 const sourceDirectory = path.join(__dirname, '../../../src');
 const modulesDirectory = path.join(__dirname, '../../../node_modules');
-
-// const sourceDirectory = path.join(__dirname, '../../../src');
-// const sourceDirectory = path.join(__dirname, '../../../src');
+const buildDirectory = path.join(__dirname, '../../../dist');
 
 /**
  * @type {import('webpack').Configuration}
@@ -27,6 +25,7 @@ module.exports = {
         react: 'React',
         'react-dom': 'ReactDOM'
     },
+    devtool: 'source-map',
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         // Absolute paths to where modules can be resolved.
@@ -34,7 +33,8 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        publicPath: '/'
+        publicPath: '/',
+        path: buildDirectory
     },
     plugins: [
         new HtmlWebpackPlugin({

@@ -1,0 +1,26 @@
+.users-list-body-header-title {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.users-list-body-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.users-list-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.users-list-body-footer {
+    height: 84px;
+}
+
+.users-list-body-footer-inner {
+    display: flex;
+    flex-direction: row;
+    align-content: space-around;
+    flex-grow: 1;
+}

@@ -1,17 +1,18 @@
 import { BACKEND_HOST_URI } from '../globals';
+import { APIUserModel, APINextToken } from './api-types';
 
 const GRAPH_API = `${BACKEND_HOST_URI}/graphql`
 
 /**
  * Fortunately, we don't have any authorization - so we can make CORS requests all day long.
  */
-export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
+export function fetchGetPages(pageCount: number, filter: string = "") : Promise<{ users: APIUserModel[], nextToken: APINextToken}> {
     const captureVariables: string[] = [];
     let captureVariablesString = "";
     const captureParameters: string[] = [];
     let captureParametersString = "";
 
-    if (pageStart) {
+    if (pageCount) {
         captureVariables.push('$pageCount: Int');
         captureParameters.push('pageCount: $pageCount');
     }
@@ -29,8 +30,7 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
     return fetch(GRAPH_API, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             query: `
@@ -50,7 +50,7 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
                 }
             `,
             variables: JSON.stringify({
-                pageStart: pageStart,
+                pageCount: pageCount,
                 filter: filter
             })
         })

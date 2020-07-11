@@ -9,12 +9,13 @@ const port = 4040;
 const args = parseArguments({
     webpackConfig: path.join(__dirname, '../configs/webpack-dev.config.js')
 });
+console.log(`Loading webpack config ${args.webpackConfig}`);
 
 /**
  * @type {import('webpack').Configuration}
  */
 const webpackConfig = require(args.webpackConfig);
-console.log(`Loading webpack config ${args.webpackConfig}`);
+console.log(JSON.stringify(webpackConfig, null, 2));
 
 const server = new WebpackDevServer(webpack(webpackConfig), {
     publicPath: webpackConfig.output.publicPath,
