@@ -44,6 +44,18 @@ You can start the development server using `npm start`. This will compile and ho
 
 The default dev-server port is `4040`.
 
+You can specify the backend URI with environment variables (just like in build)
+
+```
+BACKEND_HOST_URI := Backend URI
+```
+
+E.g. using `cross-env`
+
+```
+node_modules/.bin/cross-env BACKEND_HOST_URI='https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev' npm start
+```
+
 ```
 TODO:
 -- Document webpack development server arguments.
@@ -53,7 +65,7 @@ TODO:
 
 Unit tests use jest.
 
-`npm run test` will build the code prior to running the tests. See build.
+`npm run test` will build the code prior to running the tests. It will capture the backend. See build.
 
 E.g. Using cross-env
 

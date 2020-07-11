@@ -1,17 +1,29 @@
 import { BACKEND_HOST_URI } from '../globals';
+import { APIUserModel, APINextToken } from './api-types';
 
 const GRAPH_API = `${BACKEND_HOST_URI}/graphql`
 
 /**
  * Fortunately, we don't have any authorization - so we can make CORS requests all day long.
  */
-export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
+interface FetchGetPagesResult { 
+    users: APIUserModel[], 
+    nextToken: APINextToken
+}
+
+interface FetchGetPagesGraphResult {
+    data: {
+        getPages: FetchGetPagesResult
+    }
+}
+
+export function fetchGetPages(pageCount: number, filter: string = "") : Promise<FetchGetPagesResult> {
     const captureVariables: string[] = [];
     let captureVariablesString = "";
     const captureParameters: string[] = [];
     let captureParametersString = "";
 
-    if (pageStart) {
+    if (pageCount) {
         captureVariables.push('$pageCount: Int');
         captureParameters.push('pageCount: $pageCount');
     }
@@ -29,8 +41,7 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
     return fetch(GRAPH_API, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             query: `
@@ -50,14 +61,14 @@ export function fetchGetUsersPage(pageStart: any = {}, filter = "") {
                 }
             `,
             variables: JSON.stringify({
-                pageStart: pageStart,
+                pageCount: pageCount,
                 filter: filter
             })
         })
     })
     .then((result) => result.json())
-    .then((data) => { 
-        console.log(JSON.stringify(data));
-        return data;
+    .then((graphResult: FetchGetPagesGraphResult) => { 
+        console.log(JSON.stringify(graphResult));
+        return graphResult.data.getPages;
     });
 }

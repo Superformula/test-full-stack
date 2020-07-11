@@ -1,14 +1,18 @@
 import * as React from 'react';
-import InputText from '../../../components/text-input/TextInput';
-import UsersListBody from './UsersListBody/UsersListBody';
+import UsersListBody from './UsersListComponents/UsersListBody';
+import UsersListHeader from './UsersListComponents/UsersListHeader';
+import UsersListFooter from './UsersListComponents/UsersListFooter';
 
 import './users-list.css';
 
 const UsersList: React.FunctionComponent = () => {
     return (
         <div className="users-list">
-
-            <UsersListBody></UsersListBody>
+            <div className="users-list-infinite-scroll-container">
+                <UsersListHeader></UsersListHeader>
+                <UsersListBody></UsersListBody>
+                <UsersListFooter></UsersListFooter>
+            </div>
         </div>
     );
 }
