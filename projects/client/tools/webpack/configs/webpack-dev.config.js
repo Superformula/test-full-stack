@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const buildOptions = require('../build-config-options');
 
-const { BACKEND_HOST_URI } = buildOptions;
+const { BACKEND_HOST_URI, GOOGLE_MAPS_API_KEY } = buildOptions;
 
 const testDirectory = path.join(__dirname, '../../../test');
 const sourceDirectory = path.join(__dirname, '../../../src');
@@ -38,7 +38,8 @@ module.exports = {
             template: path.join('src', 'templates', 'index-development.template.html')
         }),
         new webpack.DefinePlugin({
-            __SYS_BACKEND_HOST_URI__: JSON.stringify(BACKEND_HOST_URI)
+            __SYS_BACKEND_HOST_URI__: JSON.stringify(BACKEND_HOST_URI),
+            __SYS_GOOGLE_MAPS_API_KEY__: JSON.stringify(GOOGLE_MAPS_API_KEY)
         })
     ],
     module: {

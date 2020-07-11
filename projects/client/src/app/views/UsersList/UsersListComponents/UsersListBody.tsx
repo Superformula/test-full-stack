@@ -35,7 +35,7 @@ const UsersListBody: React.FunctionComponent<PropsFromRedux> = (props: PropsFrom
     
 
     const filteredUsers = Object.keys(users).filter((id) => {
-        let user = users[id];
+        const user = users[id];
         return !filter || user.name.toLowerCase().startsWith(filter)
     }).map((id) => users[id]);
 

@@ -16,6 +16,7 @@ The default `BACKEND_HOST_URI` is `localhost:4080`.
 
 ```
 BACKEND_HOST_URI := Base url - including scheme and root path - of BE API.
+GOOGLE_MAPS_API_KEY := Google maps API key
 ```
 
 You can either set those environment variables manually, or use `cross-env`.
@@ -23,7 +24,7 @@ You can either set those environment variables manually, or use `cross-env`.
 ```
 node_modules/.bin/cross-env BACKEND_HOST_URI='<>' npm run build
 
-or (development)
+or (development server)
 
 node_modules/.bin/cross-env BACKEND_HOST_URI='<>' npm start
 ```

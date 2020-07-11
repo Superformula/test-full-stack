@@ -1,4 +1,4 @@
-import { EditUserModalActionTypes, EditUserModalEditAction, EditUserModalSaveAction } from './EditUserModalRedux';
+import { EditUserModalActionTypes, EditUserModalEditAction, EditUserModalSaveAction, EditUserModalUpdateLocationAction } from './EditUserModalRedux';
 
 import type { EditUserModalState, EditUserModalAction, EditUserModalShowAction } from './EditUserModalRedux';
 import { AsynchronousActionStatus } from '../../../store/AsynchronousRedux';
@@ -54,6 +54,28 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
                     isSaving: false
                 };
             }
+        case EditUserModalActionTypes.UPDATE_LOCATION:
+            const updateLocationAction = action as EditUserModalUpdateLocationAction;
+            if (updateLocationAction.status === AsynchronousActionStatus.IN_PROGRESS) {
+                return {
+                    ...state,
+                    isUpdatingLocation: true
+                };
+            }
+            else if (updateLocationAction.status === AsynchronousActionStatus.SUCCESS) {
+                return {
+                    ...state,
+                    displayLocation: updateLocationAction.location,
+                    isUpdatingLocation: false
+                };
+            }
+            else {
+                return {
+                    ...state,
+                    displayLocation: null,
+                    isUpdatingLocation: false
+                };
+            }
         default:
             if (state === undefined) {
                 return {
@@ -63,7 +85,9 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
                         name: null,
                         address: null,
                         description: null
-                    }
+                    },
+                    displayLocation: null,
+                    isUpdatingLocation: false
                 };
             }
             else {

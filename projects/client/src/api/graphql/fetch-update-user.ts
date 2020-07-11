@@ -11,6 +11,19 @@ interface FetchUpdateUserGraphResult {
 }
 
 export function fetchUpdateUser(user: APIUserModel) : Promise<FetchUpdateUserResult> {
+    const variableObject: APIUserModel = {
+        id: user.id,
+        name: user.name
+    };
+
+    if (user.address) {
+        variableObject.address = user.address;
+    }
+
+    if (user.description) {
+        variableObject.description = user.description;
+    }
+
     return fetch(GRAPH_API, {
         method: 'POST',
         headers: {
@@ -29,7 +42,7 @@ export function fetchUpdateUser(user: APIUserModel) : Promise<FetchUpdateUserRes
                 }
             `,
             variables: JSON.stringify({
-                updateUserInput: user
+                updateUserInput: variableObject
             }, (key, value) => value === null ? "" : value)
         })
     })

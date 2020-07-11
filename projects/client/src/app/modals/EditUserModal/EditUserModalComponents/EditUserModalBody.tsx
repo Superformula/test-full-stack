@@ -1,18 +1,20 @@
 import * as React from 'react';
 import EditUserModalInput from './EditUserModalInput';
 import { APIUserModel } from '../../../../api/api-types';
-
+import GoogleMap, { MapMarker } from "../../../../third-party/GoogleMap";
+import EditUserModalMap from './EditUserModalMap/EditUserModalMap';
 import './edit-user-modal-body.css';
 
 interface EditUserModalBodyProps {
     user: APIUserModel;
 }
 
+
 const EditUserModalBody: React.FunctionComponent<EditUserModalBodyProps> = (props: EditUserModalBodyProps) => {
     const { user } = props;
     return (
         <div className="modal-body-container">
-            <div className="modal-map-container"></div>
+            <EditUserModalMap/>
             <div className="modal-input-container">
                 <div>
                     <label htmlFor="name" className="default-input-label">Name</label>

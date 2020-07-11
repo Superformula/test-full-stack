@@ -6,7 +6,7 @@ import type { UsersListState, UsersListAction, UsersListFetchAction } from './Us
 import { EditUserModalActionTypes, EditUserModalSaveAction } from '../../modals/EditUserModal/EditUserModalRedux';
 
 function mergeUserMaps(users: UsersListStateUserMap, newUsers?: APIUserModel[]) : UsersListStateUserMap {
-    let result = {
+    const result = {
         ...users
     };
 
@@ -14,7 +14,7 @@ function mergeUserMaps(users: UsersListStateUserMap, newUsers?: APIUserModel[]) 
         return result;
     }
 
-    for(let newUser of newUsers) {
+    for(const newUser of newUsers) {
         result[newUser.id] = newUser;
     }
 
@@ -32,7 +32,7 @@ export function reduceUsersList(state: UsersListState, action: UsersListAction) 
             };
         case UsersListActionTypes.UPDATE_CACHED_USER:
             const updateCacheAction = action as UsersListUpdateCachedUserAction;
-            let users = {
+            const users = {
                 ...state.users
             };
             users[updateCacheAction.user.id] = updateCacheAction.user;

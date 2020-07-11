@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import InputText from '../../../../components/text-input/TextInput';
 import { connect, ConnectedProps } from "react-redux";
-import { getEditUserDescription, getEditUserLocation, getEditUserName } from '../EditUserModalActionCreators';
+import { getEditUserDescription, getEditUserLocation, getEditUserName, getFetchLocation } from '../EditUserModalActionCreators';
 
 import type { RootState } from '../../../../store/configure-store'
 
@@ -15,7 +15,8 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
     getEditUserDescription,
     getEditUserLocation,
-    getEditUserName
+    getEditUserName,
+    getFetchLocation
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -34,21 +35,36 @@ const EditUserModalInput: React.FunctionComponent<EditUserModalInputProps> = (pr
         getEditUserDescription,
         getEditUserLocation,
         getEditUserName, 
+        getFetchLocation,
         which, value
     } = props;
 
     const [textValue, setTextValue] = useState(value);
     const [intialValue, setInitialValue] = useState(value);
+    const [debouncedTimeout, setDebouncedTimeout] = useState(null);
+    const userViewChanged = value !== intialValue;
 
-    if (value !== intialValue) {
+    if (userViewChanged) {
         setInitialValue(value);
         setTextValue(value);
     }
-
+    
     let dispatchFunction;
     switch (which) {
         case 'location':
-            dispatchFunction = getEditUserLocation;
+            if (userViewChanged) {
+                getFetchLocation(value);
+            }
+            dispatchFunction = (newLocation: string) => {
+                getEditUserLocation(newLocation);
+                clearTimeout(debouncedTimeout);
+                const tm = setTimeout(() => {
+                    // TODO: Cancel the promise; There is a library for this.
+                    getFetchLocation(newLocation);
+                }, 700);
+
+                setDebouncedTimeout(tm);
+            };
             break;
         case 'name':
             dispatchFunction = getEditUserName;
