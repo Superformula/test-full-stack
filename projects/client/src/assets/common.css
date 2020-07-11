@@ -45,21 +45,6 @@ p {
     height: 316px;
 }
 
-.user-card {
-    background-color: white;
-    border-radius: 7px;
-    transition: box-shadow .3s;
-    box-shadow: none;
-    width: 90%;
-    height: 80%;
-    margin: 8px
-}
-
-.user-card:hover {
-    box-shadow: 0 2px 7px 3px rgba(13, 13, 13, .06);
-}
-
-
 
 .modal-overlay {
     visibility: visible;

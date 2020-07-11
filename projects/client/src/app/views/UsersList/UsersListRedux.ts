@@ -2,7 +2,8 @@ import type { APINextToken, APIUserModel } from "../../../api/api-types";
 import { AsynchronousAction } from "../../../store/AsynchronousRedux";
 
 export enum UsersListActionTypes {
-    FETCH_PAGES = "USERS_LIST_FETCH_PAGES"
+    FETCH_PAGES = "USERS_LIST_FETCH_PAGES",
+    FILTER = "USERS_LIST_FILTER"
 }
 
 export interface UsersListState {
@@ -22,4 +23,8 @@ export interface UsersListFetchAction extends AsynchronousAction, UsersListActio
     users?: APIUserModel[];
     nextToken?: APINextToken;
     error?: string;
+}
+
+export interface UsersListFilterAction extends UsersListAction {
+    filter: string;
 }

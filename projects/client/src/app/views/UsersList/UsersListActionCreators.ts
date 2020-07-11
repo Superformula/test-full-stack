@@ -1,10 +1,17 @@
-import {UsersListActionTypes} from './UsersListRedux';
+import { UsersListActionTypes, UsersListFetchAction, UsersListFilterAction } from './UsersListRedux';
 import { AsynchronousActionStatus } from '../../../store/AsynchronousRedux';
 
 import { fetchGetPages } from "../../../api/graphql";
 import { APIUserModel, APINextToken } from '../../../api/api-types';
 
-function getPagesSuccess(users: APIUserModel[], nextToken: APINextToken) {
+export function getUpdateFilter(filter: string) : UsersListFilterAction {
+    return {
+        type: UsersListActionTypes.FILTER,
+        filter: filter
+    }
+}
+
+function getPagesSuccess(users: APIUserModel[], nextToken: APINextToken) : UsersListFetchAction {
     return {
         status: AsynchronousActionStatus.SUCCESS,
         type: UsersListActionTypes.FETCH_PAGES,
@@ -13,14 +20,14 @@ function getPagesSuccess(users: APIUserModel[], nextToken: APINextToken) {
     }
 }
 
-function getPagesFailed() {
+function getPagesFailed() : UsersListFetchAction {
     return {
         status: AsynchronousActionStatus.FAILURE,
         type: UsersListActionTypes.FETCH_PAGES
     };
 }
 
-function getPagesInProgress() {
+function getPagesInProgress() : UsersListFetchAction {
     return {
         status: AsynchronousActionStatus.IN_PROGRESS,
         type: UsersListActionTypes.FETCH_PAGES
@@ -31,7 +38,7 @@ export function getPages(pageCount: number, filter: string) {
     return (dispatch) => {
         dispatch(getPagesInProgress());
 
-        let errorTimeout = setTimeout(() => {
+        const errorTimeout = setTimeout(() => {
             dispatch(getPagesFailed());
         });
 

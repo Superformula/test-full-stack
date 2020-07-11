@@ -1,6 +1,5 @@
 import * as React from 'react';
-import InputText from '../../../../components/text-input/TextInput';
-
+import UsersListSearch from './UsersListSearch';
 
 import './users-list-body.css';
 
@@ -14,7 +13,7 @@ const UsersListHeader: React.FunctionComponent = () => {
                 <div style={{ flexGrow: 1 }}></div>
             </div>
             <div className="user-card-grid-element">
-                <InputText className="search-input" style={{margin: '32px 8px'}} placeholder="Search..."></InputText>
+                <UsersListSearch/>
             </div>
         </div>
     );

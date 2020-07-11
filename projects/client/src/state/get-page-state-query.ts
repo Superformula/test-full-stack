@@ -1,15 +1,15 @@
 
 
 export default function getPageStateQuery() {
-    let query: string[] = window.location.search.split('=');
+    const query: string[] = window.location.search.split('=');
     if (query.length > 1) {
         if (query[0].indexOf('page') >= 0) {
-            let parseResult = parseInt(query[1]);
-            if (parseResult !== NaN) {
+            const parseResult = parseInt(query[1]);
+            if (parseResult !== NaN && parseResult > 0) {
                 return parseResult;
             }
         }
     }
     
-    return 0;
+    return 1;
 }

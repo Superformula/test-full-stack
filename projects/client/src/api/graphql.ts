@@ -17,7 +17,7 @@ interface FetchGetPagesGraphResult {
     }
 }
 
-export function fetchGetPages(pageCount: number, filter: string = "") : Promise<FetchGetPagesResult> {
+export function fetchGetPages(pageCount: number, filter = "") : Promise<FetchGetPagesResult> {
     const captureVariables: string[] = [];
     let captureVariablesString = "";
     const captureParameters: string[] = [];
