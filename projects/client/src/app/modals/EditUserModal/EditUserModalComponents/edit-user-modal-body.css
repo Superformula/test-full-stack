@@ -11,6 +11,10 @@
     margin-bottom: 26px;
 }
 
+.modal-map-container {
+    padding: 4px 20px 0px 4px;
+}
+
 .modal-map-container, .modal-footer-empty-container {
     flex-grow: 1;
     min-width: 320px;
@@ -59,3 +63,20 @@
     background-color: var(--default-background-color);
 }
 
+
+@media (max-width: 888px) {
+    .modal-body-container {
+        flex-direction: column;
+    }
+    .modal-footer-container {
+        flex-direction: column;
+    }
+
+    .modal-map-container {
+        padding: 2px;
+    }
+
+    .modal-footer-button-container, .modal-input-container {
+        min-width: 360px;
+    }
+}

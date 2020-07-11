@@ -10,9 +10,7 @@ To install the necessary packages for development, run `npm install` in this dir
 
 ## Build
 
-You can build the client using `npm run build`. The build pipeline accepts a few arguments as environment variables. (See `tools/webpack/build-config-options.js`).
-
-The default `BACKEND_HOST_URI` is `localhost:4080`.
+You can build the client using `npm run build`. The build pipeline accepts a few arguments as environment variables. These are required to build a working app!
 
 ```
 BACKEND_HOST_URI := Base url - including scheme and root path - of BE API.
@@ -22,20 +20,30 @@ GOOGLE_MAPS_API_KEY := Google maps API key
 You can either set those environment variables manually, or use `cross-env`.
 
 ```
-node_modules/.bin/cross-env BACKEND_HOST_URI='<>' npm run build
+node_modules/.bin/cross-env BACKEND_HOST_URI='<>' GOOGLE_MAPS_API_KEY='<>' npm run build
 
 or (development server)
 
-node_modules/.bin/cross-env BACKEND_HOST_URI='<>' npm start
+node_modules/.bin/cross-env BACKEND_HOST_URI='<>' GOOGLE_MAPS_API_KEY='<>' npm start
 ```
 
+The Backend Host uri is the URI provided by the Backend in this repo. The google maps API key is required to use google maps. You can create this key on the Google Cloud platform. If you choose to 'restrict' your key, the permissions needed are...
+
+```
+GCP Key Permissions:
+- Maps JavaScript API
+```
 
 ## Deployment
 
-```
-TODO:
--- Specify production config.
-```
+There is no specific deployment pipeline as the client is simply static files.
+
+Simply run `npm run build` with the appropriate environment variables.
+
+!ATTENTION! Be sure to restrict your google API key to your website!
+
+For free hosting with a github account, https://pages.github.com/.
+
 
 ## Development
 
@@ -47,14 +55,10 @@ The default dev-server port is `4040`.
 
 You can specify the backend URI with environment variables (just like in build)
 
-```
-BACKEND_HOST_URI := Backend URI
-```
-
 E.g. using `cross-env`
 
 ```
-node_modules/.bin/cross-env BACKEND_HOST_URI='https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev' npm start
+node_modules/.bin/cross-env BACKEND_HOST_URI='<>' GOOGLE_MAPS_API_KEY='<>' npm start
 ```
 
 By default, the webpack dev server uses the development config. You can specify the desired webpack config via the command line.
@@ -104,6 +108,7 @@ Jest does not run the `webpack.DefinePlugin`. You can define globals in the test
 
 "globals": {
     "__SYS_BACKEND_HOST_URI__": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev"
+    "__SYS_GOOGLE_MAPS_API_KEY__": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev"
 }
 ```
 

@@ -4,6 +4,7 @@
 
 body {
     margin: 0px;
+    position: fixed;
 }
 
 h1 {
@@ -35,4 +36,16 @@ p {
 
 .user-card-grid-element-row-element {
     height: 316px;
+}
+
+@media(max-width: 1024px) {
+    .user-card-grid-element {
+        flex-basis: 50%;
+    }
+}
+
+@media(max-width: 512px) {
+    .user-card-grid-element {
+        flex-basis: 100%;
+    }
 }

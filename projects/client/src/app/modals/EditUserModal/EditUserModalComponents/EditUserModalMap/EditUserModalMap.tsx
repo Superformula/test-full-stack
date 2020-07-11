@@ -32,16 +32,12 @@ const EditUserModalMap: React.FunctionComponent<PropsFromRedux>
     }
 
     return (
-        <div className="modal-body-container">
-            <div className="modal-map-container" style={{
-                    padding: '4px 20px 0 4px'
-                }}>
-                <div className="modal-map-container-inner">
-                    <GoogleMap>
-                        {markerElement}
-                        <EditUserModalMapCenterer location={displayLocation}/>
-                    </GoogleMap>
-                </div>
+        <div className="modal-map-container">
+            <div className="modal-map-container-inner">
+                <GoogleMap>
+                    {markerElement}
+                    <EditUserModalMapCenterer location={displayLocation}/>
+                </GoogleMap>
             </div>
         </div>
     );

@@ -40,6 +40,20 @@
     width: 100%;
 }
 
+@media (max-width: 512px) {
+    .users-list-body-header {
+        flex-direction: column;
+    }
+
+    .users-list-body-header-title {
+        margin: 8px;
+    }
+
+    .search-input {
+        margin: 8px;
+    }
+}
+
 @media (max-width: 1024px) {
     .users-list-header-spacer {
         width: 0px;
