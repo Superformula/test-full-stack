@@ -24,3 +24,29 @@
     align-content: space-around;
     flex-grow: 1;
 }
+
+
+.search-input {
+    width: auto;
+    margin: 32px 8px;
+}
+
+.users-list-header-search-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .users-list-header-spacer {
+        width: 0px;
+        flex-basis: 0;
+    }
+
+    .users-list-header-search {
+        flex-grow: 1;
+    }
+}

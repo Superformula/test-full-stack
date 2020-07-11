@@ -31,7 +31,7 @@ const UsersListLoadMoreButton: React.FunctionComponent<PropsFromRedux> = (props:
         <Button disabled={!isLoadMoreAvailable || isLoadingUsers || !!filter} onClick={(e) => {
             getNextPage(nextToken, "");
         }}>
-            {!isLoadingUsers ? "Load More" : <LoadingIndicator style={{width: '24px', height: '24px', margin: 'auto'}}/>}
+            {!isLoadingUsers ? "Load More" : <LoadingIndicator style={{ width: '24px', height: '24px', margin: 'auto' }}/>}
         </Button>
     );
 }

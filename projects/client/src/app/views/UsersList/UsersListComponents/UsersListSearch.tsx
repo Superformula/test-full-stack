@@ -27,7 +27,7 @@ const UsersListSearch: React.FunctionComponent<PropsFromRedux> = (props: PropsFr
                 getUpdateFilter(e.target.value);
             }}
             className="search-input" 
-            style={{ margin: '32px 8px', width: '100%' }} 
+            style={{ margin: '32px 8px' }} 
             placeholder="Search...">
 
         </InputText>

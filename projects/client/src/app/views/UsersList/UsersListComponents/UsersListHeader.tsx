@@ -9,11 +9,12 @@ const UsersListHeader: React.FunctionComponent = () => {
             <div className="user-card-grid-element">
                 <h1 className="users-list-body-header-title">Users list</h1>
             </div>
-            <div className="user-card-grid-element">
-                <div style={{ flexGrow: 1 }}></div>
+            <div className="user-card-grid-element users-list-header-spacer">
             </div>
-            <div className="user-card-grid-element">
-                <UsersListSearch/>
+            <div className="user-card-grid-element users-list-header-search">
+                <div className="users-list-header-search-center">
+                    <UsersListSearch/>
+                </div>
             </div>
         </div>
     );

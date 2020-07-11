@@ -6,15 +6,15 @@ import UsersList from './views/UsersList/UsersList';
 import './application.css';
 
 import { configureStore } from '../store/configure-store';
+import EditUserModal from './modals/EditUserModal/EditUserModal';
 const store = configureStore();
 
 const Application: React.FunctionComponent = () => {
     return (
         <Provider store={store}>
             <div className="application-container">
-                <UsersList>
-
-                </UsersList>
+                <EditUserModal/>
+                <UsersList/>
             </div>
         </Provider>
     );

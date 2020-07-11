@@ -3,20 +3,24 @@ import * as React from 'react';
 import './user-card.css';
 const tmp = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60";
 
-interface UserCardProps {
+type UserCardHtmlProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+
+interface UserCardBaseProps {
     name: string;
     description: string;
     avatarUrl: string;
 }
 
+type UserCardProps = UserCardHtmlProps & UserCardBaseProps;
+
 const UserCard: React.FunctionComponent<UserCardProps> = (props: UserCardProps) => {
-    const { name, description, avatarUrl } = props;
+    const { name, description, avatarUrl, ...htmlProps } = props;
 
     // This is embarassing.
     // https://stackoverflow.com/questions/493296/css-display-an-image-resized-and-cropped
     return (
         <div className="user-card-grid-element user-card-grid-element-row-element">
-            <div className="user-card">
+            <div {...htmlProps} className="user-card">
                 <div className="user-card-avatar" style={{
                     backgroundImage: `url(${tmp})`,
                 }}></div>

@@ -14,7 +14,7 @@ function getPageStateQueryInner() {
 }
 
 export function getPageStateQuery() {
-    let page = getPageStateQueryInner();
+    const page = getPageStateQueryInner();
     if (page <= 0) {
         return 1;
     }
@@ -25,7 +25,7 @@ export function getPageStateQuery() {
 
 export function initializePageState() {
     let url = window.location.href;
-    let qInd = url.indexOf('?');
+    const qInd = url.indexOf('?');
     if (qInd >= 0) {
         let page = getPageStateQueryInner();
         if (page < 1) {
@@ -41,7 +41,7 @@ export function initializePageState() {
 
 export function incrementPageStateQuery() {
     let url = window.location.href;
-    let qInd = url.indexOf('?');
+    const qInd = url.indexOf('?');
     if (qInd >= 0) {
         let page = getPageStateQueryInner();
         if (page < 0) {

@@ -56,9 +56,26 @@ E.g. using `cross-env`
 node_modules/.bin/cross-env BACKEND_HOST_URI='https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev' npm start
 ```
 
+By default, the webpack dev server uses the development config. You can specify the desired webpack config via the command line.
+
 ```
-TODO:
--- Document webpack development server arguments.
+node tools/webpack/dev-server/dev-server.js --help
+
+usage: dev-server.js [-h] [-v] [--webpack-config webpackConfig]
+
+Development server for full stack client
+
+Optional arguments:
+  -h, --help            Show this help message and exit.
+  -v, --version         Show program's version number and exit.
+  --webpack-config webpackConfig
+                        The config file for webpack compiler
+```
+
+Additionally, you can use cross env.
+
+```
+node_modules/.bin/cross-env BACKEND_HOST_URI='https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev' npm start -- --webpack-config <config_path>
 ```
 
 ## Tests

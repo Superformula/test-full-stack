@@ -1,20 +1,26 @@
-import { UsersListActionTypes, UsersListFilterAction } from './UsersListRedux';
+import { UsersListActionTypes, UsersListFilterAction, UsersListStateUserMap, UsersListUpdateCachedUserAction } from './UsersListRedux';
 import { AsynchronousActionStatus } from "../../../store/AsynchronousRedux";
+import { APIUserModel } from '../../../api/api-types';
 
-import type { APINextToken, APIUserModel } from "../../../api/api-types";
 import type { UsersListState, UsersListAction, UsersListFetchAction } from './UsersListRedux';
-/**
- * Store needs the following
- * 
- * 1. All cached users
- * 2. NextToken
- * 3. Filter
- * 4. Can load more? E.g. no more next token
- * 
- * 5. Is loading users?
- * 
- * 6. Is modal visible?
- */
+import { EditUserModalActionTypes, EditUserModalSaveAction } from '../../modals/EditUserModal/EditUserModalRedux';
+
+function mergeUserMaps(users: UsersListStateUserMap, newUsers?: APIUserModel[]) : UsersListStateUserMap {
+    let result = {
+        ...users
+    };
+
+    if (!newUsers) {
+        return result;
+    }
+
+    for(let newUser of newUsers) {
+        result[newUser.id] = newUser;
+    }
+
+    return result;
+}
+
 
 export function reduceUsersList(state: UsersListState, action: UsersListAction) : UsersListState{
     switch(action.type) {
@@ -23,6 +29,16 @@ export function reduceUsersList(state: UsersListState, action: UsersListAction) 
             return {
                 ...state,
                 filter: filterAction.filter
+            };
+        case UsersListActionTypes.UPDATE_CACHED_USER:
+            const updateCacheAction = action as UsersListUpdateCachedUserAction;
+            let users = {
+                ...state.users
+            };
+            users[updateCacheAction.user.id] = updateCacheAction.user;
+            return {
+                ...state,
+                users: users
             };
         case UsersListActionTypes.FETCH_PAGES:
             const fetchAction = action as UsersListFetchAction;
@@ -35,7 +51,7 @@ export function reduceUsersList(state: UsersListState, action: UsersListAction) 
             else if (fetchAction.status === AsynchronousActionStatus.SUCCESS) {
                 return {
                     ...state,
-                    users: state.users.concat(fetchAction.users || []) || [],
+                    users: mergeUserMaps(state.users, fetchAction.users),
                     nextToken: fetchAction.nextToken,
                     isLoadingUsers: false,
                     // If we made a request but got no results
@@ -52,8 +68,7 @@ export function reduceUsersList(state: UsersListState, action: UsersListAction) 
         default:
             if (state === undefined) {
                 return {
-                    users: [],
-                    displayUsers: [],
+                    users: {},
                     nextToken: null,
                     isLoadMoreAvailable: true,
                     isLoadingUsers: false,

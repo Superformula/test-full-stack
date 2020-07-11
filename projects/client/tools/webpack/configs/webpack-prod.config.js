@@ -14,14 +14,17 @@ const buildDirectory = path.join(__dirname, '../../../dist');
  * @type {import('webpack').Configuration}
  */
 module.exports = {
-    mode: "development",
+    mode: "production",
     entry: [
         'react',
         'react-dom',
         './src/assets/common.css',
         './src/index.tsx'
     ],
-    devtool: 'source-map',
+    externals: {
+        react: 'React',
+        'react-dom': 'ReactDOM'
+    },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         // Absolute paths to where modules can be resolved.
@@ -35,7 +38,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "Index",
-            template: path.join('src', 'templates', 'index-development.template.html')
+            template: path.join('src', 'templates', 'index-production.template.html')
         }),
         new webpack.DefinePlugin({
             __SYS_BACKEND_HOST_URI__: JSON.stringify(BACKEND_HOST_URI)

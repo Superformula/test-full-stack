@@ -7,8 +7,7 @@
     "start": "node tools/webpack/dev-server/dev-server.js",
     "clean": "rimraf node_modules",
     "lint": "node ./node_modules/eslint/bin/eslint --no-error-on-unmatched-pattern --fix --ext .ts **/*.ts **/*.tsx",
-    "build": "rimraf ./dist && webpack --config ./tools/webpack/configs/webpack-dev.config.js --progress --profile --colors",
-    "test:dev": "npm run build:dev && jest --ci --config ./.jestrc.json",
+    "build": "rimraf ./dist && webpack --config ./tools/webpack/configs/webpack-prod.config.js --progress --profile --colors",
     "test": "jest --config ./.jestrc.json"
   },
   "author": "Matthew Evers",
