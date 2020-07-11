@@ -8,7 +8,14 @@ export const resolvers = {
     Query: {
         getPages: async (parent, args: schema.GetPagesInput, context, info) => {
             const { pageCount, filter } = args;
-            const baseQuery = await UserModel.scan().limit(PAGE_SIZE*pageCount).exec();
+
+            // Typescript mistake in dynamoose.
+            let q: any = UserModel.scan().limit(PAGE_SIZE*pageCount);
+            if (filter) {
+                q = q.filter('name').beginsWith(filter);
+            }
+
+            const baseQuery = await q.exec();
 
             return {
                 users: baseQuery,
@@ -17,7 +24,14 @@ export const resolvers = {
         },
         getNextPage: async (parent, args: schema.GetNextPageInput, context, info) => {
             const { nextToken, filter } = args;
-            const baseQuery = await UserModel.scan().startAt(nextToken).limit(PAGE_SIZE).exec();
+
+            // Typescript mistake in dynamoose.
+            let q: any = UserModel.scan().startAt(nextToken).limit(PAGE_SIZE);
+            if (filter) {
+                q = q.filter('name').beginsWith(filter);
+            }
+                
+            const baseQuery = await q.exec();
 
             return {
                 users: baseQuery,

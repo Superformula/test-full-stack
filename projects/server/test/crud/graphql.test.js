@@ -43,7 +43,7 @@ describe("GraphQL endpoint", () => {
         const COMPARE_NAME = "AdjustedName";
         await LambdaTester(lambda).event(createRequest("/graphql", {
             bodyString: JSON.stringify({
-                "query":"mutation createUser($updateUserInput: UpdateUserInput!){\r\n  updateUser(input: $updateUserInput) {\r\n    id\r\n    name\r\n    dob\r\n    address\r\n    description\r\n  }\r\n}",
+                "query":"mutation updateUser($updateUserInput: UpdateUserInput!){\r\n  updateUser(input: $updateUserInput) {\r\n    id\r\n    name\r\n    dob\r\n    address\r\n    description\r\n  }\r\n}",
                 "variables":{
                     "updateUserInput":{
                         "id":createdUserId,
@@ -83,7 +83,7 @@ describe("GraphQL endpoint", () => {
         await LambdaTester(lambda).event(createRequest("/graphql", {
             bodyString: JSON.stringify({
                 "query":"query getPage($pageCount: Int, $filter: String) {\r\n  getPages(pageCount: $pageCount, filter: $filter) {\r\n    users {\r\n      id\r\n      name\r\n    }\r\n    nextToken {\r\n      id\r\n    }\r\n  }\r\n}",
-                "variables":{"pageCount":1,"filter":"dsfa"}
+                "variables":{"pageCount":1,"filter":""}
             })
         })).expectResult((arg) => {
             console.log(JSON.stringify(arg));
@@ -109,7 +109,11 @@ describe("GraphQL endpoint", () => {
         await LambdaTester(lambda).event(createRequest("/graphql", {
             bodyString: JSON.stringify({
                 "query":"mutation deleteUser($user: DeleteUserInput!){\r\n  deleteUser(input: $user)\r\n}",
-                "variables":{"user":{"id":"6b46c4d8-d9af-4ee0-bb3c-691c07c77b88"}}
+                "variables": {
+                    "user": {
+                        "id": createdUserId
+                    }
+                }
             })
         })).expectResult((arg) => {
             console.log(JSON.stringify(arg));
@@ -173,7 +177,7 @@ describe("GraphQL endpoint", () => {
         await LambdaTester(lambda).event(createRequest("/graphql", {
             bodyString: JSON.stringify({
                 "query":"query getPage($nextToken: NextTokenInput, $filter: String) {\r\n  getNextPage(nextToken: $nextToken, filter: $filter) {\r\n    users {\r\n      id\r\n      name\r\n    }\r\n    nextToken {\r\n      id\r\n    }\r\n  }\r\n}",
-                "variables":{"nextToken":nextToken,"filter":"dsfa"}
+                "variables":{"nextToken":nextToken,"filter":""}
             })
         })).expectResult((arg) => {
             console.log(JSON.stringify(arg));
