@@ -11,6 +11,10 @@
     background-color: white;
 }
 
+.default-button:enabled {
+    cursor: pointer;
+}
+
 .default-button:hover:enabled {
     border: 3px solid rgb(153, 153, 153);
 }

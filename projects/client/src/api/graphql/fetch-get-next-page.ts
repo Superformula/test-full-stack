@@ -1,31 +1,28 @@
-import { BACKEND_HOST_URI } from '../globals';
-import { APIUserModel, APINextToken } from './api-types';
+import { APIUserModel, APINextToken } from '../api-types';
 
-const GRAPH_API = `${BACKEND_HOST_URI}/graphql`
+import GRAPH_API from './backend-host';
 
-/**
- * Fortunately, we don't have any authorization - so we can make CORS requests all day long.
- */
-interface FetchGetPagesResult { 
+
+interface FetchGetNextPageResult { 
     users: APIUserModel[], 
     nextToken: APINextToken
 }
 
-interface FetchGetPagesGraphResult {
+interface FetchGetNextPageGraphResult {
     data: {
-        getPages: FetchGetPagesResult
+        getNextPage: FetchGetNextPageResult
     }
 }
 
-export function fetchGetPages(pageCount: number, filter = "") : Promise<FetchGetPagesResult> {
+export function fetchGetNextPage(nextToken: APINextToken, filter = "") : Promise<FetchGetNextPageResult> {
     const captureVariables: string[] = [];
     let captureVariablesString = "";
     const captureParameters: string[] = [];
     let captureParametersString = "";
 
-    if (pageCount) {
-        captureVariables.push('$pageCount: Int');
-        captureParameters.push('pageCount: $pageCount');
+    if (nextToken) {
+        captureVariables.push('$nextToken: NextTokenInput');
+        captureParameters.push('nextToken: $nextToken');
     }
     
     if (filter) {
@@ -45,8 +42,8 @@ export function fetchGetPages(pageCount: number, filter = "") : Promise<FetchGet
         },
         body: JSON.stringify({
             query: `
-                query getPage${captureVariablesString} {
-                    getPages${captureParametersString} {
+                query getNextPage${captureVariablesString} {
+                    getNextPage${captureParametersString} {
                         users {
                             id
                             name
@@ -61,14 +58,14 @@ export function fetchGetPages(pageCount: number, filter = "") : Promise<FetchGet
                 }
             `,
             variables: JSON.stringify({
-                pageCount: pageCount,
+                nextToken: nextToken,
                 filter: filter
             })
         })
     })
     .then((result) => result.json())
-    .then((graphResult: FetchGetPagesGraphResult) => { 
+    .then((graphResult: FetchGetNextPageGraphResult) => { 
         console.log(JSON.stringify(graphResult));
-        return graphResult.data.getPages;
+        return graphResult.data.getNextPage;
     });
 }

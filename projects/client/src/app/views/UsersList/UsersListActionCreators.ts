@@ -1,7 +1,8 @@
 import { UsersListActionTypes, UsersListFetchAction, UsersListFilterAction } from './UsersListRedux';
 import { AsynchronousActionStatus } from '../../../store/AsynchronousRedux';
 
-import { fetchGetPages } from "../../../api/graphql";
+import { fetchGetPages } from "../../../api/graphql/fetch-get-pages";
+import { fetchGetNextPage } from "../../../api/graphql/fetch-get-next-page";
 import { APIUserModel, APINextToken } from '../../../api/api-types';
 
 export function getUpdateFilter(filter: string) : UsersListFilterAction {
@@ -43,6 +44,26 @@ export function getPages(pageCount: number, filter: string) {
         });
 
         return fetchGetPages(pageCount, filter).then((resp) => {
+            clearTimeout(errorTimeout);
+
+            dispatch(getPagesSuccess(resp.users, resp.nextToken));
+        }).catch((err) => {
+            console.error(err);
+
+            dispatch(getPagesFailed());
+        });
+    }
+}
+
+export function getNextPage(nextToken: APINextToken, filter: string) {
+    return (dispatch) => {
+        dispatch(getPagesInProgress());
+
+        const errorTimeout = setTimeout(() => {
+            dispatch(getPagesFailed());
+        });
+
+        return fetchGetNextPage(nextToken, filter).then((resp) => {
             clearTimeout(errorTimeout);
 
             dispatch(getPagesSuccess(resp.users, resp.nextToken));

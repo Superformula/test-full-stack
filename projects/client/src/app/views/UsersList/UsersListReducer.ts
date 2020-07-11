@@ -39,7 +39,7 @@ export function reduceUsersList(state: UsersListState, action: UsersListAction) 
                     nextToken: fetchAction.nextToken,
                     isLoadingUsers: false,
                     // If we made a request but got no results
-                    isLoadMoreAvailable: !!(fetchAction?.users?.length)
+                    isLoadMoreAvailable: !!(fetchAction?.users?.length) && !!fetchAction.nextToken
                 };
             }
             else {
