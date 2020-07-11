@@ -1,20 +1,27 @@
 import * as React from 'react';
 
 import './user-card.css';
-const tmp = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60";
+
+const UNSPLASH_COLLECTION = "148984"
+
+// Github probably wont like this...
+const DEFAULT_AVATAR = "https://avatars2.githubusercontent.com/u/34583379?s=400&u=a084e2cd88c164807fe6e63f8ea1e57d75ca4e8d&v=4";
 
 type UserCardHtmlProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
 interface UserCardBaseProps {
     name: string;
     description: string;
-    avatarUrl: string;
+    id: string;
 }
-
 type UserCardProps = UserCardHtmlProps & UserCardBaseProps;
 
 const UserCard: React.FunctionComponent<UserCardProps> = (props: UserCardProps) => {
-    const { name, description, avatarUrl, ...htmlProps } = props;
+    const { name, description, id, ...htmlProps } = props;
+
+    // Prevent caching with the avatar url
+    // https://source.unsplash.com/
+    const unsplashUrl = `https://source.unsplash.com/collection/${UNSPLASH_COLLECTION}/144x144?${id}`;
 
     // This is embarassing.
     // https://stackoverflow.com/questions/493296/css-display-an-image-resized-and-cropped
@@ -22,7 +29,7 @@ const UserCard: React.FunctionComponent<UserCardProps> = (props: UserCardProps) 
         <div className="user-card-grid-element user-card-grid-element-row-element">
             <div {...htmlProps} className="user-card">
                 <div className="user-card-avatar" style={{
-                    backgroundImage: `url(${tmp})`,
+                    backgroundImage: `url(${unsplashUrl})`,
                 }}></div>
                 <h2>
                     {name.toUpperCase()}

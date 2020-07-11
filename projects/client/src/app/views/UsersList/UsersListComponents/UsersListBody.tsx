@@ -33,10 +33,10 @@ const UsersListBody: React.FunctionComponent<PropsFromRedux> = (props: PropsFrom
         }
     });
     
-
+    const altFilter = filter.toLowerCase();
     const filteredUsers = Object.keys(users).filter((id) => {
         const user = users[id];
-        return !filter || user.name.toLowerCase().startsWith(filter)
+        return !filter || user.name.toLowerCase().startsWith(altFilter);
     }).map((id) => users[id]);
 
     return (

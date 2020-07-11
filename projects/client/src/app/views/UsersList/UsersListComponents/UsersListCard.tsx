@@ -33,7 +33,7 @@ const UsersListCard: React.FunctionComponent<UsersListCardProps> = (props: Users
         <UserCard 
             name={user.name} 
             description={user.description} 
-            avatarUrl={""} 
+            id={user.id} 
             onClick={(e) => {
                 getShowUser(user);
             }}/>
