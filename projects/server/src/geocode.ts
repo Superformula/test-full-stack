@@ -43,7 +43,8 @@ export function geocode(req: IncomingMessage, res: ServerResponse) : void {
                     const coords = value.data.results[0].geometry.location;
                     
                     res.writeHead(200, {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
                     });
                     
                     const response = JSON.stringify(coords);
