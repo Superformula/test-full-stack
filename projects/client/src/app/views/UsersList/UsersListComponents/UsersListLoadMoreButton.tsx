@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Button from '../../../../components/button/Button';
+import LoadingIndicator from '../../../../components/loading-indicator/LoadingIndicator';
 import { connect, ConnectedProps } from "react-redux";
 import { getNextPage } from '../UsersListActionCreators';
-
 import type { RootState } from '../../../../store/configure-store'
 
 import './users-list-body.css';
@@ -27,10 +27,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 const UsersListLoadMoreButton: React.FunctionComponent<PropsFromRedux> = (props: PropsFromRedux) => {
     const { getNextPage, nextToken, filter, isLoadMoreAvailable, isLoadingUsers } = props;
     return (
+        
         <Button disabled={!isLoadMoreAvailable || isLoadingUsers} onClick={(e) => {
             getNextPage(nextToken, filter);
         }}>
-            Load More
+            {!isLoadingUsers ? "Load More" : <LoadingIndicator style={{width: '24px', height: '24px', margin: 'auto'}}/>}
         </Button>
     );
 }
