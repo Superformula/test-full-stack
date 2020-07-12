@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "env-cmd -f .env.test.local react-scripts test",
     "precypress": "copyfiles ./src/utils/testIds.js ./cypress/fixtures/",
-    "cypress:open": "cypress open --env .env",
+    "cypress:open": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

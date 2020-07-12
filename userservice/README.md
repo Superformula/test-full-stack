@@ -1,12 +1,12 @@
 ### Setting up the userservice project
 
-1. Go to the projects userservice folder
+1. Go to the projects "userservice" folder
 
 2. Make a copy of both deploy.sh.developement and deploy.e2etest.sh.development 
 
 3. Rename those copy by removing development so it will just be deploy.sh and deploy.e2etest.sh
 
-4. Edit both those files and put them in your mapbox API token on {youmapboxapikey} in those files.
+4. Edit both those files and put your mapbox API token on {youmapboxapikey} in those files.
 
 5. Navigate to the test/integration folder
 
@@ -18,7 +18,7 @@
 
 1. If you don’t have the docker step setup, please run npm i, and npm install -g serverless. If you have the docker container step setup please enter the bash shell of the docker container.
 2. Navigate to the userservice folder in a shell/command line of your choice
-3. Execute ./deploy.sh or npm run deploy_dev and this will deploy a dev version. This will be the service where you will use the site to interact and play with.
+3. Execute ./deploy.sh or npm run deploy_dev and this will deploy the dev version. This will be the service where you will use the site to interact and play with.
 4. Execute ./deploy.e2etest.sh or npm run deploy_e2e and this will deploy the e2e version. This will be the service where cypress will run against.
 
 
