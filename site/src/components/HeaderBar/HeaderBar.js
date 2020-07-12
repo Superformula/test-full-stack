@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaUserPlus } from "react-icons/fa";
 import styled from "styled-components";
 import { debounce } from "debounce";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
-import { SfH1, SfP, SfTextInput } from "../../styles/HtmlElementStyle";
+import { SfH1, SfP, SfTextInput } from "../../styles/HtmlElementStyle.js";
+import TestIds from "../../utils/testIds.js";
 
 const HeaderArea = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ const HeaderBar = (props) => {
         <SfH1>Users List</SfH1>
 
         <SfP
+          data-testid={TestIds.AddUserButton}
           onClick={() => {
             props.onNewUserClick(null);
           }}
@@ -59,6 +61,7 @@ const HeaderBar = (props) => {
       </div>
       <div className="area searchArea">
         <SfTextInput
+          data-testid={TestIds.SearchTextBox}
           type="textbox"
           placeholder="Search..."
           onChange={async (e) => {

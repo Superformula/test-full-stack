@@ -7,7 +7,8 @@ import UserCard from "../../components/UserCard/UserCard.js";
 import { UsersActions } from "../../redux/Users/UsersActions.js";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
-import { SfButton } from "../../styles/HtmlElementStyle";
+import { SfButton } from "../../styles/HtmlElementStyle.js";
+import TestIds from "../../utils/testIds.js";
 
 const UserListPanel = styled.div`
   display: flex;
@@ -41,6 +42,7 @@ const UserList = (props) => {
       <CurrentFilterHeader>
         Current Filter: {props.currentSearchTerm} &nbsp;
         <FaTimes
+          data-testid={TestIds.FilterClear}
           onClick={() => {
             return AppSyncUserServiceProvider.doSearch("");
           }}
@@ -49,10 +51,14 @@ const UserList = (props) => {
     );
   }
   let loadMoreArea = "";
-  if (props.users.length && props.users.length % 10 === 0) {
+  if (
+    props.users.length &&
+    props.users.length % process.env.REACT_APP_USERS_NUMBER_LIMIT === 0
+  ) {
     loadMoreArea = (
       <LoadMoreArea>
         <SfButton
+          data-testid={TestIds.LoadMoreButton}
           onClick={async () => {
             return AppSyncUserServiceProvider.loadMore();
           }}
@@ -68,7 +74,7 @@ const UserList = (props) => {
       {currentSearchTerm}
       <UserListPanel>
         <br />
-        {props.users.map((item) => {
+        {props.users.map((item, index) => {
           return userCard(item, props.onUserCardClick);
         })}
       </UserListPanel>
@@ -85,6 +91,7 @@ const UserListMapStateToProps = (state) => {
   return {
     users: state.users,
     currentSearchTerm: state.currentSearchTerm,
+    userNumberLimit: state.userNumberLimit,
   };
 };
 

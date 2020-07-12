@@ -15,7 +15,6 @@ const Map = (props) => {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
     setMap(map);
-    pointToLocation(props.address, map);
   }, []);
 
   const onUnmount = React.useCallback((map) => {

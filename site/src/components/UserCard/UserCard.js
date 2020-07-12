@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import React from "react";
-import moment from "moment/min/moment.min.js";
+import moment from "moment";
 import { SfH2, SfP } from "../../styles/HtmlElementStyle.js";
 import { SfPenIcon } from "../../utils/SfIcons.js";
+import TestIds from "../../utils/testIds.js";
 
 const UserCardPanel = styled.div`
   position: relative;
@@ -15,12 +16,6 @@ const UserCardPanel = styled.div`
   border-radius: 8px;
   :hover {
     box-shadow: 0 6px 9px 2px #e4e4e4;
-  }
-  svg {
-    cursor: pointer;
-    position: absolute;
-    right: 23px;
-    top: 18px;
   }
 `;
 
@@ -66,28 +61,51 @@ const UserCardPanelInfoArea = styled.div`
   }
 `;
 
+const UserEditButton = styled.span`
+  cursor: pointer;
+  position: absolute;
+  right: 23px;
+  top: 18px;
+`;
+
 const UserCard = (props) => {
   return (
-    <UserCardPanel>
-      <SfPenIcon
+    <UserCardPanel data-testid={TestIds.UserCard}>
+      <UserEditButton
+        data-testid={TestIds.EditUserButton}
         onClick={() => {
           if (props.onClick) {
             props.onClick(props.user);
           }
         }}
-      />
+      >
+        <SfPenIcon />
+      </UserEditButton>
       <UserCardPanelImageArea>
         <img alt={props.user.name} src={props.user.image} />
       </UserCardPanelImageArea>
       <UserCardPanelInfoArea>
         <div>
-          <SfH2 className="nameLabel">{props.user.name}</SfH2>
-          <div className="createdAtLabel">
+          <SfH2
+            className="nameLabel"
+            data-testid={TestIds.UserNameDisplayLabel}
+          >
+            {props.user.name}
+          </SfH2>
+          <div
+            className="createdAtLabel"
+            data-testid={TestIds.UserNameDisplayLabel}
+          >
             <SfP> Created</SfP>
             <label>{moment(props.user.createdAt).format("YYYY-MM-DD")}</label>
           </div>
         </div>
-        <div className="descriptionLabel">{props.user.description}</div>
+        <div
+          className="descriptionLabel"
+          data-testid={TestIds.UserDescriptionLabel}
+        >
+          {props.user.description}
+        </div>
       </UserCardPanelInfoArea>
     </UserCardPanel>
   );

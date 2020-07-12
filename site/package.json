@@ -7,6 +7,7 @@
     "aws-appsync": "^3.0.4",
     "cypress": "^4.10.0",
     "debounce": "^1.2.0",
+    "env-cmd": "^10.1.0",
     "graphql-tag": "^2.10.3",
     "moment": "^2.27.0",
     "query-string": "^6.13.1",
@@ -24,17 +25,23 @@
     "styled-react-modal": "^2.0.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
+    "@babel/register": "^7.10.4",
     "@jest/globals": "^26.0.1",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.1",
+    "copyfiles": "^2.3.0",
     "jest": "^24.9.0",
     "jest-styled-components": "^7.0.2",
     "prettier": "2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start_test_site": "env-cmd -f .env.test.local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "precypress": "copyfiles ./src/utils/testIds.js ./cypress/fixtures/",
+    "cypress:open": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

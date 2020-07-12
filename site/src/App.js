@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Provider } from "react-redux";
-import ReduxThunk from "redux-thunk";
-import { applyMiddleware, createStore } from "redux";
+import { createStore } from "redux";
 import { ModalProvider, BaseModalBackground } from "styled-react-modal";
 import styled from "styled-components";
 
@@ -18,16 +17,27 @@ const FadingBackground = styled(BaseModalBackground)`
   transition: opacity ease 500ms;
 `;
 
-const userStore = createStore(UsersReducer, applyMiddleware(ReduxThunk));
-AppSyncUserServiceProvider.init(userStore);
+const userStore = createStore(UsersReducer);
 
-window.addEventListener("popstate", async (event) => {
-  const parsed = queryString.parse(document.location.search);
+const initialize = async () => {
+  await AppSyncUserServiceProvider.init(userStore, false);
+};
+
+const loadUserList = async () => {
+  const parsed = queryString.parse(document.location.hash);
   let limit = process.env.REACT_APP_USERS_NUMBER_LIMIT;
   if (parsed["limit"]) {
     limit = parseInt(parsed["limit"]);
   }
   await AppSyncUserServiceProvider.loadUsersFromState(parsed["filter"], limit);
+};
+
+window.addEventListener("hashchange", async (event) => {
+  await loadUserList();
+});
+
+initialize().then(async () => {
+  await loadUserList();
 });
 
 const App = () => {
@@ -50,7 +60,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <>
       <Provider store={userStore}>
         <HeaderBar onNewUserClick={openModalFunc} />
         <UserListContainer onUserCardClick={openModalFunc} />
@@ -62,7 +72,7 @@ const App = () => {
           />
         </ModalProvider>
       </Provider>
-    </div>
+    </>
   );
 };
 

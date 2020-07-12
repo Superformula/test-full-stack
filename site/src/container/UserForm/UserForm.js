@@ -13,6 +13,7 @@ import {
   SfH2,
   SfTextInput,
 } from "../../styles/HtmlElementStyle.js";
+import TestIds from "../../utils/testIds";
 
 const UserFormPanel = styled.div`
   display: flex;
@@ -24,13 +25,14 @@ const UserFormPanel = styled.div`
     margin-top: 24px;
     width: 100%;
     margin-left: 132px;
-    svg {
-      position: relative;
-      top: 10px;
-      left: 10px;
-      cursor: pointer;
-    }
   }
+`;
+
+const UserFormPanelDeleteButton = styled.span`
+  position: relative;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
 `;
 
 const UserFormPanelArea = styled.div`
@@ -43,19 +45,19 @@ const UserFormPanelArea = styled.div`
 
 const UserFormPanelImageAndMapArea = styled.div`
   flex-direction: column;
-  flex-basis: 50%;
+  flex-basis: 651px;
   display: flex;
   align-items: center;
 `;
 
 const UserFormPanelInputArea = styled.div`
   flex-direction: column;
-  flex-basis: 50%;
+  flex-basis: 621px;
   align-items: center;
 `;
 
 const UserFormRow = styled.div`
-  width: calc(100% - 64px);
+  width: 100%;
   padding-right: 64px;
   margin-top: 18px;
   margin-bottom: 18px;
@@ -63,12 +65,15 @@ const UserFormRow = styled.div`
   input[type="text"],
   input[type="date"] {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    max-width: 580px;
+  }
+
+  button {
+    margin-top: 20px;
   }
 
   .resetButton {
-    margin-left: 40px;
+    margin-left: 56px;
   }
   .danger-text {
     color: #e08181;
@@ -108,15 +113,16 @@ const UserForm = (props) => {
     address = props.currentUser.address;
     description = props.currentUser.description;
     removeButton = (
-      <FaUserMinus
+      <UserFormPanelDeleteButton
         type="button"
+        data-testid={TestIds.DeleteUserButton}
         onClick={async () => {
           await AppSyncUserServiceProvider.deleteUser(props.currentUser);
           props.onSubmitted();
         }}
       >
-        Delete
-      </FaUserMinus>
+        <FaUserMinus>Delete</FaUserMinus>
+      </UserFormPanelDeleteButton>
     );
   }
 
@@ -139,6 +145,7 @@ const UserForm = (props) => {
                 type="text"
                 name="name"
                 defaultValue={name}
+                data-testid={TestIds.UserNameField}
                 ref={register({
                   required: true,
                 })}
@@ -153,6 +160,7 @@ const UserForm = (props) => {
                 type="date"
                 name="dateOfBirth"
                 defaultValue={dateOfBirth}
+                data-testid={TestIds.DateOfBirthField}
                 ref={register({
                   required: false,
                 })}
@@ -164,6 +172,7 @@ const UserForm = (props) => {
                 type="text"
                 name="address"
                 defaultValue={address}
+                data-testid={TestIds.UserAddressField}
                 ref={register({
                   required: false,
                 })}
@@ -178,13 +187,19 @@ const UserForm = (props) => {
                 type="text"
                 name="description"
                 defaultValue={description}
+                data-testid={TestIds.UserDescriptionField}
                 ref={register({
                   required: false,
                 })}
               />
             </UserFormRow>
             <UserFormRow>
-              <SfButton type="submit">Submit</SfButton>
+              <SfButton
+                type="submit"
+                data-testid={TestIds.UserFormSubmitButton}
+              >
+                Submit
+              </SfButton>
               <SfButton className="resetButton" type="reset">
                 Reset
               </SfButton>

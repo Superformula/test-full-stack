@@ -1,7 +1,7 @@
 import getAppSyncClient from "./getAppSyncClient.js";
 import { UsersActions } from "../redux/Users/UsersActions.js";
 import { toast } from "react-toastify";
-import GraphQLUserQueries from "../graphqlQueries/GraphQLUserQueries";
+import GraphQLUserQueries from "../graphqlQueries/GraphQLUserQueries.js";
 
 class AppSyncUserServiceProvider {
   async init(store) {
@@ -11,8 +11,8 @@ class AppSyncUserServiceProvider {
     this._hasBeenCall = true;
     this._store = store;
     this._client = await getAppSyncClient();
-    await this.loadUsers(null, null);
-    initSubscription(this._client, this._store);
+
+    initSubscription(this._client, this._store, this);
   }
 
   async doSearch(searchTerm) {
@@ -26,6 +26,7 @@ class AppSyncUserServiceProvider {
     let state = this._store.getState();
     let currentSearchTerm = state.currentSearchTerm;
     let startKey = null;
+
     if (state.users.length > 0) {
       startKey = {
         id: state.users[state.users.length - 1].id,
@@ -52,74 +53,84 @@ class AppSyncUserServiceProvider {
   async loadUsers(filter, startKey, pushToState = true) {
     let state = this._store.getState();
     let limit = state.userNumberLimit - state.users.length;
-    let result = await this._client.query({
-      query: GraphQLUserQueries.getUsers,
-      variables: {
-        filter: filter,
-        limit: limit,
-        startKey: startKey,
-      },
-      fetchPolicy: "network-only",
-    });
+    try {
+      let result = await this._client.query({
+        query: GraphQLUserQueries.getUsers,
+        variables: {
+          filter: filter,
+          limit: limit,
+          startKey: startKey,
+        },
+        fetchPolicy: "network-only",
+      });
 
-    let numberOfUsersLoaded = result.data.getUsers.items.length;
-    let users = mergeUsers(
-      state.users,
-      result.data.getUsers.items,
-      state.currentSearchTerm,
-      state.userNumberLimit
-    );
-    toast(`🦄 ${numberOfUsersLoaded} user(s) loaded`);
-    this._store.dispatch(UsersActions.setUsers(users));
-    if (pushToState) {
-      pushUrlState(filter, state.userNumberLimit);
+      let numberOfUsersLoaded = result.data.getUsers.items.length;
+      let users = mergeUsers(
+        state.users,
+        result.data.getUsers.items,
+        state.currentSearchTerm,
+        state.userNumberLimit
+      );
+      toast(`🦄 ${numberOfUsersLoaded} user(s) loaded`);
+      this._store.dispatch(UsersActions.setUsers(users));
+      if (pushToState) {
+        pushUrlState(filter, state.userNumberLimit);
+      }
+      return numberOfUsersLoaded;
+    } catch (e) {
+      handleError(e);
     }
-    return numberOfUsersLoaded;
   }
 
   async addUser(input) {
-    return this._client.mutate({
-      mutation: GraphQLUserQueries.addUser,
-      fetchPolicy: "no-cache",
-      variables: {
-        name: input.name,
-        dateOfBirth: input.dateOfBirth,
-        address: input.address,
-        description: input.description,
-      },
-    });
+    return this._client
+      .mutate({
+        mutation: GraphQLUserQueries.addUser,
+        fetchPolicy: "no-cache",
+        variables: {
+          name: input.name,
+          dateOfBirth: input.dateOfBirth,
+          address: input.address,
+          description: input.description,
+        },
+      })
+      .catch(handleError);
   }
 
   async deleteUser(input) {
-    return this._client.mutate({
-      mutation: GraphQLUserQueries.deleteUser,
-      fetchPolicy: "no-cache",
-      variables: {
-        id: input.id,
-        name: input.name,
-      },
-    });
+    return this._client
+      .mutate({
+        mutation: GraphQLUserQueries.deleteUser,
+        fetchPolicy: "no-cache",
+        variables: {
+          id: input.id,
+          name: input.name,
+        },
+      })
+      .catch(handleError);
   }
 
   async updateUser(input) {
-    return this._client.mutate({
-      mutation: GraphQLUserQueries.updateUser,
-      fetchPolicy: "no-cache",
-      variables: {
-        id: input.id,
-        name: input.name,
-        dateOfBirth: input.dateOfBirth,
-        address: input.address,
-        description: input.description,
-      },
-    });
+    return this._client
+      .mutate({
+        mutation: GraphQLUserQueries.updateUser,
+        fetchPolicy: "no-cache",
+        variables: {
+          id: input.id,
+          name: input.name,
+          dateOfBirth: input.dateOfBirth,
+          address: input.address,
+          description: input.description,
+        },
+      })
+      .catch(handleError);
   }
 }
 
-const initSubscription = (client, store) => {
+const initSubscription = (client, store, self) => {
   attachUpdateSub(client, store);
   attachAddSub(client, store);
-  attachDeleteSub(client, store);
+  attachDeleteSub(client, store, self);
 };
 
 const attachUpdateSub = (client, store) => {
@@ -141,7 +152,7 @@ const attachUpdateSub = (client, store) => {
       store.dispatch(UsersActions.setUsers(users));
     },
     complete: console.log,
-    error: console.log,
+    error: handleError,
   });
 };
 
@@ -164,11 +175,11 @@ const attachAddSub = (client, store) => {
       store.dispatch(UsersActions.setUsers(users));
     },
     complete: console.log,
-    error: console.log,
+    error: handleError,
   });
 };
 
-const attachDeleteSub = (client, store) => {
+const attachDeleteSub = (client, store, self) => {
   const deleteUserObservable = client.subscribe({
     query: GraphQLUserQueries.deleteUserSub,
     fetchPolicy: "no-cache",
@@ -177,18 +188,33 @@ const attachDeleteSub = (client, store) => {
   deleteUserObservable.subscribe({
     next: (response) => {
       toast(`🦄 ${response.data.deletedUser.name} Deleted!`);
-      let users = store.getState().users;
+      let state = store.getState();
+      let users = state.users;
       let index = users.findIndex((item) => {
         return item.id === response.data.deletedUser.id;
       });
-      console.log(index);
+
       if (index > -1) {
+        let needToGrabNext = false;
+        if (users.length > 0 && users.length % getEnvUserLimit() === 0) {
+          needToGrabNext = true;
+        }
         users.splice(index, 1);
         store.dispatch(UsersActions.setUsers([...users]));
+
+        if (needToGrabNext && users.length > 1) {
+          self.loadUsers(
+            state.currentSearchTerm,
+            {
+              id: state.users[state.users.length - 1].id,
+            },
+            false
+          );
+        }
       }
     },
     complete: console.log,
-    error: console.log,
+    error: handleError,
   });
 };
 
@@ -229,7 +255,6 @@ const mergeUsers = (currentUsers, users, currentSearchText, maxLimit) => {
     })
     .slice(0, maxLimit);
 };
-
 const randomImage = () => {
   let number = Math.floor(Math.random() * 1000);
   let result = number % 2;
@@ -250,13 +275,17 @@ const pushUrlState = (filter, userNumberLimit) => {
     window.history.pushState(
       "",
       "",
-      `/?limit=${userNumberLimit}&filter=${
+      `/#limit=${userNumberLimit}&filter=${
         filter ? encodeURIComponent(filter) : ""
       }`
     );
   } else {
     window.history.pushState("", "", "/");
   }
+};
+const handleError = (e) => {
+  console.log(e);
+  toast.error(e);
 };
 
 export default new AppSyncUserServiceProvider();

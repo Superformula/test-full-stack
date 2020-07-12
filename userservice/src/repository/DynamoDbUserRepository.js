@@ -13,7 +13,6 @@ export default class DynamoDbUserRepository {
       KeyConditionExpression: "pk = :REGULAR_USER",
       ExpressionAttributeValues: { ":REGULAR_USER": "REGULAR_USER" },
       ScanIndexForward: false,
-      Limit: limit,
     };
 
     if (startKey) {

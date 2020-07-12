@@ -10,7 +10,7 @@ const UserFormStyledModal = Modal.styled`
   border-radius: 8px;
   display: flex;
   flex-direction: column;    
-  background-color: white;
+  background-color: #F8F8F8;
   opacity: ${(props) => props.opacity};
   transition: opacity ease 500ms;
   position: relative;

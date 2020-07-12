@@ -8,6 +8,7 @@ const getAppSyncClient = async () => {
       type: "API_KEY",
       apiKey: process.env.REACT_APP_AWS_APP_SYNC_API_KEY,
     },
+    disableOffline: true,
   });
   return await client.hydrated();
 };

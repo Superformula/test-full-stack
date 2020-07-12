@@ -12,3 +12,4 @@ jspm_packages
 .env
 test/integration/EnvironmentVariable.js
 deploy.sh
+deploy.e2etest.sh
