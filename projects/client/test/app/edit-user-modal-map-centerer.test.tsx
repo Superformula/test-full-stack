@@ -16,10 +16,10 @@ class MapMock {
 }
 
 describe("EditUserModalMapCenterer", () => {
-    let mapMock = new MapMock();
+    const mapMock = new MapMock();
 
     it("Pans the google map when location is updated", () => {
-        let panLocation = {
+        const panLocation = {
             lat: 38,
             lng: -94
         };

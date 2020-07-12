@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect, ConnectedProps } from "react-redux";
-import { getHide } from './EditUserModalActionCreators';
 import EditUserModalBody from "./EditUserModalComponents/EditUserModalBody";
 import EditUserModalHeader from "./EditUserModalComponents/EditUserModalHeader";
 import EditUserModalFooter from "./EditUserModalComponents/EditUserModalFooter";
@@ -14,16 +13,14 @@ const mapStateToProps = (state: RootState) => {
     };
 };
 
-const mapDispatchToProps = {
-    getHide: getHide
-};
+const mapDispatchToProps = {};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const EditUserModal: React.FunctionComponent<PropsFromRedux> = (props: PropsFromRedux) => {
-    const { getHide, user } = props;
+    const { user } = props;
     let overlayClasses = "modal-overlay";
     let modalClasses = "modal";
 

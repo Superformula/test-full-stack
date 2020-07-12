@@ -5,7 +5,7 @@ import './user-card.css';
 const UNSPLASH_COLLECTION = "148984"
 
 // Github probably wont like this...
-const DEFAULT_AVATAR = "https://avatars2.githubusercontent.com/u/34583379?s=400&u=a084e2cd88c164807fe6e63f8ea1e57d75ca4e8d&v=4";
+// const DEFAULT_AVATAR = "https://avatars2.githubusercontent.com/u/34583379?s=400&u=a084e2cd88c164807fe6e63f8ea1e57d75ca4e8d&v=4";
 
 type UserCardHtmlProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 

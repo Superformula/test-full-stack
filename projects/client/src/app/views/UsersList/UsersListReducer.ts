@@ -3,7 +3,6 @@ import { AsynchronousActionStatus } from "../../../store/AsynchronousRedux";
 import { APIUserModel } from '../../../api/api-types';
 
 import type { UsersListState, UsersListAction, UsersListFetchAction } from './UsersListRedux';
-import { EditUserModalActionTypes, EditUserModalSaveAction } from '../../modals/EditUserModal/EditUserModalRedux';
 
 function mergeUserMaps(users: UsersListStateUserMap, newUsers?: APIUserModel[]) : UsersListStateUserMap {
     const result = {

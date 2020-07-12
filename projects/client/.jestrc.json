@@ -11,5 +11,5 @@
     "testPathIgnorePatterns": ["<rootDir>/test/setup/"],
     "moduleNameMapper": {
         "\\.(css|less)$": "identity-obj-proxy"
-      }
+    }
 }

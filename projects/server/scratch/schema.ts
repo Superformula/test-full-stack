@@ -1,5 +1,5 @@
-import { graphql, buildSchema } from "graphql";
+import { buildSchema } from "graphql";
 import { schemaTemplate } from "../src/schema";
 
-let res = buildSchema(schemaTemplate);
+const res = buildSchema(schemaTemplate);
 console.log(JSON.stringify(res));

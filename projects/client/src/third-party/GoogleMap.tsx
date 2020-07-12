@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper, IProvidedProps, IMapProps } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper, IProvidedProps, IMapProps } from 'google-maps-react';
 import { GOOGLE_MAPS_API_KEY } from "../globals";
 
 
@@ -8,7 +8,7 @@ export const MapMarker: any = Marker;
 
 const GoogleMap: React.FunctionComponent<React.PropsWithChildren<IProvidedProps>> 
 = (props: React.PropsWithChildren<IProvidedProps>) => {
-    const { google, loaded, children } = props;
+    const { google, children } = props;
     return (
         <Map google={google} onReady={(mapProps: IMapProps, map: any, event: any) => {
             console.log("eh");

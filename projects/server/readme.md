@@ -86,6 +86,10 @@ Todo:
 -- Parameterize the database.
 ```
 
+## Contribution
+
+Anyone is free to submit pull-requests. Please run `npm run lint` prior.
+
 ## Exploration
 
 There are saved `postman` requests in `tools/postman`. To help understand this API, give those a look! You can import `/tools/postman/Lambda-Backend.postman_collection.json` into Postman! __Be sure to update the lambda base url!__ The base url is the url provided the deployment procedure.

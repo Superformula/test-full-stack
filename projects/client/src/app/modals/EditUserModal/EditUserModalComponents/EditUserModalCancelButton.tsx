@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Button from '../../../../components/button/Button';
-import LoadingIndicator from '../../../../components/loading-indicator/LoadingIndicator';
 import { connect, ConnectedProps } from "react-redux";
 import { getHide } from '../EditUserModalActionCreators';
 import type { RootState } from '../../../../store/configure-store'

@@ -1,4 +1,4 @@
-import { APIUserModel, APINextToken } from '../api-types';
+import { APIUserModel } from '../api-types';
 
 import GRAPH_API from './backend-host';
 

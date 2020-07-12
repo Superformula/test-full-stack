@@ -88,7 +88,9 @@ node_modules/.bin/cross-env BACKEND_HOST_URI='<>' GOOGLE_MAPS_API_KEY='<>' npm s
 
 ## Tests
 
-Unit tests use jest.
+Unit tests use jest and enzyme.
+
+Unit tests can be run simply with `npm run test`. No environment variables required.
 
 ### Tests Installation - Notes
 
@@ -116,6 +118,11 @@ enableFetchMocks();
 ```
 
 The same is done for the redux store and many other variables.
+
+## Contribution
+
+Anyone is free to submit pull-requests. Please run `npm run lint` prior.
+
 
 ## Infinite scroll notes
 

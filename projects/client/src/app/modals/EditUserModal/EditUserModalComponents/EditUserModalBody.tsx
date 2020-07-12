@@ -1,7 +1,6 @@
 import * as React from 'react';
 import EditUserModalInput from './EditUserModalInput';
 import { APIUserModel } from '../../../../api/api-types';
-import GoogleMap, { MapMarker } from "../../../../third-party/GoogleMap";
 import EditUserModalMap from './EditUserModalMap/EditUserModalMap';
 import './edit-user-modal-body.css';
 

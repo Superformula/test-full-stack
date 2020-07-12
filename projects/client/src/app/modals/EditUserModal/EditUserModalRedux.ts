@@ -1,4 +1,4 @@
-import { AsynchronousActionStatus, AsynchronousAction } from "../../../store/AsynchronousRedux";
+import { AsynchronousAction } from "../../../store/AsynchronousRedux";
 import type { APIUserModel } from "../../../api/api-types";
 import type { FetchGeoCodeResult } from "../../../api/rest/fetch-geocode";
 
