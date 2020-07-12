@@ -49,7 +49,7 @@ export function fetchUpdateUser(user: APIUserModel) : Promise<FetchUpdateUserRes
     })
     .then((result) => result.json())
     .then((graphResult: FetchUpdateUserGraphResult) => { 
-        console.log(JSON.stringify(graphResult));
+        // console.log(JSON.stringify(graphResult));
         return graphResult.data.updateUser;
     });
 }

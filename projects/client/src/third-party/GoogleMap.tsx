@@ -11,7 +11,6 @@ const GoogleMap: React.FunctionComponent<React.PropsWithChildren<IProvidedProps>
     const { google, children } = props;
     return (
         <Map google={google} onReady={(mapProps: IMapProps, map: any, event: any) => {
-            console.log("eh");
             // For testing purposes.
             (window as any).map = map;
             map.disableDefaultUI = true;

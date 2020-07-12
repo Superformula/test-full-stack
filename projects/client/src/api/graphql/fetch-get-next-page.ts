@@ -66,7 +66,7 @@ export function fetchGetNextPage(nextToken: APINextToken, filter = "") : Promise
     })
     .then((result) => result.json())
     .then((graphResult: FetchGetNextPageGraphResult) => { 
-        console.log(JSON.stringify(graphResult));
+        // console.log(JSON.stringify(graphResult));
         return graphResult.data.getNextPage;
     });
 }

@@ -19,7 +19,7 @@ export function fetchGeocode(address: string) : Promise<FetchGeoCodeResult> {
     }
 
     const url = `${REST_API}?address=${encodeURIComponent(address)}`;
-    console.log(url);
+    // console.log(url);
 
     return fetch(url, {
         method: 'GET',

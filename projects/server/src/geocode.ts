@@ -20,7 +20,10 @@ export function geocode(req: IncomingMessage, res: ServerResponse) : void {
     function error(err: any) {
         console.error(JSON.stringify(err));
 
-        res.writeHead(400);
+        res.writeHead(400, {
+            'Access-Control-Allow-Origin': '*'
+        });
+        
         res.end();
     }
 

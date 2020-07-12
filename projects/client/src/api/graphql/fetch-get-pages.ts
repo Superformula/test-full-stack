@@ -68,7 +68,7 @@ export function fetchGetPages(pageCount: number, filter = "") : Promise<FetchGet
     })
     .then((result) => result.json())
     .then((graphResult: FetchGetPagesGraphResult) => { 
-        console.log(JSON.stringify(graphResult));
+        // console.log(JSON.stringify(graphResult));
         return graphResult.data.getPages;
     });
 }
