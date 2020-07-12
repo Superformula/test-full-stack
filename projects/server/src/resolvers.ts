@@ -58,7 +58,8 @@ export const resolvers = {
                 name: name,
                 dob: dob,
                 address: address,
-                description: description
+                description: description,
+                createdAt: Math.floor(Date.now()/1000)
             });
 
             return user;
@@ -71,7 +72,8 @@ export const resolvers = {
                 name: name,
                 dob: dob,
                 address: address,
-                description: description
+                description: description,
+                updatedAt: Math.floor(Date.now()/1000)
             });
 
             return user;

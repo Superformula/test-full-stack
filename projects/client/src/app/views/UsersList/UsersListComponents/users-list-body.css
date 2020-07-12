@@ -40,7 +40,25 @@
     width: 100%;
 }
 
-@media (max-width: 512px) {
+.user-card-emphasis {
+    font-weight: 600;
+    font-size: 18px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: rgb(176, 30, 30);
+}
+
+.users-list-card-flare {
+    float: right;
+    opacity: 0;
+    transition: all .2s;
+}
+
+.users-list-card-flare-hover {
+    visibility: visible;
+    opacity: 1;
+}
+
+@media (max-width: 586px) {
     .users-list-body-header {
         flex-direction: column;
     }

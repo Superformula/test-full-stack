@@ -32,6 +32,7 @@ p {
     flex-basis: 33.33333333%;
     flex-grow: 0;
     display: flex;
+    position: relative;
 }
 
 .user-card-grid-element-row-element {
@@ -44,7 +45,7 @@ p {
     }
 }
 
-@media(max-width: 512px) {
+@media(max-width: 586px) {
     .user-card-grid-element {
         flex-basis: 100%;
     }

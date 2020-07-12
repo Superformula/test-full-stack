@@ -27,8 +27,10 @@ export const UserSchema = new dynamoose.Schema({
     "dob": String,
     "address": String,
     "description": String,
+    "createdAt": Number,
+    "updatedAt": Number
 }, {
-    "timestamps": true // This handles createdAt and updatedAt
+    "timestamps": false
 });
 
 export const UserModel = dynamoose.model("Users-Dev", UserSchema, {

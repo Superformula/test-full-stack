@@ -52,6 +52,7 @@ export function fetchGetPages(pageCount: number, filter = "") : Promise<FetchGet
                             address
                             dob
                             description
+                            createdAt
                         }
                         nextToken {
                             id

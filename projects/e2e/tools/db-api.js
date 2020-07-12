@@ -50,7 +50,8 @@ async function createTable() {
                     AttributeName: 'id',
                     AttributeType: 'S'
                 },
-            ]
+            ],
+            
         }, (err, data) => {
             if (err) {
                 reject(err);

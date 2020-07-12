@@ -50,6 +50,7 @@ export function fetchGetNextPage(nextToken: APINextToken, filter = "") : Promise
                             address
                             dob
                             description
+                            createdAt
                         }
                         nextToken {
                             id

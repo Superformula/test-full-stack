@@ -35,3 +35,9 @@
     background-size: cover;
     border-radius: 50%;
 }
+
+.user-card-emphasis-h2 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+}

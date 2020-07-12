@@ -38,6 +38,7 @@ export function fetchUpdateUser(user: APIUserModel) : Promise<FetchUpdateUserRes
                         dob
                         address
                         description
+                        createdAt
                     }
                 }
             `,

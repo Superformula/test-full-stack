@@ -13,11 +13,13 @@ interface UserCardBaseProps {
     name: string;
     description: string;
     id: string;
+    flare?: JSX.Element;
+    cardRef?: React.MutableRefObject<any>;
 }
 type UserCardProps = UserCardHtmlProps & UserCardBaseProps;
 
 const UserCard: React.FunctionComponent<UserCardProps> = (props: UserCardProps) => {
-    const { name, description, id, ...htmlProps } = props;
+    const { name, description, id, flare, cardRef, ...htmlProps } = props;
 
     // Prevent caching with the avatar url
     // https://source.unsplash.com/
@@ -26,18 +28,17 @@ const UserCard: React.FunctionComponent<UserCardProps> = (props: UserCardProps) 
     // This is embarassing.
     // https://stackoverflow.com/questions/493296/css-display-an-image-resized-and-cropped
     return (
-        <div className="user-card-grid-element user-card-grid-element-row-element">
-            <div {...htmlProps} className="user-card">
-                <div className="user-card-avatar" style={{
-                    backgroundImage: `url(${unsplashUrl})`,
-                }}></div>
-                <h2>
-                    {name.toUpperCase()}
-                </h2>
-                <p>
-                    {description}
-                </p>
-            </div>
+        <div {...htmlProps} ref={cardRef} className="user-card">
+            <div className="user-card-avatar" style={{
+                backgroundImage: `url(${unsplashUrl})`,
+            }}></div>
+            <p>
+                <span className="user-card-emphasis-h2">{name.toUpperCase()}</span> 
+                {flare}
+            </p>
+            <p>
+                {description}
+            </p>
         </div>
     );
 }
