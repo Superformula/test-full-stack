@@ -28,5 +28,11 @@
     "serverless-dotenv-plugin": "^2.4.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "integration-test" : "jest --testPathPattern=./test/integration",
+    "unit-test" : "jest --testPathPattern=./test/unit",
+    "deploy_dev" : "./deploy.sh",
+    "deploy_e2e" : "./deploy.e2etest.sh"
   }
 }

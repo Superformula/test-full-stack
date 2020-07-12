@@ -13,6 +13,7 @@ export default class DynamoDbUserRepository {
       KeyConditionExpression: "pk = :REGULAR_USER",
       ExpressionAttributeValues: { ":REGULAR_USER": "REGULAR_USER" },
       ScanIndexForward: false,
+      limit: limit,
     };
 
     if (startKey) {
@@ -22,6 +23,7 @@ export default class DynamoDbUserRepository {
     if (filter) {
       params.FilterExpression = "contains (searchName, :name)";
       params.ExpressionAttributeValues[":name"] = filter.toLowerCase();
+      delete params["limit"];
     }
 
     let data = null;
@@ -30,12 +32,12 @@ export default class DynamoDbUserRepository {
         params.ExclusiveStartKey = data.LastEvaluatedKey;
       }
       data = await db.query(params).promise();
-      data.Items.forEach((item) => {
+      for (let i = 0; i < data.Items.length; i++) {
         if (result.length >= limit) {
-          return;
+          break;
         }
         result.push(User.fromJsonObject(item));
-      });
+      }
     } while (result.length < limit && data.LastEvaluatedKey);
 
     return result;
@@ -67,6 +69,8 @@ export default class DynamoDbUserRepository {
 
   async deleteUser(user) {
     let db = getDynamoDb();
+    let currentUser = await this.getUser(user);
+
     const param = {
       Key: fromJsonToKey(user),
       TableName: getTableName(),
@@ -74,7 +78,7 @@ export default class DynamoDbUserRepository {
 
     await db.delete(param).promise();
 
-    return user;
+    return currentUser;
   }
 
   async updateUser(user) {

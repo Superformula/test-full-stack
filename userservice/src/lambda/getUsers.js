@@ -1,4 +1,5 @@
 import getUserService from "../compositeRoot/getUserService.js";
+import logError from "../error/logError.js";
 
 exports.handler = async (event) => {
   try {
@@ -9,7 +10,7 @@ exports.handler = async (event) => {
       event.input.startKey
     );
   } catch (e) {
-    console.error(e);
+    logError(e);
     throw e;
   }
 };
