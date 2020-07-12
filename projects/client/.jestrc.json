@@ -8,5 +8,8 @@
         "__SYS_BACKEND_HOST_URI__": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev"
     },
     "setupFilesAfterEnv": ["<rootDir>/test/setup/setupTests.ts"],
-    "testPathIgnorePatterns": ["<rootDir>/test/setup/"]
+    "testPathIgnorePatterns": ["<rootDir>/test/setup/"],
+    "moduleNameMapper": {
+        "\\.(css|less)$": "identity-obj-proxy"
+      }
 }

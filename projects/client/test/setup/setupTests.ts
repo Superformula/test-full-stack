@@ -5,4 +5,8 @@ import { enableFetchMocks } from 'jest-fetch-mock';
 
 enableFetchMocks();
 
+Enzyme.configure({
+    adapter: new Adapter()
+});
+
 //global.fetch = fetch;
