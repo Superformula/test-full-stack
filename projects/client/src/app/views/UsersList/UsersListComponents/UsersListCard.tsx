@@ -50,7 +50,7 @@ function toDateDisplayFormat(timestamp: number) : string {
         return "";
     }
     let date = (new Date(timestamp * 1000));
-    return `${(date.getDay()+1).toString().padStart(2, '0')} ${MONTHS[date.getMonth()]} ${date.getFullYear().toString()} `
+    return `${(date.getDate()).toString().padStart(2, '0')} ${MONTHS[date.getMonth()]} ${date.getFullYear().toString()} `
 }
 
 const UsersListCard: React.FunctionComponent<UsersListCardProps> = (props: UsersListCardProps) => {
