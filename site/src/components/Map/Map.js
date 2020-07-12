@@ -55,6 +55,7 @@ const Map = (props) => {
   return (
     <>
       <GoogleMap
+        mapContainerClassName="google_map"
         options={{ disableDefaultUI: true }}
         mapContainerStyle={containerStyle}
         zoom={10}

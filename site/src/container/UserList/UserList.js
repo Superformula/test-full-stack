@@ -16,6 +16,10 @@ const UserListPanel = styled.div`
   padding-left: 236px;
   padding-right: 236px;
   justify-content: center;
+  @media (max-width: 1208px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;
 
 const CurrentFilterHeader = styled.div`

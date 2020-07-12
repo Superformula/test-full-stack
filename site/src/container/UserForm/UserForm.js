@@ -41,6 +41,9 @@ const UserFormPanelArea = styled.div`
   height: 100%;
   width: 100%;
   margin: 0 64px 64px;
+  @media (max-width: 1023px) {
+    justify-content: center;
+  }
 `;
 
 const UserFormPanelImageAndMapArea = styled.div`
@@ -48,6 +51,22 @@ const UserFormPanelImageAndMapArea = styled.div`
   flex-basis: 651px;
   display: flex;
   align-items: center;
+  @media (max-width: 1261px) {
+    flex-basis: 400px;
+    .google_map {
+      width: 300px !important;
+      height: 300px !important;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    flex-basis: 62px;
+    .google_map {
+      display: none;
+      width: 300px !important;
+      height: 300px !important;
+    }
+  }
 `;
 
 const UserFormPanelInputArea = styled.div`
@@ -77,6 +96,13 @@ const UserFormRow = styled.div`
   }
   .danger-text {
     color: #e08181;
+  }
+
+  @media (max-width: 680px) {
+    width: 80%;
+    button {
+      width: 150px;
+    }
   }
 `;
 

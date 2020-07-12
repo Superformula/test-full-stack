@@ -33,12 +33,35 @@ const HeaderArea = styled.div`
       align-items: center;
       cursor: pointer;
     }
+
+    @media (max-width: 1208px) {
+      flex-direction: column;
+      min-width: 308px;
+      h1 {
+        margin-left: 0;
+        padding-bottom: 10px;
+      }
+
+      p {
+        margin-left: 0;
+        padding-bottom: 10px;
+      }
+    }
   }
   .searchArea {
     flex-direction: row-reverse;
+    min-width: 308px;
     input {
       margin-right: 16px;
+      @media (max-width: 1208px) {
+        margin-right: 0;
+        width: 100%;
+      }
     }
+  }
+
+  @media (max-width: 1208px) {
+    flex-direction: column;
   }
 `;
 

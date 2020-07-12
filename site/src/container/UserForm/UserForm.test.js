@@ -55,6 +55,7 @@ describe("UserForm", () => {
     expect(userAddressElement).toHaveValue("address test");
   });
 
+  // TODO reseach on how to mock the useForm stuff.
   test("Submit form with no name set, addUser does not get call", async () => {
     const addUserMock = jest.fn();
 
