@@ -6,9 +6,9 @@ import UserCard from "../../src/components/user-card/UserCard";
 
 it("Renders a user card with the all caps name and description", () => {
     const wrapper = shallow(
-        <UserCard id="catdog" name="Matthew" description="A cool guy"></UserCard>
+        <UserCard id="catdog" name="Matthew" flare={null} description="A cool guy"></UserCard>
     );
     
-    expect(wrapper.contains(<h2>MATTHEW</h2>)).toBeTruthy();
+    expect(wrapper.contains(<span className="user-card-emphasis-h2">MATTHEW</span>)).toBeTruthy();
     expect(wrapper.contains(<p>A cool guy</p>)).toBeTruthy();
 });

@@ -2,7 +2,7 @@ import * as React from "react";
 // https://enzymejs.github.io/enzyme/docs/api/shallow.html
 import { shallow } from "enzyme";
 
-import EditUserModalMapCenterer from "../../src/app/modals/EditUserModal/EditUserModalComponents/EditUserModalMap/EditUserModalMapCenterer";
+import EditUserModalMapCenterer from "../../../src/app/modals/EditUserModal/EditUserModalComponents/EditUserModalMap/EditUserModalMapCenterer";
 
 class MapMock {
     public pannedTo: null | {lat: number, lng: number};

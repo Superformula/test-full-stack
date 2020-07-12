@@ -5,7 +5,8 @@
     },
     "testRegex": "test/*/*.*.test.(js|jsx|ts|tsx)",
     "globals": {
-        "__SYS_BACKEND_HOST_URI__": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev"
+        "__SYS_BACKEND_HOST_URI__": "https://0dgcwbc735.execute-api.us-east-1.amazonaws.com/dev",
+        "__SYS_GOOGLE_MAPS_API_KEY__": ""
     },
     "setupFilesAfterEnv": ["<rootDir>/test/setup/setupTests.ts"],
     "testPathIgnorePatterns": ["<rootDir>/test/setup/"],
