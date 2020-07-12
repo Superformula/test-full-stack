@@ -33,3 +33,5 @@ Mobile
 
 Mobile
 ![alt text](./images/phone.png "Logo Title Text 1")
+
+The load more button only appears when the current number of items on screen % 6 (this number can be controlled in the env file) == 0, except when is 0.  Since WebSocket is involved any other time another client adds a user, you should be getting an update too.  So might look odd once you click it and see it disappear.  But should not get into a stuck state.       

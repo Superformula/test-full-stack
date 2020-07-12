@@ -51,8 +51,8 @@ const GraphQLUserQueries = {
     }
   `,
   deleteUser: gql`
-    mutation deleteUserMutation($id: ID, $name: String) {
-      deleteUser(input: { id: $id, name: $name }) {
+    mutation deleteUserMutation($id: ID) {
+      deleteUser(input: { id: $id }) {
         id
         name
       }
