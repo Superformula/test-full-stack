@@ -38,6 +38,7 @@
 
 .modal-input-text {
     width: 100%;
+    padding-right: 36px;
 }
 
 .modal-footer-container {
@@ -63,6 +64,20 @@
     background-color: var(--default-background-color);
 }
 
+.modal-input-container {
+    position: relative;
+}
+
+.modal-input-indicator {
+    position: absolute;
+    padding: .75rem 0 .75rem 0;
+    right: 12px;
+}
+
+.modal-input-indicator > svg {
+    stroke: rgb(176, 30, 30);
+    opacity: 75%;
+}
 
 @media (max-width: 888px) {
     .modal-body-container {

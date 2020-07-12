@@ -7,6 +7,7 @@ import { getEditUserDescription, getEditUserLocation, getEditUserName, getFetchL
 import type { RootState } from '../../../../store/configure-store'
 
 import './edit-user-modal-body.css';
+import AlertIcon from '../../../../components/icons/AlertIcon';
 
 const mapStateToProps = (state: RootState) => {
     return {};
@@ -74,17 +75,30 @@ const EditUserModalInput: React.FunctionComponent<EditUserModalInputProps> = (pr
             break;
     }
 
-    return (
-        <InputText 
-            id={which}
-            onChange={(e) => {
-                setTextValue(e.target.value);
-                dispatchFunction(e.target.value);
-            }}
-            className="modal-input-text" 
-            value={textValue}>
+    let indicator = null;
+    if (textValue !== value) {
+        indicator = (
+            <AlertIcon className="modal-input-indicator" style={{
+                width: '24px',
+                height: '24px',
+            }}></AlertIcon>
+        );
+    }
 
-        </InputText>
+    return (
+        <div className="modal-input-container">
+            {indicator}  
+            <InputText 
+                id={which}
+                onChange={(e) => {
+                    setTextValue(e.target.value);
+                    dispatchFunction(e.target.value);
+                }}
+                className="modal-input-text" 
+                value={textValue}>
+
+            </InputText>
+        </div>
     );
 }
 
