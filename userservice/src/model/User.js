@@ -20,6 +20,7 @@ export default class User {
     user.address = input.address;
     user.description = input.description;
     user.createdAt = input.createdAt;
+    user.image = input.image;
     user.updatedAt = input.updatedAt;
     return user;
   }

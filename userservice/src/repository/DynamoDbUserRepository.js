@@ -50,7 +50,8 @@ export default class DynamoDbUserRepository {
 
   async addUser(user) {
     let db = getDynamoDb();
-    user = userToItem(user);
+    user = userToDynamoDbItem(user);
+    user.image = randomImage();
     const param = {
       Item: user,
       TableName: getTableName(),
@@ -74,7 +75,7 @@ export default class DynamoDbUserRepository {
   }
 
   async updateUser(user) {
-    let item = userToItem(user);
+    let item = userToDynamoDbItem(user);
     let currentUserOutput = await getUserRaw(user);
     if (currentUserOutput) {
       item.createdAt = currentUserOutput.Item.createdAt;
@@ -108,12 +109,13 @@ async function getUserRaw(user) {
   return await db.get(param).promise();
 }
 
-function userToItem(user) {
+function userToDynamoDbItem(user) {
   let now = new Date().valueOf();
   return {
     pk: "REGULAR_USER",
     id: user.id ? user.id : `${now}_${uuidv4()}`,
     name: user.name,
+    image: user.image,
     searchName: user.name.toLowerCase(),
     dateOfBirth: user.dateOfBirth,
     address: user.address,
@@ -121,6 +123,17 @@ function userToItem(user) {
     createdAt: user.createdAt ? user.createdAt : now,
     updatedAt: now,
   };
+}
+
+function randomImage() {
+  let number = Math.floor(Math.random() * 1000);
+  let result = number % 2;
+  let type = "women";
+  if (result === 1) {
+    type = "men";
+  }
+  let imgNum = number % 26;
+  return `https://randomuser.me/api/portraits/${type}/${imgNum}.jpg`;
 }
 
 function fromJsonToKey(user) {

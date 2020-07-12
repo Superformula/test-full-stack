@@ -6,9 +6,9 @@
     "@react-google-maps/api": "^1.9.7",
     "aws-appsync": "^3.0.4",
     "cypress": "^4.10.0",
+    "dayjs": "^1.8.29",
     "debounce": "^1.2.0",
     "graphql-tag": "^2.10.3",
-    "moment": "^2.27.0",
     "mutationobserver-shim": "^0.3.7",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
@@ -21,6 +21,7 @@
     "react-test-renderer": "^16.13.1",
     "react-toastify": "^6.0.8",
     "redux": "^4.0.5",
+    "source-map-explorer": "^2.4.2",
     "styled-components": "^5.1.1",
     "styled-react-modal": "^2.0.1"
   },
@@ -38,10 +39,12 @@
     "start": "react-scripts start",
     "start_test_site": "env-cmd -f .env.test.local react-scripts start",
     "build": "react-scripts build",
+    "build-stage": "env-cmd -f .env.stage react-scripts build",
     "test": "env-cmd -f .env.test.local react-scripts test",
     "precypress": "copyfiles ./src/utils/testIds.js ./cypress/fixtures/",
     "cypress:open": "cypress open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": "react-app"

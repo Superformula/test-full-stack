@@ -7,14 +7,11 @@ before(async () => {
   const userStore = createStore(UsersReducer);
   await AppSyncUserServiceProvider.init(userStore);
 
-  (function dispatchAction() {
-    userStore.dispatch(UsersActions.setMaxUserLimit(100));
-  })();
+  userStore.dispatch(UsersActions.setMaxUserLimit(100));
 
   await AppSyncUserServiceProvider.loadUsers(null, null, false);
 
   let users = userStore.getState().users;
-  console.log(users);
   for (let i = 0; i < users.length; i++) {
     await AppSyncUserServiceProvider.deleteUser(users[i]);
   }

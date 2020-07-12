@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import moment from "moment";
+import dayjs from "dayjs";
 import { FaUserMinus } from "react-icons/fa";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
@@ -113,8 +113,8 @@ const UserForm = (props) => {
     if (data.name === "") {
       return false;
     }
-    if (data.dateOfBirth && data.dateOfBirth === "") {
-      data.dateOfBirth = moment(data.dateOfBirth).utc().unix();
+    if (data.dateOfBirth && data.dateOfBirth !== "") {
+      data.dateOfBirth = dayjs(data.dateOfBirth).unix() * 1000;
     } else {
       data.dateOfBirth = null;
     }
@@ -138,7 +138,9 @@ const UserForm = (props) => {
   if (props.currentUser) {
     label = `Edit ${props.currentUser.name}`;
     name = props.currentUser.name;
-    dateOfBirth = props.currentUser.dateOfBirth;
+    dateOfBirth = props.currentUser.dateOfBirth
+      ? dayjs(props.currentUser.dateOfBirth).format("YYYY-MM-DD")
+      : null;
     address = props.currentUser.address;
     description = props.currentUser.description;
     removeButton = (

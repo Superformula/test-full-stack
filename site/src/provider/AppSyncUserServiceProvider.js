@@ -220,7 +220,6 @@ const attachDeleteSub = (client, store, self) => {
 
 const mergeUsers = (currentUsers, users, currentSearchText, maxLimit) => {
   if (currentUsers.length === 0) {
-    users.forEach((item) => (item.image = randomImage()));
     return users;
   }
   let newUsers = [];
@@ -235,8 +234,6 @@ const mergeUsers = (currentUsers, users, currentSearchText, maxLimit) => {
       }
     }
     if (donHaveUser) {
-      users[i].image = randomImage();
-
       if (
         !currentSearchText ||
         currentSearchText.trim() === "" ||
@@ -254,16 +251,6 @@ const mergeUsers = (currentUsers, users, currentSearchText, maxLimit) => {
       return b.createdAt - a.createdAt;
     })
     .slice(0, maxLimit);
-};
-const randomImage = () => {
-  let number = Math.floor(Math.random() * 1000);
-  let result = number % 2;
-  let type = "women";
-  if (result === 1) {
-    type = "men";
-  }
-  let imgNum = number % 26;
-  return `https://randomuser.me/api/portraits/${type}/${imgNum}.jpg`;
 };
 
 const getEnvUserLimit = () => {

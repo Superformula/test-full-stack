@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import dayjs from "dayjs";
 import React from "react";
-import moment from "moment";
 import { SfH2, SfP } from "../../styles/HtmlElementStyle.js";
 import { SfPenIcon } from "../../utils/SfIcons.js";
 import TestIds from "../../utils/testIds.js";
@@ -97,7 +97,7 @@ const UserCard = (props) => {
             data-testid={TestIds.UserNameDisplayLabel}
           >
             <SfP> Created</SfP>
-            <label>{moment(props.user.createdAt).format("YYYY-MM-DD")}</label>
+            <label>{dayjs(props.user.createdAt).format("YYYY-MM-DD")}</label>
           </div>
         </div>
         <div

@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+jspm_packages
+.serverless
 
 # testing
 /coverage
@@ -15,6 +17,7 @@
 .DS_Store
 .env.development.local
 .env.local
+.env.stage
 .env.test.local
 .env.production.local
 

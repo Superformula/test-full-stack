@@ -28,6 +28,7 @@ type Subscription {
 type User {
     id: ID
     name: String
+    image: String,
     dateOfBirth: Float
     address: String
     description: String

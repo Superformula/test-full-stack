@@ -11,6 +11,7 @@ const GraphQLUserQueries = {
         items {
           id
           name
+          image
           dateOfBirth
           address
           description
@@ -40,6 +41,7 @@ const GraphQLUserQueries = {
       ) {
         id
         name
+        image
         address
         dateOfBirth
         description
@@ -75,6 +77,7 @@ const GraphQLUserQueries = {
       ) {
         id
         name
+        image
         address
         dateOfBirth
         description
@@ -88,6 +91,7 @@ const GraphQLUserQueries = {
       updatedUser {
         id
         name
+        image
         address
         dateOfBirth
         description
@@ -101,6 +105,7 @@ const GraphQLUserQueries = {
       addedUser {
         id
         name
+        image
         address
         dateOfBirth
         description
@@ -114,6 +119,7 @@ const GraphQLUserQueries = {
       deletedUser {
         id
         name
+        image
         address
         dateOfBirth
         description
