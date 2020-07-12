@@ -5,8 +5,16 @@ services:
       context: ../
       dockerfile: Dockerfile
     image: tc_sf_fullstack_test:1.0
+    expose:
+      - "8888"
+      - "3002"
+      - "3001"
+      - "3000"
     ports:
-      - "8888:8888"
+      - "192.168.99.100:8888:8888"
+      - "192.168.99.100:3002:3002"
+      - "192.168.99.100:3001:3001"
+      - "192.168.99.100:3000:3000"
     working_dir: /app
     volumes:
       - ${LOCAL_PROJECT_PATH}:/app/tc_sf_fullstack_test/

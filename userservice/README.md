@@ -45,7 +45,7 @@
    - This is where all the logic sits. This borrows ideas from the onion core architect.
 3. compositeRoot
    - helper function that brings the classes together. (Poor man’s DI)
-4.  error
+4. error
    - custom UserServiceError and a logFunction. Will log UserServiceError as warnings
 5. graphql
    -  graphQL handler for the requirement to return back location information base on a user
