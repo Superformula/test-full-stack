@@ -7,7 +7,9 @@ import './application.css';
 
 import { configureStore } from '../store/configure-store';
 import EditUserModal from './modals/EditUserModal/EditUserModal';
+
 const store = configureStore();
+(window as any).store = store; // For testing purposes
 
 const Application: React.FunctionComponent = () => {
     return (

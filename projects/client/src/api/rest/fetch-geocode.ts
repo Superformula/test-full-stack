@@ -12,6 +12,12 @@ interface FetchGeoCodeSuccessResult {
 export type FetchGeoCodeResult = FetchGeoCodeSuccessResult | null;
 
 export function fetchGeocode(address: string) : Promise<FetchGeoCodeResult> {
+    if (address.trim() === "") {
+        return new Promise((resolve, reject) => {
+            resolve(null);
+        });
+    }
+
     const url = `${REST_API}?address=${encodeURIComponent(address)}`;
     console.log(url);
 

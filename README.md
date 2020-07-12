@@ -62,3 +62,9 @@ Credentials:
 TODO:
 -- Include picture (giphy?)
 ```
+
+## Testing
+
+Each project has their own Unit tests see the documentation for each project for more information.
+
+Additionally, there are e2e tests in `projects/e2e`. Instructions for usage are found in the readme in that folder as well as a collection of passing example screenshots.

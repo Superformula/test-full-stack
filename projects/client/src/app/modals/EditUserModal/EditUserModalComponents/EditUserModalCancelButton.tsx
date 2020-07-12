@@ -23,7 +23,7 @@ const EditUserModalCancelButton: React.FunctionComponent<PropsFromRedux> = (prop
     const { getHide } = props;
     return (
         
-        <Button className="default-button modal-input-cancel-button modal-input-button" onClick={(e) => {
+        <Button className="modal-input-cancel-button modal-input-button" onClick={(e) => {
             getHide();
         }}>
             Cancel

@@ -1,0 +1,15 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "E2E testing full stack",
+  "main": "puppeteer.js",
+  "scripts": {
+    "test": "jest --config ./.jestrc.json --runInBand"
+  },
+  "author": "Matthew Evers",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^26.1.0",
+    "puppeteer": "^5.0.0"
+  }
+}

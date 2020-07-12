@@ -12,7 +12,7 @@ interface GoogleMapsReactInheritedProps {
 
 const EditUserModalMapCenterer: React.FunctionComponent<GoogleMapsReactInheritedProps> 
 = (props: GoogleMapsReactInheritedProps) => {
-    const { map, google, mapCenter, location } = props;
+    const { map, location } = props;
     const [intialValue, setInitialValue] = useState(location);
 
     if (location !== intialValue) {

@@ -23,6 +23,7 @@ const UsersListSearch: React.FunctionComponent<PropsFromRedux> = (props: PropsFr
     const { getUpdateFilter } = props;
     return (
         <InputText 
+            id="search-input"
             onChange={(e) => {
                 getUpdateFilter(e.target.value);
             }}

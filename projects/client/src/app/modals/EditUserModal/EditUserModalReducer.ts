@@ -23,13 +23,13 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
                 editUser: { ...state.editUser }
             };
 
-            if (editAction.name) {
+            if (typeof editAction.name === 'string') {
                 newState.editUser.name = editAction.name;
             }
-            if (editAction.address) {
+            if (typeof editAction.address === 'string') {
                 newState.editUser.address = editAction.address;
             }
-            if (editAction.description) {
+            if (typeof editAction.description === 'string') {
                 newState.editUser.description = editAction.description;
             }
 
@@ -45,7 +45,8 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
             else if (saveAction.status === AsynchronousActionStatus.SUCCESS) {
                 return {
                     ...state,
-                    isSaving: false
+                    isSaving: false,
+                    user: null
                 };
             }
             else {

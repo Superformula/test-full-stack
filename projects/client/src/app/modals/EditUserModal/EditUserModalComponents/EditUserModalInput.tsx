@@ -76,6 +76,7 @@ const EditUserModalInput: React.FunctionComponent<EditUserModalInputProps> = (pr
 
     return (
         <InputText 
+            id={which}
             onChange={(e) => {
                 setTextValue(e.target.value);
                 dispatchFunction(e.target.value);
