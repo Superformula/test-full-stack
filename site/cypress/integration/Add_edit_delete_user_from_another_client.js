@@ -13,13 +13,17 @@ describe("Updating ui base on Create, Update, and Delete from another client", (
     cy.visit("http://localhost:3001/");
   });
 
-  it("Can display user being added, updated, and deleted from another client", () => {
+  it("Can display user being added from another client", () => {
     cy.wait(InBetweenWaitTime);
 
-    AppSyncUserServiceProvider.addUser({
-      name: "New User",
-      description: "New User Description",
-    });
+    async function addUserFn() {
+      await AppSyncUserServiceProvider.addUser({
+        name: "New User",
+        description: "New User Description",
+      });
+    }
+
+    addUserFn();
 
     cy.wait(InBetweenWaitTime);
 
@@ -49,6 +53,7 @@ describe("Updating ui base on Create, Update, and Delete from another client", (
     });
 
     cy.wait(InBetweenWaitTime);
+
     cy.get(`[data-testid=${TestIds.UserCard}]`)
       .first()
       .should(($firstElement) => {

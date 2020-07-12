@@ -9,6 +9,7 @@
     "debounce": "^1.2.0",
     "graphql-tag": "^2.10.3",
     "moment": "^2.27.0",
+    "mutationobserver-shim": "^0.3.7",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -37,9 +38,9 @@
     "start": "react-scripts start",
     "start_test_site": "env-cmd -f .env.test.local react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "env-cmd -f .env.test.local react-scripts test",
     "precypress": "copyfiles ./src/utils/testIds.js ./cypress/fixtures/",
-    "cypress:open": "cypress open",
+    "cypress:open": "cypress open --env .env",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -16,6 +16,9 @@ const TestIds = {
   AddUserButton: "AddUserButton",
   DeleteUserButton: "DeleteUserButton",
   EditUserButton: "EditUserButton",
+  UserNameDisplayLabelError: "UserNameDisplayLabelError",
+  UserFormScreen: "UserFormScreen",
+  UserFormScreenTitle: "UserFormScreenTitle",
 };
 
 export default TestIds;

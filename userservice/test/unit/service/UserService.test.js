@@ -3,9 +3,8 @@ import { expect, jest } from "@jest/globals";
 
 import UserService from "../../../src/service/UserService.js";
 import DynamoDbUserRepository from "../../../src/repository/DynamoDbUserRepository.js";
-import User from "../../../src/model/User";
-import { handler } from "../../../src/lambda/getUser";
-import UserServiceError from "../../../src/error/UserServiceError";
+import User from "../../../src/model/User.js";
+import UserServiceError from "../../../src/error/UserServiceError.js";
 
 jest.mock("../../../src/repository/DynamoDbUserRepository.js");
 

@@ -13,7 +13,7 @@ import {
   SfH2,
   SfTextInput,
 } from "../../styles/HtmlElementStyle.js";
-import TestIds from "../../utils/testIds";
+import TestIds from "../../utils/testIds.js";
 
 const UserFormPanel = styled.div`
   display: flex;
@@ -84,16 +84,19 @@ const UserForm = (props) => {
   const formRef = useRef(null);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = async (data) => {
+    if (data.name === "") {
+      return false;
+    }
     if (data.dateOfBirth && data.dateOfBirth === "") {
       data.dateOfBirth = moment(data.dateOfBirth).utc().unix();
     } else {
       data.dateOfBirth = null;
     }
-    if (props.currentUser) {
+    if (props.currentUser && props.currentUser.id) {
       data.id = props.currentUser.id;
       await AppSyncUserServiceProvider.updateUser(data);
     } else {
-      await AppSyncUserServiceProvider.addUser(data);
+      let item = await AppSyncUserServiceProvider.addUser(data);
     }
     if (props.onSubmitted) {
       props.onSubmitted();
@@ -129,8 +132,8 @@ const UserForm = (props) => {
   const [mapAddress, setMapAddress] = React.useState(address);
 
   return (
-    <UserFormPanel>
-      <SfH1>
+    <UserFormPanel data-testid={TestIds.UserFormScreen}>
+      <SfH1 data-testid={TestIds.UserFormScreenTitle}>
         {label} {removeButton}
       </SfH1>
       <UserFormPanelArea>
@@ -151,7 +154,12 @@ const UserForm = (props) => {
                 })}
               />
               {errors.name && (
-                <SfH2 className="danger-text">Name cannot be empty!</SfH2>
+                <SfH2
+                  data-testid={TestIds.UserNameDisplayLabelError}
+                  className="danger-text"
+                >
+                  Name cannot be empty!
+                </SfH2>
               )}
             </UserFormRow>
             <UserFormRow>

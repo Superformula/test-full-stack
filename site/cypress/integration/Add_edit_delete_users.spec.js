@@ -1,6 +1,6 @@
 import TestIds from "../fixtures/src/utils/testIds.js";
 
-const InBetweenWaitTime = 2000;
+const InBetweenWaitTime = 3000;
 
 describe("Create, Update, and Delete user", () => {
   before(() => {

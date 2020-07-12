@@ -44,15 +44,7 @@ export default class DynamoDbUserRepository {
   }
 
   async getUser(user) {
-    let db = getDynamoDb();
-
-    const param = {
-      Key: fromJsonToKey(user),
-      TableName: getTableName(),
-    };
-
-    let userOutput = await db.get(param).promise();
-
+    let userOutput = await getUserRaw(user);
     return User.fromJsonObject(userOutput.Item);
   }
 
@@ -82,40 +74,38 @@ export default class DynamoDbUserRepository {
   }
 
   async updateUser(user) {
-    let currentUser = await this.getUser(user);
-    if (currentUser) {
-      user.createdAt = currentUser.createdAt;
-    }
     let item = userToItem(user);
+    let currentUserOutput = await getUserRaw(user);
+    if (currentUserOutput) {
+      item.createdAt = currentUserOutput.Item.createdAt;
+      let currentItem = currentUserOutput.Item;
+      for (let key in item) {
+        if (item[key] === undefined && currentItem[key]) {
+          item[key] = currentItem[key];
+        }
+      }
+    }
 
     let db = getDynamoDb();
 
     const param = {
-      Key: fromJsonToKey(item),
+      Item: item,
       TableName: getTableName(),
-      UpdateExpression: `
-        set #name = :name,         
-        searchName = :searchName, 
-        dateOfBirth = :dateOfBirth, 
-        address = :address,
-        description = :description,
-        updatedAt = :updatedAt,
-        createdAt = :createdAt`,
-      ExpressionAttributeValues: {
-        ":name": item.name,
-        ":searchName": item.searchName,
-        ":dateOfBirth": item.dateOfBirth,
-        ":address": item.address,
-        ":description": item.description,
-        ":updatedAt": item.updatedAt,
-        ":createdAt": item.createdAt,
-      },
-      ExpressionAttributeNames: { "#name": "name" },
     };
-
-    await db.update(param).promise();
+    await db.put(param).promise();
     return item;
   }
+}
+
+async function getUserRaw(user) {
+  let db = getDynamoDb();
+
+  const param = {
+    Key: fromJsonToKey(user),
+    TableName: getTableName(),
+  };
+
+  return await db.get(param).promise();
 }
 
 function userToItem(user) {
