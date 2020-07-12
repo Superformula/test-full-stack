@@ -10,7 +10,7 @@ cd /app/tc_sf_fullstack_test/userservice/
 npm i --no-bin-links
 sls dynamodb install
 
-cd /app/tc_sf_fullstack_test/site/
-npm i --no-bin-links
+#cd /app/tc_sf_fullstack_test/site/
+#npm i --no-bin-links
 
 tail -f /dev/null

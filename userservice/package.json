@@ -30,9 +30,9 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "integration-test" : "jest --testPathPattern=./test/integration",
-    "unit-test" : "jest --testPathPattern=./test/unit",
-    "deploy_dev" : "./deploy.sh",
-    "deploy_e2e" : "./deploy.e2etest.sh"
+    "integration-test": "jest --testPathPattern=./test/integration",
+    "unit-test": "jest --testPathPattern=./test/unit",
+    "deploy_dev": "./deploy.sh",
+    "deploy_e2e": "./deploy.e2etest.sh"
   }
 }

@@ -3,14 +3,14 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { ModalProvider, BaseModalBackground } from "styled-react-modal";
 import styled from "styled-components";
+import queryString from "query-string";
 
 import AppSyncUserServiceProvider from "./provider/AppSyncUserServiceProvider.js";
 import UserListContainer from "./container/UserList/UserList.js";
 import UsersReducer from "./redux/Users/UsersReducer.js";
 import UserFormModal from "./container/UserForm/UserFormModal.js";
 import { UsersActions } from "./redux/Users/UsersActions.js";
-import HeaderBar from "./components/HeaderBar/HeaderBar";
-import queryString from "query-string";
+import HeaderBar from "./components/HeaderBar/HeaderBar.js";
 
 const FadingBackground = styled(BaseModalBackground)`
   opacity: ${(props) => props.opacity};

@@ -19,7 +19,7 @@
 1. If you don’t have the docker step setup, please run npm i, and npm install -g serverless. If you have the docker container step setup please enter the bash shell of the docker container.
 2. Navigate to the userservice folder in a shell/command line of your choice
 3. Execute ./deploy.sh or npm run deploy_dev and this will deploy a dev version. This will be the service where you will use the site to interact and play with.
-4. Execute ./deploy.e2etest.sh or npm run deploy_e2e and this will deploy the e2e version. This will be the service where the cypress will run against.
+4. Execute ./deploy.e2etest.sh or npm run deploy_e2e and this will deploy the e2e version. This will be the service where cypress will run against.
 
 
 
@@ -41,22 +41,21 @@
 
 1. mapping-templates
    - contains all the vtl resolver files.
-2. src 
-   - This is where all the logic sits. This borrows ideas from the onion core architect.
-3. compositeRoot
-   - helper function that brings the classes together. (Poor man’s DI)
-4. error
-   - custom UserServiceError and a logFunction. Will log UserServiceError as warnings
-5. graphql
-   -  graphQL handler for the requirement to return back location information base on a user
-6. lambda
-   - All the handlers for the crud logic. AppSync graphQL calls will pretty much get resolve and call into these lambda functions.
-7. Model
-   - The domain model for the userservice. 
-8. Repository
-   -  This is the infrastructure layer (data access layer). 
-9. Service
-   -  The service layer, basically the business logic for the userservice. Since this is crud, is mostly used for validation and calling into the repository layer.
+2. src (This is where all the logic sits. This borrows ideas from the onion core architect.)   
+    3. compositeRoot
+        - helper function that brings the classes together. (Poor man’s DI)
+    4. error
+        - custom UserServiceError and a logFunction. Will log UserServiceError as warnings
+    5. graphql
+        -  graphQL handler for the requirement to return back location information base on a user
+    6. lambda
+        - All the handlers for the crud logic. AppSync graphQL calls will pretty much get resolve and call into these lambda functions.
+    7. Model
+        - The domain model for the userservice. 
+    8. Repository
+        -  This is the infrastructure layer (data access layer). 
+    9. Service
+        -  The service layer, basically the business logic for the userservice. Since this is crud, is mostly used for validation and calling into the repository layer.
 10. Test
     - Where all the test sits
 11. Other files to pay attention to in the main directory

@@ -36,7 +36,7 @@ export default class DynamoDbUserRepository {
         if (result.length >= limit) {
           break;
         }
-        result.push(User.fromJsonObject(item));
+        result.push(User.fromJsonObject(data.Items[i]));
       }
     } while (result.length < limit && data.LastEvaluatedKey);
 

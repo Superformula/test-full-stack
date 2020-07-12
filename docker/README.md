@@ -26,7 +26,7 @@
 2. Navigate to the scripts folder
 3. Make a copy of .env.developement and remove the .development so the file will just be .env
 4. Put in the current project directory path to LOCAL_PROJECT_PATH.  (i.e lets say the current path that you are in is /test-full-stack/docker/scripts.  You want to put /test-full-stack there)
-5. Now type in ./run.sh and…crosses finger everything will run smoothly.  If it does your service deployment environment is set up, yay !!!!!!!!
+5. Now type in docker-compose up and…crosses finger everything will run smoothly.  If it does your service deployment environment is set up, yay !!!!!!!!
 
 
 
