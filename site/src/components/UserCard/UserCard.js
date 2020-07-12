@@ -40,11 +40,17 @@ const UserCardPanelInfoArea = styled.div`
   margin-right: 32px;
   .nameLabel {
     display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .descriptionLabel {
     padding-top: 8px;
     font-weight: 300;
     font-size: 16px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .createdAtLabel {
@@ -97,7 +103,7 @@ const UserCard = (props) => {
             data-testid={TestIds.UserNameDisplayLabel}
           >
             <SfP> Created</SfP>
-            <label>{dayjs(props.user.createdAt).format("YYYY-MM-DD")}</label>
+            <label>{dayjs(props.user.createdAt).format("DD MMM YYYY")}</label>
           </div>
         </div>
         <div

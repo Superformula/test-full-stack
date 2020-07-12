@@ -15,11 +15,12 @@
    
 
 ### Deploying the userservice
-
-1. If you don’t have the docker step setup, please run npm i, and npm install -g serverless. If you have the docker container step setup please enter the bash shell of the docker container.
-2. Navigate to the userservice folder in a shell/command line of your choice
-3. Execute ./deploy.sh or npm run deploy_dev and this will deploy the dev version. This will be the service where you will use the site to interact and play with.
-4. Execute ./deploy.e2etest.sh or npm run deploy_e2e and this will deploy the e2e version. This will be the service where cypress will run against.
+The serverless.yml have the region set to us-east-1 and is using looking to use the default AWS profile.
+1. If you have the docker step setup please enter the bash shell of the container and go to the userservice folder and skip to step 4. Otherwise, follow the next step.
+2. Open a shell/command line and navigate to the userservice folder.  Execute npm i, and npm install -g serverless.
+3. Go to serverless.yml and set the region you want and the AWS profile you want to use.     
+4. Execute ./deploy.sh or npm run deploy_dev and this will deploy the dev version. This will be the service where you will use the site to interact and play with.
+5. Execute ./deploy.e2etest.sh or npm run deploy_e2e and this will deploy the e2e version. This will be the service where cypress will run against.
 
 
 
@@ -31,8 +32,8 @@
 
 ### Running integration test
 
-1. Run sls dynamodb install if you are not using the docker container
-2. Run sls dynamodb start
+1. Execute sls dynamodb install if you are not using the docker container
+2. Execute sls dynamodb start --stage=test
 3. Open another shell and navigate back to the userservice folder and execute ./run-integration-test.sh or npm run integration-test
 
 

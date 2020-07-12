@@ -77,7 +77,7 @@ export default class DynamoDbUserRepository {
   async updateUser(user) {
     let item = userToDynamoDbItem(user);
     let currentUserOutput = await getUserRaw(user);
-    if (currentUserOutput) {
+    if (currentUserOutput && currentUserOutput.Item) {
       item.createdAt = currentUserOutput.Item.createdAt;
       let currentItem = currentUserOutput.Item;
       for (let key in item) {

@@ -20,3 +20,16 @@ Some notes
 The user list is sorted by descending order. Adding a user will always put the user right at the beginning. That means if another client adds a user you will see what they added right at the beginning.   Anytime a user is added/deleted/updated there will be a toast notification.  
 
 The e2e test is not 100% stable I would say.  Especially the test that simulate another client adding/updating/deleting a user and those result showing up on your screen. However, they do work for me on my machine (heh the famous word from a developer).  Here is a short video showing the e2e test in action running locally.  But I do notice from time to time it fails and it looks like cypress is grabbing on to the old elements and blocking the subscription from finishing.
+
+[Video](https://cdn.vidyard.com/videos/QOqTvRwk-KC__ljkzO8AdA/hd.mp4?K8VFt9OabVW-AwLOOzvX0TjH-Qa5sSgP16NdSWIy2IIhd988ng0IgEbjxFL2rbrqkQgEUQlv3VDU9QiNG1qO8TIOGBNDpTqL5LAJ6Kve)
+
+The site should be responsive, tested this on chrome 83, and here are some screenshots.
+
+Desktop
+![alt text](./images/Desktop.png "Logo Title Text 1")
+
+Mobile
+![alt text](./images/mobile.png "Logo Title Text 1")
+
+Mobile
+![alt text](./images/phone.png "Logo Title Text 1")
