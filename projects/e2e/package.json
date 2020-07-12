@@ -9,7 +9,12 @@
   "author": "Matthew Evers",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.713.0",
     "jest": "^26.1.0",
-    "puppeteer": "^5.0.0"
+    "puppeteer": "^5.0.0",
+    "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
   }
 }
