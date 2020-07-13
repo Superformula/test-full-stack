@@ -8,16 +8,15 @@ The steps below assume you already have this branch checkout.  As an example, le
 
 ### **Create an AWS IAM user that have access to these services**
 
- 1. AWS CloudFormation
- 2. Amazon S3
- 3. Manage - Amazon API Gateway
- 4. AWS AppSync
- 5. AWS Key Management Service
- 6. AWS Lambda
- 7. AWS Security Token Service
- 8. Amazon CloudWatch Logs
- 9. Amazon DynamoDB
-
+ AWS CloudFormation
+ Amazon S3
+ Manage - Amazon API Gateway
+ AWS AppSync
+ AWS Key Management Service
+ AWS Lambda
+ AWS Security Token Service
+ Amazon CloudWatch Logs
+ Amazon DynamoDB
 
 1. ### Docker Setup (OPTIONAL)
 
