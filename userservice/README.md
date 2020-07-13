@@ -45,18 +45,25 @@ The serverless.yml have the region set to us-east-1 and is using looking to use 
 2. src (This is where all the logic sits. This borrows ideas from the onion core architect.)   
     3. compositeRoot
         - helper function that brings the classes together. (Poor man’s DI)
+        
     4. error
         - custom UserServiceError and a logFunction. Will log UserServiceError as warnings
+        
     5. graphql
         -  graphQL handler for the requirement to return back location information base on a user
+        
     6. lambda
         - All the handlers for the crud logic. AppSync graphQL calls will pretty much get resolve and call into these lambda functions.
+        
     7. Model
         - The domain model for the userservice. 
+        
     8. Repository
         -  This is the infrastructure layer (data access layer). 
+        
     9. Service
         -  The service layer, basically the business logic for the userservice. Since this is crud, is mostly used for validation and calling into the repository layer.
+        
 10. Test
     - Where all the test sits
 11. Other files to pay attention to in the main directory
