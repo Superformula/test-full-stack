@@ -15,7 +15,7 @@
    
 
 ### Deploying the userservice
-The serverless.yml have the region set to us-east-1 and is using looking to use the default AWS profile.
+The serverless.yml have the region set to us-east-1 and is looking to use the default AWS profile.
 1. If you have the docker step setup please enter the bash shell of the container and go to the userservice folder and skip to step 4. Otherwise, follow the next step.
 2. Open a shell/command line and navigate to the userservice folder.  Execute npm i, and npm install -g serverless.
 3. Go to serverless.yml and set the region you want and the AWS profile you want to use.     
