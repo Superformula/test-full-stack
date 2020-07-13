@@ -4,6 +4,8 @@
 
 ### Application Setup
 
+The steps below assume you already have this branch checkout.  As an example, let's pretend the branch is on your computer with the path C:\Homework\test-full-stack
+
 1. ### Docker Setup
 
    This is mainly used as a way to deploy the userservice.  
