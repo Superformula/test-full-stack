@@ -1,11 +1,13 @@
 import React from "react";
 import { FaUserPlus } from "react-icons/fa";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import { debounce } from "debounce";
 
 import AppSyncUserServiceProvider from "../../provider/AppSyncUserServiceProvider.js";
 import { SfH1, SfP, SfTextInput } from "../../styles/HtmlElementStyle.js";
 import TestIds from "../../utils/testIds.js";
+import { UsersActions } from "../../redux/Users/UsersActions";
 
 const HeaderArea = styled.div`
   display: flex;
@@ -86,9 +88,11 @@ const HeaderBar = (props) => {
         <SfTextInput
           data-testid={TestIds.SearchTextBox}
           type="textbox"
+          value={props.currentSearchTerm}
           placeholder="Search..."
           onChange={async (e) => {
             let value = e.target.value;
+            props.setCurrentSearchTerm(value);
             if (debounceFn) {
               debounceFn.clear();
             }
@@ -103,4 +107,23 @@ const HeaderBar = (props) => {
   );
 };
 
-export default HeaderBar;
+const HeaderBarMapStateToProps = (state) => {
+  return {
+    currentSearchTerm: state.currentSearchTerm,
+  };
+};
+
+const HeaderBarMapDispatchToProps = function (dispatch) {
+  return {
+    setCurrentSearchTerm(currentSearchTerm) {
+      dispatch(UsersActions.setCurrentSearchTerm(currentSearchTerm));
+    },
+  };
+};
+
+const HeaderBarContainer = connect(
+  HeaderBarMapStateToProps,
+  HeaderBarMapDispatchToProps
+)(HeaderBar);
+
+export default HeaderBarContainer;

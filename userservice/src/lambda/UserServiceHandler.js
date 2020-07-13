@@ -1,6 +1,7 @@
 import getUserService from "../compositeRoot/getUserService.js";
 import logError from "../error/logError.js";
 import Constants from "../utils/constants.js";
+import UserServiceError from "../error/UserServiceError.js";
 
 exports.handler = async (event) => {
   try {
@@ -20,6 +21,8 @@ exports.handler = async (event) => {
         );
       case Constants.UPDATE_USER:
         return await userService.updateUser(event.input);
+      default:
+        throw new UserServiceError("Unknown fieldName");
     }
   } catch (e) {
     logError(e);

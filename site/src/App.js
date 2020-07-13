@@ -10,7 +10,7 @@ import UserListContainer from "./container/UserList/UserList.js";
 import UsersReducer from "./redux/Users/UsersReducer.js";
 import UserFormModal from "./container/UserForm/UserFormModal.js";
 import { UsersActions } from "./redux/Users/UsersActions.js";
-import HeaderBar from "./components/HeaderBar/HeaderBar.js";
+import HeaderBarContainer from "./container/HeaderBar/HeaderBar.js";
 
 const FadingBackground = styled(BaseModalBackground)`
   opacity: ${(props) => props.opacity};
@@ -62,7 +62,7 @@ const App = () => {
   return (
     <>
       <Provider store={userStore}>
-        <HeaderBar onNewUserClick={openModalFunc} />
+        <HeaderBarContainer onNewUserClick={openModalFunc} />
         <UserListContainer onUserCardClick={openModalFunc} />
         <ModalProvider backgroundComponent={FadingBackground}>
           <UserFormModal
