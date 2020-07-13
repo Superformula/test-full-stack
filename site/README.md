@@ -15,7 +15,7 @@ The site needs to be run on your local environment.
 
  
 
-Some notes
+### Some notes
 
 The user list is sorted by descending order. Adding a user will always put the user right at the beginning. That means if another client adds a user you will see what they added right at the beginning.   Anytime a user is added/deleted/updated there will be a toast notification.  
 
