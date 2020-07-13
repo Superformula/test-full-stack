@@ -1,4 +1,0 @@
-process.env.DYNAMODB_LOCAL = true; //set this to false if you want to test this against aws dynamodb
-process.env.USER_TABLE = "users_test";
-process.env.MAP_BOX_API_KEY =
-
