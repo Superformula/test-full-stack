@@ -24,16 +24,16 @@ The following instruction assumes that you have this branch checkout already. Le
 ### Running the sites
 
 1. To run the site use `npm start`
-2. To run the e2e test site use `npm start_test_site`
+2. To run the e2e test site use `npm run start_test_site`
 
 ### Running the test
 
 1. To run the unit test use `npm test`
-2. To run the e2e test use `npm cypress:open`
+2. To run the e2e test use `npm run cypress:open`
 
  
 
-###Other Tibits
+### Other Tibits
 
 The user list is sorted by descending order. Adding a user will always put the user right at the beginning. That means if another client adds a user you will see what they added right at the beginning.   Anytime a user is added/deleted/updated there will be a toast notification.  
 
