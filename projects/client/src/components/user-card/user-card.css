@@ -12,6 +12,8 @@
 
 .user-card p {
     text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     margin-top: 3px;
     display: inline-block;
     width: calc(100%);
