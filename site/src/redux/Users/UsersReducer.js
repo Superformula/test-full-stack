@@ -4,7 +4,7 @@ const initialState = {
   users: [],
   userNumberLimit: parseInt(process.env.REACT_APP_USERS_NUMBER_LIMIT),
   currentEditUser: null,
-  currentSearchTerm: null,
+  currentSearchTerm: "",
 };
 
 const UsersReducer = (state = initialState, action) => {
@@ -34,7 +34,7 @@ const UsersReducer = (state = initialState, action) => {
     default:
   }
 
-  return initialState;
+  return state;
 };
 
 export default UsersReducer;

@@ -51,11 +51,16 @@ const UserFormPanelImageAndMapArea = styled.div`
   flex-basis: 651px;
   display: flex;
   align-items: center;
+  .google_map {
+    width: 518px;
+    height: 336px;
+    top: 30px;
+  }
   @media (max-width: 1261px) {
     flex-basis: 400px;
     .google_map {
-      width: 300px !important;
-      height: 300px !important;
+      width: 300px;
+      height: 300px;
     }
   }
 
@@ -122,7 +127,7 @@ const UserForm = (props) => {
       data.id = props.currentUser.id;
       await AppSyncUserServiceProvider.updateUser(data);
     } else {
-      let item = await AppSyncUserServiceProvider.addUser(data);
+      await AppSyncUserServiceProvider.addUser(data);
     }
     if (props.onSubmitted) {
       props.onSubmitted();

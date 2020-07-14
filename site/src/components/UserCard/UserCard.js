@@ -19,6 +19,13 @@ const UserCardPanel = styled.div`
   }
 `;
 
+const UserEditButton = styled.span`
+  cursor: pointer;
+  position: absolute;
+  right: 23px;
+  top: 18px;
+`;
+
 const UserCardPanelImageArea = styled.div`
   display: flex;
   align-items: center;
@@ -38,40 +45,36 @@ const UserCardPanelInfoArea = styled.div`
   height: 70px;
   margin-left: 32px;
   margin-right: 32px;
-  .nameLabel {
+  ${SfH2} {
     display: inline-block;
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .descriptionLabel {
-    padding-top: 8px;
-    font-weight: 300;
-    font-size: 16px;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+`;
 
-  .createdAtLabel {
-    float: right;
-    font-size: 16px;
-    padding-top: 5px;
-    p {
-      display: inline;
-    }
-    label {
-      margin-left: 5px;
-      color: #b42320;
-    }
+const CreatedAtLabelArea = styled.div`
+  float: right;
+  font-size: 16px;
+  padding-top: 5px;
+  ${SfP} {
+    display: inline;
   }
 `;
 
-const UserEditButton = styled.span`
-  cursor: pointer;
-  position: absolute;
-  right: 23px;
-  top: 18px;
+const DateLabel = styled(SfP)`
+  margin-left: 5px;
+  font-weight: normal;
+  color: #b42320;
+`;
+
+const DescriptionLabel = styled(SfP)`
+  padding-top: 8px;
+  font-weight: 300;
+  font-size: 16px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const UserCard = (props) => {
@@ -92,26 +95,19 @@ const UserCard = (props) => {
       </UserCardPanelImageArea>
       <UserCardPanelInfoArea>
         <div>
-          <SfH2
-            className="nameLabel"
-            data-testid={TestIds.UserNameDisplayLabel}
-          >
+          <SfH2 data-testid={TestIds.UserNameDisplayLabel}>
             {props.user.name}
           </SfH2>
-          <div
-            className="createdAtLabel"
-            data-testid={TestIds.UserNameDisplayLabel}
-          >
-            <SfP> Created</SfP>
-            <label>{dayjs(props.user.createdAt).format("DD MMM YYYY")}</label>
-          </div>
+          <CreatedAtLabelArea data-testid={TestIds.UserNameDisplayLabel}>
+            <SfP>created</SfP>
+            <DateLabel>
+              {dayjs(props.user.createdAt).format("DD MMM YYYY")}
+            </DateLabel>
+          </CreatedAtLabelArea>
         </div>
-        <div
-          className="descriptionLabel"
-          data-testid={TestIds.UserDescriptionLabel}
-        >
+        <DescriptionLabel data-testid={TestIds.UserDescriptionLabel}>
           {props.user.description}
-        </div>
+        </DescriptionLabel>
       </UserCardPanelInfoArea>
     </UserCardPanel>
   );

@@ -1,63 +1,30 @@
-import React from "react";
+import React, { useCallback, useState, memo, useMemo, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
-const containerStyle = {
-  width: "518px",
-  height: "336px",
-  top: "30px",
-};
-
 let markers = [];
-
 const Map = (props) => {
-  const [map, setMap] = React.useState(null);
-  const onLoad = React.useCallback((map) => {
+  const [map, setMap] = useState(null);
+  const onLoad = useCallback((map) => {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
     setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback((map) => {
+  const onUnmount = useCallback(() => {
     setMap(null);
   }, []);
 
-  let pointToLocation = (address, map) => {
-    if (markers) {
-      markers.forEach((item) => {
-        item.setMap(null);
-      });
-      markers.splice(-1);
+  useEffect(() => {
+    if (map) {
+      addressToLocation(props.address, map);
     }
-    if (address) {
-      let geoCoder = new window.google.maps.Geocoder();
-      geoCoder.geocode({ address: address }, (results, status) => {
-        if (status === "OK") {
-          map.setCenter(results[0].geometry.location);
-          markers.push(
-            new window.google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location,
-            })
-          );
-        }
-      });
-    } else {
-      map.setCenter({
-        lat: 0,
-        lng: 0,
-      });
-    }
-  };
+  }, [props.address, map]);
 
-  if (map) {
-    pointToLocation(props.address, map);
-  }
   return (
     <>
       <GoogleMap
         mapContainerClassName="google_map"
         options={{ disableDefaultUI: true }}
-        mapContainerStyle={containerStyle}
         zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
@@ -66,4 +33,42 @@ const Map = (props) => {
   );
 };
 
-export default Map;
+const cache = {};
+const empty = { lat: 0, lng: 0 };
+export const addressToLocation = (address, map) => {
+  if (address) {
+    if (cache[address]) {
+      postMarkerToMap(cache[address], map);
+    }
+    let geoCoder = new window.google.maps.Geocoder();
+    geoCoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK") {
+        cache[address] = results[0].geometry.location;
+      } else {
+        cache[address] = empty;
+      }
+      postMarkerToMap(cache[address], map);
+    });
+  } else {
+    postMarkerToMap(empty, map);
+  }
+};
+
+const postMarkerToMap = (location, map) => {
+  if (markers) {
+    markers.forEach((item) => {
+      item.setMap(null);
+    });
+    markers.splice(-1);
+  }
+
+  map.setCenter(location);
+  markers.push(
+    new window.google.maps.Marker({
+      map: map,
+      position: location,
+    })
+  );
+};
+
+export default memo(Map);

@@ -23,21 +23,21 @@ const initialize = async () => {
   await AppSyncUserServiceProvider.init(userStore, false);
 };
 
-const loadUserList = async () => {
+const loadUserList = () => {
   const parsed = queryString.parse(document.location.hash);
   let limit = process.env.REACT_APP_USERS_NUMBER_LIMIT;
   if (parsed["limit"]) {
     limit = parseInt(parsed["limit"]);
   }
-  await AppSyncUserServiceProvider.loadUsersFromState(parsed["filter"], limit);
+  AppSyncUserServiceProvider.loadUsersFromState(parsed["filter"], limit);
 };
 
-window.addEventListener("hashchange", async (event) => {
-  await loadUserList();
+window.addEventListener("hashchange", (event) => {
+  loadUserList();
 });
 
-initialize().then(async () => {
-  await loadUserList();
+initialize().then(() => {
+  loadUserList();
 });
 
 const App = () => {

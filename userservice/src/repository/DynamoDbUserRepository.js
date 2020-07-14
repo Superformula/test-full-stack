@@ -128,10 +128,7 @@ function userToDynamoDbItem(user) {
 function randomImage() {
   let number = Math.floor(Math.random() * 1000);
   let result = number % 2;
-  let type = "women";
-  if (result === 1) {
-    type = "men";
-  }
+  let type = result === 1 ? "men" : "women";
   let imgNum = number % 26;
   return `https://randomuser.me/api/portraits/${type}/${imgNum}.jpg`;
 }

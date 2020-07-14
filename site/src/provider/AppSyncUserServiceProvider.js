@@ -73,7 +73,7 @@ class AppSyncUserServiceProvider {
       );
       toast(`🦄 ${numberOfUsersLoaded} user(s) loaded`);
       this._store.dispatch(UsersActions.setUsers(users));
-      if (pushToState) {
+      if (pushToState && numberOfUsersLoaded > 0) {
         pushUrlState(filter, state.userNumberLimit);
       }
       return numberOfUsersLoaded;

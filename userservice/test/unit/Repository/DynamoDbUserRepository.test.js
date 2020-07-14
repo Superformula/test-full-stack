@@ -28,35 +28,42 @@ describe("DynamoDbUserRepository", () => {
       expect(items.length).toBe(10);
     });
 
-    test("Valid input with a limit of 1, DynamoDB query two item. Return only 1 item. ", async () => {
-      makeQueryMock([{}, {}], { id: "fake key" });
-      let dynamoDbUserRepository = new DynamoDbUserRepository();
-      let items = await dynamoDbUserRepository.getUsers("some filter", 1, {
-        id: "fake key",
-      });
-      expect(items.length).toBe(1);
-    });
+    let table = [];
+    for (let i = 0; i < 100; i++) {
+      let randomNumber = Math.round((Math.random() * 2000) % 2000);
+      table.push([randomNumber, randomNumber]);
+    }
 
-    test("Valid input with a limit of 10, DynamoDB query return one item with a empty LastEvaluatedKey. Return only 1 items. ", async () => {
-      makeQueryMock([{}], { id: "fake key" });
-      let dynamoDbUserRepository = new DynamoDbUserRepository();
-      let items = await dynamoDbUserRepository.getUsers(
-        "some filter",
-        10,
-        null
-      );
-      expect(items.length).toBe(10);
-    });
+    it.each(table)(
+      "Valid input with a limit of Random Items, DynamoDB query return random number (%i) of items with a LastEvaluatedKey. Return the correct number (%i) of items with a limit. ",
+      async (numOfItems) => {
+        makeQueryMockWithRandomItemsReturn();
+        let dynamoDbUserRepository = new DynamoDbUserRepository();
+        let items = await dynamoDbUserRepository.getUsers(
+          "some filter",
+          numOfItems,
+          {
+            id: "fake key",
+          }
+        );
+        expect(items.length).toBe(numOfItems);
+      }
+    );
 
-    function makeQueryMock(items, key) {
+    function makeQueryMockWithRandomItemsReturn() {
       getDynamoDb.mockImplementation(() => {
         return {
           query: (param) => {
             return {
               promise: async () => {
+                let randNumber = Math.round((Math.random() % 100) * 100);
+                let items = [];
+                for (let i = 0; i < randNumber; i++) {
+                  items.push({});
+                }
                 return {
                   Items: items,
-                  LastEvaluatedKey: key,
+                  LastEvaluatedKey: {},
                 };
               },
             };
@@ -65,4 +72,37 @@ describe("DynamoDbUserRepository", () => {
       });
     }
   });
+
+  test("Valid input with a limit of 1, DynamoDB query two item. Return only 1 item. ", async () => {
+    makeQueryMock([{}, {}], { id: "fake key" });
+    let dynamoDbUserRepository = new DynamoDbUserRepository();
+    let items = await dynamoDbUserRepository.getUsers("some filter", 1, {
+      id: "fake key",
+    });
+    expect(items.length).toBe(1);
+  });
+
+  test("Valid input with a limit of 10, DynamoDB query return one item with a empty LastEvaluatedKey. Return only 1 items. ", async () => {
+    makeQueryMock([{}], { id: "fake key" });
+    let dynamoDbUserRepository = new DynamoDbUserRepository();
+    let items = await dynamoDbUserRepository.getUsers("some filter", 10, null);
+    expect(items.length).toBe(10);
+  });
+
+  function makeQueryMock(items, key) {
+    getDynamoDb.mockImplementation(() => {
+      return {
+        query: (param) => {
+          return {
+            promise: async () => {
+              return {
+                Items: items,
+                LastEvaluatedKey: key,
+              };
+            },
+          };
+        },
+      };
+    });
+  }
 });

@@ -87,17 +87,16 @@ const HeaderBar = (props) => {
       <div className="area searchArea">
         <SfTextInput
           data-testid={TestIds.SearchTextBox}
-          type="textbox"
           value={props.currentSearchTerm}
           placeholder="Search..."
-          onChange={async (e) => {
+          onChange={(e) => {
             let value = e.target.value;
-            props.setCurrentSearchTerm(value);
+
             if (debounceFn) {
               debounceFn.clear();
             }
-            debounceFn = debounce(async () => {
-              return AppSyncUserServiceProvider.doSearch(value);
+            debounceFn = debounce(() => {
+              AppSyncUserServiceProvider.doSearch(value);
             }, 1000);
             debounceFn();
           }}
