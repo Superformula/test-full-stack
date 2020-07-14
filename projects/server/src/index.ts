@@ -2,7 +2,7 @@ import { ApolloServer } from 'apollo-server-lambda';
 import { createServer, proxy } from "aws-serverless-express";
 import { schema } from './schema';
 import { resolvers } from './resolvers';
-import { geocode } from './geocode';
+import geocode from './geocode';
 
 import type { APIGatewayEvent, Context, Callback } from 'aws-lambda';
 
