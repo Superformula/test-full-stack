@@ -1,8 +1,8 @@
-import React, { useCallback, useState, memo, useMemo, useEffect } from "react";
+import React, { useCallback, useState, memo, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
 let markers = [];
-const Map = (props) => {
+const Map = ({ address }) => {
   const [map, setMap] = useState(null);
   const onLoad = useCallback((map) => {
     const bounds = new window.google.maps.LatLngBounds();
@@ -16,9 +16,9 @@ const Map = (props) => {
 
   useEffect(() => {
     if (map) {
-      addressToLocation(props.address, map);
+      addressToLocation(address, map);
     }
-  }, [props.address, map]);
+  }, [address, map]);
 
   return (
     <>

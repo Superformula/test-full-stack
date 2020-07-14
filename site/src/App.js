@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { ModalProvider, BaseModalBackground } from "styled-react-modal";
@@ -44,20 +44,20 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
-  let openModalFunc = (user) => {
+  let openModalFunc = useCallback((user) => {
     userStore.dispatch(UsersActions.setCurrentUser(user));
     setIsOpen(true);
     setTimeout(() => {
       setOpacity(1);
     }, 100);
-  };
+  }, []);
 
-  let closeModalFunc = () => {
+  let closeModalFunc = useCallback(() => {
     setOpacity(0);
     setTimeout(() => {
       setIsOpen(false);
     }, 100);
-  };
+  }, []);
 
   return (
     <>

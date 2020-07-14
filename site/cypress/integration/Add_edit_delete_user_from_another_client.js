@@ -14,7 +14,7 @@ describe("Updating ui base on Create, Update, and Delete from another client", (
   });
 
   it("Can display user being added from another client", () => {
-    cy.wait(InBetweenWaitTime);
+    cy.get(`[data-testid=${TestIds.UserCard}]`);
 
     async function addUserFn() {
       await AppSyncUserServiceProvider.addUser({

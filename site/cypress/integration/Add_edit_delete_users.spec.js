@@ -8,7 +8,7 @@ describe("Create, Update, and Delete user", () => {
   });
 
   it("Can add a user", () => {
-    cy.wait(InBetweenWaitTime);
+    cy.get(`[data-testid=${TestIds.UserCard}]`);
 
     cy.get(`[data-testid=${TestIds.AddUserButton}]`).click();
 

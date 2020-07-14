@@ -111,7 +111,7 @@ const UserFormRow = styled.div`
   }
 `;
 
-const UserForm = (props) => {
+const UserForm = ({ currentUser, onSubmitted }) => {
   const formRef = useRef(null);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = async (data) => {
@@ -123,14 +123,14 @@ const UserForm = (props) => {
     } else {
       data.dateOfBirth = null;
     }
-    if (props.currentUser && props.currentUser.id) {
-      data.id = props.currentUser.id;
+    if (currentUser && currentUser.id) {
+      data.id = currentUser.id;
       await AppSyncUserServiceProvider.updateUser(data);
     } else {
       await AppSyncUserServiceProvider.addUser(data);
     }
-    if (props.onSubmitted) {
-      props.onSubmitted();
+    if (onSubmitted) {
+      onSubmitted();
     }
   };
 
@@ -140,21 +140,21 @@ const UserForm = (props) => {
   let address = null;
   let description = null;
   let removeButton = "";
-  if (props.currentUser) {
-    label = `Edit ${props.currentUser.name}`;
-    name = props.currentUser.name;
-    dateOfBirth = props.currentUser.dateOfBirth
-      ? dayjs(props.currentUser.dateOfBirth).format("YYYY-MM-DD")
+  if (currentUser) {
+    label = `Edit ${currentUser.name}`;
+    name = currentUser.name;
+    dateOfBirth = currentUser.dateOfBirth
+      ? dayjs(currentUser.dateOfBirth).format("YYYY-MM-DD")
       : null;
-    address = props.currentUser.address;
-    description = props.currentUser.description;
+    address = currentUser.address;
+    description = currentUser.description;
     removeButton = (
       <UserFormPanelDeleteButton
         type="button"
         data-testid={TestIds.DeleteUserButton}
         onClick={async () => {
-          await AppSyncUserServiceProvider.deleteUser(props.currentUser);
-          props.onSubmitted();
+          await AppSyncUserServiceProvider.deleteUser(currentUser);
+          onSubmitted();
         }}
       >
         <FaUserMinus>Delete</FaUserMinus>

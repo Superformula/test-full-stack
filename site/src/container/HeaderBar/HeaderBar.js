@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, memo } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -68,8 +68,23 @@ const HeaderArea = styled.div`
 `;
 
 let debounceFn = null;
+const HeaderBar = ({
+  currentSearchTerm,
+  setCurrentSearchTerm,
+  onNewUserClick,
+}) => {
+  const onTextChangeHandle = useCallback((e) => {
+    let value = e.target.value;
+    setCurrentSearchTerm(value);
+    if (debounceFn) {
+      debounceFn.clear();
+    }
+    debounceFn = debounce(() => {
+      AppSyncUserServiceProvider.doSearch(value);
+    }, 1000);
+    debounceFn();
+  }, []);
 
-const HeaderBar = (props) => {
   return (
     <HeaderArea>
       <div className="area titleArea">
@@ -78,7 +93,7 @@ const HeaderBar = (props) => {
         <SfP
           data-testid={TestIds.AddUserButton}
           onClick={() => {
-            props.onNewUserClick(null);
+            onNewUserClick(null);
           }}
         >
           <FaUserPlus /> &nbsp;&nbsp;New User
@@ -87,19 +102,9 @@ const HeaderBar = (props) => {
       <div className="area searchArea">
         <SfTextInput
           data-testid={TestIds.SearchTextBox}
-          value={props.currentSearchTerm}
+          value={currentSearchTerm}
           placeholder="Search..."
-          onChange={(e) => {
-            let value = e.target.value;
-
-            if (debounceFn) {
-              debounceFn.clear();
-            }
-            debounceFn = debounce(() => {
-              AppSyncUserServiceProvider.doSearch(value);
-            }, 1000);
-            debounceFn();
-          }}
+          onChange={onTextChangeHandle}
         />
       </div>
     </HeaderArea>
@@ -108,7 +113,7 @@ const HeaderBar = (props) => {
 
 const HeaderBarMapStateToProps = (state) => {
   return {
-    currentSearchTerm: state.currentSearchTerm,
+    currentSearchTerm: state.currentSearchTerm ? state.currentSearchTerm : "",
   };
 };
 
@@ -125,4 +130,4 @@ const HeaderBarContainer = connect(
   HeaderBarMapDispatchToProps
 )(HeaderBar);
 
-export default HeaderBarContainer;
+export default memo(HeaderBarContainer);

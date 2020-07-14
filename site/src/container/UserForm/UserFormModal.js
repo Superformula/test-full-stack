@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import Modal from "styled-react-modal";
 
@@ -23,21 +23,19 @@ const UserFormStyledModal = Modal.styled`
   }
 `;
 
-const UserFormModal = (props) => {
+const UserFormModal = ({ isOpen, opacity, closeModal }) => {
   return (
     <UserFormStyledModal
-      isOpen={props.isOpen}
-      afterOpen={props.afterOpen}
-      beforeClose={props.beforeClose}
-      opacity={props.opacity}
-      backgroundProps={props.opacity}
+      isOpen={isOpen}
+      opacity={opacity}
+      backgroundProps={opacity}
     >
       <span className="closeButton">
-        <FaWindowClose onClick={props.closeModal} />
+        <FaWindowClose onClick={closeModal} />
       </span>
-      <UserFormContainer onSubmitted={props.closeModal} />
+      <UserFormContainer onSubmitted={closeModal} />
     </UserFormStyledModal>
   );
 };
 
-export default UserFormModal;
+export default memo(UserFormModal);

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import dayjs from "dayjs";
-import React from "react";
+import React, { memo } from "react";
 import { SfH2, SfP } from "../../styles/HtmlElementStyle.js";
 import { SfPenIcon } from "../../utils/SfIcons.js";
 import TestIds from "../../utils/testIds.js";
@@ -77,40 +77,36 @@ const DescriptionLabel = styled(SfP)`
   text-overflow: ellipsis;
 `;
 
-const UserCard = (props) => {
+const UserCard = ({ user, onClick }) => {
   return (
     <UserCardPanel data-testid={TestIds.UserCard}>
       <UserEditButton
         data-testid={TestIds.EditUserButton}
         onClick={() => {
-          if (props.onClick) {
-            props.onClick(props.user);
+          if (onClick) {
+            onClick(user);
           }
         }}
       >
         <SfPenIcon />
       </UserEditButton>
       <UserCardPanelImageArea>
-        <img alt={props.user.name} src={props.user.image} />
+        <img alt={user.name} src={user.image} />
       </UserCardPanelImageArea>
       <UserCardPanelInfoArea>
         <div>
-          <SfH2 data-testid={TestIds.UserNameDisplayLabel}>
-            {props.user.name}
-          </SfH2>
+          <SfH2 data-testid={TestIds.UserNameDisplayLabel}>{user.name}</SfH2>
           <CreatedAtLabelArea data-testid={TestIds.UserNameDisplayLabel}>
             <SfP>created</SfP>
-            <DateLabel>
-              {dayjs(props.user.createdAt).format("DD MMM YYYY")}
-            </DateLabel>
+            <DateLabel>{dayjs(user.createdAt).format("DD MMM YYYY")}</DateLabel>
           </CreatedAtLabelArea>
         </div>
         <DescriptionLabel data-testid={TestIds.UserDescriptionLabel}>
-          {props.user.description}
+          {user.description}
         </DescriptionLabel>
       </UserCardPanelInfoArea>
     </UserCardPanel>
   );
 };
 
-export default UserCard;
+export default memo(UserCard);
