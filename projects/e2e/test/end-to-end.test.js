@@ -97,9 +97,9 @@ describe("E2E", () => {
     it("Filters users in desplay based on search input", async (done) => {
         try {
             // Get a card that will be filtered.
-            const filteredCard = await page.$x("//h2[contains(., 'JACK')]");
+            const filteredCard = await page.$x("//span[contains(., 'JACK')]");
             // and a card that wont.
-            const unfilteredCard = await page.$x("//h2[contains(., 'MATTHEW')]");
+            const unfilteredCard = await page.$x("//span[contains(., 'MATTHEW')]");
             
             if (filteredCard.length === 0 || unfilteredCard.length === 0) {
                 return done(new Error("No card to be filtered... did you seed the database?"));
@@ -109,8 +109,8 @@ describe("E2E", () => {
             await page.type("#search-input", "matthew");
             await page.screenshot({ path: getNextImagePath("users-list-filtered") });
             
-            const filteredCardRetry = await page.$x("//h2[contains(., 'JACK')]");
-            const unfilteredCardRetry = await page.$x("//h2[contains(., 'MATTHEW')]");
+            const filteredCardRetry = await page.$x("//span[contains(., 'JACK')]");
+            const unfilteredCardRetry = await page.$x("//span[contains(., 'MATTHEW')]");
             
             if (filteredCardRetry.length !== 0 || unfilteredCardRetry.length === 0) {
                 return done(new Error("Filtering unsuccessful"));
@@ -123,9 +123,9 @@ describe("E2E", () => {
             await page.screenshot({ path: getNextImagePath("users-list-filter-removed") });
 
             // Get a card that will be filtered.
-            const filteredCardReturn = await page.$x("//h2[contains(., 'JACK')]");
+            const filteredCardReturn = await page.$x("//span[contains(., 'JACK')]");
             // and a card that wont.
-            const unfilteredCardReturn = await page.$x("//h2[contains(., 'MATTHEW')]");
+            const unfilteredCardReturn = await page.$x("//span[contains(., 'MATTHEW')]");
             
             if (unfilteredCardReturn.length === 0 || filteredCardReturn.length === 0) {
                 return done(new Error("Filtering did not stop!"));
@@ -140,7 +140,7 @@ describe("E2E", () => {
 
     it("Displays modal when as user card is clicked", async (done) => {
         try {
-            const knownCard = await page.$x("//h2[contains(., 'MATTHEW')]");
+            const knownCard = await page.$x("//span[contains(., 'MATTHEW')]");
             if (knownCard.length === 0) {
                 return done(new Error("Test card not found... did you seed the database?"));
             }
@@ -193,7 +193,7 @@ describe("E2E", () => {
 
     it("Displays correct information on modal for a different user", async (done) => {
         try {
-            let knownCard = await page.$x("//h2[contains(., 'JACK')]");
+            let knownCard = await page.$x("//span[contains(., 'JACK')]");
             if (knownCard.length === 0) {
                 return done(new Error("Test card not found... did you seed the database?"));
             }
