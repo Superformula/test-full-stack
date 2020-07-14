@@ -14,7 +14,12 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
         case EditUserModalActionTypes.HIDE:
             return {
                 ...state,
-                user: null
+                user: null,
+                editUser: {
+                    name: null,
+                    description: null,
+                    address: null
+                }
             };
         case EditUserModalActionTypes.EDIT:
             const editAction = action as EditUserModalEditAction;
