@@ -40,28 +40,34 @@ async function geocode(req: IncomingMessage, res: ServerResponse) : Promise<void
         return;
     }
     
-    let geocodeResponse: GeocodeResponse = await client.geocode({
-        params: {
-            address: address,
-            key: configGoogleMapsKey
-        }
-    });
-
-    if (geocodeResponse.data.results.length > 0) {
-        const coords = geocodeResponse.data.results[0].geometry.location;
-        
-        res.writeHead(200, {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+    try {
+        let geocodeResponse: GeocodeResponse = await client.geocode({
+            params: {
+                address: address,
+                key: configGoogleMapsKey
+            }
         });
-        
-        const response = JSON.stringify(coords);
-        console.log(response);
 
-        res.end(response);
+        if (geocodeResponse.data.results.length > 0) {
+            const coords = geocodeResponse.data.results[0].geometry.location;
+            
+            res.writeHead(200, {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            });
+            
+            const response = JSON.stringify(coords);
+            console.log(response);
+    
+            res.end(response);
+        }
+        else {
+            error("Address not found");
+        }
     }
-    else {
-        error("Address not found");
+    catch (e) {
+        error("Failed to fetch geocode.");
+        error(e);
     }
 }
 
