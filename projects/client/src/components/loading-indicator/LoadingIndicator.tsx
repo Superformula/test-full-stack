@@ -5,8 +5,14 @@ import './loading-indicator.css';
 type LoadingIndicator = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
 const LoadingIndicator: React.FunctionComponent<LoadingIndicator> = (props: LoadingIndicator) => {
+    let className = "loading-indicator";
+
+    if (props.className) {
+        className += ` ${props.className}`;
+    }
+
     return (
-        <div {...props} className="loading-indicator"></div>
+        <div {...props} className={className}></div>
     );
 }
 

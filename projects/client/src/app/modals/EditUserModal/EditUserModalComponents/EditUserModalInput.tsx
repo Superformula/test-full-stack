@@ -8,9 +8,12 @@ import type { RootState } from '../../../../store/configure-store'
 
 import './edit-user-modal-body.css';
 import AlertIcon from '../../../../components/icons/AlertIcon';
+import LoadingIndicator from '../../../../components/loading-indicator/LoadingIndicator';
 
 const mapStateToProps = (state: RootState) => {
-    return {};
+    return {
+        isUpdatingLocation: state.editUser.isUpdatingLocation
+    };
 };
 
 const mapDispatchToProps = {
@@ -38,6 +41,7 @@ const EditUserModalInput: React.FunctionComponent<EditUserModalInputProps> = (pr
         getEditUserLocation,
         getEditUserName, 
         getFetchLocation,
+        isUpdatingLocation,
         which, value, id
     } = props;
     
@@ -77,12 +81,25 @@ const EditUserModalInput: React.FunctionComponent<EditUserModalInputProps> = (pr
     }
 
     let indicator = null;
-    if (textValue !== value) {
+    if (isUpdatingLocation && which === 'location') {
+        indicator = (
+            <div className="modal-input-indicator" style={{
+                width: '24px',
+                height: '24px',
+                display: 'flex'
+            }}>
+                <LoadingIndicator style={{
+                    flexGrow: 1
+                }}/>
+            </div>
+        );
+    }
+    else if (textValue !== value) {
         indicator = (
             <AlertIcon className="modal-input-indicator" style={{
                 width: '24px',
                 height: '24px',
-            }}></AlertIcon>
+            }}/>
         );
     }
 
