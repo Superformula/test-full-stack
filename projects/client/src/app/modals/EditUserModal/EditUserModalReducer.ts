@@ -45,6 +45,11 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
                 return {
                     ...state,
                     isSaving: true,
+                    editUser: {
+                        name: null,
+                        description: null,
+                        address: null
+                    }
                 };
             }
             else if (saveAction.status === AsynchronousActionStatus.SUCCESS) {
