@@ -17,7 +17,7 @@
 
 .modal-map-container, .modal-footer-empty-container {
     flex-grow: 1;
-    min-width: 320px;
+    min-width: 280px;
 }
 
 .modal-map-container-inner {
@@ -92,6 +92,6 @@
     }
 
     .modal-footer-button-container, .modal-input-container {
-        min-width: 360px;
+        min-width: 300px;
     }
 }
