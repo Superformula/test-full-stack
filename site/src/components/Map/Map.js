@@ -67,13 +67,17 @@ const postMarkerToMap = (location, map) => {
     markers.splice(-1);
   }
 
-  map.setCenter(location);
-  markers.push(
-    new window.google.maps.Marker({
-      map: map,
-      position: location,
-    })
-  );
+  if (location) {
+    map.setCenter(location);
+    if (location !== empty) {
+      markers.push(
+        new window.google.maps.Marker({
+          map: map,
+          position: location,
+        })
+      );
+    }
+  }
 };
 
 export default memo(Map);
