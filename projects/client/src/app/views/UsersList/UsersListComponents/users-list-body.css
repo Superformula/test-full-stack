@@ -50,12 +50,14 @@
 .users-list-card-flare {
     float: right;
     opacity: 0;
+    height: 0px;
     transition: all .2s;
 }
 
 .users-list-card-flare-hover {
     visibility: visible;
     opacity: 1;
+    height: 24px;
 }
 
 @media (max-width: 586px) {
