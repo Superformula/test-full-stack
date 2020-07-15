@@ -36,10 +36,17 @@ const Map = ({ address }) => {
 const cache = {};
 const empty = { lat: 0, lng: 0 };
 export const addressToLocation = (address, map) => {
+  if (cache[address]) {
+    postMarkerToMap(cache[address], map);
+    return;
+  }
+
+  if (!address) {
+    postMarkerToMap(empty, map);
+    return;
+  }
+
   if (address) {
-    if (cache[address]) {
-      postMarkerToMap(cache[address], map);
-    }
     let geoCoder = new window.google.maps.Geocoder();
     geoCoder.geocode({ address: address }, (results, status) => {
       if (status === "OK") {
@@ -49,8 +56,6 @@ export const addressToLocation = (address, map) => {
       }
       postMarkerToMap(cache[address], map);
     });
-  } else {
-    postMarkerToMap(empty, map);
   }
 };
 
