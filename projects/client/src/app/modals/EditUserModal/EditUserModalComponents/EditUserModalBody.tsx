@@ -17,15 +17,15 @@ const EditUserModalBody: React.FunctionComponent<EditUserModalBodyProps> = (prop
             <div className="modal-input-container">
                 <div>
                     <label htmlFor="name" className="default-input-label">Name</label>
-                    <EditUserModalInput which='name' value={user?.name || ""}/>
+                    <EditUserModalInput which='name' id={user?.id || ""} value={user?.name || ""}/>
                 </div>
                 <div>
                     <label htmlFor="location" className="default-input-label">Location</label>
-                    <EditUserModalInput which='location' value={user?.address || ""}/>
+                    <EditUserModalInput which='location' id={user?.id || ""} value={user?.address || ""}/>
                 </div>
                 <div>
                     <label htmlFor="description" className="default-input-label">Description</label>
-                    <EditUserModalInput which='description' value={user?.description || ""}/>
+                    <EditUserModalInput which='description' id={user?.id || ""} value={user?.description || ""}/>
                 </div>
             </div>
         </div>

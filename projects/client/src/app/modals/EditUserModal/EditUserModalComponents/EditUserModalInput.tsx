@@ -27,6 +27,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 interface EditUserModalInputBaseProps {
     which: 'location' | 'name' | 'description';
     value: string;
+    id: string;
 }
 
 type EditUserModalInputProps = PropsFromRedux & EditUserModalInputBaseProps;
@@ -37,17 +38,17 @@ const EditUserModalInput: React.FunctionComponent<EditUserModalInputProps> = (pr
         getEditUserLocation,
         getEditUserName, 
         getFetchLocation,
-        which, value
+        which, value, id
     } = props;
-
+    
+    const [lastId, setLastId] = useState(id);
     const [textValue, setTextValue] = useState(value);
-    const [intialValue, setInitialValue] = useState(value);
     const [debouncedTimeout, setDebouncedTimeout] = useState(null);
-    const userViewChanged = value !== intialValue;
 
+    const userViewChanged = id !== lastId;
     if (userViewChanged) {
-        setInitialValue(value);
         setTextValue(value);
+        setLastId(id);
     }
     
     let dispatchFunction;

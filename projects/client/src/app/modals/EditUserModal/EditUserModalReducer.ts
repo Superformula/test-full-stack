@@ -51,7 +51,7 @@ export function reduceEditUserModal(state: EditUserModalState, action: EditUserM
                 return {
                     ...state,
                     isSaving: false,
-                    user: null
+                    user: null,
                 };
             }
             else {
