@@ -15,7 +15,7 @@ const Button: React.FunctionComponent<TextInputProps> =
     }
     
     return (
-        <input {...props} className={inputClassName} type="text"></input>
+        <input {...props} className={inputClassName} type={props.type || "text"}></input>
     );
 };
 
