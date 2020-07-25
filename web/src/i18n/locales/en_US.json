@@ -1,4 +1,8 @@
 {
+  "save": "Save",
+  "close": "Close",
+
   "users.title": "Users list",
-  "users.edit": "Edit User"
+  "users.edit": "Edit User",
+  "users.loadMore": "Load More"
 }

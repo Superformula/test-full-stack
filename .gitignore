@@ -15,7 +15,7 @@ api/build
 
 # misc
 .DS_Store
-.env.local
+web/.env.local
 .env.development.local
 .env.test.local
 .env.production.local

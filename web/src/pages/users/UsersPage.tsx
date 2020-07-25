@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Button } from '../../components/button/Button'
 import { Input } from '../../components/input/Input'
 import { useGetUsers, User } from './hooks/useGetUsers'
 import { UserCard } from './UserCard'
@@ -22,6 +23,11 @@ export const UsersPage = (): ReactElement => {
         {users.map((user: User) => (
           <UserCard key={user.id} name={user.name} avatar={user.avatar} description={user.description} />
         ))}
+      </div>
+      <div className={style.loadMore}>
+        <Button>
+          <FormattedMessage id="users.loadMore" />
+        </Button>
       </div>
     </div>
   )

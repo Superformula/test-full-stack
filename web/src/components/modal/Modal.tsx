@@ -11,6 +11,14 @@ interface ModalProps {
   onClose?: VoidFunction
 }
 
+interface ModalController {
+  close: VoidFunction
+}
+
+export const ModalContext = React.createContext<ModalController>({
+  close: () => {},
+})
+
 export const useModal = (onClose?: VoidFunction) => {
   const [fading, setFading] = useState(false)
   const close = useCallback(() => setFading(true), [])
@@ -25,7 +33,7 @@ export const useModal = (onClose?: VoidFunction) => {
     setFading(false)
     hide()
     onClose && onClose()
-  }, [fading, hide])
+  }, [fading, hide, onClose])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -35,13 +43,30 @@ export const useModal = (onClose?: VoidFunction) => {
     return (): void => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isShow])
+  }, [isShow, close])
 
-  return useMemo(() => ({ fading, show, handleAnimEnd, Portal }), [fading, show, handleAnimEnd, close, Portal])
+  const controller: ModalController = useMemo(() => ({ close }), [close])
+
+  return useMemo(() => ({ fading, show, handleAnimEnd, Portal, controller }), [
+    fading,
+    show,
+    handleAnimEnd,
+    Portal,
+    controller,
+  ])
 }
 
 export const Modal = ({ children, width, height, trigger, onClose }: ModalProps): ReactElement => {
-  const { fading, handleAnimEnd, show, Portal } = useModal(onClose)
+  const { fading, handleAnimEnd, show, Portal, controller } = useModal(onClose)
+
+  const backdropClass = useMemo(
+    () =>
+      classNames({
+        [style.modal]: true,
+        [style.fading]: fading,
+      }),
+    [fading],
+  )
 
   const windowClass = useMemo(
     () =>
@@ -55,17 +80,17 @@ export const Modal = ({ children, width, height, trigger, onClose }: ModalProps)
   const windowStyle = useMemo(() => ({ width, height }), [width, height])
 
   return (
-    <>
+    <ModalContext.Provider value={controller}>
       <div className={style.modalTrigger} onClick={show}>
         {trigger}
       </div>
       <Portal>
-        <div className={style.modal}>
+        <div className={backdropClass}>
           <div onAnimationEnd={handleAnimEnd} className={windowClass} style={windowStyle}>
             {children}
           </div>
         </div>
       </Portal>
-    </>
+    </ModalContext.Provider>
   )
 }

@@ -8,12 +8,22 @@
   width: 100vw;
   height: 100vh;
   top: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+
+  animation-name: backdropShowUp;
+  animation-duration: .4s;
+  animation-timing-function: ease-in-out;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  &.fading {
+    animation-name: backdropHide;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+  }
 
   .modalWindow {
     z-index: 11;
@@ -35,6 +45,24 @@
       animation-duration: .4s;
       animation-timing-function: ease-in-out;
     }
+  }
+}
+
+@keyframes backdropShowUp {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 

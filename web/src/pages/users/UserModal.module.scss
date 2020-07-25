@@ -1,0 +1,19 @@
+.userFormContent {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+
+  .userFormFields {
+    padding-left: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .userFormButtons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
