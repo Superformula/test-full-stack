@@ -1,18 +1,16 @@
 import React from 'react'
-import { Avatar } from './components/avatar/Avatar'
-import { Card } from './components/card/Card'
-
+import { IntlProvider } from 'react-intl'
 import style from './App.module.scss'
+import { i18n } from './i18n'
+import { UsersPage } from './pages/users/UsersPage'
 
 function App() {
   return (
-    <header className={style.AppHeader}>
-      <Card>
-        <Avatar src="https://source.unsplash.com/400x400/?people" alt="Hello World" />
-        <h2>JESSICA MAY</h2>
-        <p>Lorem ipsum dolor sit amet</p>
-      </Card>
-    </header>
+    <IntlProvider locale={i18n.locale} messages={i18n.messages}>
+      <header className={style.AppHeader}>
+        <UsersPage />
+      </header>
+    </IntlProvider>
   )
 }
 

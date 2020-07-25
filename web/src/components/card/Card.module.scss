@@ -4,7 +4,7 @@
   background: $card-background;
   border-radius: $card-border-radius;
   transition: box-shadow .1s ease-in-out;
-  padding: 44px;
+  padding: $card-padding;
 
   &:hover {
     box-shadow: $card-hover-box-shadow;

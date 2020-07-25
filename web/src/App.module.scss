@@ -20,6 +20,10 @@
     font-size: $h1-font-size;
     line-height: $h1-line-height;
     color: $text-color;
+
+    @media (max-width: 600px) {
+      font-size: 40px;
+    }
   }
 
   h2 {
@@ -39,7 +43,7 @@
 }
 
 .AppHeader {
-  background-color: #F8F8F8;
+  background-color: $background-color;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

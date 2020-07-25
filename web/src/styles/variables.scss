@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
 
 $text-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-
 $text-color: #222;
+
+$background-color: #F8F8F8;
 
 $h1-font-size: 48px;
 $h1-line-height: 1.25;
+
 $h2-font-size: 21px;
 $h2-line-height: 1.4;
 $p-font-size: 16px;
@@ -14,10 +16,11 @@ $p-line-height: 20px;
 $card-background: #ffffff;
 $card-border-radius: 8px;
 $card-hover-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$card-padding: 44px;
 
 $input-border-radius: 8px;
 $input-border: 1px solid rgba(0, 0, 0, 0.1);
 $input-background: #fff;
-$input-height: 64px;
-$input-text-font-size: 24px;
+$input-height: 48px;
+$input-text-font-size: 18px;
 $input-label-font-size: 16px;

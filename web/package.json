@@ -16,7 +16,9 @@
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.6",
+    "react-cool-portal": "^1.0.14",
     "react-dom": "^16.13.1",
+    "react-intl": "^5.4.2",
     "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },

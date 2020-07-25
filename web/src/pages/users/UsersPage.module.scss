@@ -1,0 +1,24 @@
+.usersHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h1 {
+    flex-grow: 1;
+  }
+}
+
+.usersBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 32px;
+  row-gap: 32px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 600px) and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
