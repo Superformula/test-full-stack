@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.card {
+  background: $card-background;
+  border-radius: $card-border-radius;
+  transition: box-shadow .1s ease-in-out;
+  padding: 20px;
+
+  &:hover {
+    box-shadow: $card-hover-box-shadow;
+  }
+}

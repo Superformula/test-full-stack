@@ -1,38 +1,53 @@
+@import './styles/variables';
+
+:global {
+  body, * {
+    margin: 0;
+    font-family: $text-font-family;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  }
+
+  h1 {
+    font-style: normal;
+    font-weight: 300;
+    font-size: $h1-font-size;
+    line-height: $h1-line-height;
+    color: $text-color;
+  }
+
+  h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: $h2-font-size;
+    line-height: $h2-line-height;
+    color: $text-color;
+  }
+
+  p {
+    font-weight: 300;
+    font-size: $p-font-size;
+    line-height: $p-line-height;
+    color: $text-color;
+  }
+}
+
 .App {
   text-align: center;
 }
 
-.AppLogo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .AppLogo {
-    animation: AppLogoSpin infinite 20s linear;
-  }
-}
-
 .AppHeader {
-  background-color: #282c34;
+  background-color: #F8F8F8;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.AppLink {
-  color: #61dafb;
-}
-
-@keyframes AppLogoSpin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  color: #333;
 }
