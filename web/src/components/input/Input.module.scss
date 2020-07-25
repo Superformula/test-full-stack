@@ -1,8 +1,11 @@
 @import '../../styles/variables';
 
 .input {
-  padding-top: 24px;
   position: relative;
+
+  &.padded {
+    padding-top: 24px;
+  }
 
   .placeholder {
     font-weight: 600;
