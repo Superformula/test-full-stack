@@ -26,8 +26,8 @@ export const UsersPage = (): ReactElement => {
             <UserCard name={user.name} avatar={user.avatar} description={user.description} />
           </EditUserModal>
         ))}
+        {loading ? <UsersLoader /> : null}
       </div>
-      {loading ? <UsersLoader /> : null}
       {hasMore ? (
         <div className={style.loadMore}>
           <Button onClick={loadMore}>
