@@ -1,0 +1,54 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+type Mutation {
+    createPerson(body: PersonRequest!): Person!
+    deletePerson(id: ID!): Person!
+    updatePerson(body: PersonRequest!, id: ID!): Person!
+}
+
+type Person {
+    address: String!
+    avatar: String!
+    createdAt: AWSDateTime!
+    description: String
+    dob: AWSDate
+    id: ID!
+    lat: Float
+    lng: Float
+    name: String!
+    updatedAt: AWSDateTime!
+}
+
+type PersonConnection {
+    list: [Person!]!
+    nextToken: String
+}
+
+type Query {
+    person(id: ID!): Person
+    persons(after: String, name: String): PersonConnection!
+}
+
+type Subscription {
+    personChanged: Person
+}
+
+input PersonRequest {
+    address: String!
+    description: String
+    dob: AWSDate
+    lat: Float
+    lng: Float
+    name: String!
+}
+
+
+scalar AWSDate
+
+scalar AWSDateTime

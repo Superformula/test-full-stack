@@ -1,0 +1,41 @@
+mutation createPerson($body: PersonRequest!) {
+    createPerson(body: $body) {
+        id
+        name
+        avatar
+        description
+    }
+}
+
+query listPersons($name: String, $after: String) {
+    persons(name: $name, after: $after) {
+        list {
+            id
+            name
+            avatar
+            description
+        }
+        nextToken
+    }
+}
+
+query getPerson($id: ID!) {
+    person(id: $id) {
+        id
+        avatar
+        name
+        description
+        lat
+        lng
+        address
+    }
+}
+
+subscription watchPersons {
+    personChanged {
+        id
+        name
+        avatar
+        description
+    }
+}

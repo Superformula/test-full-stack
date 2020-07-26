@@ -5,7 +5,7 @@ import { Card } from '../../components/card/Card'
 interface UserProps {
   name: string
   avatar: string
-  description: string
+  description: string | undefined | null
 }
 
 export const UserCard = ({ name, avatar, description }: UserProps): ReactElement => (

@@ -6,37 +6,38 @@ type Mutation {
 
 type Query {
     person(id: ID!): Person
-    persons(name: String, after: String): PersonConnection
+    persons(name: String, after: String): PersonConnection!
 }
 
 type Subscription {
-    personChanged: Person!
+    personChanged: Person
     @aws_subscribe(mutations: ["createPerson", "updatePerson", "deletePerson"])
 }
 
 input PersonRequest {
     name: String!
-    dob: AWSDate!
+    dob: AWSDate
     address: String!
-    lat: Float!
-    lng: Float!
+    lat: Float
+    lng: Float
     description: String
 }
 
 type Person {
     id: ID!
+    avatar: String!
     name: String!
-    dob: AWSDate!
+    dob: AWSDate
     address: String!
-    lat: Float!
-    lng: Float!
+    lat: Float
+    lng: Float
     description: String
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
 }
 
 type PersonConnection {
-    list: [Person]
+    list: [Person!]!
     nextToken: String
 }
 

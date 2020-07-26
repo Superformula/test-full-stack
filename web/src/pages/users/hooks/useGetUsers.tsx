@@ -1,54 +1,102 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useApolloClient } from '@apollo/react-hooks'
+import { ListPersonsDocument, Maybe, WatchPersonsDocument } from '../../../generated/graphql'
+
 export interface User {
   id: string
   name: string
   avatar: string
-  description: string
+  description?: Maybe<string>
 }
+
 interface Users {
   users: User[]
   loading: boolean
+  hasMore: boolean
+  loadMore: VoidFunction
 }
 
 export const useGetUsers = (): Users => {
-  return {
-    loading: false,
-    users: [
-      {
-        id: 'F2ChA2c3',
-        name: 'Jessica May',
-        avatar: 'https://source.unsplash.com/400x400/?women&v=1',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-      {
-        id: 'a87Cljk431',
-        name: 'John Doe',
-        avatar: 'https://source.unsplash.com/400x400/?men&v=1',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-      {
-        id: '1d2h892fh',
-        name: 'Michael Douglas',
-        avatar: 'https://source.unsplash.com/400x400/?men&v=2',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-      {
-        id: 'F2ChA2c3d',
-        name: 'Jessica May',
-        avatar: 'https://source.unsplash.com/400x400/?women&v=3',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-      {
-        id: 'a87Cljk43w',
-        name: 'John Doe',
-        avatar: 'https://source.unsplash.com/400x400/?men&v=3',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-      {
-        id: '1d2h892fhz',
-        name: 'Michael Douglas',
-        avatar: 'https://source.unsplash.com/400x400/?men&v=4',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-    ],
-  }
+  const client = useApolloClient()
+  const usersInternal = useRef<User[]>([])
+  const [loading, setLoading] = useState(false)
+  const [users, setUsers] = useState<User[]>([])
+  const [nextToken, setNextToken] = useState<string>('')
+
+  const hasMore = useMemo(() => !!nextToken, [nextToken])
+
+  const internalSetUsers = useCallback(
+    (users: User[]) => {
+      usersInternal.current = users
+      setUsers(users)
+    },
+    [usersInternal],
+  )
+
+  const loadMore = useCallback(() => {
+    if (nextToken) {
+      setLoading(true)
+      client
+        .query({
+          fetchPolicy: 'no-cache',
+          query: ListPersonsDocument,
+          variables: { after: nextToken },
+        })
+        .then((result) => {
+          internalSetUsers(users.concat(result.data.persons.list))
+          setNextToken(result.data.persons.nextToken)
+        })
+        .finally(() => setLoading(false))
+    }
+  }, [nextToken, client, users, internalSetUsers])
+
+  useEffect(() => {
+    setLoading(true)
+    client
+      .query({
+        fetchPolicy: 'no-cache',
+        query: ListPersonsDocument,
+      })
+      .then((result) => {
+        setLoading(false)
+        internalSetUsers(result.data.persons.list)
+        setNextToken(result.data.persons.nextToken)
+      })
+
+    const subscription = client
+      .subscribe({
+        fetchPolicy: 'no-cache',
+        query: WatchPersonsDocument,
+      })
+      .subscribe({
+        next(value) {
+          if (!value.data.personChanged) return
+
+          const internalUsers = usersInternal.current
+          const updatedUser: User = value.data.personChanged
+          const oldUserIndex: number = internalUsers.findIndex((user: User) => user.id === updatedUser.id)
+
+          if (oldUserIndex >= 0) {
+            // replacing item with updated one
+            internalSetUsers(
+              internalUsers.map((item: User, index: number) => (index === oldUserIndex ? updatedUser : item)),
+            )
+          } else {
+            // adding new user to the top of the list
+            internalSetUsers([updatedUser].concat(internalUsers))
+          }
+        },
+      })
+    return () => subscription.unsubscribe()
+  }, [usersInternal, client, internalSetUsers])
+
+  return useMemo(
+    () => ({
+      loading,
+      users,
+      hasMore,
+      loadMore,
+    }),
+    [loading, users, hasMore, loadMore],
+  )
 }
