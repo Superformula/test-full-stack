@@ -1,0 +1,22 @@
+{
+    "version": "2017-02-28",
+    "limit": 6
+    #if( $context.arguments.name )
+        ,"operation": "Query"
+        ,"index" : "name-index"
+        ,"query": {
+            "expression": "#name = :name",
+            "expressionValues": {
+                ":name": $util.dynamodb.toDynamoDBJson($context.arguments.name)
+            },
+            "expressionNames": {
+                "#name": "name"
+            }
+        }
+    #else
+        ,"operation": "Scan"
+    #end
+    #if( $context.arguments.after )
+        ,"nextToken": "${context.arguments.after}"
+    #end
+}

@@ -1,0 +1,50 @@
+type Mutation {
+    createPerson(body: PersonRequest!): Person!
+    updatePerson(id: ID!, body: PersonRequest!): Person!
+    deletePerson(id: ID!): Person!
+}
+
+type Query {
+    person(id: ID!): Person
+    persons(name: String, after: String): PersonConnection
+}
+
+type Subscription {
+    personChanged: Person!
+    @aws_subscribe(mutations: ["createPerson", "updatePerson", "deletePerson"])
+}
+
+input PersonRequest {
+    name: String!
+    dob: AWSDate!
+    address: String!
+    lat: Float!
+    lng: Float!
+    description: String
+}
+
+type Person {
+    id: ID!
+    name: String!
+    dob: AWSDate!
+    address: String!
+    lat: Float!
+    lng: Float!
+    description: String
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+}
+
+type PersonConnection {
+    list: [Person]
+    nextToken: String
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+scalar AWSDateTime
+scalar AWSDate
