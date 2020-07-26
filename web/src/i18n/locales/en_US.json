@@ -1,8 +1,11 @@
 {
   "save": "Save",
   "close": "Close",
+  "loading": "Loading",
 
   "users.title": "Users list",
+  "users.create": "Create User",
   "users.edit": "Edit User",
-  "users.loadMore": "Load More"
+  "users.loadMore": "Load More",
+  "users.notFound": "User Not Found"
 }

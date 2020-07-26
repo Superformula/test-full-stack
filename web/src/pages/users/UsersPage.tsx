@@ -4,7 +4,7 @@ import { Button } from '../../components/button/Button'
 import { Input } from '../../components/input/Input'
 import { useGetUsers, User } from './hooks/useGetUsers'
 import { UserCard } from './UserCard'
-import { CreateUserModal } from './UserModal'
+import { CreateUserModal, EditUserModal } from './UserModal'
 import { UsersLoader } from './UsersLoader'
 
 import style from './UsersPage.module.scss'
@@ -22,7 +22,9 @@ export const UsersPage = (): ReactElement => {
       </div>
       <div className={style.usersBody}>
         {users.map((user: User) => (
-          <UserCard key={user.id} name={user.name} avatar={user.avatar} description={user.description} />
+          <EditUserModal key={user.id} userId={user.id}>
+            <UserCard name={user.name} avatar={user.avatar} description={user.description} />
+          </EditUserModal>
         ))}
       </div>
       {loading ? <UsersLoader /> : null}

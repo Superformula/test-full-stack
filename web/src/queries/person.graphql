@@ -7,6 +7,15 @@ mutation createPerson($body: PersonRequest!) {
     }
 }
 
+mutation updatePerson($id: ID!, $body: PersonRequest!) {
+    updatePerson(id: $id, body: $body) {
+        id
+        name
+        avatar
+        description
+    }
+}
+
 query listPersons($name: String, $after: String) {
     persons(name: $name, after: $after) {
         list {

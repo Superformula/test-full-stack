@@ -109,6 +109,20 @@ export type CreatePersonMutation = (
   ) }
 );
 
+export type UpdatePersonMutationVariables = Exact<{
+  id: Scalars['ID'];
+  body: PersonRequest;
+}>;
+
+
+export type UpdatePersonMutation = (
+  { __typename?: 'Mutation' }
+  & { updatePerson: (
+    { __typename?: 'Person' }
+    & Pick<Person, 'id' | 'name' | 'avatar' | 'description'>
+  ) }
+);
+
 export type ListPersonsQueryVariables = Exact<{
   name?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
@@ -206,6 +220,61 @@ export function useCreatePersonMutation(baseOptions?: ApolloReactHooks.MutationH
 export type CreatePersonMutationHookResult = ReturnType<typeof useCreatePersonMutation>;
 export type CreatePersonMutationResult = ApolloReactCommon.MutationResult<CreatePersonMutation>;
 export type CreatePersonMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePersonMutation, CreatePersonMutationVariables>;
+export const UpdatePersonDocument = gql`
+    mutation updatePerson($id: ID!, $body: PersonRequest!) {
+  updatePerson(id: $id, body: $body) {
+    id
+    name
+    avatar
+    description
+  }
+}
+    `;
+export type UpdatePersonMutationFn = ApolloReactCommon.MutationFunction<UpdatePersonMutation, UpdatePersonMutationVariables>;
+export type UpdatePersonComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdatePersonMutation, UpdatePersonMutationVariables>, 'mutation'>;
+
+    export const UpdatePersonComponent = (props: UpdatePersonComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdatePersonMutation, UpdatePersonMutationVariables> mutation={UpdatePersonDocument} {...props} />
+    );
+    
+export type UpdatePersonProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdatePersonMutation, UpdatePersonMutationVariables>
+    } & TChildProps;
+export function withUpdatePerson<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdatePersonMutation,
+  UpdatePersonMutationVariables,
+  UpdatePersonProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdatePersonMutation, UpdatePersonMutationVariables, UpdatePersonProps<TChildProps, TDataName>>(UpdatePersonDocument, {
+      alias: 'updatePerson',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdatePersonMutation__
+ *
+ * To run a mutation, you first call `useUpdatePersonMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePersonMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePersonMutation, { data, loading, error }] = useUpdatePersonMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      body: // value for 'body'
+ *   },
+ * });
+ */
+export function useUpdatePersonMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdatePersonMutation, UpdatePersonMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, baseOptions);
+      }
+export type UpdatePersonMutationHookResult = ReturnType<typeof useUpdatePersonMutation>;
+export type UpdatePersonMutationResult = ApolloReactCommon.MutationResult<UpdatePersonMutation>;
+export type UpdatePersonMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdatePersonMutation, UpdatePersonMutationVariables>;
 export const ListPersonsDocument = gql`
     query listPersons($name: String, $after: String) {
   persons(name: $name, after: $after) {

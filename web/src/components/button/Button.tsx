@@ -7,9 +7,10 @@ declare type ButtonType = 'primary' | 'default'
 declare type ButtonProps = React.HTMLProps<HTMLButtonElement> & {
   type?: ButtonType
   children: ReactNode
+  htmlType?: 'submit' | 'button'
 }
 
-export const Button = ({ type, children, ...props }: ButtonProps) => {
+export const Button = ({ type, children, htmlType, ...props }: ButtonProps) => {
   const classes = useMemo(
     () =>
       classNames({
@@ -20,7 +21,7 @@ export const Button = ({ type, children, ...props }: ButtonProps) => {
     [type],
   )
   return (
-    <button className={classes} {...props}>
+    <button className={classes} {...props} type={htmlType}>
       {children}
     </button>
   )
