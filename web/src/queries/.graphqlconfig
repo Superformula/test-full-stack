@@ -4,10 +4,10 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://3mw4xxic3nhmjeo74igxv5ituu.appsync-api.us-east-1.amazonaws.com/graphql",
+        "url": "https://eh3jgzhg4fg4jbwcxvryzijwqm.appsync-api.us-east-1.amazonaws.com/graphql",
         "headers": {
           "user-agent": "JS GraphQL",
-          "X-Api-Key": "da2-cladukzedva2dbimdziotmw57q"
+          "X-Api-Key": "da2-vb5weg2xj5hprnprvxohccp4uy"
         },
         "introspect": false
       }

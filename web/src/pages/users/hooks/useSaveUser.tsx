@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { useCreatePersonMutation, useUpdatePersonMutation } from '../../../generated/graphql'
+import { useCreateUserMutation, useUpdateUserMutation } from '../../../generated/graphql'
 import { CompleteUser } from './useGetUser'
 
 export interface SaveUserResult {
@@ -7,8 +7,8 @@ export interface SaveUserResult {
 }
 
 export const useSaveUser = (): SaveUserResult => {
-  const [create] = useCreatePersonMutation()
-  const [update] = useUpdatePersonMutation()
+  const [create] = useCreateUserMutation()
+  const [update] = useUpdateUserMutation()
   const save = useCallback(
     async (values: CompleteUser): Promise<void> => {
       const body = {

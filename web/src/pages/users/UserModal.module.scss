@@ -1,3 +1,22 @@
+@import '../../styles/variables';
+
+.formTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  h1 {
+    flex-grow: 1;
+  }
+
+  .removeButton {
+    cursor: pointer;
+    svg {
+      fill: $icon-trash-color;
+    }
+  }
+}
+
 .userFormContent {
   margin-top: 10px;
   display: flex;

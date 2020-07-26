@@ -1,6 +1,6 @@
 import { useApolloClient } from '@apollo/react-hooks'
 import { useEffect, useMemo, useState } from 'react'
-import { GetPersonDocument, Maybe } from '../../../generated/graphql'
+import { GetUserDocument, Maybe } from '../../../generated/graphql'
 
 export interface CompleteUser {
   id?: string
@@ -28,15 +28,15 @@ export const useGetUser = (id: string): GetUserResult => {
     client
       .query({
         fetchPolicy: 'no-cache',
-        query: GetPersonDocument,
+        query: GetUserDocument,
         variables: { id },
       })
       .then((result) => {
-        console.log(result.data.person)
-        setUser(result.data.person as CompleteUser)
+        console.log(result.data.user)
+        setUser(result.data.user as CompleteUser)
       })
       .finally(() => setLoading(false))
-  }, [])
+  }, [client, id])
 
   return useMemo(
     () => ({

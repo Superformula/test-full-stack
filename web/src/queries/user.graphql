@@ -1,0 +1,61 @@
+mutation createUser($body: UserRequest!) {
+    createUser(body: $body) {
+        id
+        name
+        avatar
+        description
+    }
+}
+
+mutation updateUser($id: ID!, $body: UserRequest!) {
+    updateUser(id: $id, body: $body) {
+        id
+        name
+        avatar
+        description
+    }
+}
+
+mutation deleteUser($id: ID!) {
+    deleteUser(id: $id) {
+        id
+    }
+}
+
+query listUsers($name: String, $after: String) {
+    users(name: $name, after: $after) {
+        list {
+            id
+            name
+            avatar
+            description
+        }
+        nextToken
+    }
+}
+
+query getUser($id: ID!) {
+    user(id: $id) {
+        id
+        avatar
+        name
+        description
+        lat
+        lng
+        address
+    }
+}
+
+subscription watchUsers {
+    userChanged {
+        id
+        name
+        avatar
+        description
+    }
+}
+subscription watchDeletedUsers {
+    userDeleted {
+        id
+    }
+}

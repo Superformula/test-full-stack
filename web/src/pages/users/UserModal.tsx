@@ -1,14 +1,15 @@
 import React, { ReactElement, ReactNode, useCallback, useContext } from 'react'
+import { Form } from 'react-final-form'
 import { FormattedMessage } from 'react-intl'
 import { ReactComponent as AddIcon } from '../../assets/icon-add.svg'
 import { Button } from '../../components/button/Button'
 import { FormItem } from '../../components/formItem/FormItem'
 import { Icon } from '../../components/icon/Icon'
 import { Input } from '../../components/input/Input'
-import { Form } from 'react-final-form'
 import { Map } from '../../components/map/Map'
 import { Modal, ModalContext } from '../../components/modal/Modal'
-import { useGetPersonQuery } from '../../generated/graphql'
+import { useGetUserQuery } from '../../generated/graphql'
+import { UserDeleteButton } from './DeleteUserButton'
 import { CompleteUser, useGetUser } from './hooks/useGetUser'
 import { useSaveUser } from './hooks/useSaveUser'
 
@@ -24,13 +25,23 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
   const { close } = useContext(ModalContext)
   const { save } = useSaveUser()
 
-  const onSubmit = useCallback((values) => {
-    save(values).then(close)
-  }, [])
+  const onSubmit = useCallback(
+    (values) => {
+      save(values).then(close)
+    },
+    [save, close],
+  )
 
   return (
     <>
-      <h1>{user.id ? <FormattedMessage id="users.edit" /> : <FormattedMessage id="users.create" />}</h1>
+      <div className={style.formTitle}>
+        <h1>{user.id ? <FormattedMessage id="users.edit" /> : <FormattedMessage id="users.create" />}</h1>
+        {user.id && (
+          <div className={style.removeButton}>
+            <UserDeleteButton userId={user.id} onDeleteSuccess={close} />
+          </div>
+        )}
+      </div>
 
       <Form
         initialValues={user}
@@ -88,7 +99,7 @@ export const UserEditForm = ({ userId }: { userId: string }): ReactElement => {
 }
 
 export const EditUserModal = ({ userId, children }: EditUserModalProps): ReactElement => {
-  useGetPersonQuery()
+  useGetUserQuery()
   return (
     <Modal trigger={children} width={1000} height={400}>
       <UserEditForm userId={userId} />

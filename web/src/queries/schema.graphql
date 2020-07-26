@@ -7,12 +7,22 @@ schema {
 }
 
 type Mutation {
-    createPerson(body: PersonRequest!): Person!
-    deletePerson(id: ID!): Person!
-    updatePerson(body: PersonRequest!, id: ID!): Person!
+    createUser(body: UserRequest!): User!
+    deleteUser(id: ID!): User!
+    updateUser(body: UserRequest!, id: ID!): User!
 }
 
-type Person {
+type Query {
+    user(id: ID!): User
+    users(after: String, name: String): UserConnection!
+}
+
+type Subscription {
+    userChanged: User
+    userDeleted: User
+}
+
+type User {
     address: String!
     avatar: String!
     createdAt: AWSDateTime!
@@ -25,21 +35,12 @@ type Person {
     updatedAt: AWSDateTime!
 }
 
-type PersonConnection {
-    list: [Person!]!
+type UserConnection {
+    list: [User!]!
     nextToken: String
 }
 
-type Query {
-    person(id: ID!): Person
-    persons(after: String, name: String): PersonConnection!
-}
-
-type Subscription {
-    personChanged: Person
-}
-
-input PersonRequest {
+input UserRequest {
     address: String!
     description: String
     dob: AWSDate

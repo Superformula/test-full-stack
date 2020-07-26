@@ -1,5 +1,5 @@
-resource "aws_dynamodb_table" "person" {
-  name           = "PersonTable-${var.stage}"
+resource "aws_dynamodb_table" "user" {
+  name           = "UserTable-${var.stage}"
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
@@ -24,7 +24,7 @@ resource "aws_dynamodb_table" "person" {
   }
 
   tags = {
-    Name        = "person-table-1"
+    Name        = "user-table-1"
     Environment = var.stage
   }
 }
@@ -67,8 +67,8 @@ resource "aws_iam_role_policy" "api_to_dynamodb_policy" {
       ],
       "Effect": "Allow",
       "Resource": [
-        "${aws_dynamodb_table.person.arn}",
-        "${aws_dynamodb_table.person.arn}/index/name-index"
+        "${aws_dynamodb_table.user.arn}",
+        "${aws_dynamodb_table.user.arn}/index/name-index"
       ]
     }
   ]
@@ -86,82 +86,82 @@ resource "aws_appsync_graphql_api" "appsyncapi" {
   schema              = data.local_file.schema.content
 }
 
-resource "aws_appsync_datasource" "person" {
+resource "aws_appsync_datasource" "user" {
   api_id           = aws_appsync_graphql_api.appsyncapi.id
-  name             = "${var.appname}_appsync_person_ds_${var.stage}"
+  name             = "${var.appname}_appsync_user_ds_${var.stage}"
   service_role_arn = aws_iam_role.api.arn
   type             = "AMAZON_DYNAMODB"
 
   dynamodb_config {
-    table_name = aws_dynamodb_table.person.name
+    table_name = aws_dynamodb_table.user.name
   }
 }
 
-data "local_file" "create_person_mapping" {
-  filename = "${path.module}/appsync/createPerson-mapping-request.txt"
+data "local_file" "create_user_mapping" {
+  filename = "${path.module}/appsync/createUser-mapping-request.txt"
 }
 
-data "local_file" "update_person_mapping" {
-  filename = "${path.module}/appsync/updatePerson-mapping-request.txt"
+data "local_file" "update_user_mapping" {
+  filename = "${path.module}/appsync/updateUser-mapping-request.txt"
 }
 
-data "local_file" "delete_person_mapping" {
-  filename = "${path.module}/appsync/deletePerson-mapping-request.txt"
+data "local_file" "delete_user_mapping" {
+  filename = "${path.module}/appsync/deleteUser-mapping-request.txt"
 }
 
-data "local_file" "list_persons_mapping_request" {
-  filename = "${path.module}/appsync/listPersons-mapping-request.txt"
+data "local_file" "list_users_mapping_request" {
+  filename = "${path.module}/appsync/listUsers-mapping-request.txt"
 }
 
-data "local_file" "list_persons_mapping_response" {
-  filename = "${path.module}/appsync/listPersons-mapping-response.txt"
+data "local_file" "list_users_mapping_response" {
+  filename = "${path.module}/appsync/listUsers-mapping-response.txt"
 }
 
-data "local_file" "get_person_mapping_request" {
-  filename = "${path.module}/appsync/getPerson-mapping-request.txt"
+data "local_file" "get_user_mapping_request" {
+  filename = "${path.module}/appsync/getUser-mapping-request.txt"
 }
 
-resource "aws_appsync_resolver" "createPerson" {
+resource "aws_appsync_resolver" "createUser" {
   type              = "Mutation"
   api_id            = aws_appsync_graphql_api.appsyncapi.id
-  field             = "createPerson"
-  data_source       = aws_appsync_datasource.person.name
-  request_template  = data.local_file.create_person_mapping.content
+  field             = "createUser"
+  data_source       = aws_appsync_datasource.user.name
+  request_template  = data.local_file.create_user_mapping.content
   response_template = "$util.toJson($ctx.result)"
 }
 
-resource "aws_appsync_resolver" "updatePerson" {
+resource "aws_appsync_resolver" "updateUser" {
   type              = "Mutation"
   api_id            = aws_appsync_graphql_api.appsyncapi.id
-  field             = "updatePerson"
-  data_source       = aws_appsync_datasource.person.name
-  request_template  = data.local_file.update_person_mapping.content
+  field             = "updateUser"
+  data_source       = aws_appsync_datasource.user.name
+  request_template  = data.local_file.update_user_mapping.content
   response_template = "$util.toJson($ctx.result)"
 }
 
-resource "aws_appsync_resolver" "deletePerson" {
+resource "aws_appsync_resolver" "deleteUser" {
   type              = "Mutation"
   api_id            = aws_appsync_graphql_api.appsyncapi.id
-  field             = "deletePerson"
-  data_source       = aws_appsync_datasource.person.name
-  request_template  = data.local_file.delete_person_mapping.content
+  field             = "deleteUser"
+  data_source       = aws_appsync_datasource.user.name
+  request_template  = data.local_file.delete_user_mapping.content
   response_template = "$util.toJson($ctx.result)"
 }
 
-resource "aws_appsync_resolver" "listPersons" {
+resource "aws_appsync_resolver" "listUsers" {
   type              = "Query"
   api_id            = aws_appsync_graphql_api.appsyncapi.id
-  field             = "persons"
-  data_source       = aws_appsync_datasource.person.name
-  request_template  = data.local_file.list_persons_mapping_request.content
-  response_template = data.local_file.list_persons_mapping_response.content
+  field             = "users"
+  data_source       = aws_appsync_datasource.user.name
+  request_template  = data.local_file.list_users_mapping_request.content
+  response_template = data.local_file.list_users_mapping_response.content
 }
 
-resource "aws_appsync_resolver" "getPerson" {
+resource "aws_appsync_resolver" "getUser" {
   type              = "Query"
   api_id            = aws_appsync_graphql_api.appsyncapi.id
-  field             = "person"
-  data_source       = aws_appsync_datasource.person.name
-  request_template  = data.local_file.get_person_mapping_request.content
+  field             = "user"
+  data_source       = aws_appsync_datasource.user.name
+  request_template  = data.local_file.get_user_mapping_request.content
   response_template = "$util.toJson($ctx.result)"
 }

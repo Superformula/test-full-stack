@@ -1,20 +1,23 @@
 type Mutation {
-    createPerson(body: PersonRequest!): Person!
-    updatePerson(id: ID!, body: PersonRequest!): Person!
-    deletePerson(id: ID!): Person!
+    createUser(body: UserRequest!): User!
+    updateUser(id: ID!, body: UserRequest!): User!
+    deleteUser(id: ID!): User!
 }
 
 type Query {
-    person(id: ID!): Person
-    persons(name: String, after: String): PersonConnection!
+    user(id: ID!): User
+    users(name: String, after: String): UserConnection!
 }
 
 type Subscription {
-    personChanged: Person
-    @aws_subscribe(mutations: ["createPerson", "updatePerson", "deletePerson"])
+    userChanged: User
+    @aws_subscribe(mutations: ["createUser", "updateUser"])
+
+    userDeleted: User
+    @aws_subscribe(mutations: ["deleteUser"])
 }
 
-input PersonRequest {
+input UserRequest {
     name: String!
     dob: AWSDate
     address: String!
@@ -23,7 +26,7 @@ input PersonRequest {
     description: String
 }
 
-type Person {
+type User {
     id: ID!
     avatar: String!
     name: String!
@@ -36,8 +39,8 @@ type Person {
     updatedAt: AWSDateTime!
 }
 
-type PersonConnection {
-    list: [Person!]!
+type UserConnection {
+    list: [User!]!
     nextToken: String
 }
 

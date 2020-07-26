@@ -22,23 +22,23 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  person?: Maybe<Person>;
-  persons: PersonConnection;
+  user?: Maybe<User>;
+  users: UserConnection;
 };
 
 
-export type QueryPersonArgs = {
+export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
 
-export type QueryPersonsArgs = {
+export type QueryUsersArgs = {
   name?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
 };
 
-export type Person = {
-  __typename?: 'Person';
+export type User = {
+  __typename?: 'User';
   id: Scalars['ID'];
   avatar: Scalars['String'];
   name: Scalars['String'];
@@ -53,36 +53,36 @@ export type Person = {
 
 
 
-export type PersonConnection = {
-  __typename?: 'PersonConnection';
-  list: Array<Person>;
+export type UserConnection = {
+  __typename?: 'UserConnection';
+  list: Array<User>;
   nextToken?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createPerson: Person;
-  updatePerson: Person;
-  deletePerson: Person;
+  createUser: User;
+  updateUser: User;
+  deleteUser: User;
 };
 
 
-export type MutationCreatePersonArgs = {
-  body: PersonRequest;
+export type MutationCreateUserArgs = {
+  body: UserRequest;
 };
 
 
-export type MutationUpdatePersonArgs = {
+export type MutationUpdateUserArgs = {
   id: Scalars['ID'];
-  body: PersonRequest;
+  body: UserRequest;
 };
 
 
-export type MutationDeletePersonArgs = {
+export type MutationDeleteUserArgs = {
   id: Scalars['ID'];
 };
 
-export type PersonRequest = {
+export type UserRequest = {
   name: Scalars['String'];
   dob?: Maybe<Scalars['AWSDate']>;
   address: Scalars['String'];
@@ -93,82 +93,107 @@ export type PersonRequest = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  personChanged?: Maybe<Person>;
+  userChanged?: Maybe<User>;
+  userDeleted?: Maybe<User>;
 };
 
-export type CreatePersonMutationVariables = Exact<{
-  body: PersonRequest;
+export type CreateUserMutationVariables = Exact<{
+  body: UserRequest;
 }>;
 
 
-export type CreatePersonMutation = (
+export type CreateUserMutation = (
   { __typename?: 'Mutation' }
-  & { createPerson: (
-    { __typename?: 'Person' }
-    & Pick<Person, 'id' | 'name' | 'avatar' | 'description'>
+  & { createUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'avatar' | 'description'>
   ) }
 );
 
-export type UpdatePersonMutationVariables = Exact<{
+export type UpdateUserMutationVariables = Exact<{
   id: Scalars['ID'];
-  body: PersonRequest;
+  body: UserRequest;
 }>;
 
 
-export type UpdatePersonMutation = (
+export type UpdateUserMutation = (
   { __typename?: 'Mutation' }
-  & { updatePerson: (
-    { __typename?: 'Person' }
-    & Pick<Person, 'id' | 'name' | 'avatar' | 'description'>
+  & { updateUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'avatar' | 'description'>
   ) }
 );
 
-export type ListPersonsQueryVariables = Exact<{
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteUserMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
+export type ListUsersQueryVariables = Exact<{
   name?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
 }>;
 
 
-export type ListPersonsQuery = (
+export type ListUsersQuery = (
   { __typename?: 'Query' }
-  & { persons: (
-    { __typename?: 'PersonConnection' }
-    & Pick<PersonConnection, 'nextToken'>
+  & { users: (
+    { __typename?: 'UserConnection' }
+    & Pick<UserConnection, 'nextToken'>
     & { list: Array<(
-      { __typename?: 'Person' }
-      & Pick<Person, 'id' | 'name' | 'avatar' | 'description'>
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'avatar' | 'description'>
     )> }
   ) }
 );
 
-export type GetPersonQueryVariables = Exact<{
+export type GetUserQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetPersonQuery = (
+export type GetUserQuery = (
   { __typename?: 'Query' }
-  & { person?: Maybe<(
-    { __typename?: 'Person' }
-    & Pick<Person, 'id' | 'avatar' | 'name' | 'description' | 'lat' | 'lng' | 'address'>
+  & { user?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'avatar' | 'name' | 'description' | 'lat' | 'lng' | 'address'>
   )> }
 );
 
-export type WatchPersonsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type WatchUsersSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WatchPersonsSubscription = (
+export type WatchUsersSubscription = (
   { __typename?: 'Subscription' }
-  & { personChanged?: Maybe<(
-    { __typename?: 'Person' }
-    & Pick<Person, 'id' | 'name' | 'avatar' | 'description'>
+  & { userChanged?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'avatar' | 'description'>
+  )> }
+);
+
+export type WatchDeletedUsersSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WatchDeletedUsersSubscription = (
+  { __typename?: 'Subscription' }
+  & { userDeleted?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
   )> }
 );
 
 
-export const CreatePersonDocument = gql`
-    mutation createPerson($body: PersonRequest!) {
-  createPerson(body: $body) {
+export const CreateUserDocument = gql`
+    mutation createUser($body: UserRequest!) {
+  createUser(body: $body) {
     id
     name
     avatar
@@ -176,53 +201,53 @@ export const CreatePersonDocument = gql`
   }
 }
     `;
-export type CreatePersonMutationFn = ApolloReactCommon.MutationFunction<CreatePersonMutation, CreatePersonMutationVariables>;
-export type CreatePersonComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreatePersonMutation, CreatePersonMutationVariables>, 'mutation'>;
+export type CreateUserMutationFn = ApolloReactCommon.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+export type CreateUserComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateUserMutation, CreateUserMutationVariables>, 'mutation'>;
 
-    export const CreatePersonComponent = (props: CreatePersonComponentProps) => (
-      <ApolloReactComponents.Mutation<CreatePersonMutation, CreatePersonMutationVariables> mutation={CreatePersonDocument} {...props} />
+    export const CreateUserComponent = (props: CreateUserComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateUserMutation, CreateUserMutationVariables> mutation={CreateUserDocument} {...props} />
     );
     
-export type CreatePersonProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreatePersonMutation, CreatePersonMutationVariables>
+export type CreateUserProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateUserMutation, CreateUserMutationVariables>
     } & TChildProps;
-export function withCreatePerson<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withCreateUser<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  CreatePersonMutation,
-  CreatePersonMutationVariables,
-  CreatePersonProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreatePersonMutation, CreatePersonMutationVariables, CreatePersonProps<TChildProps, TDataName>>(CreatePersonDocument, {
-      alias: 'createPerson',
+  CreateUserMutation,
+  CreateUserMutationVariables,
+  CreateUserProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, CreateUserMutation, CreateUserMutationVariables, CreateUserProps<TChildProps, TDataName>>(CreateUserDocument, {
+      alias: 'createUser',
       ...operationOptions
     });
 };
 
 /**
- * __useCreatePersonMutation__
+ * __useCreateUserMutation__
  *
- * To run a mutation, you first call `useCreatePersonMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePersonMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createPersonMutation, { data, loading, error }] = useCreatePersonMutation({
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
  *   variables: {
  *      body: // value for 'body'
  *   },
  * });
  */
-export function useCreatePersonMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePersonMutation, CreatePersonMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, baseOptions);
+export function useCreateUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, baseOptions);
       }
-export type CreatePersonMutationHookResult = ReturnType<typeof useCreatePersonMutation>;
-export type CreatePersonMutationResult = ApolloReactCommon.MutationResult<CreatePersonMutation>;
-export type CreatePersonMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePersonMutation, CreatePersonMutationVariables>;
-export const UpdatePersonDocument = gql`
-    mutation updatePerson($id: ID!, $body: PersonRequest!) {
-  updatePerson(id: $id, body: $body) {
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation updateUser($id: ID!, $body: UserRequest!) {
+  updateUser(id: $id, body: $body) {
     id
     name
     avatar
@@ -230,54 +255,105 @@ export const UpdatePersonDocument = gql`
   }
 }
     `;
-export type UpdatePersonMutationFn = ApolloReactCommon.MutationFunction<UpdatePersonMutation, UpdatePersonMutationVariables>;
-export type UpdatePersonComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdatePersonMutation, UpdatePersonMutationVariables>, 'mutation'>;
+export type UpdateUserMutationFn = ApolloReactCommon.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+export type UpdateUserComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateUserMutation, UpdateUserMutationVariables>, 'mutation'>;
 
-    export const UpdatePersonComponent = (props: UpdatePersonComponentProps) => (
-      <ApolloReactComponents.Mutation<UpdatePersonMutation, UpdatePersonMutationVariables> mutation={UpdatePersonDocument} {...props} />
+    export const UpdateUserComponent = (props: UpdateUserComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateUserMutation, UpdateUserMutationVariables> mutation={UpdateUserDocument} {...props} />
     );
     
-export type UpdatePersonProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdatePersonMutation, UpdatePersonMutationVariables>
+export type UpdateUserProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>
     } & TChildProps;
-export function withUpdatePerson<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withUpdateUser<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  UpdatePersonMutation,
-  UpdatePersonMutationVariables,
-  UpdatePersonProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, UpdatePersonMutation, UpdatePersonMutationVariables, UpdatePersonProps<TChildProps, TDataName>>(UpdatePersonDocument, {
-      alias: 'updatePerson',
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+  UpdateUserProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateUserMutation, UpdateUserMutationVariables, UpdateUserProps<TChildProps, TDataName>>(UpdateUserDocument, {
+      alias: 'updateUser',
       ...operationOptions
     });
 };
 
 /**
- * __useUpdatePersonMutation__
+ * __useUpdateUserMutation__
  *
- * To run a mutation, you first call `useUpdatePersonMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdatePersonMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updatePersonMutation, { data, loading, error }] = useUpdatePersonMutation({
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
  *   variables: {
  *      id: // value for 'id'
  *      body: // value for 'body'
  *   },
  * });
  */
-export function useUpdatePersonMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdatePersonMutation, UpdatePersonMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, baseOptions);
+export function useUpdateUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, baseOptions);
       }
-export type UpdatePersonMutationHookResult = ReturnType<typeof useUpdatePersonMutation>;
-export type UpdatePersonMutationResult = ApolloReactCommon.MutationResult<UpdatePersonMutation>;
-export type UpdatePersonMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdatePersonMutation, UpdatePersonMutationVariables>;
-export const ListPersonsDocument = gql`
-    query listPersons($name: String, $after: String) {
-  persons(name: $name, after: $after) {
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = ApolloReactCommon.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const DeleteUserDocument = gql`
+    mutation deleteUser($id: ID!) {
+  deleteUser(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteUserMutationFn = ApolloReactCommon.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
+export type DeleteUserComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteUserMutation, DeleteUserMutationVariables>, 'mutation'>;
+
+    export const DeleteUserComponent = (props: DeleteUserComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteUserMutation, DeleteUserMutationVariables> mutation={DeleteUserDocument} {...props} />
+    );
+    
+export type DeleteUserProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>
+    } & TChildProps;
+export function withDeleteUser<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  DeleteUserMutation,
+  DeleteUserMutationVariables,
+  DeleteUserProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, DeleteUserMutation, DeleteUserMutationVariables, DeleteUserProps<TChildProps, TDataName>>(DeleteUserDocument, {
+      alias: 'deleteUser',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useDeleteUserMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserMutation, { data, loading, error }] = useDeleteUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteUserMutation, DeleteUserMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, baseOptions);
+      }
+export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
+export type DeleteUserMutationResult = ApolloReactCommon.MutationResult<DeleteUserMutation>;
+export type DeleteUserMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const ListUsersDocument = gql`
+    query listUsers($name: String, $after: String) {
+  users(name: $name, after: $after) {
     list {
       id
       name
@@ -288,55 +364,55 @@ export const ListPersonsDocument = gql`
   }
 }
     `;
-export type ListPersonsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<ListPersonsQuery, ListPersonsQueryVariables>, 'query'>;
+export type ListUsersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<ListUsersQuery, ListUsersQueryVariables>, 'query'>;
 
-    export const ListPersonsComponent = (props: ListPersonsComponentProps) => (
-      <ApolloReactComponents.Query<ListPersonsQuery, ListPersonsQueryVariables> query={ListPersonsDocument} {...props} />
+    export const ListUsersComponent = (props: ListUsersComponentProps) => (
+      <ApolloReactComponents.Query<ListUsersQuery, ListUsersQueryVariables> query={ListUsersDocument} {...props} />
     );
     
-export type ListPersonsProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<ListPersonsQuery, ListPersonsQueryVariables>
+export type ListUsersProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<ListUsersQuery, ListUsersQueryVariables>
     } & TChildProps;
-export function withListPersons<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withListUsers<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  ListPersonsQuery,
-  ListPersonsQueryVariables,
-  ListPersonsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, ListPersonsQuery, ListPersonsQueryVariables, ListPersonsProps<TChildProps, TDataName>>(ListPersonsDocument, {
-      alias: 'listPersons',
+  ListUsersQuery,
+  ListUsersQueryVariables,
+  ListUsersProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, ListUsersQuery, ListUsersQueryVariables, ListUsersProps<TChildProps, TDataName>>(ListUsersDocument, {
+      alias: 'listUsers',
       ...operationOptions
     });
 };
 
 /**
- * __useListPersonsQuery__
+ * __useListUsersQuery__
  *
- * To run a query within a React component, call `useListPersonsQuery` and pass it any options that fit your needs.
- * When your component renders, `useListPersonsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListPersonsQuery({
+ * const { data, loading, error } = useListUsersQuery({
  *   variables: {
  *      name: // value for 'name'
  *      after: // value for 'after'
  *   },
  * });
  */
-export function useListPersonsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListPersonsQuery, ListPersonsQueryVariables>) {
-        return ApolloReactHooks.useQuery<ListPersonsQuery, ListPersonsQueryVariables>(ListPersonsDocument, baseOptions);
+export function useListUsersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListUsersQuery, ListUsersQueryVariables>) {
+        return ApolloReactHooks.useQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
       }
-export function useListPersonsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListPersonsQuery, ListPersonsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ListPersonsQuery, ListPersonsQueryVariables>(ListPersonsDocument, baseOptions);
+export function useListUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListUsersQuery, ListUsersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ListUsersQuery, ListUsersQueryVariables>(ListUsersDocument, baseOptions);
         }
-export type ListPersonsQueryHookResult = ReturnType<typeof useListPersonsQuery>;
-export type ListPersonsLazyQueryHookResult = ReturnType<typeof useListPersonsLazyQuery>;
-export type ListPersonsQueryResult = ApolloReactCommon.QueryResult<ListPersonsQuery, ListPersonsQueryVariables>;
-export const GetPersonDocument = gql`
-    query getPerson($id: ID!) {
-  person(id: $id) {
+export type ListUsersQueryHookResult = ReturnType<typeof useListUsersQuery>;
+export type ListUsersLazyQueryHookResult = ReturnType<typeof useListUsersLazyQuery>;
+export type ListUsersQueryResult = ApolloReactCommon.QueryResult<ListUsersQuery, ListUsersQueryVariables>;
+export const GetUserDocument = gql`
+    query getUser($id: ID!) {
+  user(id: $id) {
     id
     avatar
     name
@@ -347,54 +423,54 @@ export const GetPersonDocument = gql`
   }
 }
     `;
-export type GetPersonComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetPersonQuery, GetPersonQueryVariables>, 'query'> & ({ variables: GetPersonQueryVariables; skip?: boolean; } | { skip: boolean; });
+export type GetUserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetUserQuery, GetUserQueryVariables>, 'query'> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; });
 
-    export const GetPersonComponent = (props: GetPersonComponentProps) => (
-      <ApolloReactComponents.Query<GetPersonQuery, GetPersonQueryVariables> query={GetPersonDocument} {...props} />
+    export const GetUserComponent = (props: GetUserComponentProps) => (
+      <ApolloReactComponents.Query<GetUserQuery, GetUserQueryVariables> query={GetUserDocument} {...props} />
     );
     
-export type GetPersonProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetPersonQuery, GetPersonQueryVariables>
+export type GetUserProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetUserQuery, GetUserQueryVariables>
     } & TChildProps;
-export function withGetPerson<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withGetUser<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  GetPersonQuery,
-  GetPersonQueryVariables,
-  GetPersonProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetPersonQuery, GetPersonQueryVariables, GetPersonProps<TChildProps, TDataName>>(GetPersonDocument, {
-      alias: 'getPerson',
+  GetUserQuery,
+  GetUserQueryVariables,
+  GetUserProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetUserQuery, GetUserQueryVariables, GetUserProps<TChildProps, TDataName>>(GetUserDocument, {
+      alias: 'getUser',
       ...operationOptions
     });
 };
 
 /**
- * __useGetPersonQuery__
+ * __useGetUserQuery__
  *
- * To run a query within a React component, call `useGetPersonQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPersonQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPersonQuery({
+ * const { data, loading, error } = useGetUserQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetPersonQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetPersonQuery, GetPersonQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetPersonQuery, GetPersonQueryVariables>(GetPersonDocument, baseOptions);
+export function useGetUserQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, baseOptions);
       }
-export function useGetPersonLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetPersonQuery, GetPersonQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetPersonQuery, GetPersonQueryVariables>(GetPersonDocument, baseOptions);
+export function useGetUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, baseOptions);
         }
-export type GetPersonQueryHookResult = ReturnType<typeof useGetPersonQuery>;
-export type GetPersonLazyQueryHookResult = ReturnType<typeof useGetPersonLazyQuery>;
-export type GetPersonQueryResult = ApolloReactCommon.QueryResult<GetPersonQuery, GetPersonQueryVariables>;
-export const WatchPersonsDocument = gql`
-    subscription watchPersons {
-  personChanged {
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = ApolloReactCommon.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const WatchUsersDocument = gql`
+    subscription watchUsers {
+  userChanged {
     id
     name
     avatar
@@ -402,43 +478,90 @@ export const WatchPersonsDocument = gql`
   }
 }
     `;
-export type WatchPersonsComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<WatchPersonsSubscription, WatchPersonsSubscriptionVariables>, 'subscription'>;
+export type WatchUsersComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<WatchUsersSubscription, WatchUsersSubscriptionVariables>, 'subscription'>;
 
-    export const WatchPersonsComponent = (props: WatchPersonsComponentProps) => (
-      <ApolloReactComponents.Subscription<WatchPersonsSubscription, WatchPersonsSubscriptionVariables> subscription={WatchPersonsDocument} {...props} />
+    export const WatchUsersComponent = (props: WatchUsersComponentProps) => (
+      <ApolloReactComponents.Subscription<WatchUsersSubscription, WatchUsersSubscriptionVariables> subscription={WatchUsersDocument} {...props} />
     );
     
-export type WatchPersonsProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<WatchPersonsSubscription, WatchPersonsSubscriptionVariables>
+export type WatchUsersProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<WatchUsersSubscription, WatchUsersSubscriptionVariables>
     } & TChildProps;
-export function withWatchPersons<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withWatchUsers<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  WatchPersonsSubscription,
-  WatchPersonsSubscriptionVariables,
-  WatchPersonsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withSubscription<TProps, WatchPersonsSubscription, WatchPersonsSubscriptionVariables, WatchPersonsProps<TChildProps, TDataName>>(WatchPersonsDocument, {
-      alias: 'watchPersons',
+  WatchUsersSubscription,
+  WatchUsersSubscriptionVariables,
+  WatchUsersProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withSubscription<TProps, WatchUsersSubscription, WatchUsersSubscriptionVariables, WatchUsersProps<TChildProps, TDataName>>(WatchUsersDocument, {
+      alias: 'watchUsers',
       ...operationOptions
     });
 };
 
 /**
- * __useWatchPersonsSubscription__
+ * __useWatchUsersSubscription__
  *
- * To run a query within a React component, call `useWatchPersonsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useWatchPersonsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useWatchUsersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useWatchUsersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useWatchPersonsSubscription({
+ * const { data, loading, error } = useWatchUsersSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useWatchPersonsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<WatchPersonsSubscription, WatchPersonsSubscriptionVariables>) {
-        return ApolloReactHooks.useSubscription<WatchPersonsSubscription, WatchPersonsSubscriptionVariables>(WatchPersonsDocument, baseOptions);
+export function useWatchUsersSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<WatchUsersSubscription, WatchUsersSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<WatchUsersSubscription, WatchUsersSubscriptionVariables>(WatchUsersDocument, baseOptions);
       }
-export type WatchPersonsSubscriptionHookResult = ReturnType<typeof useWatchPersonsSubscription>;
-export type WatchPersonsSubscriptionResult = ApolloReactCommon.SubscriptionResult<WatchPersonsSubscription>;
+export type WatchUsersSubscriptionHookResult = ReturnType<typeof useWatchUsersSubscription>;
+export type WatchUsersSubscriptionResult = ApolloReactCommon.SubscriptionResult<WatchUsersSubscription>;
+export const WatchDeletedUsersDocument = gql`
+    subscription watchDeletedUsers {
+  userDeleted {
+    id
+  }
+}
+    `;
+export type WatchDeletedUsersComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<WatchDeletedUsersSubscription, WatchDeletedUsersSubscriptionVariables>, 'subscription'>;
+
+    export const WatchDeletedUsersComponent = (props: WatchDeletedUsersComponentProps) => (
+      <ApolloReactComponents.Subscription<WatchDeletedUsersSubscription, WatchDeletedUsersSubscriptionVariables> subscription={WatchDeletedUsersDocument} {...props} />
+    );
+    
+export type WatchDeletedUsersProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<WatchDeletedUsersSubscription, WatchDeletedUsersSubscriptionVariables>
+    } & TChildProps;
+export function withWatchDeletedUsers<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  WatchDeletedUsersSubscription,
+  WatchDeletedUsersSubscriptionVariables,
+  WatchDeletedUsersProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withSubscription<TProps, WatchDeletedUsersSubscription, WatchDeletedUsersSubscriptionVariables, WatchDeletedUsersProps<TChildProps, TDataName>>(WatchDeletedUsersDocument, {
+      alias: 'watchDeletedUsers',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useWatchDeletedUsersSubscription__
+ *
+ * To run a query within a React component, call `useWatchDeletedUsersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useWatchDeletedUsersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWatchDeletedUsersSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWatchDeletedUsersSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<WatchDeletedUsersSubscription, WatchDeletedUsersSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<WatchDeletedUsersSubscription, WatchDeletedUsersSubscriptionVariables>(WatchDeletedUsersDocument, baseOptions);
+      }
+export type WatchDeletedUsersSubscriptionHookResult = ReturnType<typeof useWatchDeletedUsersSubscription>;
+export type WatchDeletedUsersSubscriptionResult = ApolloReactCommon.SubscriptionResult<WatchDeletedUsersSubscription>;

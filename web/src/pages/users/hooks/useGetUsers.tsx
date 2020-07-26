@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
-import { ListPersonsDocument, Maybe, WatchPersonsDocument } from '../../../generated/graphql'
+import { ListUsersDocument, Maybe, WatchDeletedUsersDocument, WatchUsersDocument } from '../../../generated/graphql'
 
 export interface User {
   id: string
@@ -39,12 +39,12 @@ export const useGetUsers = (): Users => {
       client
         .query({
           fetchPolicy: 'no-cache',
-          query: ListPersonsDocument,
+          query: ListUsersDocument,
           variables: { after: nextToken },
         })
         .then((result) => {
-          internalSetUsers(users.concat(result.data.persons.list))
-          setNextToken(result.data.persons.nextToken)
+          internalSetUsers(users.concat(result.data.users.list))
+          setNextToken(result.data.users.nextToken)
         })
         .finally(() => setLoading(false))
     }
@@ -55,25 +55,43 @@ export const useGetUsers = (): Users => {
     client
       .query({
         fetchPolicy: 'no-cache',
-        query: ListPersonsDocument,
+        query: ListUsersDocument,
       })
       .then((result) => {
         setLoading(false)
-        internalSetUsers(result.data.persons.list)
-        setNextToken(result.data.persons.nextToken)
+        internalSetUsers(result.data.users.list)
+        setNextToken(result.data.users.nextToken)
+      })
+
+    const deleteSubscription = client
+      .subscribe({
+        fetchPolicy: 'no-cache',
+        query: WatchDeletedUsersDocument,
+      })
+      .subscribe({
+        next(value) {
+          if (!value.data.userDeleted) return
+
+          const deleted: User = value.data.userDeleted
+          const internalUsers = usersInternal.current
+          const oldUserIndex: number = internalUsers.findIndex((user: User) => user.id === deleted.id)
+          if (oldUserIndex >= 0) {
+            internalSetUsers(internalUsers.filter((user: User) => user.id !== deleted.id))
+          }
+        },
       })
 
     const subscription = client
       .subscribe({
         fetchPolicy: 'no-cache',
-        query: WatchPersonsDocument,
+        query: WatchUsersDocument,
       })
       .subscribe({
         next(value) {
-          if (!value.data.personChanged) return
+          if (!value.data.userChanged) return
 
           const internalUsers = usersInternal.current
-          const updatedUser: User = value.data.personChanged
+          const updatedUser: User = value.data.userChanged
           const oldUserIndex: number = internalUsers.findIndex((user: User) => user.id === updatedUser.id)
 
           if (oldUserIndex >= 0) {
@@ -87,7 +105,10 @@ export const useGetUsers = (): Users => {
           }
         },
       })
-    return () => subscription.unsubscribe()
+    return () => {
+      subscription.unsubscribe()
+      deleteSubscription.unsubscribe()
+    }
   }, [usersInternal, client, internalSetUsers])
 
   return useMemo(
