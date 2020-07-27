@@ -11,7 +11,8 @@ api/coverage
 
 # production
 web/build
-api/build
+api/.serverless
+api/dist
 
 # misc
 .DS_Store

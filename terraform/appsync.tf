@@ -1,99 +1,32 @@
-resource "aws_dynamodb_table" "user" {
-  name           = "UserTable-${var.stage}"
-  billing_mode   = "PROVISIONED"
-  read_capacity  = 20
-  write_capacity = 20
-  hash_key       = "id"
-
-  global_secondary_index {
-    hash_key        = "name"
-    name            = "name-index"
-    projection_type = "ALL"
-    read_capacity   = 20
-    write_capacity  = 20
-  }
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
-
-  attribute {
-    name = "name"
-    type = "S"
-  }
-
-  tags = {
-    Name        = "user-table-1"
-    Environment = var.stage
-  }
-}
-
-resource "aws_iam_role" "api" {
-  name = "${var.appname}-role-${var.stage}"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "appsync.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy" "api_to_dynamodb_policy" {
-  name = "${var.appname}_api_dynamodb_policy-${var.stage}"
-  role = aws_iam_role.api.id
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "dynamodb:GetItem",
-        "dynamodb:PutItem",
-        "dynamodb:UpdateItem",
-        "dynamodb:DeleteItem",
-        "dynamodb:Query",
-        "dynamodb:Scan"
-      ],
-      "Effect": "Allow",
-      "Resource": [
-        "${aws_dynamodb_table.user.arn}",
-        "${aws_dynamodb_table.user.arn}/index/name-index"
-      ]
-    }
-  ]
-}
-EOF
-}
-
 data "local_file" "schema" {
   filename = "${path.module}/appsync/schema.graphql"
 }
 
-resource "aws_appsync_graphql_api" "appsyncapi" {
+resource "aws_appsync_graphql_api" "appsync_api" {
   authentication_type = "API_KEY"
-  name                = "${var.appname}_appsync_api"
+  name                = "${var.appname}_appsync_api_${var.stage}"
   schema              = data.local_file.schema.content
 }
 
 resource "aws_appsync_datasource" "user" {
-  api_id           = aws_appsync_graphql_api.appsyncapi.id
+  api_id           = aws_appsync_graphql_api.appsync_api.id
   name             = "${var.appname}_appsync_user_ds_${var.stage}"
   service_role_arn = aws_iam_role.api.arn
   type             = "AMAZON_DYNAMODB"
 
   dynamodb_config {
     table_name = aws_dynamodb_table.user.name
+  }
+}
+
+resource "aws_appsync_datasource" "address_function" {
+  api_id           = aws_appsync_graphql_api.appsync_api.id
+  name             = "${var.appname}_appsync_address_${var.stage}"
+  service_role_arn = aws_iam_role.api.arn
+  type             = "AWS_LAMBDA"
+
+  lambda_config {
+    function_arn = aws_lambda_function.address_lambda.arn
   }
 }
 
@@ -121,47 +54,73 @@ data "local_file" "get_user_mapping_request" {
   filename = "${path.module}/appsync/getUser-mapping-request.txt"
 }
 
-resource "aws_appsync_resolver" "createUser" {
+data "local_file" "search_address_mapping_request" {
+  filename = "${path.module}/appsync/searchAddress-mapping-request.txt"
+}
+
+data "local_file" "get_coordinates_address_mapping_request" {
+  filename = "${path.module}/appsync/getCoordinates-mapping-request.txt"
+}
+
+resource "aws_appsync_resolver" "create_user" {
   type              = "Mutation"
-  api_id            = aws_appsync_graphql_api.appsyncapi.id
+  api_id            = aws_appsync_graphql_api.appsync_api.id
   field             = "createUser"
   data_source       = aws_appsync_datasource.user.name
   request_template  = data.local_file.create_user_mapping.content
   response_template = "$util.toJson($ctx.result)"
 }
 
-resource "aws_appsync_resolver" "updateUser" {
+resource "aws_appsync_resolver" "update_user" {
   type              = "Mutation"
-  api_id            = aws_appsync_graphql_api.appsyncapi.id
+  api_id            = aws_appsync_graphql_api.appsync_api.id
   field             = "updateUser"
   data_source       = aws_appsync_datasource.user.name
   request_template  = data.local_file.update_user_mapping.content
   response_template = "$util.toJson($ctx.result)"
 }
 
-resource "aws_appsync_resolver" "deleteUser" {
+resource "aws_appsync_resolver" "delete_user" {
   type              = "Mutation"
-  api_id            = aws_appsync_graphql_api.appsyncapi.id
+  api_id            = aws_appsync_graphql_api.appsync_api.id
   field             = "deleteUser"
   data_source       = aws_appsync_datasource.user.name
   request_template  = data.local_file.delete_user_mapping.content
   response_template = "$util.toJson($ctx.result)"
 }
 
-resource "aws_appsync_resolver" "listUsers" {
+resource "aws_appsync_resolver" "list_users" {
   type              = "Query"
-  api_id            = aws_appsync_graphql_api.appsyncapi.id
+  api_id            = aws_appsync_graphql_api.appsync_api.id
   field             = "users"
   data_source       = aws_appsync_datasource.user.name
   request_template  = data.local_file.list_users_mapping_request.content
   response_template = data.local_file.list_users_mapping_response.content
 }
 
-resource "aws_appsync_resolver" "getUser" {
+resource "aws_appsync_resolver" "get_user" {
   type              = "Query"
-  api_id            = aws_appsync_graphql_api.appsyncapi.id
+  api_id            = aws_appsync_graphql_api.appsync_api.id
   field             = "user"
   data_source       = aws_appsync_datasource.user.name
   request_template  = data.local_file.get_user_mapping_request.content
+  response_template = "$util.toJson($ctx.result)"
+}
+
+resource "aws_appsync_resolver" "search_address" {
+  type              = "Query"
+  api_id            = aws_appsync_graphql_api.appsync_api.id
+  field             = "searchAddress"
+  data_source       = aws_appsync_datasource.address_function.name
+  request_template  = data.local_file.search_address_mapping_request.content
+  response_template = "$util.toJson($ctx.result)"
+}
+
+resource "aws_appsync_resolver" "get_coordinates" {
+  type              = "Query"
+  api_id            = aws_appsync_graphql_api.appsync_api.id
+  field             = "getCoordinates"
+  data_source       = aws_appsync_datasource.address_function.name
+  request_template  = data.local_file.get_coordinates_address_mapping_request.content
   response_template = "$util.toJson($ctx.result)"
 }

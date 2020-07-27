@@ -9,8 +9,8 @@
         "name": $util.dynamodb.toDynamoDBJson($context.arguments.body.name),
         "dob": $util.dynamodb.toDynamoDBJson($context.arguments.body.dob),
         "address": $util.dynamodb.toDynamoDBJson($context.arguments.body.address),
-        "lat": $util.dynamodb.toDynamoDBJson($context.arguments.body.lat),
-        "lng": $util.dynamodb.toDynamoDBJson($context.arguments.body.lng),
+        "latitude": $util.dynamodb.toDynamoDBJson($context.arguments.body.latitude),
+        "longitude": $util.dynamodb.toDynamoDBJson($context.arguments.body.longitude),
         "description": $util.dynamodb.toDynamoDBJson($context.arguments.body.description),
         "createdAt": { "S": "$util.time.nowISO8601()" },
         "updatedAt": { "S": "$util.time.nowISO8601()" }

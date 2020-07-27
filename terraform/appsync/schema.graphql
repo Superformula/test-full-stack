@@ -7,6 +7,8 @@ type Mutation {
 type Query {
     user(id: ID!): User
     users(name: String, after: String): UserConnection!
+    searchAddress(text: String!): [Address!]!
+    getCoordinates(placeId: String!): LatLng
 }
 
 type Subscription {
@@ -17,12 +19,22 @@ type Subscription {
     @aws_subscribe(mutations: ["deleteUser"])
 }
 
+type Address {
+    text: String!
+    placeId: String!
+}
+
+type LatLng {
+    latitude: Float
+    longitude: Float
+}
+
 input UserRequest {
     name: String!
     dob: AWSDate
     address: String!
-    lat: Float
-    lng: Float
+    latitude: Float
+    longitude: Float
     description: String
 }
 
@@ -32,8 +44,8 @@ type User {
     name: String!
     dob: AWSDate
     address: String!
-    lat: Float
-    lng: Float
+    latitude: Float
+    longitude: Float
     description: String
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!

@@ -10,6 +10,10 @@ variable "profile" {
   default = ""
 }
 
+variable "google_maps_token" {
+  default = ""
+}
+
 variable "aws_access_key_id" {
   default = ""
 }
