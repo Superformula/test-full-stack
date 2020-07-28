@@ -37,6 +37,8 @@ First configure the terraform variables
 | aws_access_key_id     | The AWS IAM Access Key ID to run the terraform               |
 | aws_secret_access_key | The AWS IAM Secret Access Key to run the terraform           |
 | profile               | In case you have multi profiles on your aws-cli              |
+| mapbox_token          | You will need to have a MapBox access token from the Mapbox page (https://docs.mapbox.com/help/how-mapbox-works/access-tokens/) |
+| mapbox_style          | Provide a map style URI from MapBox to have a different look and feel on the application (https://docs.mapbox.com/studio-manual/overview/map-styling/) |
 
 ### Before you push the code
 
