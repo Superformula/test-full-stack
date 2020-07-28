@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useApolloClient } from '@apollo/client'
 import { ListUsersDocument, Maybe, WatchDeletedUsersDocument, WatchUsersDocument } from '../../../generated/graphql'
 
 export interface User {

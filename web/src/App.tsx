@@ -5,12 +5,7 @@ import style from './App.module.scss'
 import { i18n } from './i18n'
 import { UsersPage } from './pages/users/UsersPage'
 
-import { ApolloProvider } from '@apollo/react-hooks'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { onError } from 'apollo-link-error'
-import { ApolloClient } from 'apollo-client'
-import { ApolloLink, split } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
+import { ApolloProvider, ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client'
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link'
 
 const graphQlUri = process.env.REACT_APP_GRAPHQL_URI
@@ -41,21 +36,21 @@ const link = split(
     const definition = getMainDefinition(query)
     return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
   },
-  subscriptionLink,
+
+  /**
+   * Surprisingly AppSync WS connector is running
+   * on an OLD (but yet compatible) Apollo client.
+   *
+   * The reason I did this was just to keep it working,
+   * but we need wait until they push a new version supporting
+   * Apollo Client 3.
+   */
+  subscriptionLink as any,
   httpLink,
 )
 
 const client: ApolloClient<Store> = new ApolloClient({
-  link: ApolloLink.from([
-    onError(({ graphQLErrors, networkError }) => {
-      if (graphQLErrors)
-        graphQLErrors.forEach(({ message, locations, path }) =>
-          console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
-        )
-      if (networkError) console.log(`[Network error]: ${networkError}`, networkError)
-    }),
-    link,
-  ]),
+  link,
   cache: new InMemoryCache(),
 })
 

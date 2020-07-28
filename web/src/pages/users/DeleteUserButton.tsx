@@ -16,8 +16,8 @@ export const UserDeleteButton = ({ userId, onDeleteSuccess }: UserDeleteButtonPr
   }, [deleteUser, onDeleteSuccess])
 
   return (
-    <div onClick={onDeleteClick}>
+    <button onClick={onDeleteClick} aria-roledescription="Delete User">
       <Icon Component={TrashIcon} size={32} />
-    </div>
+    </button>
   )
 }

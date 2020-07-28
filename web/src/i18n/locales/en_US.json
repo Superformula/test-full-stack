@@ -10,5 +10,7 @@
   "users.loadMore": "Load More",
   "users.notFound": "User Not Found",
   "users.field.name": "Name",
-  "users.field.description": "Description"
+  "users.field.description": "Description",
+  "users.empty.message": "Looks like you don't have any users created yet",
+  "users.empty.createFirstUser": "Create your first user"
 }

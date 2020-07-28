@@ -22,6 +22,8 @@ interface UserFormProps {
   user?: CompleteUser
 }
 
+export const required = (value: any): string | undefined => (value ? undefined : 'This field is required')
+
 export const UserFormHeader = ({ user }: UserFormProps): ReactElement => {
   const { close } = useContext(ModalContext)
   return (
@@ -47,7 +49,7 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
 
   return (
     <>
-      <UserFormHeader />
+      <UserFormHeader user={user} />
       <Form
         initialValues={user}
         subscription={{ submitting: true, pristine: true }}
@@ -57,13 +59,13 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
             <div className={style.userFormContent}>
               <Map latitude={coordinates?.latitude} longitude={coordinates?.longitude} />
               <div className={style.userFormFields}>
-                <FormItem name="name">
+                <FormItem name="name" validate={required}>
                   <Input type="text" placeholder={intl.formatMessage({ id: 'users.field.name' })} />
                 </FormItem>
-                <FormItem name="address">
+                <FormItem name="address" validate={required}>
                   <AddressAutocomplete onCoordinateFound={setCoordinates} />
                 </FormItem>
-                <FormItem name="description">
+                <FormItem name="description" validate={required}>
                   <Input type="text" placeholder={intl.formatMessage({ id: 'users.field.description' })} />
                 </FormItem>
                 <div className={style.userFormButtons}>
@@ -83,10 +85,18 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
   )
 }
 
-export const CreateUserModal = (): ReactElement => (
-  <Modal trigger={<Icon Component={AddIcon} size={46} />} width={1000} height={400}>
+export const UserModal = ({ children }: { children: ReactNode }): ReactElement => (
+  <Modal trigger={children} width={1000} height={450}>
     <UserForm />
   </Modal>
+)
+
+export const CreateUserModal = (): ReactElement => (
+  <UserModal>
+    <button aria-roledescription="Create User">
+      <Icon Component={AddIcon} size={46} />
+    </button>
+  </UserModal>
 )
 
 interface EditUserModalProps {

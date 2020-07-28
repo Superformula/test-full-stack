@@ -7,12 +7,14 @@ import { useSearchAddressLazyQuery } from '../../generated/graphql'
 import { useGetCoordinates } from './hooks/useGetCoordinates'
 
 interface AddressAutocompleteFieldProps {
+  name?: string
   value?: string
   onChange?: (value: string) => void
   onCoordinateFound: (latlng: LatLng) => void
 }
 
 export const AddressAutocomplete = ({
+  name,
   value,
   onChange,
   onCoordinateFound,
@@ -36,6 +38,7 @@ export const AddressAutocomplete = ({
   )
   return (
     <Autocomplete
+      name={name}
       value={value}
       placeholder={intl.formatMessage({ id: 'address' })}
       keyProp="text"

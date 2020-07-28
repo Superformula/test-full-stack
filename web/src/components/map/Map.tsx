@@ -15,8 +15,8 @@ export interface StaticMapProps {
 
 export const Map = ({ latitude, longitude, children, zoom = 13 }: StaticMapProps): ReactElement => {
   const [viewport, setViewport] = useState({
-    latitude: latitude,
-    longitude: longitude,
+    latitude: latitude ?? 40.7744146,
+    longitude: longitude ?? -73.9678064,
     zoom,
     bearing: 0,
     pitch: 0,

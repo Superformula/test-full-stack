@@ -13,6 +13,7 @@ interface AutocompleteProps {
   onSelect: (value: any) => void
   keyProp: string
   minLength?: number
+  name?: string
 }
 
 const useAutocomplete = ({
@@ -112,6 +113,7 @@ export const Autocomplete = (props: AutocompleteProps): ReactElement => {
   return (
     <div className={styles.autocomplete} onBlur={onBlur}>
       <Input
+        name={props.name}
         value={value}
         placeholder={props.placeholder}
         type="text"

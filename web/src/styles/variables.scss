@@ -28,8 +28,9 @@ $input-label-font-size: 16px;
 $input-focus-border-color: #666;
 $input-focus-shadow: rgba(0, 0, 0, 0.1);
 
+$danger-color: #ff6464;
 $icon-primary-color: #333;
-$icon-trash-color: #ff6464;
+$icon-trash-color: $danger-color;
 
 $autocomplete-select-background: #999;
 $autocomplete-popup-background: #fcfcfc;

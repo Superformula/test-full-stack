@@ -1,0 +1,18 @@
+@import "../../styles/variables.scss";
+
+.formItemWithError {
+  .formItemError {
+    font-size: 13px;
+    color: $danger-color;
+  }
+
+  input[type="text"] {
+    border-color: $danger-color;
+
+    &:focus {
+      border-color: $danger-color;
+      -webkit-box-shadow: 0 0 0 2px fade_out($danger-color, 0.4);
+      box-shadow: 0 0 0 2px fade_out($danger-color, 0.4);
+    }
+  }
+}
