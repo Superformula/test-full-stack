@@ -91,14 +91,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/user-profile-api/tsconfig.app.json",
-              "apps/user-profile-api/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/user-profile-api/**/*"
-            ]
+            "tsConfig": ["apps/user-profile-api/tsconfig.app.json", "apps/user-profile-api/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/user-profile-api/**/*"]
           }
         },
         "test": {

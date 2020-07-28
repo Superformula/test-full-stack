@@ -1,7 +1,9 @@
 service: user-profile-api
 frameworkVersion: ">=1.1.0 <2.0.0"
+
 plugins:
   - serverless-offline
+
 package:
   individually: true
   excludeDevDependencies: false
@@ -9,15 +11,28 @@ package:
   custom:
     enable_optimize:
       local: false
+
 provider:
   name: aws
   region: undefined
   endpointType: undefined
   runtime: nodejs10.x
+
+custom:
+  serverless-offline:
+    port: 4000
+
 functions:
-  hello-world:
-    handler: src/handler.helloWorld
+  user-profile-api:
+    handler: src/handler.gqlRequestHandler
     events:
       - http:
-          path: hello-world
+          path: graphql
+          method: post
+          cors: true
+      - http:
+          path: graphql
           method: get
+          cors: true
+    logRetentionInDays: 1
+
