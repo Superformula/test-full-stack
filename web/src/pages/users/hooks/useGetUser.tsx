@@ -3,14 +3,14 @@ import { useEffect, useMemo, useState } from 'react'
 import { GetUserDocument, Maybe } from '../../../generated/graphql'
 
 export interface CompleteUser {
-  id?: string
-  name?: string
-  avatar?: string
-  description?: Maybe<string>
+  id: string
+  name: string
+  avatar: string
+  description: Maybe<string>
   dob?: string
-  lat?: number
-  lng?: number
-  address?: string
+  latitude: number
+  longitude: number
+  address: string
 }
 
 export interface GetUserResult {
@@ -32,7 +32,6 @@ export const useGetUser = (id: string): GetUserResult => {
         variables: { id },
       })
       .then((result) => {
-        console.log(result.data.user)
         setUser(result.data.user as CompleteUser)
       })
       .finally(() => setLoading(false))

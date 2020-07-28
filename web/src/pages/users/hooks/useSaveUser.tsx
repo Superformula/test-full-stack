@@ -15,14 +15,16 @@ export const useSaveUser = (): SaveUserResult => {
         name: values.name ?? '',
         address: values.address ?? '',
         description: values.description,
-        dob: values.dob ?? '1989-11-01',
-        lat: values.lat,
-        lng: values.lng,
+        dob: values.dob ?? '1989-11-01', // TODO add DOB in a future release
+        latitude: values.latitude,
+        longitude: values.longitude,
       }
       if (values.id) {
-        await update({ variables: { id: values.id, body } })
+        // TODO add validations and error handling
+        await update({ variables: { id: values.id, body } }).catch((err) => console.error(err))
       } else {
-        await create({ variables: { body } })
+        // TODO add validations and error handling
+        await create({ variables: { body } }).catch((err) => console.error(err))
       }
     },
     [create, update],

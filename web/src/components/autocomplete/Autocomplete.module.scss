@@ -1,0 +1,30 @@
+@import "../../styles/variables.scss";
+
+.autocomplete {
+  position: relative;
+
+  .list {
+    position: absolute;
+    z-index: 2;
+    width: calc(100% - 22px);
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    margin: 4px 0 0 0;
+    padding: 10px;
+    border-radius: 5px;
+    background: $autocomplete-popup-background;
+    border: 1px solid $autocomplete-popup-border;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.9em;
+
+    li {
+      padding: 8px 5px;
+      &:hover, &.active {
+        background: $autocomplete-select-background;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback, useContext } from 'react'
+import React, { ReactElement, ReactNode, useCallback, useContext, useState } from 'react'
 import { Form } from 'react-final-form'
 import { FormattedMessage } from 'react-intl'
 import { ReactComponent as AddIcon } from '../../assets/icon-add.svg'
@@ -8,8 +8,9 @@ import { Icon } from '../../components/icon/Icon'
 import { Input } from '../../components/input/Input'
 import { Map } from '../../components/map/Map'
 import { Modal, ModalContext } from '../../components/modal/Modal'
-import { useGetUserQuery } from '../../generated/graphql'
+import { AddressAutocomplete } from './AddressAutocomplete'
 import { UserDeleteButton } from './DeleteUserButton'
+import { LatLng } from './hooks/useGetCoordinates'
 import { CompleteUser, useGetUser } from './hooks/useGetUser'
 import { useSaveUser } from './hooks/useSaveUser'
 
@@ -18,31 +19,34 @@ import { UserNotFound } from './UserNotFound'
 import { UserFormLoader } from './UsersLoader'
 
 interface UserFormProps {
-  user: CompleteUser
+  user?: CompleteUser
+}
+
+export const UserFormHeader = ({ user }: UserFormProps): ReactElement => {
+  const { close } = useContext(ModalContext)
+  return (
+    <div className={style.formTitle}>
+      <h1>{user?.id ? <FormattedMessage id="users.edit" /> : <FormattedMessage id="users.create" />}</h1>
+      {user?.id && (
+        <div className={style.removeButton}>
+          <UserDeleteButton userId={user.id} onDeleteSuccess={close} />
+        </div>
+      )}
+    </div>
+  )
 }
 
 export const UserForm = ({ user }: UserFormProps): ReactElement => {
   const { close } = useContext(ModalContext)
   const { save } = useSaveUser()
-
-  const onSubmit = useCallback(
-    (values) => {
-      save(values).then(close)
-    },
-    [save, close],
+  const [coordinates, setCoordinates] = useState<LatLng | null>(
+    user ? { latitude: user.latitude, longitude: user.longitude } : null,
   )
+  const onSubmit = useCallback((values) => save(values).then(close), [save, close])
 
   return (
     <>
-      <div className={style.formTitle}>
-        <h1>{user.id ? <FormattedMessage id="users.edit" /> : <FormattedMessage id="users.create" />}</h1>
-        {user.id && (
-          <div className={style.removeButton}>
-            <UserDeleteButton userId={user.id} onDeleteSuccess={close} />
-          </div>
-        )}
-      </div>
-
+      <UserFormHeader />
       <Form
         initialValues={user}
         subscription={{ submitting: true, pristine: true }}
@@ -50,13 +54,13 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <div className={style.userFormContent}>
-              <Map />
+              <Map latitude={coordinates?.latitude} longitude={coordinates?.longitude} />
               <div className={style.userFormFields}>
                 <FormItem name="name">
                   <Input type="text" placeholder="Name" />
                 </FormItem>
                 <FormItem name="address">
-                  <Input type="text" placeholder="Address" />
+                  <AddressAutocomplete onCoordinateFound={setCoordinates} />
                 </FormItem>
                 <FormItem name="description">
                   <Input type="text" placeholder="Description" />
@@ -80,7 +84,7 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
 
 export const CreateUserModal = (): ReactElement => (
   <Modal trigger={<Icon Component={AddIcon} size={46} />} width={1000} height={400}>
-    <UserForm user={{}} />
+    <UserForm />
   </Modal>
 )
 
@@ -99,7 +103,6 @@ export const UserEditForm = ({ userId }: { userId: string }): ReactElement => {
 }
 
 export const EditUserModal = ({ userId, children }: EditUserModalProps): ReactElement => {
-  useGetUserQuery()
   return (
     <Modal trigger={children} width={1000} height={400}>
       <UserEditForm userId={userId} />

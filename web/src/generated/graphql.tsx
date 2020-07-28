@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/react-common';
 import * as React from 'react';
+import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHoc from '@apollo/react-hoc';
 import * as ApolloReactHooks from '@apollo/react-hooks';
@@ -24,6 +24,8 @@ export type Query = {
   __typename?: 'Query';
   user?: Maybe<User>;
   users: UserConnection;
+  searchAddress: Array<Address>;
+  getCoordinates?: Maybe<LatLng>;
 };
 
 
@@ -37,6 +39,16 @@ export type QueryUsersArgs = {
   after?: Maybe<Scalars['String']>;
 };
 
+
+export type QuerySearchAddressArgs = {
+  text: Scalars['String'];
+};
+
+
+export type QueryGetCoordinatesArgs = {
+  placeId: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
@@ -44,8 +56,8 @@ export type User = {
   name: Scalars['String'];
   dob?: Maybe<Scalars['AWSDate']>;
   address: Scalars['String'];
-  lat?: Maybe<Scalars['Float']>;
-  lng?: Maybe<Scalars['Float']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
   description?: Maybe<Scalars['String']>;
   createdAt: Scalars['AWSDateTime'];
   updatedAt: Scalars['AWSDateTime'];
@@ -57,6 +69,18 @@ export type UserConnection = {
   __typename?: 'UserConnection';
   list: Array<User>;
   nextToken?: Maybe<Scalars['String']>;
+};
+
+export type Address = {
+  __typename?: 'Address';
+  text: Scalars['String'];
+  placeId: Scalars['String'];
+};
+
+export type LatLng = {
+  __typename?: 'LatLng';
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
 };
 
 export type Mutation = {
@@ -86,8 +110,8 @@ export type UserRequest = {
   name: Scalars['String'];
   dob?: Maybe<Scalars['AWSDate']>;
   address: Scalars['String'];
-  lat?: Maybe<Scalars['Float']>;
-  lng?: Maybe<Scalars['Float']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
   description?: Maybe<Scalars['String']>;
 };
 
@@ -96,6 +120,32 @@ export type Subscription = {
   userChanged?: Maybe<User>;
   userDeleted?: Maybe<User>;
 };
+
+export type SearchAddressQueryVariables = Exact<{
+  text: Scalars['String'];
+}>;
+
+
+export type SearchAddressQuery = (
+  { __typename?: 'Query' }
+  & { searchAddress: Array<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'text' | 'placeId'>
+  )> }
+);
+
+export type GetCoordinatesQueryVariables = Exact<{
+  placeId: Scalars['String'];
+}>;
+
+
+export type GetCoordinatesQuery = (
+  { __typename?: 'Query' }
+  & { getCoordinates?: Maybe<(
+    { __typename?: 'LatLng' }
+    & Pick<LatLng, 'latitude' | 'longitude'>
+  )> }
+);
 
 export type CreateUserMutationVariables = Exact<{
   body: UserRequest;
@@ -164,7 +214,7 @@ export type GetUserQuery = (
   { __typename?: 'Query' }
   & { user?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'avatar' | 'name' | 'description' | 'lat' | 'lng' | 'address'>
+    & Pick<User, 'id' | 'avatar' | 'name' | 'description' | 'latitude' | 'longitude' | 'address'>
   )> }
 );
 
@@ -191,6 +241,112 @@ export type WatchDeletedUsersSubscription = (
 );
 
 
+export const SearchAddressDocument = gql`
+    query searchAddress($text: String!) {
+  searchAddress(text: $text) {
+    text
+    placeId
+  }
+}
+    `;
+export type SearchAddressComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SearchAddressQuery, SearchAddressQueryVariables>, 'query'> & ({ variables: SearchAddressQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SearchAddressComponent = (props: SearchAddressComponentProps) => (
+      <ApolloReactComponents.Query<SearchAddressQuery, SearchAddressQueryVariables> query={SearchAddressDocument} {...props} />
+    );
+    
+export type SearchAddressProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SearchAddressQuery, SearchAddressQueryVariables>
+    } & TChildProps;
+export function withSearchAddress<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SearchAddressQuery,
+  SearchAddressQueryVariables,
+  SearchAddressProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SearchAddressQuery, SearchAddressQueryVariables, SearchAddressProps<TChildProps, TDataName>>(SearchAddressDocument, {
+      alias: 'searchAddress',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSearchAddressQuery__
+ *
+ * To run a query within a React component, call `useSearchAddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAddressQuery({
+ *   variables: {
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function useSearchAddressQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SearchAddressQuery, SearchAddressQueryVariables>) {
+        return ApolloReactHooks.useQuery<SearchAddressQuery, SearchAddressQueryVariables>(SearchAddressDocument, baseOptions);
+      }
+export function useSearchAddressLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchAddressQuery, SearchAddressQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SearchAddressQuery, SearchAddressQueryVariables>(SearchAddressDocument, baseOptions);
+        }
+export type SearchAddressQueryHookResult = ReturnType<typeof useSearchAddressQuery>;
+export type SearchAddressLazyQueryHookResult = ReturnType<typeof useSearchAddressLazyQuery>;
+export type SearchAddressQueryResult = ApolloReactCommon.QueryResult<SearchAddressQuery, SearchAddressQueryVariables>;
+export const GetCoordinatesDocument = gql`
+    query getCoordinates($placeId: String!) {
+  getCoordinates(placeId: $placeId) {
+    latitude
+    longitude
+  }
+}
+    `;
+export type GetCoordinatesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetCoordinatesQuery, GetCoordinatesQueryVariables>, 'query'> & ({ variables: GetCoordinatesQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetCoordinatesComponent = (props: GetCoordinatesComponentProps) => (
+      <ApolloReactComponents.Query<GetCoordinatesQuery, GetCoordinatesQueryVariables> query={GetCoordinatesDocument} {...props} />
+    );
+    
+export type GetCoordinatesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetCoordinatesQuery, GetCoordinatesQueryVariables>
+    } & TChildProps;
+export function withGetCoordinates<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetCoordinatesQuery,
+  GetCoordinatesQueryVariables,
+  GetCoordinatesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetCoordinatesQuery, GetCoordinatesQueryVariables, GetCoordinatesProps<TChildProps, TDataName>>(GetCoordinatesDocument, {
+      alias: 'getCoordinates',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetCoordinatesQuery__
+ *
+ * To run a query within a React component, call `useGetCoordinatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCoordinatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCoordinatesQuery({
+ *   variables: {
+ *      placeId: // value for 'placeId'
+ *   },
+ * });
+ */
+export function useGetCoordinatesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCoordinatesQuery, GetCoordinatesQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCoordinatesQuery, GetCoordinatesQueryVariables>(GetCoordinatesDocument, baseOptions);
+      }
+export function useGetCoordinatesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCoordinatesQuery, GetCoordinatesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCoordinatesQuery, GetCoordinatesQueryVariables>(GetCoordinatesDocument, baseOptions);
+        }
+export type GetCoordinatesQueryHookResult = ReturnType<typeof useGetCoordinatesQuery>;
+export type GetCoordinatesLazyQueryHookResult = ReturnType<typeof useGetCoordinatesLazyQuery>;
+export type GetCoordinatesQueryResult = ApolloReactCommon.QueryResult<GetCoordinatesQuery, GetCoordinatesQueryVariables>;
 export const CreateUserDocument = gql`
     mutation createUser($body: UserRequest!) {
   createUser(body: $body) {
@@ -417,8 +573,8 @@ export const GetUserDocument = gql`
     avatar
     name
     description
-    lat
-    lng
+    latitude
+    longitude
     address
   }
 }

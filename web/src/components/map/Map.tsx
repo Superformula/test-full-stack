@@ -1,4 +1,6 @@
-import React, { ReactElement, ReactNode, useState } from 'react'
+import mapboxgl from 'mapbox-gl'
+import * as MapboxGL from 'mapbox-gl'
+import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { MapLoadEvent, InteractiveMap } from 'react-map-gl'
 
 const MAP_TOKEN = process.env.REACT_APP_MAP_TOKEN
@@ -9,16 +11,9 @@ export interface StaticMapProps {
   latitude?: number
   longitude?: number
   zoom?: number
-  onLoad?: (event: MapLoadEvent) => void
 }
 
-export const Map = ({
-  latitude = -7.1214792,
-  longitude = -34.8542211,
-  children,
-  zoom = 13,
-  onLoad,
-}: StaticMapProps): ReactElement => {
+export const Map = ({ latitude, longitude, children, zoom = 13 }: StaticMapProps): ReactElement => {
   const [viewport, setViewport] = useState({
     latitude: latitude,
     longitude: longitude,
@@ -26,6 +21,17 @@ export const Map = ({
     bearing: 0,
     pitch: 0,
   })
+  const [map, setMap] = useState<MapboxGL.Map>()
+  const onMapLoad = useCallback((event: MapLoadEvent) => setMap(event.target), [])
+  const marker = useMemo(() => new mapboxgl.Marker(), [])
+
+  useEffect(() => {
+    if (map && latitude && longitude) {
+      marker.setLngLat({ lat: latitude, lng: longitude }).addTo(map)
+      setViewport((v) => ({ ...v, latitude, longitude }))
+    }
+  }, [latitude, longitude, map, marker])
+
   return (
     <InteractiveMap
       width="500px"
@@ -36,7 +42,7 @@ export const Map = ({
       bearing={viewport.bearing}
       pitch={viewport.pitch}
       mapStyle={MAP_STYLE}
-      onLoad={onLoad}
+      onLoad={onMapLoad}
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAP_TOKEN}
     >

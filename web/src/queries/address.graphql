@@ -1,0 +1,13 @@
+query searchAddress($text: String!) {
+    searchAddress(text: $text) {
+        text
+        placeId
+    }
+}
+
+query getCoordinates($placeId: String!) {
+    getCoordinates(placeId: $placeId) {
+        latitude
+        longitude
+    }
+}

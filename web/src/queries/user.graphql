@@ -40,8 +40,8 @@ query getUser($id: ID!) {
         avatar
         name
         description
-        lat
-        lng
+        latitude
+        longitude
         address
     }
 }

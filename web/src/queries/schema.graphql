@@ -6,6 +6,16 @@ schema {
     subscription: Subscription
 }
 
+type Address {
+    placeId: String!
+    text: String!
+}
+
+type LatLng {
+    latitude: Float
+    longitude: Float
+}
+
 type Mutation {
     createUser(body: UserRequest!): User!
     deleteUser(id: ID!): User!
@@ -13,6 +23,8 @@ type Mutation {
 }
 
 type Query {
+    getCoordinates(placeId: String!): LatLng
+    searchAddress(text: String!): [Address!]!
     user(id: ID!): User
     users(after: String, name: String): UserConnection!
 }
@@ -29,8 +41,8 @@ type User {
     description: String
     dob: AWSDate
     id: ID!
-    lat: Float
-    lng: Float
+    latitude: Float
+    longitude: Float
     name: String!
     updatedAt: AWSDateTime!
 }
@@ -44,8 +56,8 @@ input UserRequest {
     address: String!
     description: String
     dob: AWSDate
-    lat: Float
-    lng: Float
+    latitude: Float
+    longitude: Float
     name: String!
 }
 
