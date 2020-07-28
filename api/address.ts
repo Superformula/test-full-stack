@@ -17,7 +17,7 @@ export const searchAddress: AppSyncResolver<AddressResponse[]> = async (
       key: googleMapsToken,
     },
   })
-  return data.predictions.map(
+  return data?.predictions?.map(
     (prediction: GooglePrediction): AddressResponse => ({
       text: prediction.description,
       placeId: prediction.place_id,
