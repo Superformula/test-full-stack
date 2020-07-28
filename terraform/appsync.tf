@@ -8,6 +8,10 @@ resource "aws_appsync_graphql_api" "appsync_api" {
   schema              = data.local_file.schema.content
 }
 
+resource "aws_appsync_api_key" "appsync_api_key" {
+  api_id  = aws_appsync_graphql_api.appsync_api.id
+}
+
 resource "aws_appsync_datasource" "user" {
   api_id           = aws_appsync_graphql_api.appsync_api.id
   name             = "${var.appname}_appsync_user_ds_${var.stage}"

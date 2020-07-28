@@ -1,112 +1,99 @@
 # Superformula Full Stack Developer Test
 
-Be sure to read **all** of this document carefully, and follow the guidelines within.
+This is the guide to run and understand everything on the stack
 
-## Backend Context
+## Backend
 
-Build a GraphQL API that can `create/read/update/delete` user data from a persistence store.
+The Backend was built with AppSync + Terraform Scripts. 
+
+Mapping files are on `terraform/appsync`
+
+Resolvers are configured on `terraform/appsync.tf`
 
 ### User Model
 
+| Variable    | Type                        | Description             |
+| ----------- | --------------------------- | ----------------------- |
+| id          | ID (String UUID)            | User ID                 |
+| name        | String                      | User Name               |
+| dob         | String (YYYY-MM-DD format)  | User Date of Birth      |
+| address     | String                      | User Address            |
+| latitude    | Float                       | User Location Latitude  |
+| longitude   | Float                       | User Location Longitude |
+| avatar      | String                      | User Avatar             |
+| description | String                      | User Description        |
+| createdAt   | String (Date ISO timestamp) | User Created Date       |
+| updatedAt   | String (Date ISO timestamp) | User Updated Date       |
+
+### Pushing the code
+
+First configure the terraform variables
+
+| Variable Name         | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| appname               | All resources created will have this variable as a prefix    |
+| stage                 | All resources created will have this variable as a suffix    |
+| google_maps_token     | You need to issue a Google Maps token in order to make some queries work (https://developers.google.com/maps/documentation/javascript/get-api-key) |
+| aws_access_key_id     | The AWS IAM Access Key ID to run the terraform               |
+| aws_secret_access_key | The AWS IAM Secret Access Key to run the terraform           |
+| profile               | In case you have multi profiles on your aws-cli              |
+
+### Before you push the code
+
+Before applying the terraform script, you will need to build the lambda functions. It was built using serverless, but only for packaging, since it has some pretty cool features to manage dependencies and remove dev dependencies. I decided to centralize everything on Terraform to be easier to maintain.
+
+Make sure you have serverless module installed globally
+
 ```
-{
-  "id": "xxx",                  // user ID (must be unique)
-  "name": "backend test",       // user name
-  "dob": "",                    // date of birth
-  "address": "",                // user address
-  "description": "",            // user description
-  "createdAt": ""               // user created date
-  "updatedAt": ""               // user updated date
-}
+$ cd api
+$ yarn
+$ serverless package
 ```
 
-### Functionality
+### Applying Terraform
 
-- The API should follow typical GraphQL API design pattern.
-- The data should be saved in the DB.
-- Proper error handling should be used.
-- Paginating and filtering (by name) users list
+Once you have built the API and configured Terraform variables you can just run the basic command line
 
-### Basic Requirements
+```
+$ terraform apply
+```
 
-  - Use AWS AppSync (preferred) or AWS Lambda + API Gateway approach
-  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
-  - Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
-  - Write concise and clear commit messages.
-  - Write clear **documentation** on how it has been designed and how to run the code.
 
-### Bonus
-  - Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
-  - Provide proper unit tests.
-  - Providing an online demo is welcomed, but not required.
-  - Bundle npm modules into your Lambdas
 
-### Advanced Requirements
+## Frontend
 
-These may be used for further challenges. You can freely skip these; feel free to try out if you feel up to it.
-  - Describe your strategy for Lambda error handling, retries, and DLQs
-  - Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
+The frontend was built with React + Apollo Client.
 
-## UI context
+### Environment Variables
 
-Use HTML, CSS, and JavaScript (choose one of popular framework) to implement the following mock-up. You are only required to complete the desktop views, unless otherwise instructed. Application should connect to created GraphQL API.
+There are some environment variables needed to configure in order to run the application
 
-![Superformula-front-end-test-mockup](./mockup1.png)
+| Variable                   | Description                                                  |
+| -------------------------- | ------------------------------------------------------------ |
+| `REACT_APP_MAP_TOKEN`      | You will need to have a MapBox access token from the Mapbox page (https://docs.mapbox.com/help/how-mapbox-works/access-tokens/) |
+| `REACT_APP_MAP_STYLE`      | Provide a map style URI from MapBox to have a different look and feel on the application (https://docs.mapbox.com/studio-manual/overview/map-styling/) |
+| `REACT_APP_GRAPHQL_REGION` | AWS Region where AppSync is located                          |
+| `REACT_APP_GRAPHQL_URI`    | AppSync endpoint. No need to configure the Realtime endpoint, it is resolved automatically |
+| `REACT_APP_GRAPHQL_TOKEN`  | AppSync API Key                                              |
 
-![Superformula-front-end-test-mockup-2](./mockup2.png)
+### GraphQL
 
-> [Source Figma file](https://www.figma.com/file/hd7EgdTxJs2fpTzzSKlNxo/Superformula-full-stack-test)
+The GraphQL is managed by GraphQL Code Generator (https://graphql-code-generator.com/). Some hooks are generated by it. For more information please refer to the doc.
 
-## Requirements
+### Before starting
 
-### Functionality
+Once you have created the backend, and have the AppSync Address and the API Key in hand. You will need to configure some files inside web folder to make sure the code generation will work.
 
-- The search functionality should perform real time filtering on client side data and API side data
-- List of users should be updated automatically after single user is updated
-- Infinite loading state should be saved in url query
-- Appear/Disappear of modal should be animated (feel free with choose how)
-- Map with user location should update async - when user changes "location" field
+The following files will need replace some values:
 
-### Tech stack
+* `src/queries/.graphqlconfig`: This file is used by code editors like VSCode, WebStorm, etc.
+* `web/codegen.yml`: This is used by GraphQL Code Generator
+* `.env.local`: You will need to create this file based on `.env.example` in order to run the React Application
 
-- JS oriented (Typescript preferred)
-- Use **React**, **Angular** or **VUE**.
-- Use unsplash.com to show random avatar images
-- You don't have to write configuration from scratch (you can use eg. CRA for React application)
-- Feel free to use a preprocessor like SASS/SCSS/Less or CSS in JS
-- Provide E2E and unit tests
-- Feel free to choose MAPS service (GoogleMaps, OpenStreetMap etc)
-- Please **do not** use any additional libraries with predefined styles like `react-bootstrap`, `material-ui` etc.
+### Creating a new GraphQL query
 
-### Bonus
+In order to create a new query, you just need to create a new file or a new graphql query on any existing file inside `web/src/queries`, then, once created, you will need to go to the command line and execute the following line
 
-- Write clear **documentation** on how the app was designed and how to run the code.
-- Provide components in [Storybook](https://storybook.js.org) with tests.
-- Write concise and clear commit messages.
-- Provide an online demo of the application.
-- Include subtle animations to focus attention
-- Describe optimization opportunities when you conclude
-- Handle server errors
-- Handle loading states
-
-## What We Care About
-
-Use any libraries that you would normally use if this were a real production App. Please note: we're interested in your code & the way you solve the problem, not how well you can use a particular library or feature.
-
-_We're interested in your method and how you approach the problem just as much as we're interested in the end result._
-
-Here's what you should strive for:
-
-- Good use of current HTML, CSS, JavaScript, Node.js & performance best practices.
-- Solid testing approach.
-- Extensible code.
-
-## Q&A
-
-> Where should I send back the result when I'm done?
-
-Fork this repo and send us a pull request when you think you are done. There is no deadline for this task unless otherwise noted to you directly.
-
-> What if I have a question?
-
-Create a new issue in this repo and we will respond and get back to you quickly.
+```
+$ yarn codegen
+```
