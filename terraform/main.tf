@@ -11,6 +11,14 @@ variable "profile" {
 }
 
 variable "google_maps_token" {
+   default = ""
+}
+
+variable "mapbox_token" {
+  default = ""
+}
+
+variable "mapbox_style" {
   default = ""
 }
 
