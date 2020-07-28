@@ -2,10 +2,13 @@
   "save": "Save",
   "close": "Close",
   "loading": "Loading",
+  "address": "Address",
 
   "users.title": "Users list",
   "users.create": "Create User",
   "users.edit": "Edit User",
   "users.loadMore": "Load More",
-  "users.notFound": "User Not Found"
+  "users.notFound": "User Not Found",
+  "users.field.name": "Name",
+  "users.field.description": "Description"
 }

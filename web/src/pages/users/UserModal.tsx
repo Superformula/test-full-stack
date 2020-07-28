@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode, useCallback, useContext, useState } from 'react'
 import { Form } from 'react-final-form'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { ReactComponent as AddIcon } from '../../assets/icon-add.svg'
 import { Button } from '../../components/button/Button'
 import { FormItem } from '../../components/formItem/FormItem'
@@ -42,6 +42,7 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
   const [coordinates, setCoordinates] = useState<LatLng | null>(
     user ? { latitude: user.latitude, longitude: user.longitude } : null,
   )
+  const intl = useIntl()
   const onSubmit = useCallback((values) => save(values).then(close), [save, close])
 
   return (
@@ -57,13 +58,13 @@ export const UserForm = ({ user }: UserFormProps): ReactElement => {
               <Map latitude={coordinates?.latitude} longitude={coordinates?.longitude} />
               <div className={style.userFormFields}>
                 <FormItem name="name">
-                  <Input type="text" placeholder="Name" />
+                  <Input type="text" placeholder={intl.formatMessage({ id: 'users.field.name' })} />
                 </FormItem>
                 <FormItem name="address">
                   <AddressAutocomplete onCoordinateFound={setCoordinates} />
                 </FormItem>
                 <FormItem name="description">
-                  <Input type="text" placeholder="Description" />
+                  <Input type="text" placeholder={intl.formatMessage({ id: 'users.field.description' })} />
                 </FormItem>
                 <div className={style.userFormButtons}>
                   <Button type="primary" htmlType="submit">

@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback } from 'react'
+import { useIntl } from 'react-intl'
 import { useForm } from 'react-final-form'
 import { LatLng } from '../../../../api/Types'
 import { Autocomplete } from '../../components/autocomplete/Autocomplete'
@@ -16,6 +17,7 @@ export const AddressAutocomplete = ({
   onChange,
   onCoordinateFound,
 }: AddressAutocompleteFieldProps): ReactElement => {
+  const intl = useIntl()
   const [searchAddress, { data }] = useSearchAddressLazyQuery({ fetchPolicy: 'cache-first' })
   const getCoordinates = useGetCoordinates()
   const form = useForm()
@@ -35,7 +37,7 @@ export const AddressAutocomplete = ({
   return (
     <Autocomplete
       value={value}
-      placeholder="Address"
+      placeholder={intl.formatMessage({ id: 'address' })}
       keyProp="text"
       onChange={onChange}
       onSelect={onSelect}
