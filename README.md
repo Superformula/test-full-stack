@@ -27,7 +27,7 @@ Resolvers are configured on `terraform/appsync.tf`
 
 ### Pushing the code
 
-First configure the terraform variables
+First configure the terraform variables.
 
 | Variable Name         | Description                                                  |
 | --------------------- | ------------------------------------------------------------ |
@@ -44,23 +44,32 @@ First configure the terraform variables
 
 Before applying the terraform script, you will need to build the lambda functions. It was built using serverless, but only for packaging, since it has some pretty cool features to manage dependencies and remove dev dependencies. I decided to centralize everything on Terraform to be easier to maintain.
 
-Make sure you have serverless module installed globally
+#### Installing Serverless
+
+Make sure you have Serverless module installed globally, Terraform uses it to generate the API bundle.
+
+```
+$ npm install -g serverless
+```
+
+#### Installing dependencies
+
+Install modules on both `api` and `web` folder. Terraform will need them already installed in order to build the bundles.
 
 ```
 $ cd api
 $ yarn
-$ serverless package
+$ cd ../web
+$ yarn
 ```
 
 ### Applying Terraform
 
-Once you have built the API and configured Terraform variables you can just run the basic command line
+Once you have built the API and configured Terraform variables you can just run the basic command line.
 
 ```
 $ terraform apply
 ```
-
-
 
 ## Frontend
 
@@ -68,7 +77,7 @@ The frontend was built with React + Apollo Client.
 
 ### Environment Variables
 
-There are some environment variables needed to configure in order to run the application
+There are some environment variables needed to configure in order to run the application.
 
 | Variable                   | Description                                                  |
 | -------------------------- | ------------------------------------------------------------ |
