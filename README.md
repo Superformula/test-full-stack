@@ -1,112 +1,90 @@
-# Superformula Full Stack Developer Test
+# TestFullStack
 
-Be sure to read **all** of this document carefully, and follow the guidelines within.
+This project was generated using [Nx](https://nx.dev).
 
-## Backend Context
+<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
-Build a GraphQL API that can `create/read/update/delete` user data from a persistence store.
+🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
-### User Model
+## Adding capabilities to your workspace
 
-```
-{
-  "id": "xxx",                  // user ID (must be unique)
-  "name": "backend test",       // user name
-  "dob": "",                    // date of birth
-  "address": "",                // user address
-  "description": "",            // user description
-  "createdAt": ""               // user created date
-  "updatedAt": ""               // user updated date
-}
-```
+Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
-### Functionality
+These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
 
-- The API should follow typical GraphQL API design pattern.
-- The data should be saved in the DB.
-- Proper error handling should be used.
-- Paginating and filtering (by name) users list
+Below are our core plugins:
 
-### Basic Requirements
+- [React](https://reactjs.org)
+  - `npm install --save-dev @nrwl/react`
+- Web (no framework frontends)
+  - `npm install --save-dev @nrwl/web`
+- [Angular](https://angular.io)
+  - `npm install --save-dev @nrwl/angular`
+- [Nest](https://nestjs.com)
+  - `npm install --save-dev @nrwl/nest`
+- [Express](https://expressjs.com)
+  - `npm install --save-dev @nrwl/express`
+- [Node](https://nodejs.org)
+  - `npm install --save-dev @nrwl/node`
 
-  - Use AWS AppSync (preferred) or AWS Lambda + API Gateway approach
-  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
-  - Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
-  - Write concise and clear commit messages.
-  - Write clear **documentation** on how it has been designed and how to run the code.
+There are also many [community plugins](https://nx.dev/nx-community) you could add.
 
-### Bonus
-  - Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
-  - Provide proper unit tests.
-  - Providing an online demo is welcomed, but not required.
-  - Bundle npm modules into your Lambdas
+## Generate an application
 
-### Advanced Requirements
+Run `nx g @nrwl/react:app my-app` to generate an application.
 
-These may be used for further challenges. You can freely skip these; feel free to try out if you feel up to it.
-  - Describe your strategy for Lambda error handling, retries, and DLQs
-  - Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
+> You can use any of the plugins above to generate applications as well.
 
-## UI context
+When using Nx, you can create multiple applications and libraries in the same workspace.
 
-Use HTML, CSS, and JavaScript (choose one of popular framework) to implement the following mock-up. You are only required to complete the desktop views, unless otherwise instructed. Application should connect to created GraphQL API.
+## Generate a library
 
-![Superformula-front-end-test-mockup](./mockup1.png)
+Run `nx g @nrwl/react:lib my-lib` to generate a library.
 
-![Superformula-front-end-test-mockup-2](./mockup2.png)
+> You can also use any of the plugins above to generate libraries as well.
 
-> [Source Figma file](https://www.figma.com/file/hd7EgdTxJs2fpTzzSKlNxo/Superformula-full-stack-test)
+Libraries are sharable across libraries and applications. They can be imported from `@test-full-stack/mylib`.
 
-## Requirements
+## Development server
 
-### Functionality
+Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
-- The search functionality should perform real time filtering on client side data and API side data
-- List of users should be updated automatically after single user is updated
-- Infinite loading state should be saved in url query
-- Appear/Disappear of modal should be animated (feel free with choose how)
-- Map with user location should update async - when user changes "location" field
+## Code scaffolding
 
-### Tech stack
+Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
 
-- JS oriented (Typescript preferred)
-- Use **React**, **Angular** or **VUE**.
-- Use unsplash.com to show random avatar images
-- You don't have to write configuration from scratch (you can use eg. CRA for React application)
-- Feel free to use a preprocessor like SASS/SCSS/Less or CSS in JS
-- Provide E2E and unit tests
-- Feel free to choose MAPS service (GoogleMaps, OpenStreetMap etc)
-- Please **do not** use any additional libraries with predefined styles like `react-bootstrap`, `material-ui` etc.
+## Build
 
-### Bonus
+Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-- Write clear **documentation** on how the app was designed and how to run the code.
-- Provide components in [Storybook](https://storybook.js.org) with tests.
-- Write concise and clear commit messages.
-- Provide an online demo of the application.
-- Include subtle animations to focus attention
-- Describe optimization opportunities when you conclude
-- Handle server errors
-- Handle loading states
+## Running unit tests
 
-## What We Care About
+Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
 
-Use any libraries that you would normally use if this were a real production App. Please note: we're interested in your code & the way you solve the problem, not how well you can use a particular library or feature.
+Run `nx affected:test` to execute the unit tests affected by a change.
 
-_We're interested in your method and how you approach the problem just as much as we're interested in the end result._
+## Running end-to-end tests
 
-Here's what you should strive for:
+Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
 
-- Good use of current HTML, CSS, JavaScript, Node.js & performance best practices.
-- Solid testing approach.
-- Extensible code.
+Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
 
-## Q&A
+## Understand your workspace
 
-> Where should I send back the result when I'm done?
+Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
-Fork this repo and send us a pull request when you think you are done. There is no deadline for this task unless otherwise noted to you directly.
+## Further help
 
-> What if I have a question?
+Visit the [Nx Documentation](https://nx.dev) to learn more.
 
-Create a new issue in this repo and we will respond and get back to you quickly.
+## ☁ Nx Cloud
+
+### Computation Memoization in the Cloud
+
+<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+
+Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
+
+Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+
+Visit [Nx Cloud](https://nx.app/) to learn more.
