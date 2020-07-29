@@ -12,6 +12,7 @@
   "users.notFound": "User Not Found",
   "users.field.name": "Name",
   "users.field.description": "Description",
+  "users.searchEmpty.message": "No results were found on your search",
   "users.empty.message": "Looks like you don't have any users created yet",
   "users.empty.createFirstUser": "Create your first user"
 }

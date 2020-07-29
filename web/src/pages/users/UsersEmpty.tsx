@@ -5,15 +5,21 @@ import { UserModal } from './UserModal'
 
 import style from './UsersEmpty.module.scss'
 
-export const UsersEmpty = (): ReactElement => (
+interface UsersEmptyProps {
+  search: string | null | undefined
+}
+
+export const UsersEmpty = ({ search }: UsersEmptyProps): ReactElement => (
   <div className={style.usersEmpty}>
     <div className={style.message}>
-      <FormattedMessage id="users.empty.message" />
+      {search ? <FormattedMessage id="users.searchEmpty.message" /> : <FormattedMessage id="users.empty.message" />}
     </div>
-    <UserModal>
-      <Button>
-        <FormattedMessage id="users.empty.createFirstUser" />
-      </Button>
-    </UserModal>
+    {!search && (
+      <UserModal>
+        <Button>
+          <FormattedMessage id="users.empty.createFirstUser" />
+        </Button>
+      </UserModal>
+    )}
   </div>
 )

@@ -4,6 +4,7 @@
 # dependencies
 web/node_modules
 api/node_modules
+e2e/node_modules
 
 # testing
 web/coverage

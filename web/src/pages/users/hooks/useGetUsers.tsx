@@ -11,6 +11,7 @@ export interface User {
 }
 
 interface Users {
+  search: string | null | undefined
   users: User[]
   loading: boolean
   hasMore: boolean
@@ -24,7 +25,7 @@ export const useGetUsers = (): Users => {
   const [users, setUsers] = useState<User[]>([])
   const [nextToken, setNextToken] = useState<string>('')
   const [limit, setLimit] = useQueryParam<number | null | undefined>('limit', NumberParam)
-  const [name] = useQueryParam<string | null | undefined>('name', StringParam)
+  const [search] = useQueryParam<string | null | undefined>('name', StringParam)
   const hasMore = useMemo(() => !!nextToken, [nextToken])
 
   const internalSetUsers = useCallback(
@@ -42,7 +43,7 @@ export const useGetUsers = (): Users => {
         .query({
           fetchPolicy: 'no-cache',
           query: ListUsersDocument,
-          variables: { after: nextToken, limit: 6, name: !!name ? name : undefined },
+          variables: { after: nextToken, limit: 6, name: !!search ? search : undefined },
         })
         .then((result) => {
           setLimit((limit ?? 6) + 6, 'replaceIn')
@@ -51,7 +52,7 @@ export const useGetUsers = (): Users => {
         })
         .finally(() => setLoading(false))
     }
-  }, [setLimit, limit, nextToken, client, users, internalSetUsers, name])
+  }, [setLimit, limit, nextToken, client, users, internalSetUsers, search])
 
   useEffect(() => {
     setLoading(true)
@@ -59,7 +60,7 @@ export const useGetUsers = (): Users => {
       .query({
         fetchPolicy: 'no-cache',
         query: ListUsersDocument,
-        variables: { limit: limit ?? 6, name: !!name ? name : undefined },
+        variables: { limit: limit ?? 6, name: !!search ? search : undefined },
       })
       .then((result) => {
         setLoading(false)
@@ -103,7 +104,7 @@ export const useGetUsers = (): Users => {
             internalSetUsers(
               internalUsers.map((item: User, index: number) => (index === oldUserIndex ? updatedUser : item)),
             )
-          } else if (!name) {
+          } else if (!search) {
             // if search is defined, don't add
             // adding new user to the top of the list
             internalSetUsers([updatedUser].concat(internalUsers))
@@ -116,7 +117,7 @@ export const useGetUsers = (): Users => {
     }
     // Limit should NOT be on the dependency array
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name, usersInternal, client, internalSetUsers])
+  }, [search, usersInternal, client, internalSetUsers])
 
   return useMemo(
     () => ({
@@ -124,7 +125,8 @@ export const useGetUsers = (): Users => {
       users,
       hasMore,
       loadMore,
+      search,
     }),
-    [loading, users, hasMore, loadMore],
+    [loading, users, hasMore, loadMore, search],
   )
 }

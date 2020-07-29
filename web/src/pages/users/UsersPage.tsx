@@ -11,7 +11,7 @@ import { UsersLoader } from './UsersLoader'
 import style from './UsersPage.module.scss'
 
 export const UsersPage = (): ReactElement => {
-  const { users, hasMore, loadMore, loading } = useGetUsers()
+  const { users, search, hasMore, loadMore, loading } = useGetUsers()
   return (
     <div className={style.users}>
       <div className={style.usersHeader}>
@@ -22,7 +22,7 @@ export const UsersPage = (): ReactElement => {
         <SearchInput />
       </div>
       {!loading && users.length === 0 ? (
-        <UsersEmpty />
+        <UsersEmpty search={search} />
       ) : (
         <div className={style.usersBody}>
           {users.map((user: User) => (
