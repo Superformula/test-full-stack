@@ -1,6 +1,6 @@
 import { Context } from 'aws-lambda'
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { AddressResponse, AppSyncEvent, AppSyncResolver, GooglePlaceResponse, GooglePrediction, LatLng } from './Types'
+import { AddressResponse, AppSyncEvent, AppSyncResolver, GooglePlaceResponse, GooglePrediction, LatLng } from './types'
 
 const googleMapsToken: string = process.env.GOOGLE_MAPS_TOKEN
 const googleMaps: AxiosInstance = axios.create({ baseURL: 'https://maps.googleapis.com' })

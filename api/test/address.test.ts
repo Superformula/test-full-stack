@@ -1,7 +1,7 @@
 import nock from 'nock'
 import { expect } from 'chai'
 import { getCoordinates, handler, searchAddress } from '../address'
-import { AddressResponse, LatLng } from '../Types'
+import { AddressResponse, LatLng } from '../types'
 
 describe('Address', () => {
   it('should search address', async () => {
