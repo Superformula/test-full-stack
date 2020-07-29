@@ -37,6 +37,7 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   name?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 
@@ -190,6 +191,7 @@ export type DeleteUserMutation = (
 export type ListUsersQueryVariables = Exact<{
   name?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -508,8 +510,8 @@ export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutati
 export type DeleteUserMutationResult = ApolloReactCommon.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
 export const ListUsersDocument = gql`
-    query listUsers($name: String, $after: String) {
-  users(name: $name, after: $after) {
+    query listUsers($name: String, $after: String, $limit: Int) {
+  users(name: $name, after: $after, limit: $limit) {
     list {
       id
       name
@@ -554,6 +556,7 @@ export function withListUsers<TProps, TChildProps = {}, TDataName extends string
  *   variables: {
  *      name: // value for 'name'
  *      after: // value for 'after'
+ *      limit: // value for 'limit'
  *   },
  * });
  */

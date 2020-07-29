@@ -22,8 +22,8 @@ mutation deleteUser($id: ID!) {
     }
 }
 
-query listUsers($name: String, $after: String) {
-    users(name: $name, after: $after) {
+query listUsers($name: String, $after: String, $limit: Int) {
+    users(name: $name, after: $after, limit: $limit) {
         list {
             id
             name

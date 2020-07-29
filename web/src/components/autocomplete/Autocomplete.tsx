@@ -1,3 +1,4 @@
+import { useDebounceCallback } from '@react-hook/debounce'
 import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 import { Input } from '../input/Input'
 
@@ -28,7 +29,10 @@ const useAutocomplete = ({
   const [activeIndex, setActiveIndex] = useState(2)
   const [open, setOpen] = useState(false)
   const onFocus = useCallback(() => setOpen(true), [])
+
+  // This was necessary because the click on the balloon was triggering the blur and wasn't selecting
   const onBlur = useCallback(() => setTimeout(() => setOpen(false), 200), [])
+
   const onSelectInternal = useCallback(
     (value: string) => {
       onSelect(value)
@@ -63,24 +67,16 @@ const useAutocomplete = ({
     },
     [activeIndex, suggestions, onSelect],
   )
-  const [timeoutItem, setTimeoutItem] = useState<any>()
+
+  const debounce = useDebounceCallback(requestSuggestion, 800)
   const onTextChange = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {
-      if (timeoutItem) clearTimeout(timeoutItem)
       const value = evt.target.value
       onChange && onChange(value)
-      setTimeoutItem(
-        setTimeout(() => {
-          requestSuggestion(value)
-          setActiveIndex(-1)
-          if (timeoutItem) {
-            clearTimeout(timeoutItem)
-            setTimeoutItem(undefined)
-          }
-        }, 800),
-      )
+      debounce(value)
+      setActiveIndex(-1)
     },
-    [requestSuggestion, timeoutItem, onChange],
+    [debounce, onChange],
   )
 
   const renderedSuggestions = useMemo(

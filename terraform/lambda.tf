@@ -1,10 +1,3 @@
-resource "null_resource" "address_build" {
-  provisioner "local-exec" {
-    working_dir = "${path.module}/../api"
-    command     = "serverless package"
-  }
-}
-
 resource "aws_lambda_function" "address_lambda" {
   filename         = "${path.module}/../api/.serverless/marcelinosf.zip"
   function_name    = "${var.appname}_address_${var.stage}"
@@ -14,7 +7,6 @@ resource "aws_lambda_function" "address_lambda" {
 
   runtime          = "nodejs10.x"
   timeout          = "30"
-  depends_on       = [null_resource.address_build]
 
   environment {
     variables = {

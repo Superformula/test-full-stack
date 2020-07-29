@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 import { ListUsersDocument, Maybe, WatchDeletedUsersDocument, WatchUsersDocument } from '../../../generated/graphql'
+import { StringParam, NumberParam, useQueryParam } from 'use-query-params'
 
 export interface User {
   id: string
@@ -22,7 +23,8 @@ export const useGetUsers = (): Users => {
   const [loading, setLoading] = useState(false)
   const [users, setUsers] = useState<User[]>([])
   const [nextToken, setNextToken] = useState<string>('')
-
+  const [limit, setLimit] = useQueryParam<number | null | undefined>('limit', NumberParam)
+  const [name] = useQueryParam<string | null | undefined>('name', StringParam)
   const hasMore = useMemo(() => !!nextToken, [nextToken])
 
   const internalSetUsers = useCallback(
@@ -40,15 +42,16 @@ export const useGetUsers = (): Users => {
         .query({
           fetchPolicy: 'no-cache',
           query: ListUsersDocument,
-          variables: { after: nextToken },
+          variables: { after: nextToken, limit: 6, name: !!name ? name : undefined },
         })
         .then((result) => {
+          setLimit((limit ?? 6) + 6, 'replaceIn')
           internalSetUsers(users.concat(result.data.users.list))
           setNextToken(result.data.users.nextToken)
         })
         .finally(() => setLoading(false))
     }
-  }, [nextToken, client, users, internalSetUsers])
+  }, [setLimit, limit, nextToken, client, users, internalSetUsers, name])
 
   useEffect(() => {
     setLoading(true)
@@ -56,6 +59,7 @@ export const useGetUsers = (): Users => {
       .query({
         fetchPolicy: 'no-cache',
         query: ListUsersDocument,
+        variables: { limit: limit ?? 6, name: !!name ? name : undefined },
       })
       .then((result) => {
         setLoading(false)
@@ -99,7 +103,8 @@ export const useGetUsers = (): Users => {
             internalSetUsers(
               internalUsers.map((item: User, index: number) => (index === oldUserIndex ? updatedUser : item)),
             )
-          } else {
+          } else if (!name) {
+            // if search is defined, don't add
             // adding new user to the top of the list
             internalSetUsers([updatedUser].concat(internalUsers))
           }
@@ -109,7 +114,9 @@ export const useGetUsers = (): Users => {
       subscription.unsubscribe()
       deleteSubscription.unsubscribe()
     }
-  }, [usersInternal, client, internalSetUsers])
+    // Limit should NOT be on the dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, usersInternal, client, internalSetUsers])
 
   return useMemo(
     () => ({

@@ -1,4 +1,6 @@
 import { getMainDefinition } from 'apollo-utilities'
+import { QueryParamProvider } from 'use-query-params'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import style from './App.module.scss'
@@ -56,13 +58,19 @@ const client: ApolloClient<Store> = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <IntlProvider locale={i18n.locale} messages={i18n.messages}>
-        <header className={style.AppHeader}>
-          <UsersPage />
-        </header>
-      </IntlProvider>
-    </ApolloProvider>
+    <Router>
+      <QueryParamProvider ReactRouterRoute={Route}>
+        <ApolloProvider client={client}>
+          <IntlProvider locale={i18n.locale} messages={i18n.messages}>
+            <header className={style.AppHeader}>
+              <Route>
+                <UsersPage />
+              </Route>
+            </header>
+          </IntlProvider>
+        </ApolloProvider>
+      </QueryParamProvider>
+    </Router>
   )
 }
 

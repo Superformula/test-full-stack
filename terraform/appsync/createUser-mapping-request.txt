@@ -5,6 +5,7 @@
         "id": { "S": "$util.autoId()" }
     },
     "attributeValues": {
+        "status": { "S": "OK" },
         "avatar": { "S": "https://source.unsplash.com/400x400/?people&v=$util.autoId()" },
         "name": $util.dynamodb.toDynamoDBJson($context.arguments.body.name),
         "dob": $util.dynamodb.toDynamoDBJson($context.arguments.body.dob),

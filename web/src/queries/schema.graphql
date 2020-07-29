@@ -26,7 +26,7 @@ type Query {
     getCoordinates(placeId: String!): LatLng
     searchAddress(text: String!): [Address!]!
     user(id: ID!): User
-    users(after: String, name: String): UserConnection!
+    users(after: String, limit: Int, name: String): UserConnection!
 }
 
 type Subscription {

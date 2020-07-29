@@ -41,7 +41,7 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_iam_policy_attachment" "lambda_attachment" {
-  name       = "${var.appname}_attachment_${var.stage}"
+  name       = "${var.appname}_lambda_attachment_${var.stage}"
   roles      = [aws_iam_role.lambda_role.name]
   policy_arn = aws_iam_policy.lambda_policy.arn
 }

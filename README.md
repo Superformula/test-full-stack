@@ -46,7 +46,7 @@ Before applying the terraform script, you will need to build the lambda function
 
 #### Installing Serverless
 
-Make sure you have Serverless module installed globally, Terraform uses it to generate the API bundle.
+Make sure you have Serverless module installed globally
 
 ```
 $ npm install -g serverless
@@ -61,6 +61,15 @@ $ cd api
 $ yarn
 $ cd ../web
 $ yarn
+```
+
+### Building Serverless Package
+
+You will need to build the Serverless Package whenever you make changes.
+
+```
+$ cd api
+$ serverless package
 ```
 
 ### Applying Terraform

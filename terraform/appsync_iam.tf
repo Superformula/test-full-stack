@@ -35,7 +35,8 @@ data "aws_iam_policy_document" "api_dynamo_policy_document" {
 
     resources = [
       aws_dynamodb_table.user.arn,
-      "${aws_dynamodb_table.user.arn}/index/name-index"
+      "${aws_dynamodb_table.user.arn}/index/name-index",
+      "${aws_dynamodb_table.user.arn}/index/status-index"
     ]
   }
 }

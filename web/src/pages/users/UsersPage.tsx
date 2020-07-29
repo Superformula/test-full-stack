@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button } from '../../components/button/Button'
-import { Input } from '../../components/input/Input'
+import { SearchInput } from '../SearchInput'
 import { useGetUsers, User } from './hooks/useGetUsers'
 import { UserCard } from './UserCard'
 import { CreateUserModal, EditUserModal } from './UserModal'
@@ -19,7 +19,7 @@ export const UsersPage = (): ReactElement => {
           <FormattedMessage id="users.title" />
         </h1>
         <CreateUserModal />
-        <Input type="text" placeholder={'Search...'} placeholderOnTop={false} />
+        <SearchInput />
       </div>
       {!loading && users.length === 0 ? (
         <UsersEmpty />

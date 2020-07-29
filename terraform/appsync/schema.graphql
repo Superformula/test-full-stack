@@ -6,7 +6,7 @@ type Mutation {
 
 type Query {
     user(id: ID!): User
-    users(name: String, after: String): UserConnection!
+    users(name: String, after: String, limit: Int): UserConnection!
     searchAddress(text: String!): [Address!]!
     getCoordinates(placeId: String!): LatLng
 }

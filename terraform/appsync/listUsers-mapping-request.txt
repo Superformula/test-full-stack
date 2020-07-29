@@ -1,9 +1,16 @@
 {
     "version": "2017-02-28",
-    "limit": 6
+    "scanIndexForward": false,
+    "operation": "Query",
+    #if( $context.arguments.limit > 120 )
+        "limit": 120
+    #elseif( $context.arguments.limit )
+        "limit": $context.arguments.limit
+    #else
+        "limit": 6
+    #end
     #if( $context.arguments.name )
-        ,"operation": "Query"
-        ,"index" : "name-index"
+        ,"index": "name-index"
         ,"query": {
             "expression": "#name = :name",
             "expressionValues": {
@@ -14,7 +21,16 @@
             }
         }
     #else
-        ,"operation": "Scan"
+        ,"index": "status-index"
+        ,"query": {
+            "expression": "#status = :status",
+            "expressionValues": {
+                ":status": { "S": "OK" }
+            },
+            "expressionNames": {
+                "#status": "status"
+            }
+        }
     #end
     #if( $context.arguments.after )
         ,"nextToken": "${context.arguments.after}"
