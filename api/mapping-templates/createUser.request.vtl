@@ -5,5 +5,8 @@
         "id" : $util.dynamodb.toDynamoDBJson(${util.autoId()}),
         "name" : $util.dynamodb.toDynamoDBJson($ctx.args.name)
     },
-    "attributeValues" : $util.dynamodb.toMapValuesJson($ctx.args)
+
+    #set ( $insertObject = $util.dynamodb.toMapValues($ctx.args) )
+    #set ( $insertObject.createdAt = $util.dynamodb.toString($util.time.nowISO8601()) )
+    "attributeValues" : $util.toJson($insertObject)
 }
