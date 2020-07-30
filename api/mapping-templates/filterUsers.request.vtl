@@ -1,0 +1,15 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Scan",
+    "filter": {
+        "expression": "contains(#name, :name)",
+        "expressionNames": {
+          "#name": "name"
+        },
+        "expressionValues" : {
+            ":name": $util.dynamodb.toDynamoDBJson($ctx.args.name)
+        }
+    },
+    "limit": $util.defaultIfNull(${ctx.args.limit}, 6),
+    "nextToken": $util.toJson($util.defaultIfNullOrBlank($ctx.args.nextToken, null))
+}
