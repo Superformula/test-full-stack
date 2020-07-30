@@ -9,12 +9,26 @@ type Mutation {
     dob: String
     address: String
     description: String
-    createdAt: String
+  ): User
+  deleteUser(id: String): User
+  updateUser(
+    id: String!
+    name: String
+    dob: String
+    address: String
+    description: String
   ): User
 }
 
 type Query {
-  getUser(id: String!): User!
+  user(id: String!): User
+  users(limit: Int, nextToken: String): UserList
+  filterUsers(name: String, limit: Int, nextToken: String): UserList
+}
+
+type UserList {
+  items: [User]
+  nextToken: String
 }
 
 type User {
