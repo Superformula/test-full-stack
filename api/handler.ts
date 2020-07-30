@@ -1,14 +1,15 @@
+import { Logger } from './src/utils';
+import { getLocation } from './src/controllers/location';
 
-export const hello = (event: any) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
-}
+export const locationHandler = async (event: any) => {
+  const log = new Logger();
+  log.info({ event }, 'getLocation Handler!');
+
+  try {
+    const { address } = event.arguments;
+    return getLocation(address, log);
+  } catch (error) {
+    log.error({ error }, 'Location handler failed');
+    throw error;
+  }
+};
