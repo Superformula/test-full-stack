@@ -1,11 +1,14 @@
 {
   "name": "test-full-stack",
   "version": "1.0.0",
-  "description": "Be sure to read **all** of this document carefully, and follow the guidelines within.",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "pretest": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "prestart": "export $(cat .env | xargs)",
+    "start": "sls appsync-offline start",
+    "deploy": "npm run prestart && sls deploy"
   },
   "repository": {
     "type": "git",
@@ -18,11 +21,15 @@
   },
   "homepage": "https://github.com/vpcsilva/test-full-stack#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.158",
+    "@types/pino": "^6.3.0",
+    "aws-sdk": "^2.723.0",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "serverless": "^1.77.1",
+    "serverless-appsync-offline": "^1.4.0",
     "serverless-appsync-plugin": "^1.3.1",
     "serverless-dynamodb-local": "^0.2.39",
     "serverless-offline": "^6.5.0",
@@ -37,6 +44,11 @@
   },
   "lint-staged": {
     "*.ts": "tslint --fix",
-    "*.{ts,css,md}": "prettier --write"
+    "*.{js,css,md}": "prettier --write"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "lodash": "^4.17.19",
+    "pino": "^6.4.1"
   }
 }
