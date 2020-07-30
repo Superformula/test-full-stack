@@ -1,0 +1,6 @@
+export enum ErrorCode {
+  NOT_AUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  UNPROCESSABLE = 422,
+}
