@@ -4,9 +4,8 @@ service:
 
 plugins:
   # - serverless-plugin-typescript
-  # - serverless-dynamodb-local
+  - serverless-dynamodb-local
   - serverless-appsync-plugin
-  - serverless-offline
 
 provider:
   name: aws
@@ -29,6 +28,31 @@ custom:
         field: createUser
         request: 'createUser.request.vtl'
         response: 'createUser.response.vtl'
+      - dataSource: Users
+        type: Query
+        field: user
+        request: 'getUser.request.vtl'
+        response: 'getUser.response.vtl'
+      - dataSource: Users
+        type: Query
+        field: users
+        request: 'listUsers.request.vtl'
+        response: 'listUsers.response.vtl'
+      - dataSource: Users
+        type: Query
+        field: filterUsers
+        request: 'filterUsers.request.vtl'
+        response: 'filterUsers.response.vtl'
+      - dataSource: Users
+        type: Mutation
+        field: deleteUser
+        request: 'deleteUser.request.vtl'
+        response: 'deleteUser.response.vtl'
+      - dataSource: Users
+        type: Mutation
+        field: updateUser
+        request: 'updateUser.request.vtl'
+        response: 'updateUser.response.vtl'
 
     dataSources:
       - type: AMAZON_DYNAMODB
