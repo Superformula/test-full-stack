@@ -6,7 +6,7 @@ export const locationHandler = async (event: any) => {
   log.info({ event }, 'getLocation Handler!');
 
   try {
-    const { address } = event.arguments;
+    const { address } = event;
     return getLocation(address, log);
   } catch (error) {
     log.error({ error }, 'Location handler failed');

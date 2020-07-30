@@ -73,6 +73,11 @@ custom:
         field: updateUser
         request: 'updateUser.request.vtl'
         response: 'updateUser.response.vtl'
+      - dataSource: LambdaLocation
+        type: Query
+        field: getLocation
+        request: 'getLocation.request.vtl'
+        response: 'getLocation.response.vtl'
 
     dataSources:
       - type: AMAZON_DYNAMODB
@@ -81,6 +86,12 @@ custom:
         config:
           tableName: { Ref: UserTable }
           serviceRoleArn: { Fn::GetAtt: [AppSyncDynamoDBServiceRole, Arn] }
+      - type: AWS_LAMBDA
+        name: LambdaLocation
+        description: 'Location Lambda Source'
+        config:
+          functionName: getLocation
+          serviceRoleArn: { Fn::GetAtt: [AppSyncLambdaServiceRole, Arn] }
 
 resources:
   Resources:
@@ -159,7 +170,31 @@ resources:
                     - 'dynamodb:Scan'
                     - 'dynamodb:UpdateItem'
                   Resource:
-                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Users'
-                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Users/*'
-                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Tweets'
-                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Tweets/*'
+                    - 'arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/Users'
+                    - 'arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/Users/*'
+                    - 'arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/Tweets'
+                    - 'arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/Tweets/*'
+    AppSyncLambdaServiceRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        RoleName: 'Lambda-${self:custom.appSync.serviceRole}'
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Service:
+                  - 'appsync.amazonaws.com'
+              Action:
+                - 'sts:AssumeRole'
+        Policies:
+          - PolicyName: 'Lambda-${self:custom.appSync.serviceRole}-Policy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - 'lambda:invokeFunction'
+                  Resource:
+                    - 'arn:aws:lambda:${self:provider.region}:${self:custom.accountId}:function:${self:service.name}-${self:provider.stage}-getLocation'
+                    - 'arn:aws:lambda:${self:provider.region}:${self:custom.accountId}:function:${self:service.name}-${self:provider.stage}-getLocation:*'

@@ -24,6 +24,16 @@ type Query {
   user(id: String!): User
   users(limit: Int, nextToken: String): UserList
   filterUsers(name: String, limit: Int, nextToken: String): UserList
+  getLocation(address: String!): Location
+}
+
+type Geometry {
+  type: String
+  coordinates: [Float]
+}
+
+type Location {
+  geometry: Geometry
 }
 
 type UserList {
