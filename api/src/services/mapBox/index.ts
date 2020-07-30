@@ -40,8 +40,6 @@ export const fetchLocationInfo = async (
 
     // return the location information
     return {
-      center: mostRelevantFeature.center,
-      context: mostRelevantFeature.context,
       geometry: mostRelevantFeature.geometry,
     } as ILocationInformation;
   } catch (error) {

@@ -15,9 +15,7 @@ export interface ILoggerConfig {
 }
 
 export interface ILocationInformation {
-  center: number[];
   geometry: IMapBoxGeometry;
-  context: IMapBoxContext;
 }
 
 export interface IMapBoxGeometry {
