@@ -3,15 +3,119 @@ service:
   publish: false
 
 plugins:
-  - serverless-plugin-typescript
-  - serverless-dynamodb-local
+  # - serverless-plugin-typescript
+  # - serverless-dynamodb-local
   - serverless-appsync-plugin
   - serverless-offline
 
 provider:
   name: aws
+  region: us-east-1
   runtime: nodejs12.x
 
 functions:
   hello:
     handler: handler.hello
+
+custom:
+  accountId: ${env:AWS_ACCOUNT_ID}
+  appSync:
+    name: SuperFormulaAPI
+    authenticationType: API_KEY
+    serviceRole: AppSyncServiceRole
+    mappingTemplates:
+      - dataSource: Users
+        type: Mutation
+        field: createUser
+        request: 'createUser.request.vtl'
+        response: 'createUser.response.vtl'
+
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: Users
+        description: 'Users Table'
+        config:
+          tableName: { Ref: UserTable }
+          serviceRoleArn: { Fn::GetAtt: [AppSyncDynamoDBServiceRole, Arn] }
+
+resources:
+  Resources:
+    UserTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: 'Users'
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: dob
+            AttributeType: S
+          - AttributeName: address
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: name-index
+            KeySchema:
+              - AttributeName: name
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          - IndexName: dob-index
+            KeySchema:
+              - AttributeName: dob
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          - IndexName: address-index
+            KeySchema:
+              - AttributeName: address
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    AppSyncDynamoDBServiceRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        RoleName: 'Dynamo-${self:custom.appSync.serviceRole}'
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Service:
+                  - 'appsync.amazonaws.com'
+              Action:
+                - 'sts:AssumeRole'
+        Policies:
+          - PolicyName: 'Dynamo-${self:custom.appSync.serviceRole}-Policy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - 'dynamodb:Query'
+                    - 'dynamodb:BatchWriteItem'
+                    - 'dynamodb:GetItem'
+                    - 'dynamodb:DeleteItem'
+                    - 'dynamodb:PutItem'
+                    - 'dynamodb:Scan'
+                    - 'dynamodb:UpdateItem'
+                  Resource:
+                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Users'
+                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Users/*'
+                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Tweets'
+                    - 'arn:aws:dynamodb:us-east-1:${self:custom.accountId}:table/Tweets/*'

@@ -1,0 +1,9 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        "id" : $util.dynamodb.toDynamoDBJson(${util.autoId()}),
+        "name" : $util.dynamodb.toDynamoDBJson($ctx.args.name)
+    },
+    "attributeValues" : $util.dynamodb.toMapValuesJson($ctx.args)
+}
