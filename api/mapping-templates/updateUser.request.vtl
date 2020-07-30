@@ -1,0 +1,48 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "UpdateItem",
+    "key" : {
+      "id": $util.dynamodb.toDynamoDBJson($ctx.args.id)
+    },
+
+    ## Set up some space to keep track of things we're updating **
+    #set( $expNames  = {} )
+    #set( $expValues = {} )
+    #set( $expSet = {} )
+
+    ## Iterate through each argument, skipping "id" **
+    #foreach( $entry in $ctx.args.entrySet() )
+      #if( $entry.key != "id" )
+        $!{expSet.put("#${entry.key}", ":${entry.key}")}
+        $!{expNames.put("#${entry.key}", "${entry.key}")}
+        $!{expValues.put(":${entry.key}", { "S" : "${entry.value}" })}
+      #end
+    #end
+
+    ## Start building the update expression, starting with attributes we're going to SET **
+    #set( $expression = "" )
+    #if( !${expSet.isEmpty()} )
+        $!{expSet.put("#updatedAt", ":updatedAt")}
+        $!{expNames.put("#updatedAt", "updatedAt")}
+        $!{expValues.put(":updatedAt", { "S" : "${util.time.nowISO8601()}" })}
+
+        #set( $expression = "SET" )
+        #foreach( $entry in $expSet.entrySet() )
+            #set( $expression = "${expression} ${entry.key} = ${entry.value}" )
+            #if ( $foreach.hasNext )
+                #set( $expression = "${expression}," )
+            #end
+        #end
+    #end
+
+    ## Finally, write the update expression into the document, along with any expressionNames and expressionValues **
+    "update" : {
+        "expression" : "${expression}"
+        #if( !${expNames.isEmpty()} )
+            ,"expressionNames" : $utils.toJson($expNames)
+        #end
+        #if( !${expValues.isEmpty()} )
+            ,"expressionValues" : $utils.toJson($expValues)
+        #end
+    },
+}
