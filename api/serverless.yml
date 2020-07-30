@@ -3,20 +3,40 @@ service:
   publish: false
 
 plugins:
-  # - serverless-plugin-typescript
+  - serverless-plugin-typescript
   - serverless-dynamodb-local
   - serverless-appsync-plugin
+  - serverless-appsync-offline
 
 provider:
   name: aws
   region: us-east-1
   runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  environment:
+    LOG_ENABLED: ${self:custom.env.${self:provider.stage}.log_enabled}
+    LOG_LEVEL: ${self:custom.env.${self:provider.stage}.log_level}
+    MAPBOX_API_TOKEN: ${self:custom.env.${self:provider.stage}.mapbox_token}
 
 functions:
-  hello:
-    handler: handler.hello
+  getLocation:
+    handler: handler.locationHandler
 
 custom:
+  env:
+    dev:
+      log_level: debug
+      log_enabled: 'true'
+      mapbox_token: ${env:MAPBOX_TOKEN, ''}
+    prod:
+      log_level: info
+      log_enabled: ${env:LOG_ENABLED, 'true'}
+      mapbox_token: ${env:MAPBOX_TOKEN, ''}
+  appsync-offline:
+    port: 62222
+    dynamodb:
+      server:
+        port: 8000
   accountId: ${env:AWS_ACCOUNT_ID}
   appSync:
     name: SuperFormulaAPI
