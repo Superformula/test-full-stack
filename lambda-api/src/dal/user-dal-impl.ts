@@ -12,7 +12,7 @@ import { PagedUserResult } from "../graphql/paged-user-result";
 import { UpdateUserInput } from "../graphql/update-user-input";
 import { User } from "../graphql/user";
 import { UserSearchCriteria } from "../graphql/user-search-criteria";
-import { createContextLogger } from "../logging/logger";
+import { createContextLogger, toMeta } from "../logging/logger";
 import { decodeCursor, encodeCursor, toCursor } from "./fetch-util";
 import { UserDal } from "./user-dal";
 import { v4 as uuidV4 } from "uuid";
@@ -344,7 +344,7 @@ export class UserDalImpl implements UserDal {
         .promise();
       return true;
     } catch (e) {
-      log.error(`Error deleting user for id ${id}`, e);
+      log.error(`Error deleting user for id ${id}`, toMeta(e));
       return false;
     }
   }

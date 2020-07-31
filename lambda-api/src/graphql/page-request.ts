@@ -16,13 +16,6 @@ export class PageRequest {
   @Min(1)
   @Max(MAX_USER_PAGE_SIZE)
   limit: number;
-  // @Field((_type) => Int, {
-  //   nullable: false,
-  //   description:
-  //     "Page number to retrieve.  This is a '1' based value so to request the first page, this value should be '1'",
-  // })
-  // @Min(1)
-  // pageNumber?: number;
   @Field((_type) => String, {
     nullable: true,
     description:

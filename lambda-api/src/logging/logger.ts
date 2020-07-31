@@ -48,3 +48,7 @@ export const createContextLogger = (
   additionalContext: unknown,
   options?: LoggerOptions
 ): Logger => createLogger(options).child(additionalContext);
+
+export const toMeta = (error: Error): unknown => {
+  return { errMsg: error.message, stack: error.stack };
+};

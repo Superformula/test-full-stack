@@ -1,6 +1,6 @@
 import { DateTimeFormatter, LocalDate } from "@js-joda/core";
 import { GraphQLScalarType, Kind } from "graphql";
-import { createContextLogger } from "../logging/logger";
+import { createContextLogger, toMeta } from "../logging/logger";
 import { localDateStringToLocalDate } from "../util/temporal-util";
 
 const log = createContextLogger({ appModule: "LocalDateScalar" });
@@ -12,7 +12,10 @@ export const LocalDateScalar = new GraphQLScalarType({
     try {
       return localDateStringToLocalDate(value);
     } catch (e) {
-      log.error(`Error parsing local date value ${value} to LocalDate`, e);
+      log.error(
+        `Error parsing local date value ${value} to LocalDate`,
+        toMeta(e)
+      );
       throw e;
     }
   },
@@ -22,7 +25,7 @@ export const LocalDateScalar = new GraphQLScalarType({
     } catch (e) {
       log.error(
         `Error converting local date value to formatted ISO date ${value}`,
-        e
+        toMeta(e)
       );
       throw e;
     }
@@ -34,7 +37,7 @@ export const LocalDateScalar = new GraphQLScalarType({
       } catch (e) {
         log.error(
           `Error parsing literal local date value ${ast.value} to LocalDate`,
-          e
+          toMeta(e)
         );
         throw e;
       }

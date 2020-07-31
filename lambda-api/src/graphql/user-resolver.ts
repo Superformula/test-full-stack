@@ -2,7 +2,7 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { Inject, Service } from "typedi";
 import { UserDal } from "../dal/user-dal";
 import { UserDalComponent } from "../dal/user-dal-impl";
-import { createContextLogger } from "../logging/logger";
+import { createContextLogger, toMeta } from "../logging/logger";
 import { CreateUserInput } from "./create-user-input";
 import { PageRequest } from "./page-request";
 import { PagedUserResult } from "./paged-user-result";
@@ -29,7 +29,7 @@ export class UserResolver {
     @Arg("searchCriteria", { nullable: true })
     searchCriteria: UserSearchCriteria,
     @Arg("pageRequest", { nullable: true })
-    pageRequest: PageRequest = { pageNumber: 1, limit: 10 }
+    pageRequest: PageRequest = { limit: 10 }
   ): Promise<PagedUserResult> {
     try {
       return await this.userDal.find(searchCriteria, pageRequest);
@@ -39,7 +39,7 @@ export class UserResolver {
         `Error finding users searchCriteria: ${
           searchCriteria ? JSON.stringify(searchCriteria) : ""
         } pageRequest: ${pageRequest ? JSON.stringify(pageRequest) : ""}`,
-        e
+        toMeta(e)
       );
       throw e;
     }
@@ -56,7 +56,7 @@ export class UserResolver {
     try {
       return await this.userDal.findOne(id);
     } catch (e) {
-      log.error(`Error finding user by id ${id}`, e);
+      log.error(`Error finding user by id ${id}`, toMeta(e));
       throw e;
     }
   }
@@ -69,7 +69,10 @@ export class UserResolver {
     try {
       return await this.userDal.create(createUserInput);
     } catch (e) {
-      log.error(`Error creating user ${JSON.stringify(createUserInput)}`, e);
+      log.error(
+        `Error creating user ${JSON.stringify(createUserInput)}`,
+        toMeta(e)
+      );
       throw e;
     }
   }
@@ -82,7 +85,10 @@ export class UserResolver {
     try {
       return await this.userDal.update(updateUserInput);
     } catch (e) {
-      log.error(`Error updating user ${JSON.stringify(updateUserInput)}`, e);
+      log.error(
+        `Error updating user ${JSON.stringify(updateUserInput)}`,
+        toMeta(e)
+      );
       throw e;
     }
   }
@@ -95,7 +101,7 @@ export class UserResolver {
     try {
       return { value: Boolean(await this.userDal.delete(id)) };
     } catch (e) {
-      log.error(`Error deleting user ${id}`, e);
+      log.error(`Error deleting user ${id}`, toMeta(e));
       throw e;
     }
   }

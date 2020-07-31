@@ -1,5 +1,5 @@
 import { User, UserCursor } from "../graphql/user";
-import { createContextLogger } from "../logging/logger";
+import { createContextLogger, toMeta } from "../logging/logger";
 
 const log = createContextLogger({ appModule: "fetch-util" });
 
@@ -9,7 +9,7 @@ export const decodeCursor = (encodedCursor: string): unknown => {
       const strVal = Buffer.from(encodedCursor, "base64").toString("ascii");
       return JSON.parse(strVal);
     } catch (e) {
-      log.error(`Error decoding cursor value from ${encodedCursor}`, e);
+      log.error(`Error decoding cursor value from ${encodedCursor}`, toMeta(e));
       throw e;
     }
   }
@@ -22,7 +22,7 @@ export const encodeCursor = (cursor: unknown): string | undefined => {
     try {
       return Buffer.from(jsonStr).toString("base64");
     } catch (e) {
-      log.error(`Error encoding cursor value for ${jsonStr}`, e);
+      log.error(`Error encoding cursor value for ${jsonStr}`, toMeta(e));
       throw e;
     }
   }
