@@ -1,0 +1,115 @@
+service: lambda-api
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+plugins:
+  - serverless-plugin-monorepo
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline
+
+package:
+  # path: dist/apps/user-profile-api
+  individually: true
+  excludeDevDependencies: false
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-2'}
+  runtime: nodejs12.x
+  apiGateway:
+    minimumCompressionSize: 1024
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    API_NAME: ${self:service}
+    CONFIG_USER_TABLE: ${self:custom.tableNames.User}
+    CONFIG_USER_TABLE_NAME_IDX: ${self:custom.indexNames.User_Name}
+    CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
+  logRetentionInDays: 1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: '*'
+
+custom:
+  serverless-offline:
+    httpPort: 7777
+    noPrependStageInUrl: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    packager: 'yarn'
+    includeModules: true
+    ignoreScripts: true
+    keepOutputDirectory: true
+  dynamodb:
+    stages:
+      - dev
+      - test
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      dev:
+        sources:
+          - table: User
+            sources: [resources/seed-data/User.json]
+  tableNames:
+    User: 'User'
+  indexNames:
+    User_Name: user-global-si-name
+  endpoints:
+    dynamodb-url: 'http://localhost:8000'
+
+resources:
+  Resources:
+    User:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableNames.User}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: createdAt
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:custom.indexNames.User_Name}
+            KeySchema:
+              - AttributeName: name
+                KeyType: HASH
+              - AttributeName: createdAt
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+
+functions:
+  lambdaapi:
+    handler: src/handler.gqlRequestHandler
+    events:
+      - http:
+          path: graphql
+          method: post
+      # GraphQL Playground
+      - http:
+          path: graphql
+          method: get
+
+

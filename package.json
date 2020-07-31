@@ -1,32 +1,10 @@
 {
-  "name": "test-full-stack",
-  "version": "0.0.0",
   "private": true,
-  "license": "MIT",
-  "scripts": {
-    "affected": "nx affected",
-    "affected:apps": "nx affected:apps",
-    "affected:build": "nx affected:build",
-    "affected:dep-graph": "nx affected:dep-graph",
-    "affected:e2e": "nx affected:e2e",
-    "affected:libs": "nx affected:libs",
-    "affected:lint": "nx affected:lint",
-    "affected:test": "nx affected:test",
-    "build": "nx build",
-    "dep-graph": "nx dep-graph",
-    "e2e": "nx e2e",
-    "format": "nx format:write",
-    "format:check": "nx format:check",
-    "format:write": "nx format:write",
-    "help": "nx help",
-    "lint": "nx workspace-lint && nx lint",
-    "nx": "nx",
-    "sort:packages": "npx sort-package-json",
-    "start": "nx serve",
-    "test": "nx test",
-    "update": "nx migrate latest",
-    "workspace-schematic": "nx workspace-schematic"
-  },
+  "version": "0.0.1",
+  "workspaces": [
+    "shared",
+    "lambda-api"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -38,52 +16,10 @@
       "eslint . --fix --ext js,jsx,ts,tsx"
     ]
   },
-  "dependencies": {
-    "@js-joda/core": "^3.0.0",
-    "@types/faker": "^4.1.12",
-    "@types/uuid": "^8.0.0",
-    "apollo-server-lambda": "^2.16.0",
-    "class-validator": "^0.12.2",
-    "factory.ts": "^0.5.1",
-    "faker": "^4.1.0",
-    "graphql": "^15.3.0",
-    "reflect-metadata": "^0.1.13",
-    "type-graphql": "^1.0.0-rc.3",
-    "typedi": "^0.8.0",
-    "uuid": "^8.2.0",
-    "winston": "^3.3.3",
-    "winston-cloudwatch": "^2.3.2"
-  },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1000.4",
-    "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
-    "@flowaccount/nx-serverless": "^0.5.0",
-    "@nrwl/eslint-plugin-nx": "^10.0.6",
-    "@nrwl/jest": "9.2.2",
-    "@nrwl/nx": "^7.8.7",
-    "@nrwl/web": "^10.0.6",
-    "@nrwl/workspace": "^10.0.6",
-    "@types/aws-lambda": "^8.10.40",
-    "@types/jest": "25.1.4",
-    "@types/node": "~8.9.4",
-    "@typescript-eslint/eslint-plugin": "^3.7.0",
-    "@typescript-eslint/parser": "^3.7.0",
-    "dotenv": "6.2.0",
-    "eslint": "6.8.0",
-    "eslint-config-prettier": "^6.11.0",
+    "commitlint": "^9.1.0",
     "husky": "^4.2.5",
-    "jest": "25.2.3",
-    "lint-staged": "^10.2.11",
-    "prettier": "2.0.4",
-    "serverless": "1.58.0",
-    "serverless-offline": "^5.12.0",
-    "ts-jest": "25.2.1",
-    "ts-node": "~8.10.2",
-    "tslint": "^6.1.2",
-    "typescript": "~3.9.3"
-  },
-  "engines": {
-    "node": ">=12.16.1"
+    "lint-staged": "^10.2.11"
   }
 }

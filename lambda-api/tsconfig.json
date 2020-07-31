@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "allowJs": true,
+    "lib": ["es2017"],
+    "removeComments": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "target": "es2017",
+    "esModuleInterop": true,
+    "baseUrl": "."
+  },
+  "types": [
+    "node",
+    "reflect-metadata",
+    "jest"
+  ],
+  "skipLibCheck": true,
+  "skipDefaultLibCheck": true,
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".dynamodb/**/*"
+  ]
+}
