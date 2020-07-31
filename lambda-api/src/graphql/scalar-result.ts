@@ -1,4 +1,4 @@
-import { ClassType, Field, ObjectType } from "type-graphql";
+import { ClassType, Field, ObjectType } from 'type-graphql';
 
 /**
  * Class representing a scalar result wrapped in an object.
@@ -7,9 +7,9 @@ import { ClassType, Field, ObjectType } from "type-graphql";
 export default function ScalarResult<TScalar>(
   TScalarClass: ClassType<TScalar>
 ) {
-  @ObjectType("ScalarResult", {
+  @ObjectType('ScalarResult', {
     isAbstract: true,
-    description: "Scalar result",
+    description: 'Scalar result',
   })
   @ObjectType(`Scalar${TScalarClass.name}Result`)
   class ScalarResultClass {

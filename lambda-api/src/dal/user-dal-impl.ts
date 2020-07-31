@@ -1,26 +1,26 @@
-import { LocalDate } from "@js-joda/core";
+import { LocalDate } from '@js-joda/core';
 import {
   DynamoDocumentClientProvider,
   DynamoDocumentClientProviderComponent,
-} from "../dynamodb/dynamodb-docclient-factory";
-import { DocumentClient } from "aws-sdk/lib/dynamodb/document_client";
-import { Inject, Service, Token } from "typedi";
-import { CreateUserInput } from "../graphql/create-user-input";
-import { LocalDateScalar } from "../graphql/custom-scalars";
-import { PageRequest } from "../graphql/page-request";
-import { PagedUserResult } from "../graphql/paged-user-result";
-import { UpdateUserInput } from "../graphql/update-user-input";
-import { User } from "../graphql/user";
-import { UserSearchCriteria } from "../graphql/user-search-criteria";
-import { createContextLogger, toMeta } from "../logging/logger";
-import { decodeCursor, encodeCursor, toCursor } from "./fetch-util";
-import { UserDal } from "./user-dal";
-import { v4 as uuidV4 } from "uuid";
+} from '../dynamodb/dynamodb-docclient-factory';
+import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
+import { Inject, Service, Token } from 'typedi';
+import { CreateUserInput } from '../graphql/create-user-input';
+import { LocalDateScalar } from '../graphql/custom-scalars';
+import { PageRequest } from '../graphql/page-request';
+import { PagedUserResult } from '../graphql/paged-user-result';
+import { UpdateUserInput } from '../graphql/update-user-input';
+import { User } from '../graphql/user';
+import { UserSearchCriteria } from '../graphql/user-search-criteria';
+import { createContextLogger, toMeta } from '../logging/logger';
+import { decodeCursor, encodeCursor, toCursor } from './fetch-util';
+import { UserDal } from './user-dal';
+import { v4 as uuidV4 } from 'uuid';
 
 const USER_TABLE = process.env.CONFIG_USER_TABLE;
 const USER_NAME_IDX = process.env.CONFIG_USER_TABLE_NAME_IDX;
 
-const log = createContextLogger({ appModule: "UserDal" });
+const log = createContextLogger({ appModule: 'UserDal' });
 
 export const UserDalComponent = new Token<UserDal>();
 
@@ -121,12 +121,12 @@ export class UserDalImpl implements UserDal {
   ) {
     const nameFilterFragment = searchCriteria?.nameFilter
       ? {
-          FilterExpression: "contains(#name, :nameFragment)",
+          FilterExpression: 'contains(#name, :nameFragment)',
           ExpressionAttributeNames: {
-            "#name": "name",
+            '#name': 'name',
           },
           ExpressionAttributeValues: {
-            ":nameFragment": searchCriteria.nameFilter,
+            ':nameFragment': searchCriteria.nameFilter,
           },
         }
       : {};
@@ -138,7 +138,7 @@ export class UserDalImpl implements UserDal {
     const params = {
       TableName: USER_TABLE,
       IndexName: USER_NAME_IDX,
-      ReturnConsumedCapacity: "TOTAL",
+      ReturnConsumedCapacity: 'TOTAL',
       Limit: fetchSize,
       // results are filtered *after* scanning in DynamoDB so overfetch to try to hit the intended page size in one scan
       ...startKeyFragment,
@@ -215,7 +215,7 @@ export class UserDalImpl implements UserDal {
     // If a cursor is passed, base64 decode it
     const cursorVal = decodeCursor(pageRequest.cursor);
 
-    log.debug(`Name filter: "${searchCriteria?.nameFilter ?? ""}"`);
+    log.debug(`Name filter: "${searchCriteria?.nameFilter ?? ''}"`);
     log.debug(`Request limit: ${pageRequest.limit} cursor value: ${cursorVal}`);
 
     // Calculate the fetch size - small optimization when scanning for partial key matches as DynamoDB filters

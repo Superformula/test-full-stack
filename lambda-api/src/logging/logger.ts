@@ -4,9 +4,9 @@ import {
   createLogger as CreateLogger,
   format,
   transports,
-} from "winston";
-import WinstonCloudWatch from "winston-cloudwatch";
-import envConfig from "../envConfig";
+} from 'winston';
+import WinstonCloudWatch from 'winston-cloudwatch';
+import envConfig from '../envConfig';
 
 /**
  * Create a {@link Logger} with configuration from config file.
@@ -27,11 +27,11 @@ export const createLogger = (
   });
 
   // Set up cloud watch logging in prod
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     logger.add(
       new WinstonCloudWatch({
         logGroupName: envConfig.apiName,
-        logStreamName: "first",
+        logStreamName: 'first',
       })
     );
   }

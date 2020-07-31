@@ -1,12 +1,12 @@
-import { Arg, Query, Resolver } from "type-graphql";
-import { Inject, Service } from "typedi";
-import { GeocodeService } from "../geocode/geocode-service";
-import { GeocodeServiceComponent } from "../geocode/geocode-service-impl";
-import { createContextLogger, toMeta } from "../logging/logger";
-import { GeocodeInput } from "./geocode-input";
-import { GeocodeResult } from "./geocode-result";
+import { Arg, Query, Resolver } from 'type-graphql';
+import { Inject, Service } from 'typedi';
+import { GeocodeService } from '../geocode/geocode-service';
+import { GeocodeServiceComponent } from '../geocode/geocode-service-impl';
+import { createContextLogger, toMeta } from '../logging/logger';
+import { GeocodeInput } from './geocode-input';
+import { GeocodeResult } from './geocode-result';
 
-const log = createContextLogger({ appModule: "GeocodingResolver" });
+const log = createContextLogger({ appModule: 'GeocodingResolver' });
 
 @Service()
 @Resolver()
@@ -18,10 +18,10 @@ export class GeocodingResolver {
   }
 
   @Query((_returns) => GeocodeResult, {
-    description: "Geocode an address",
+    description: 'Geocode an address',
   })
   async geocode(
-    @Arg("geocodeInput", { nullable: false })
+    @Arg('geocodeInput', { nullable: false })
     geocodeInput: GeocodeInput
   ): Promise<GeocodeResult> {
     try {

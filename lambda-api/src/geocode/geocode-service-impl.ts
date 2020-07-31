@@ -1,14 +1,14 @@
-import { Service, Token } from "typedi";
-import envConfig from "../envConfig";
-import { GeocodeResult } from "../graphql/geocode-result";
-import { createContextLogger, toMeta } from "../logging/logger";
-import { GeocodeService } from "./geocode-service";
+import { Service, Token } from 'typedi';
+import envConfig from '../envConfig';
+import { GeocodeResult } from '../graphql/geocode-result';
+import { createContextLogger, toMeta } from '../logging/logger';
+import { GeocodeService } from './geocode-service';
 import mapboxGeocodeServiceFactory, {
   GeocodeService as MapboxGeocodeService,
-} from "@mapbox/mapbox-sdk/services/geocoding";
-import retry from "async-retry";
+} from '@mapbox/mapbox-sdk/services/geocoding';
+import retry from 'async-retry';
 
-const log = createContextLogger({ appModule: "GeocodeService" });
+const log = createContextLogger({ appModule: 'GeocodeService' });
 
 export const GeocodeServiceComponent = new Token<GeocodeService>();
 
@@ -33,7 +33,7 @@ export class GeocodeServiceImpl implements GeocodeService {
           return await this.mapboxGeocodeService
             .forwardGeocode({
               query: address,
-              mode: "mapbox.places",
+              mode: 'mapbox.places',
               limit: 1,
             })
             .send();

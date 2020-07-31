@@ -1,6 +1,6 @@
-import { format } from "logform";
-import { LoggerOptions } from "winston";
-import * as dotenv from "dotenv";
+import { format } from 'logform';
+import { LoggerOptions } from 'winston';
+import * as dotenv from 'dotenv';
 import simple = format.simple;
 import colorize = format.colorize;
 import errors = format.errors;
@@ -12,10 +12,10 @@ dotenv.config();
 
 const env = process.env;
 
-export type EnvironmentType = "local" | "prod";
+export type EnvironmentType = 'local' | 'prod';
 
 const environment =
-  !env.NODE_ENV || env.NODE_ENV === "development" ? "local" : env.NODE_ENV;
+  !env.NODE_ENV || env.NODE_ENV === 'development' ? 'local' : env.NODE_ENV;
 
 const apiName = process.env.API_NAME;
 const mapboxApiToken: string = process.env.MAPBOX_API_TOKEN;
@@ -32,7 +32,7 @@ export type EnvConfig = {
 const envConfigs: Record<EnvironmentType, Partial<EnvConfig>> = {
   local: {
     loggerOptions: {
-      level: env.LOG_LEVEL ?? "debug",
+      level: env.LOG_LEVEL ?? 'debug',
       format: format.combine(
         timestamp(),
         simple(),
@@ -43,7 +43,7 @@ const envConfigs: Record<EnvironmentType, Partial<EnvConfig>> = {
   },
   prod: {
     loggerOptions: {
-      level: env.LOG_LEVEL ?? "info",
+      level: env.LOG_LEVEL ?? 'info',
       format: format.combine(timestamp(), errors({ stack: true }), json()),
     },
   },

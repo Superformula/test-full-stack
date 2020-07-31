@@ -9,9 +9,7 @@
   "env": {
     "node": true
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -23,31 +21,20 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
-      {
-        "argsIgnorePattern": "^_"
-      }
+      { "argsIgnorePattern": "^_" }
     ],
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-parameter-properties": "off",
     "max-len": [
-      "error",
-      {
+      "error", {
         "code": 160,
         "comments": 160
       }
     ],
-    "quotes": [
-      1,
-      "single",
-      {
-        "allowTemplateLiterals": true
-      }
-    ]
+    "quotes": [1, "single", { "allowTemplateLiterals": true }]
   },
-  "ignorePatterns": [
-    "**/*.js"
-  ],
+  "ignorePatterns": ["**/*.js"],
   "overrides": [
   ]
 }

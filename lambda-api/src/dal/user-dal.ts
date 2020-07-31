@@ -1,9 +1,9 @@
-import { CreateUserInput } from "../graphql/create-user-input";
-import { PageRequest } from "../graphql/page-request";
-import { PagedUserResult } from "../graphql/paged-user-result";
-import { UpdateUserInput } from "../graphql/update-user-input";
-import { UserSearchCriteria } from "../graphql/user-search-criteria";
-import { User } from "../graphql/user";
+import { CreateUserInput } from '../graphql/create-user-input';
+import { PageRequest } from '../graphql/page-request';
+import { PagedUserResult } from '../graphql/paged-user-result';
+import { UpdateUserInput } from '../graphql/update-user-input';
+import { UserSearchCriteria } from '../graphql/user-search-criteria';
+import { User } from '../graphql/user';
 
 export interface UserDal {
   /**

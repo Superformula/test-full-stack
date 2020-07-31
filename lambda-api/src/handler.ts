@@ -1,14 +1,14 @@
-import "reflect-metadata";
-import { ApolloServer } from "apollo-server-lambda";
-import { buildSchemaSync } from "type-graphql";
-import { Container } from "typedi";
-import { UserResolver } from "./graphql";
-import { GeocodingResolver } from "./graphql/geocoding-resolver";
+import 'reflect-metadata';
+import { ApolloServer } from 'apollo-server-lambda';
+import { buildSchemaSync } from 'type-graphql';
+import { Container } from 'typedi';
+import { UserResolver } from './graphql';
+import { GeocodingResolver } from './graphql/geocoding-resolver';
 
 const schema = buildSchemaSync({
   resolvers: [UserResolver, GeocodingResolver],
   // All Date with default to isoDate scalar
-  dateScalarMode: "isoDate",
+  dateScalarMode: 'isoDate',
   emitSchemaFile: false,
   // TypeDI container
   container: Container,

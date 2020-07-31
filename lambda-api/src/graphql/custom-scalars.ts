@@ -1,13 +1,13 @@
-import { DateTimeFormatter, LocalDate } from "@js-joda/core";
-import { GraphQLScalarType, Kind } from "graphql";
-import { createContextLogger, toMeta } from "../logging/logger";
-import { localDateStringToLocalDate } from "../util/temporal-util";
+import { DateTimeFormatter, LocalDate } from '@js-joda/core';
+import { GraphQLScalarType, Kind } from 'graphql';
+import { createContextLogger, toMeta } from '../logging/logger';
+import { localDateStringToLocalDate } from '../util/temporal-util';
 
-const log = createContextLogger({ appModule: "LocalDateScalar" });
+const log = createContextLogger({ appModule: 'LocalDateScalar' });
 
 export const LocalDateScalar = new GraphQLScalarType({
-  name: "LocalDate",
-  description: "Time-less local date in ISO 8601 format",
+  name: 'LocalDate',
+  description: 'Time-less local date in ISO 8601 format',
   parseValue(value: string) {
     try {
       return localDateStringToLocalDate(value);

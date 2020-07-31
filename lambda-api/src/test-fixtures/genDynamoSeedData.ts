@@ -1,5 +1,5 @@
-import { util } from "@apollo/protobufjs";
-import { userFactory } from "./user-generator";
+import { util } from '@apollo/protobufjs';
+import { userFactory } from './user-generator';
 import fs = util.fs;
 
 // Sort by name and use integer ids for ease of testing
@@ -12,10 +12,10 @@ const seedData = [...Array(500)]
   }));
 
 fs.writeFile(
-  "resources/seed-data/User.json",
+  'resources/seed-data/User.json',
   JSON.stringify(seedData),
   (err) => {
     if (err) throw err;
-    console.log("Seed data written successfully");
+    console.log('Seed data written successfully');
   }
 );
