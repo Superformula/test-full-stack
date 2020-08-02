@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./assets/App.scss";
+
+import SearchInput from "./components/SearchInput";
+import LoadMoreButton from "./components/LoadMoreButton";
+import Card from "./components/Card";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Users List</h1>
+        <SearchInput />
       </header>
+      <div className="App-content">
+        <div className="Card-list">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+        <LoadMoreButton />
+      </div>
     </div>
   );
 }
