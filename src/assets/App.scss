@@ -1,0 +1,32 @@
+@import "./styles/_inputs";
+@import "./styles/buttons";
+@import "./styles/card";
+
+body {
+  background-color: whitesmoke;
+}
+
+.App {
+  margin: auto;
+  max-width: 1200px;
+
+  .App-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 50px;
+  }
+
+  .App-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .Card-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+}
