@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-// Added to solve deploy build issue https://github.com/aws-amplify/docs/issues/503
-import config from './aws-exports'; 
 
 ReactDOM.render(
   <React.StrictMode>
