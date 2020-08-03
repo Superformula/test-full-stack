@@ -2,6 +2,8 @@ import React from "react";
 
 import "./Modal.css";
 
+//TODO: Add transition
+
 const Modal = (props) => {
   return (
     <div
