@@ -1,0 +1,5 @@
+fragment GeocodeResult on GeocodeResult {
+  latitude
+  longitude
+  error
+}

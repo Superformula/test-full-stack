@@ -1,0 +1,227 @@
+type Query {
+  """
+  Find users optionally by name filter and page specification
+  """
+  users(
+    pageRequest: PageRequest
+    searchCriteria: UserSearchCriteria
+  ): PagedUserResult!
+
+  """
+  Find a user by id
+  """
+  user(
+    """
+    The id of the user to find
+    """
+    id: String!
+  ): User
+
+  """
+  Geocode an address
+  """
+  geocode(geocodeInput: GeocodeInput!): GeocodeResult!
+}
+
+"""
+Page of User data
+"""
+type PagedUserResult {
+  values: [User!]!
+
+  """
+  true if this is the last page of data, false otherwise
+  """
+  isLastPage: Boolean!
+
+  """
+  Number of results found for the page request
+  """
+  count: Int!
+
+  """
+  Cursor value to utilize while resuming fetch of paginated data.
+  """
+  cursor: String
+}
+
+"""
+Object that represents a user
+"""
+type User {
+  """
+  User name
+  """
+  name: String!
+
+  """
+  User date of birth - ISO 8601 format
+  """
+  dob: LocalDate!
+
+  """
+  User address
+  """
+  address: String!
+
+  """
+  User description
+  """
+  description: String!
+
+  """
+  User id
+  """
+  id: String!
+
+  """
+  Created at timestamp - ISO 8601 format
+  """
+  createdAt: DateTime!
+
+  """
+  Updated timestamp - ISO 8601 format
+  """
+  updatedAt: DateTime!
+}
+
+"""
+Time-less local date in ISO 8601 format
+"""
+scalar LocalDate
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+"""
+Object that represents a page request
+"""
+input PageRequest {
+  """
+  Maximum number of results requested in a page
+  """
+  limit: Int!
+
+  """
+  Cursor value to utilize while resuming fetch of paginated data.
+  """
+  cursor: String
+}
+
+"""
+Object that represents user search criteria
+"""
+input UserSearchCriteria {
+  """
+  Filter on partial or full user name
+  """
+  nameFilter: String
+}
+
+"""
+Object that represents a geocoding result
+"""
+type GeocodeResult {
+  """
+  Latitude
+  """
+  latitude: String
+
+  """
+  Longitude
+  """
+  longitude: String
+
+  """
+  Error during geocoding attempt - null if no errors
+  """
+  error: String
+}
+
+"""
+Object that represents geocoding request
+"""
+input GeocodeInput {
+  """
+  Address to geocode
+  """
+  address: String!
+}
+
+type Mutation {
+  """
+  Create a user
+  """
+  createUser(createUserInput: CreateUserInput!): User!
+
+  """
+  Update a user
+  """
+  updateUser(updateUserInput: UpdateUserInput!): User!
+
+  """
+  Delete a user
+  """
+  deleteUser(id: String!): ScalarBooleanResult!
+}
+
+"""
+Object that represents a user creation request
+"""
+input CreateUserInput {
+  """
+  User name
+  """
+  name: String!
+
+  """
+  User date of birth - ISO 8601 format
+  """
+  dob: LocalDate!
+
+  """
+  User address
+  """
+  address: String!
+
+  """
+  User description
+  """
+  description: String!
+}
+
+"""
+Object that represents a user update request
+"""
+input UpdateUserInput {
+  """
+  User name
+  """
+  name: String!
+
+  """
+  User date of birth - ISO 8601 format
+  """
+  dob: LocalDate!
+
+  """
+  User address
+  """
+  address: String!
+
+  """
+  User description
+  """
+  description: String!
+
+  """
+  User id
+  """
+  id: String!
+}
+
+type ScalarBooleanResult {
+  value: Boolean!
+}

@@ -1,0 +1,20 @@
+query User ($id: String!){
+  user(id: $id){
+    ...User
+  }
+}
+
+query Users ($searchCriteria: UserSearchCriteria, $pageRequest: PageRequest) {
+  users(
+    searchCriteria: $searchCriteria
+    pageRequest: $pageRequest
+  ) {
+  ...PagedUserResult
+  }
+}
+
+query Geocode ($geocodeInput: GeocodeInput!){
+  geocode(geocodeInput: $geocodeInput){
+    ...GeocodeResult
+  }
+}

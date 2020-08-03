@@ -5,3 +5,4 @@ dist/
 serviceWorker.ts
 setupTests.ts
 lock-node-version.js
+**/generated/*.*

@@ -1,0 +1,17 @@
+mutation CreateUser ($createUserInput: CreateUserInput!) {
+  createUser(createUserInput: $createUserInput) {
+    ...User
+  }
+}
+
+mutation UpdateUser ($updateUserInput: UpdateUserInput!) {
+  updateUser(updateUserInput: $updateUserInput) {
+    ...User
+  }
+}
+
+mutation DeleteUser ($id: String!) {
+  deleteUser(id: $id) {
+    value
+  }
+}

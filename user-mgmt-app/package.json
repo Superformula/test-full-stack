@@ -5,22 +5,13 @@
   "scripts": {
     "build": "react-scripts build",
     "build-storybook": "build-storybook -s public",
+    "generate:types:user-api-gql": "graphql-codegen --config ./src/graphql/user-api/codegen.yml",
     "eject": "react-scripts eject",
     "format": "eslint . --fix --ext js,jsx,ts,tsx",
     "sort:packages": "npx sort-package-json",
     "start": "react-scripts start",
     "storybook": "start-storybook -p 9009 -s public",
     "test": "react-scripts test"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "eslint . --fix --ext js,jsx,ts,tsx"
-    ]
   },
   "browserslist": {
     "production": [
@@ -34,20 +25,97 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "plugins": [
+      "@typescript-eslint",
+      "react",
+      "react-hooks",
+      "prettier",
+      "jest",
+      "prettier"
+    ],
+    "extends": [
+      "airbnb",
+      "eslint:recommended",
+      "prettier"
+    ],
+    "rules": {
+      "comma-dangle": "off",
+      "max-len": [
+        "error",
+        {
+          "code": 120,
+          "comments": 120
+        }
+      ],
+      "quotes": [
+        2,
+        "single"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "import/extensions": "off",
+      "import/no-extraneous-dependencies": "off",
+      "import/no-unresolved": "off",
+      "import/prefer-default-export": "off",
+      "react/destructuring-assignment": "off",
+      "react/jsx-closing-tag-location": 0,
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".ts",
+            "tsx"
+          ]
+        }
+      ],
+      "react/jsx-props-no-spreading": [
+        "error",
+        {
+          "html": "enforce",
+          "custom": "ignore"
+        }
+      ],
+      "prettier/prettier": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
+      "react/jsx-boolean-value": "off",
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "react/prop-types": "off"
+    }
+  },
   "dependencies": {
+    "@apollo/client": "^3.1.1",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@styled-system/css": "^5.1.5",
     "@styled-system/theme-get": "^5.1.2",
     "@styled-system/variant": "^5.1.5",
+    "apollo-link-error": "^2.0.0-beta.0",
+    "apollo-link-retry": "^3.0.0-beta.0",
     "emotion-theming": "^10.0.27",
+    "graphql": "^15.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-svg": "^11.0.31",
     "styled-system": "^5.1.5"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^1.17.7",
+    "@graphql-codegen/cli": "^1.17.7",
+    "@graphql-codegen/near-operation-file-preset": "^1.17.7",
+    "@graphql-codegen/schema-ast": "^1.17.7",
+    "@graphql-codegen/typescript": "^1.17.7",
+    "@graphql-codegen/typescript-operations": "^1.17.7",
+    "@graphql-codegen/typescript-react-apollo": "^1.17.7",
+    "@graphql-codegen/typescript-resolvers": "^1.17.7",
     "@react-theming/storybook-addon": "^1.0.2",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-docs": "^5.3.19",
@@ -65,18 +133,24 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.5",
     "@types/styled-system": "5.1.9",
     "@types/styled-system__css": "^5.0.12",
     "@types/styled-system__theme-get": "^5.0.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-graphql": "^4.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
+    "eslint-plugin-standard": "^4.0.1",
     "prettier": "^2.0.5",
     "react-docgen-typescript-loader": "^3.7.2",
+    "react-test-renderer": "^16.13.1",
     "typescript": "^3.9.2"
   },
   "engines": {

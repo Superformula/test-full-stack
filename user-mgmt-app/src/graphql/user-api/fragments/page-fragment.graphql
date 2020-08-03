@@ -1,0 +1,8 @@
+fragment PagedUserResult on PagedUserResult {
+  values {
+    ...User
+  }
+  isLastPage
+  count
+  cursor
+}

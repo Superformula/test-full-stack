@@ -1,0 +1,43 @@
+overwrite: true
+
+gql-enpoints:
+  - &user-api-local ./src/graphql/user-api/**/*.graphql
+  - &user-api-remote http://localhost:7777/graphql
+
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+schema: *user-api-remote
+documents: *user-api-local
+generates:
+  ./src/graphql/user-api/schema/reservation-service.graphql:
+    plugins:
+      - schema-ast
+  ./src/graphql/user-api/@types/types.ts:
+    plugins:
+      - typescript
+      - add: /* eslint-disable */
+    config:
+      namingConvention:
+        enumValues: upper-case#upperCase
+
+  ./:
+    preset: near-operation-file
+    presetConfig:
+      extension: .ts
+      baseTypesPath: ./src/graphql/user-api/@types/types.ts
+      folder: generated
+    plugins:
+      - add: /* eslint-disable */
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      gqlImport: graphql-tag
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      withMutationFn: false
+      namingConvention:
+        enumValues: upper-case#upperCase
+      apolloReactHooksImportFrom: "@apollo/client"
+      apolloReactCommonImportFrom: "@apollo/client"
