@@ -1,0 +1,45 @@
+.usermodal-details {
+  width: 1200px;
+  height: 100%;
+
+  margin-top: 64px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  column-gap: 60px;
+}
+
+.usermodal-details-left {
+  width: 44%;
+}
+
+.usermodal-details-right {
+  width: 56%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 36px;
+}
+
+.usermodal-map {
+  width: 518px;
+  height: 336px;
+
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.usermodal-buttons {
+  width: 100%;
+  height: 90px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  justify-content: space-between;
+}
+
+.userdetails-input {
+  width: 621.5px;
+}
