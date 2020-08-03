@@ -37,14 +37,11 @@ class App extends Component {
         <div className="App-content">
           <div className="Card-list">
             <Connect query={graphqlOperation(ListUsers)}>
-
-              {/* {({ data, loading }) => { */}
+              {/* TODO: Find the type for the graphql operation response */}
               {(response: any) => {
-                console.log(response)
-                if (response.loading || response.data === undefined || response.data === null || Card === undefined) return []
-                const data = response.data.listUsers.items;                
+                if (response.loading || response.data === undefined || response.data === null || response.data.listUsers === undefined) return []               
                 return (
-                  data.map((user: User, index: any) => <Card key={index} user={{
+                  response.data.listUsers.items.map((user: User, index: any) => <Card key={index} user={{
                     id: user.id,
                     name: user.name,
                     avatar: user.avatar,
