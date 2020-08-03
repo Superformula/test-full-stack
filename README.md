@@ -23,7 +23,7 @@ The following tools are used to build/deploy the stack
 ## Project structure
 * `Root dir`
   * `lambda-api` - the Node.js/Typescript/Apollo Server/Lambda "application" code
-  * `web-app` - the React/Typescript SPA code
+  * `user-mgmt-app` - the React/Typescript SPA code
 
 ## Back end
 
