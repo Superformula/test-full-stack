@@ -8,23 +8,19 @@ import Input from "../components/Input/Input";
 
 const DashboardView = () => {
   return (
-    <div>
+    <div style={{ background: "#F8F8F8" }}>
       <p>Dashboard</p>
       <Card />
       <Typography variant="h1" text="H1 Source Sans Pro Light 48px" />
       <Typography variant="h2" text="H2 Header Source Sans Pro Semibold 21px" />
       <Typography variant="text" text="Parahraph Source Sans Pro Light 16px" />
-      <Avatar />
+      <Avatar src={process.env.PUBLIC_URL + "logo512.png"} />
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
         <Button variant="primary" text="Default" />
-        <Button variant="primary" text="Hover" />
-        <Button variant="primary" text="Active" />
         <Button variant="primary" text="Disabled" disabled />
       </div>
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
         <Button variant="secondary" text="Default" />
-        <Button variant="secondary" text="Hover" />
-        <Button variant="secondary" text="Active" />
         <Button variant="secondary" text="Disabled" disabled />
       </div>
       <div
