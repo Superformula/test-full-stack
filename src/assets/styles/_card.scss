@@ -6,6 +6,10 @@
   margin-bottom: 50px;
   font-size: smaller;
 
+  .Card-date {
+    visibility: hidden;
+  }
+
   .Card-edit-button {
     float: right;
     visibility: hidden;
@@ -19,6 +23,9 @@
 
   &:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    .Card-date {
+      visibility: visible;
+    }
     .Card-edit-button {
       visibility: visible;
     }
