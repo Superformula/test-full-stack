@@ -1,0 +1,33 @@
+.typography-h1 {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 60px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+.typography-h2 {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 26px;
+
+  color: #000000;
+}
+
+.typography-text {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
