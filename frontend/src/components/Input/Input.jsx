@@ -11,8 +11,7 @@ const Input = (props) => {
   };
 
   const id = props.id ? props.id : props.label;
-  const classToUse =
-    value !== "" ? "input-value" : props.placeholder ? "input-placeholder" : "";
+  const classToUse = props.placeholder ? "input-placeholder" : "input-value";
   return (
     <div>
       {props.label && props.label !== "" ? (
