@@ -1,0 +1,55 @@
+.input {
+  width: 400px;
+  height: 64px;
+
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+.input-label {
+  width: 165.22px;
+  height: 16px;
+
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+/* TODO: Check expected width with PMs due to wasted space */
+.input-placeholder {
+  width: 239px;
+
+  font-weight: 300;
+}
+
+/* TODO: Check expected width with PMs due to wasted space */
+.input-value {
+  width: 187.47px;
+
+  font-weight: normal;
+}
+
+.input-value,
+.input-placeholder {
+  border: none;
+
+  height: 32px;
+  margin-left: 16px;
+
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.input-value:focus,
+.input-placeholder:focus {
+  outline: none;
+}

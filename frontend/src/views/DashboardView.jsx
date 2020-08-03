@@ -4,6 +4,7 @@ import Card from "../components/Card/Card";
 import Typography from "../components/Typography/Typography";
 import Avatar from "../components/Avatar/Avatar";
 import Button from "../components/Button/Button";
+import Input from "../components/Input/Input";
 
 const DashboardView = () => {
   return (
@@ -25,6 +26,12 @@ const DashboardView = () => {
         <Button variant="secondary" text="Hover" />
         <Button variant="secondary" text="Active" />
         <Button variant="secondary" text="Disabled" disabled />
+      </div>
+      <div
+        style={{ display: "flex", flexDirection: "column", flexWrap: "nowrap" }}
+      >
+        <Input placeholder="Placeholder" />
+        <Input label="Label" value="Value with Label" />
       </div>
     </div>
   );
