@@ -1,0 +1,15 @@
+projects:
+  Superformula Test:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+        region: us-east-1
+        apiId: yf56pgs6y5hhxcmdgf7w75dmqa
+        maxDepth: 2
