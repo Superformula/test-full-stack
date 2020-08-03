@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -7,13 +7,25 @@ import Typography from "../../components/Typography/Typography";
 
 import "./UserModal.css";
 
+// TODO: Add Map implementation
 const UserModal = (props) => {
-  console.log(props);
+  const [activeUser, setActiveUser] = useState(props.user);
 
   const closeModal = (event) => {
     event.preventDefault();
     props.closeModal();
   };
+
+  useEffect(() => {
+    const updateActiveUser = (user) => {
+      setActiveUser(user);
+    };
+
+    updateActiveUser(props.user);
+    return () => {
+      updateActiveUser(props.user);
+    };
+  }, [props.user]);
 
   return (
     <Modal open={props.open} closeModal={props.closeModal}>
@@ -25,17 +37,17 @@ const UserModal = (props) => {
         <div className="usermodal-details-right">
           <Input
             label="Name"
-            value={props.name}
+            value={activeUser ? activeUser.name : ""}
             className="userdetails-input"
           />
           <Input
             label="Address"
-            value={props.address}
+            value={activeUser ? activeUser.address : ""}
             className="userdetails-input"
           />
           <Input
             label="Description"
-            value={props.description}
+            value={activeUser ? activeUser.description : ""}
             className="userdetails-input"
           />
           <div className="usermodal-buttons">

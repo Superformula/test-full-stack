@@ -9,15 +9,19 @@ import "./UserCard.css";
 
 // TODO: show edit button and user createdAt onHover only
 const UserCard = (props) => {
+  const onPencilClick = (event) => {
+    props.onPencilClick(props.user);
+  };
+
   return (
     <Card className="usercard">
-      <Pencil className="usercard-edit-button" onClick={props.onPencilClick} />
+      <Pencil className="usercard-edit-button" onClick={onPencilClick} />
       <Avatar src={process.env.PUBLIC_URL + "logo512.png"} />
       <Typography className="usercard-name" variant="h2">
-        User Name
+        {props.user.name}
       </Typography>
       <Typography className="usercard-text" variant="text">
-        Lorem ipsum dolor sit amet, consectetur…
+        {props.user.description}
       </Typography>
     </Card>
   );
