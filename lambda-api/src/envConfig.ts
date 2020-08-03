@@ -22,9 +22,15 @@ const mapboxApiToken: string = process.env.MAPBOX_API_TOKEN;
 const mapboxRequestRetries: number =
   Number(process.env.MAPBOX_REQUEST_RETRIES) ?? 3;
 
+const userTableName = process.env.CONFIG_USER_TABLE ?? 'User';
+const userTableNameIndex =
+  process.env.CONFIG_USER_TABLE_NAME_IDX ?? 'user-global-si-name';
+
 export type EnvConfig = {
   loggerOptions: LoggerOptions;
   apiName: string;
+  userTableName: string;
+  userTableNameIndex: string;
   mapboxApiToken: string;
   mapboxApiRequestRetries: number;
 };
@@ -52,6 +58,8 @@ const envConfigs: Record<EnvironmentType, Partial<EnvConfig>> = {
 export default {
   ...envConfigs[environment],
   apiName,
+  userTableName,
+  userTableNameIndex,
   mapboxApiToken,
   mapboxRequestRetries,
 };

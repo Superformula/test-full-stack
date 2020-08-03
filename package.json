@@ -19,6 +19,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^9.1.1",
     "commitlint": "^9.1.0",
+    "electron": "^9.1.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11"
   }

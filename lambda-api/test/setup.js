@@ -1,2 +1,3 @@
-require('dotenv').config()
-require('reflect-metadata')
+require('dotenv').config();
+
+require('reflect-metadata');

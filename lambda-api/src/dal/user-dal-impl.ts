@@ -16,13 +16,13 @@ import { createContextLogger, toMeta } from '../logging/logger';
 import { decodeCursor, encodeCursor, toCursor } from './fetch-util';
 import { UserDal } from './user-dal';
 import { v4 as uuidV4 } from 'uuid';
-
-const USER_TABLE = process.env.CONFIG_USER_TABLE;
-const USER_NAME_IDX = process.env.CONFIG_USER_TABLE_NAME_IDX;
+import envConfig from '../envConfig';
 
 const log = createContextLogger({ appModule: 'UserDal' });
 
 export const UserDalComponent = new Token<UserDal>();
+
+const tableNameFragment = { TableName: envConfig.userTableName };
 
 /**
  * User Data Access Layer service
@@ -46,7 +46,7 @@ export class UserDalImpl implements UserDal {
    */
   private static buildIdCriteria(id: string): DocumentClient.GetItemInput {
     return {
-      TableName: USER_TABLE,
+      ...tableNameFragment,
       Key: { id: id },
     };
   }
@@ -83,7 +83,7 @@ export class UserDalImpl implements UserDal {
    * @param searchCriteria The search criteria
    * @return The fetch size calculated for the input params
    */
-  private static calculateFetchSize(
+  static calculateFetchSize(
     pageRequest: PageRequest,
     searchCriteria: UserSearchCriteria
   ): number {
@@ -100,10 +100,9 @@ export class UserDalImpl implements UserDal {
    * @param resultArr The result array to slice
    * @return A sliced copy of the result array
    */
-  private static slicePageResult<T>(pageRequest: PageRequest, resultArr: T[]) {
-    const resStartIndex = 0;
-    // We may have overfetched when filtering so limit when slicing
-    return resultArr.slice(resStartIndex, pageRequest.limit);
+  static slicePageResult<T>(pageRequest: PageRequest, resultArr: T[]): T[] {
+    // We may have overfetched when filtering so limit to the actual requested page size by slicing
+    return resultArr.slice(0, pageRequest.limit);
   }
 
   /**
@@ -114,7 +113,7 @@ export class UserDalImpl implements UserDal {
    * @param startKey The start key for this scan (optional)
    * @return The result of the scan operation
    */
-  private async scanForUsers(
+  async scanForUsers(
     fetchSize: number,
     searchCriteria: UserSearchCriteria,
     startKey: DocumentClient.Key
@@ -136,8 +135,8 @@ export class UserDalImpl implements UserDal {
     // Filter during scanning - note that the data is filtered *after* the scan/limit operation so the result set
     // size can be less that the requested fetch size when filtering by UserSearchCriteria.
     const params = {
-      TableName: USER_TABLE,
-      IndexName: USER_NAME_IDX,
+      ...tableNameFragment,
+      IndexName: envConfig.userTableNameIndex,
       ReturnConsumedCapacity: 'TOTAL',
       Limit: fetchSize,
       // results are filtered *after* scanning in DynamoDB so overfetch to try to hit the intended page size in one scan
@@ -156,7 +155,7 @@ export class UserDalImpl implements UserDal {
    * @param pageRequest The page request for this batch scan
    * @param batchFetchSize The fetch size per batch
    */
-  private async batchScanForUsers(
+  async batchScanForUsers(
     initialCursorValue: DocumentClient.Key,
     searchCriteria: UserSearchCriteria,
     pageRequest: PageRequest,
@@ -182,7 +181,7 @@ export class UserDalImpl implements UserDal {
       );
       scannedResults.push(...currScanRes.Items);
 
-      // Keep track of the last evaluated key for the nes
+      // Keep track of the last evaluated key for the current batch
       lastEvaluatedKey = currScanRes.LastEvaluatedKey;
 
       log.debug(
@@ -280,7 +279,7 @@ export class UserDalImpl implements UserDal {
   async create(createUserInput: CreateUserInput): Promise<User> {
     const nowStr = new Date().toISOString();
     const newUser = {
-      TableName: USER_TABLE,
+      ...tableNameFragment,
       Item: {
         id: uuidV4(),
         ...createUserInput,
@@ -315,7 +314,7 @@ export class UserDalImpl implements UserDal {
     }
 
     const updateUser = {
-      TableName: USER_TABLE,
+      ...tableNameFragment,
       Item: {
         ...oldUser,
         ...updateUserInput,

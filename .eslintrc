@@ -28,8 +28,8 @@
     "@typescript-eslint/no-parameter-properties": "off",
     "max-len": [
       "error", {
-        "code": 160,
-        "comments": 160
+        "code": 120,
+        "comments": 120
       }
     ],
     "quotes": [1, "single", { "allowTemplateLiterals": true }]

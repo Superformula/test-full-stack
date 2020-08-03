@@ -25,6 +25,7 @@ provider:
     CONFIG_USER_TABLE: ${self:custom.tableNames.User}
     CONFIG_USER_TABLE_NAME_IDX: ${self:custom.indexNames.User_Name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
+    MAPBOX_API_TOKEN: ${env:MAPBOX_API_TOKEN}
   logRetentionInDays: 1
   iamRoleStatements:
     - Effect: Allow
