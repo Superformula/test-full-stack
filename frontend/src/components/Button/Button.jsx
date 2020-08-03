@@ -9,8 +9,9 @@ const Button = (props) => {
     <button
       className={"button button-" + props.variant}
       disabled={props.disabled}
+      onClick={props.onClick}
     >
-      {props.text}
+      {props.children}
     </button>
   );
 };
