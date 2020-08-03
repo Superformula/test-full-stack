@@ -24,14 +24,14 @@
 
 /* TODO: Check expected width with PMs due to wasted space */
 .input-placeholder {
-  width: 370px;
+  width: 92.5%;
 
   font-weight: 300;
 }
 
 /* TODO: Check expected width with PMs due to wasted space */
 .input-value {
-  width: 370px;
+  width: 92.5%;
 
   font-weight: normal;
 }

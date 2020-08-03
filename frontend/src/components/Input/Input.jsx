@@ -19,7 +19,7 @@ const Input = (props) => {
           {props.label}
         </label>
       ) : null}
-      <div className="input">
+      <div className={"input" + " " + props.className}>
         <input
           className={classToUse}
           id={id}
