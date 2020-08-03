@@ -3,9 +3,10 @@ import { Query } from "react-apollo";
 
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
+import Typography from "../components/Typography/Typography";
 import UserCard from "../features/UserCard/UserCard";
 import UserModal from "../features/UserModal/UserModal";
-import Typography from "../components/Typography/Typography";
+import WatchLoader from "../components/Loader/WatchLoader";
 
 import { listUsers } from "../graphql/queries";
 import "./Dashboard.css";
@@ -17,7 +18,7 @@ const DashboardView = () => {
   const users = () => (
     <Query query={listUsers}>
       {({ loading, error, data }) => {
-        if (loading) return "Loading...";
+        if (loading) return <WatchLoader />;
         if (error) return `Error! ${error.message}`;
 
         return (

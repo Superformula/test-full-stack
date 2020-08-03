@@ -10,7 +10,8 @@ body {
 }
 
 #root,
-.app {
+.app,
+.awsappsync {
   width: 100%;
   height: 100%;
 }
