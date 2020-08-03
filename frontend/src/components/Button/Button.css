@@ -1,8 +1,6 @@
-button {
-  outline: none;
-}
-
 .button {
+  outline: none;
+
   width: 280px;
   height: 90px;
 
@@ -15,9 +13,6 @@ button {
   font-weight: 600;
   font-size: 24px;
   line-height: 30px;
-  display: flex;
-  align-items: center;
-  text-align: center;
 
   color: #000000;
 }
