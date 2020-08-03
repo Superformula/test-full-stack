@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Input.css";
 
 const Input = (props) => {
   const [value, setValue] = useState(props.value ? props.value : "");
+
+  useEffect(() => {
+    const updateValue = (val) => {
+      if (val) {
+        setValue(val);
+      }
+    };
+
+    updateValue(props.value);
+    return () => {
+      updateValue(props.value);
+    };
+  }, [props.value]);
 
   const onChange = (event) => {
     const value = event.target.value;
@@ -19,13 +32,14 @@ const Input = (props) => {
           {props.label}
         </label>
       ) : null}
-      <div className={"input" + " " + props.className}>
+      <div className={"input " + props.className}>
         <input
           className={classToUse}
           id={id}
           placeholder={props.placeholder ? props.placeholder : null}
           value={value}
           onChange={onChange}
+          type="text"
         />
       </div>
     </div>
