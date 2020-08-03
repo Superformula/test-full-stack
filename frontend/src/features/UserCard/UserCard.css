@@ -1,0 +1,24 @@
+.usercard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.usercard-name {
+  width: 336px;
+  height: 28px;
+}
+
+.usercard-text {
+  width: 336px;
+  height: 20px;
+}
+
+.usercard > .typography-h2 {
+  margin-top: 32px;
+}
+
+.usercard > .typography-text {
+  margin-top: 8px;
+}

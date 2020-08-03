@@ -1,10 +1,11 @@
 import React from "react";
 
 import DashboardView from "./views/DashboardView";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <DashboardView />
     </div>
   );
