@@ -13,3 +13,8 @@ export interface UserEdit {
   address: String;
   description: String;
 }
+
+export interface QueryVariables {
+  limit: Number;
+  nextToken?: String;
+}

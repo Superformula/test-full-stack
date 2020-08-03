@@ -6,7 +6,7 @@ import retry from "async-retry";
 import SearchInput from "./components/SearchInput";
 import Card from "./components/Card";
 import aws_exports from "./aws-exports";
-import { User } from "./models";
+import { User, QueryVariables } from "./models";
 Amplify.configure(aws_exports);
 Amplify.Logger.LOG_LEVEL = "INFO";
 
@@ -63,23 +63,26 @@ class App extends Component<{}, any> {
     if (token) this.setState({ nextToken: token });
   };
 
-  handleAddUsers = (givenUsersList: any[]) => {
+  handleAddUsers = (givenUsersList: User[]) => {
     const usersList = this.state.users.concat(givenUsersList);
     this.setState({ users: usersList });
   };
 
-  getUsers = async () => {
-    // TODO: Find the type for the graphql operation response
-    await GqlRetry(ListUsers, { limit: 6 }).then(({data}: any) => {
-      this.setState({ users: data.listUsers.items });
-      this.setState({ nextToken: data.listUsers.nextToken });
-    });
-  };
+  getNextUser = () => {
+    if (this.state.nextToken) this.getUsers(this.state.nextToken);
+  }
 
-  getNextUsers = async () => {
-    // TODO: Integrate with getUsers to keep DRY
-    await GqlRetry(ListUsers, { limit: 6, nextToken: this.state.nextToken }).then(({data}: any) => {
-      this.handleAddUsers(data.listUsers.items);
+  getUsers = async (givenToken?: String) => {
+    const variables: QueryVariables = {
+      limit: 6,
+    }
+
+    if (givenToken) variables.nextToken = givenToken;
+    
+    // TODO: Find the type for the graphql operation response
+    await GqlRetry(ListUsers, variables).then(({data}: any) => {
+      if (!givenToken)this.setState({ users: data.listUsers.items });
+      if (givenToken) this.handleAddUsers(data.listUsers.items);
       this.setState({ nextToken: data.listUsers.nextToken });
     });
   };
@@ -108,7 +111,7 @@ class App extends Component<{}, any> {
             ))}
           </div>
           <div className="Load-more-button-container">
-            { this.state.nextToken ? <button onClick={this.getNextUsers}>Load More...</button> : null }
+            { this.state.nextToken ? <button onClick={this.getNextUser}>Load More...</button> : null }
           </div>
         </div>
       </div>
