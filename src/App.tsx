@@ -1,45 +1,20 @@
 import React, { Component } from "react";
 import "./assets/App.scss";
-import Amplify, { graphqlOperation, API } from "aws-amplify";
-import retry from "async-retry";
+import Amplify from "aws-amplify";
 import _ from "lodash";
 import SearchInput from "./components/SearchInput";
 import Card from "./components/Card";
 import aws_exports from "./aws-exports";
 import { User, QueryVariables, QueryVariablesWithFilter } from "./models";
+import { GqlRetry, ListUsers } from "./superformula-api";
 Amplify.configure(aws_exports);
 Amplify.Logger.LOG_LEVEL = "INFO";
-
-const ListUsers = `
-query ListUsers($limit: Int, $nextToken: String, $filter: ModelUserFilterInput) {
-    listUsers(limit: $limit, nextToken: $nextToken, filter: $filter) {
-        nextToken
-        items {
-          id
-          name
-          avatar
-          address
-          description
-          createdAt
-        }
-    }
-}`;
-
-const GqlRetry = async (query: any, variables?: any) => {
-  return await retry(
-    async () => {
-      return await API.graphql(graphqlOperation(query, variables));
-    },
-    {
-      retries: 10,
-    }
-  );
-};
 
 class App extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      isLoading: false,
       nextToken: "",
       users: [],
       searchValue: "",
@@ -60,6 +35,7 @@ class App extends Component<any, any> {
   };
 
   handleNameSearch = _.debounce(async (givenSearchText: String) => {
+    this.setState({ isLoading: true });
     const variables: QueryVariablesWithFilter = {
       limit: 6,
       filter: {
@@ -74,6 +50,7 @@ class App extends Component<any, any> {
       this.setState({ users: data.listUsers.items });
       this.setState({ nextToken: data.listUsers.nextToken });
     });
+    this.setState({ isLoading: false });
   }, 500);
 
   getNextUser = () => {
@@ -81,6 +58,7 @@ class App extends Component<any, any> {
   };
 
   getUsers = async (givenToken?: String) => {
+    this.setState({ isLoading: true });
     const variables: QueryVariables = {
       limit: 6,
     };
@@ -93,6 +71,7 @@ class App extends Component<any, any> {
       if (givenToken) this.handleAddUsers(data.listUsers.items);
       this.setState({ nextToken: data.listUsers.nextToken });
     });
+    this.setState({ isLoading: false });
   };
 
   render() {
@@ -114,12 +93,16 @@ class App extends Component<any, any> {
                   address: user.address,
                   description: user.description,
                   createdAt: user.createdAt,
+                  version: user.version,
                 }}
               />
             ))}
           </div>
+          <div className="Loader">
+            {this.state.isLoading ? <h4>Loading...</h4> : null}
+          </div>
           <div className="No-Results">
-            {!this.state.users.length ? (
+            {!this.state.isLoading && !this.state.users.length ? (
               <h4>No results found. Note: The search is case sensitive.</h4>
             ) : null}
           </div>

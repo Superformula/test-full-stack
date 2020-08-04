@@ -24,13 +24,11 @@ class Card extends Component<CardProps, any> {
     };
   }
 
-
   closeModal = () => {
-    console.log("hello close");
     this.setState({ modalIsOpen: false });
   };
+  
   openModal = () => {
-    console.log("hello open");
     this.setState({ modalIsOpen: true });
   };
 

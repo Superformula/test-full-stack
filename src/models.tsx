@@ -5,6 +5,7 @@ export interface User {
   address: String;
   description: String;
   createdAt: Date;
+  version: Number;
 }
 
 export interface UserEdit {
@@ -12,6 +13,7 @@ export interface UserEdit {
   name: String;
   address: String;
   description: String;
+  version: Number;
 }
 
 export interface QueryVariables {
@@ -25,6 +27,14 @@ export interface QueryVariablesWithFilter extends QueryVariables {
       contains: String;
     };
   }
+}
+
+export interface UpdateUserQueryVariables {
+  id: String;
+  name: String;
+  address: String;
+  description: String;
+  expectedVersion: Number;
 }
 
 export interface EditModalProps {
