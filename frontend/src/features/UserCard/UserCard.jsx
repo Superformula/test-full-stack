@@ -10,7 +10,9 @@ import "./UserCard.css";
 
 // TODO: show edit button and user createdAt onHover only
 const UserCard = (props) => {
-  const pictureUrl = props.picturesList.results[getRandomInt(29)].urls.small;
+  // Consistently show the same picture for users across loads through modulo operation
+  const pictureUrl =
+    props.picturesList.results[props.user.createdAt % 23].urls.small;
 
   const onPencilClick = (event) => {
     props.onPencilClick(props.user);
