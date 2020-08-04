@@ -3,4 +3,5 @@ import { SerializedStyles } from '@emotion/serialize';
 
 export type Theme = SSTheme & {
   globalStyles: SerializedStyles;
+  colors: string;
 };

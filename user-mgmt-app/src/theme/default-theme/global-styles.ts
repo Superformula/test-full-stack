@@ -25,4 +25,20 @@ export const globalStyles = css`
       /* Chrome 26+, Opera 23+, Firefox 39+ */
         url('fonts/source-sans-pro-v13-latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
+
+  .nameLabel {
+    font-family: Source Sans Pro, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 26px;
+  }
+
+  .descriptionLabel {
+    font-family: Source Sans Pro, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+  }
 `;

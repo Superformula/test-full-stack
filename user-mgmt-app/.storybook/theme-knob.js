@@ -7,6 +7,8 @@ import { Global } from '@emotion/core';
 export const ThemeKnob = ({ children }) => {
   const theme = select('Theme', Object.keys(themes), 'DefaultTheme');
 
+  console.log(JSON.stringify(themes[theme].globalStyles));
+
   return (
     <>
       <Global styles={themes[theme].globalStyles} />

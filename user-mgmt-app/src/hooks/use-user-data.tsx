@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client';
 import { toErrorStr } from 'graphql/apollo-util';
 import { User } from 'graphql/user-api/@types';
 import { UsersDocument } from 'graphql/user-api/queries/generated/userapi-queries';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Optional } from 'types';
 
 type UseUserData = {
@@ -178,17 +178,20 @@ export const useUserData = (pageSize = 10): UseUserData => {
     const loadFn = async () => {
       await loadNextPage();
     };
-    if (cursorState.isMoreData && pagesToLoad > 0) {
-      loadFn().then(() => {
-        setPagesToLoad(pagesToLoad - 1);
+    if (pagesToLoad > 0) {
+      if (cursorState.isMoreData) {
+        loadFn().then(() => {
+          setPagesToLoad(pagesToLoad - 1);
+          // eslint-disable-next-line no-console
+          console.info(`Page ${pagesToLoad} loaded`);
+        });
+      } else {
         // eslint-disable-next-line no-console
-        console.info(`Page ${pagesToLoad} loaded`);
-      });
-    } else {
-      // eslint-disable-next-line no-console
-      console.info(`Page ${pagesToLoad} loaded - no more data to load`);
-      setPagesToLoad(0);
+        console.info(`Page ${pagesToLoad} loaded - no more data to load`);
+        setPagesToLoad(0);
+      }
     }
+    // eslint-disable-next-line
   }, [pagesToLoad, cursorState.isMoreData]);
 
   /**
@@ -196,30 +199,33 @@ export const useUserData = (pageSize = 10): UseUserData => {
    *
    * @param userNameFragment The new user name filter value
    */
-  const updateFilter = async (userNameFragment: string): Promise<void> => {
-    // If the new filter is an extension of the last filter value, just filter the list that we already have in memory.
-    // Pagination wil still work since the next page fetch will use an absolute offset via cursor value
-    if (
-      !cursorState.nameFilter ||
-      (cursorState.nameFilter &&
-        userNameFragment.startsWith(cursorState.nameFilter))
-    ) {
-      // Update the filter in state
-      setCursorState({
-        ...cursorState,
-        nameFilter: userNameFragment,
-      });
-      // Filter the current user list state by the new filter
-      const filteredUsers = users.filter((user) => {
-        return user.name.includes(userNameFragment);
-      });
-      // Upate state with the filtered list
-      setUsers(filteredUsers);
-    } else {
-      // If the new filter isn't an extension of the last filter value, reset state and re-query
-      await initialize(userNameFragment);
-    }
-  };
+  const updateFilter = useCallback(
+    async (userNameFragment: string): Promise<void> => {
+      // If the new filter is an extension of the last filter value, just filter the list that we already have in
+      // memory Pagination wil still work since the next page fetch will use an absolute offset via cursor value
+      if (
+        !cursorState.nameFilter ||
+        (cursorState.nameFilter &&
+          userNameFragment.startsWith(cursorState.nameFilter))
+      ) {
+        // Update the filter in state
+        setCursorState({
+          ...cursorState,
+          nameFilter: userNameFragment,
+        });
+        // Filter the current user list state by the new filter
+        const filteredUsers = users.filter((user) => {
+          return user.name.includes(userNameFragment);
+        });
+        // Upate state with the filtered list
+        setUsers(filteredUsers);
+      } else {
+        // If the new filter isn't an extension of the last filter value, reset state and re-query
+        await initialize(userNameFragment);
+      }
+    },
+    [cursorState, users]
+  );
 
   return {
     users,

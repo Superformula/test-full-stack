@@ -32,6 +32,7 @@ const UserManagementPage: React.FC<
     };
     // eslint-disable-next-line no-console
     initFn().then(() => console.log('Initialized'));
+    // eslint-disable-next-line
   }, []);
 
   /**
@@ -42,6 +43,7 @@ const UserManagementPage: React.FC<
       hookNameFilter ? `&nameFilter=${hookNameFilter}` : ''
     }`;
     history.push(newLocation);
+    // eslint-disable-next-line
   }, [hookNameFilter, hookPageNumber]);
 
   return (
