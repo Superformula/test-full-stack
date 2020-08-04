@@ -49,7 +49,7 @@ const DashboardView = (props) => {
               key="filtered-user-list"
               setActiveUser={setActiveUser}
               setIsModalOpen={setIsModalOpen}
-              limit={6}
+              limit={12}
               filter={searchFilter}
               resetFilter={resetFilter}
               picturesList={props.picturesList}

@@ -5,7 +5,6 @@ import Card from "../../components/Card/Card";
 import Pencil from "../../icons/Pencil";
 import Typography from "../../components/Typography/Typography";
 
-import { getRandomInt } from "../../utilities/getRandomInt";
 import "./UserCard.css";
 
 // TODO: show edit button and user createdAt onHover only
