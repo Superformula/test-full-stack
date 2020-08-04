@@ -1,10 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 import "../assets/App.scss";
+import { Search } from "../models";
 
-function SearchInput() {
-  return (
-    <input type="text" className="SearchInput" placeholder="Search..."></input>
-  );
+class SearchInput extends Component<Search, any> {
+ 
+  render() {
+    return (
+      <input 
+        type="text" 
+        className="SearchInput" 
+        placeholder="Search..."
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.handleNameSearch(event.target.value)} />
+    );
+  }
 }
 
 export default SearchInput;

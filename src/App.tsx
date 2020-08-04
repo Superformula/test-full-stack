@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import "./assets/App.scss";
 import Amplify, { graphqlOperation, API } from "aws-amplify";
 import retry from "async-retry";
-// import _ from "lodash";
+import _ from "lodash";
 import SearchInput from "./components/SearchInput";
 import Card from "./components/Card";
 import aws_exports from "./aws-exports";
-import { User, QueryVariables } from "./models";
+import { User, QueryVariables, QueryVariablesWithFilter } from "./models";
 Amplify.configure(aws_exports);
 Amplify.Logger.LOG_LEVEL = "INFO";
 
 const ListUsers = `
-query ListUsers($limit: Int, $nextToken: String) {
-    listUsers(limit: $limit, nextToken: $nextToken) {
+query ListUsers($limit: Int, $nextToken: String, $filter: ModelUserFilterInput) {
+    listUsers(limit: $limit, nextToken: $nextToken, filter: $filter) {
         nextToken
         items {
           id
@@ -28,17 +28,7 @@ query ListUsers($limit: Int, $nextToken: String) {
 const GqlRetry = async (query: any, variables?: any) => {
   return await retry(
     async () => {
-      console.log("Sending GraphQL operation", {
-        query: query,
-        vars: variables,
-      });
-      const response = await API.graphql(graphqlOperation(query, variables));
-      console.log("GraphQL result", {
-        result: response,
-        query: query,
-        vars: variables,
-      });
-      return response;
+      return await API.graphql(graphqlOperation(query, variables));
     },
     {
       retries: 10,
@@ -46,12 +36,13 @@ const GqlRetry = async (query: any, variables?: any) => {
   );
 };
 
-class App extends Component<{}, any> {
+class App extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
       nextToken: "",
       users: [],
+      searchValue: "",
     };
   }
 
@@ -67,6 +58,23 @@ class App extends Component<{}, any> {
     const usersList = this.state.users.concat(givenUsersList);
     this.setState({ users: usersList });
   };
+
+  handleNameSearch = _.debounce(async (givenSearchText: String) => {
+    const variables: QueryVariablesWithFilter = {
+      limit: 6,
+      filter: {
+        name: {
+          contains: givenSearchText,
+        },
+      },
+    };
+
+    // Totally not DRY :(
+    await GqlRetry(ListUsers, variables).then(({ data }: any) => {
+      this.setState({ users: data.listUsers.items });
+      this.setState({ nextToken: data.listUsers.nextToken });
+    });
+  }, 500);
 
   getNextUser = () => {
     if (this.state.nextToken) this.getUsers(this.state.nextToken);
@@ -92,7 +100,7 @@ class App extends Component<{}, any> {
       <div className="App">
         <header className="App-header">
           <h1>Users List</h1>
-          <SearchInput />
+          <SearchInput handleNameSearch={this.handleNameSearch} />
         </header>
         <div className="App-content">
           <div className="Card-list">
@@ -110,8 +118,13 @@ class App extends Component<{}, any> {
               />
             ))}
           </div>
+          <div className="No-Results">
+            {!this.state.users.length ? (
+              <h4>No results found. Note: The search is case sensitive.</h4>
+            ) : null}
+          </div>
           <div className="Load-more-button-container">
-            {this.state.nextToken ? (
+            {this.state.nextToken && this.state.users.length ? (
               <button onClick={this.getNextUser}>Load More...</button>
             ) : null}
           </div>

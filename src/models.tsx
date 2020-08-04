@@ -15,6 +15,18 @@ export interface UserEdit {
 }
 
 export interface QueryVariables {
-  limit: Number;
+  limit?: Number;
   nextToken?: String;
+}
+
+export interface QueryVariablesWithFilter extends QueryVariables {
+  filter: {
+    name: {
+      contains: String;
+    };
+  }
+}
+
+export interface Search {
+  handleNameSearch: any;
 }
