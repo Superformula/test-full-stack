@@ -1,6 +1,6 @@
 {
 	"api": {
-		"testfullstack": {
+		"superformulaApi": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
@@ -8,7 +8,7 @@
 					"defaultAuthentication": {
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
-							"apiKeyExpirationDays": 240,
+							"apiKeyExpirationDays": 365,
 							"description": ""
 						}
 					},

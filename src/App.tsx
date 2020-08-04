@@ -57,7 +57,7 @@ class App extends Component<{}, any> {
 
   async componentDidMount() {
     this.getUsers();
-}
+  }
 
   setNextToken = (token: String) => {
     if (token) this.setState({ nextToken: token });
@@ -70,18 +70,18 @@ class App extends Component<{}, any> {
 
   getNextUser = () => {
     if (this.state.nextToken) this.getUsers(this.state.nextToken);
-  }
+  };
 
   getUsers = async (givenToken?: String) => {
     const variables: QueryVariables = {
       limit: 6,
-    }
+    };
 
     if (givenToken) variables.nextToken = givenToken;
-    
+
     // TODO: Find the type for the graphql operation response
-    await GqlRetry(ListUsers, variables).then(({data}: any) => {
-      if (!givenToken)this.setState({ users: data.listUsers.items });
+    await GqlRetry(ListUsers, variables).then(({ data }: any) => {
+      if (!givenToken) this.setState({ users: data.listUsers.items });
       if (givenToken) this.handleAddUsers(data.listUsers.items);
       this.setState({ nextToken: data.listUsers.nextToken });
     });
@@ -111,7 +111,9 @@ class App extends Component<{}, any> {
             ))}
           </div>
           <div className="Load-more-button-container">
-            { this.state.nextToken ? <button onClick={this.getNextUser}>Load More...</button> : null }
+            {this.state.nextToken ? (
+              <button onClick={this.getNextUser}>Load More...</button>
+            ) : null}
           </div>
         </div>
       </div>
