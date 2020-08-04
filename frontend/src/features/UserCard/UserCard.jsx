@@ -5,10 +5,13 @@ import Card from "../../components/Card/Card";
 import Pencil from "../../icons/Pencil";
 import Typography from "../../components/Typography/Typography";
 
+import { getRandomInt } from "../../utilities/getRandomInt";
 import "./UserCard.css";
 
 // TODO: show edit button and user createdAt onHover only
 const UserCard = (props) => {
+  const pictureUrl = props.picturesList.results[getRandomInt(29)].urls.small;
+
   const onPencilClick = (event) => {
     props.onPencilClick(props.user);
   };
@@ -16,7 +19,7 @@ const UserCard = (props) => {
   return (
     <Card className="usercard">
       <Pencil className="usercard-edit-button" onClick={onPencilClick} />
-      <Avatar src={process.env.PUBLIC_URL + "logo512.png"} />
+      <Avatar src={pictureUrl} />
       <Typography className="usercard-name" variant="h2">
         {props.user.name}
       </Typography>

@@ -7,7 +7,6 @@ import Modal from "../../components/Modal/Modal";
 import Typography from "../../components/Typography/Typography";
 
 import "./UserModal.css";
-import { act } from "react-dom/test-utils";
 
 // TODO: Add Map implementation
 const UserModal = (props) => {
@@ -18,7 +17,6 @@ const UserModal = (props) => {
   const closeModal = () => {
     const userReset = Object.assign({}, props.user);
     setActiveUser(userReset);
-    console.log(userReset);
     props.closeModal();
   };
 

@@ -7,7 +7,7 @@ import LimitedUserList from "../features/UserQueries/LimitedUserList";
 
 import "./Dashboard.css";
 
-const DashboardView = () => {
+const DashboardView = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeUser, setActiveUser] = useState(null);
   const [searchFilter, setSearchFilter] = useState(null);
@@ -52,6 +52,7 @@ const DashboardView = () => {
               limit={6}
               filter={searchFilter}
               resetFilter={resetFilter}
+              picturesList={props.picturesList}
             />
           ) : (
             <LimitedUserList
@@ -59,6 +60,7 @@ const DashboardView = () => {
               setActiveUser={setActiveUser}
               setIsModalOpen={setIsModalOpen}
               limit={6}
+              picturesList={props.picturesList}
             />
           )}
         </div>

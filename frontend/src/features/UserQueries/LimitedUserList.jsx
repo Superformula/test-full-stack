@@ -56,6 +56,7 @@ const LimitedUserList = (props) => {
             showLoadMore={areThereUsersLeft}
             users={data.listUsers.items}
             onEditClick={onEditClick}
+            picturesList={props.picturesList}
             onLoadMore={() => {
               fetchMore({
                 query: listUsers,

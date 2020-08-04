@@ -1,6 +1,6 @@
 import React from "react";
 import AWSAppSyncClient from "aws-appsync";
-import AppSyncConfig from "./aws-exports";
+import AppSyncConfig from "../aws-exports";
 import { ApolloProvider } from "react-apollo";
 import { Rehydrated } from "aws-appsync-react";
 import { createAuthLink } from "aws-appsync-auth-link";
@@ -8,7 +8,7 @@ import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 import { ApolloLink } from "apollo-link";
 import { createHttpLink } from "apollo-link-http";
 
-import App from "./App";
+import App from "../App";
 
 const url = AppSyncConfig.aws_appsync_graphqlEndpoint;
 const region = AppSyncConfig.aws_appsync_region;

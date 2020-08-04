@@ -13,6 +13,7 @@ const UserList = (props) => {
               key={user.id}
               onPencilClick={props.onEditClick}
               user={user}
+              picturesList={props.picturesList}
             />
           );
         })}

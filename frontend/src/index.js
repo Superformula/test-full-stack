@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import WithProvider from "./client";
-import * as serviceWorker from "./serviceWorker";
+import WithProvider from "./utilities/client";
+import * as serviceWorker from "./utilities/serviceWorker";
 
 ReactDOM.render(<WithProvider />, document.getElementById("root"));
 

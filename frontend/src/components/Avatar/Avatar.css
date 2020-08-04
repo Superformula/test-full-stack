@@ -1,6 +1,6 @@
 .avatar {
-  background-color: pink;
   width: 168px;
   height: 168px;
   border-radius: 50%;
+  object-fit: cover;
 }
