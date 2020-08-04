@@ -92,7 +92,7 @@ The frontend was built with React with Create React App facilititaing the toolin
   - The project is live at: https://rodrigo.d1fkwqzove8rxw.amplifyapp.com
 - [x] Include subtle animations to focus attention
   - UserCards on hover animations
-- [] Describe optimization opportunities when you conclude
+- [x] Describe optimization opportunities when you conclude
   - Create a form component to improve state management
   - Refactor picture fetching isn't ideal as state is deeply propagated
   - Upgrade graphql dependencies to streamline code
@@ -101,3 +101,9 @@ The frontend was built with React with Create React App facilititaing the toolin
   - In case no users data is present, error mesage are shown to user
 - [x] Handle loading states
   - Used react-loader-spinner to handle loading states.
+
+## FYI
+
+- The project took about 21 hours to complete: https://wakatime.com/projects/test-full-stack?start=2020-07-29&end=2020-08-04
+- The biggest struggle was getting a match in libraries and dependencies between Apollo and AppSync.
+- It was a really fun coding challenge and it's probably the one I've learned the most with in recent memory.
