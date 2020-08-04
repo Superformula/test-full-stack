@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import Map from "../../components/Map/Map";
 import Modal from "../../components/Modal/Modal";
 import Typography from "../../components/Typography/Typography";
 
@@ -32,7 +33,9 @@ const UserModal = (props) => {
       <Typography variant="h1">Edit User</Typography>
       <div className="usermodal-details">
         <div className="usermodal-details-left">
-          <div className="usermodal-map">map</div>
+          <div className="usermodal-map">
+            <Map address={activeUser ? activeUser.address : ""} />
+          </div>
         </div>
         <div className="usermodal-details-right">
           <Input
