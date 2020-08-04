@@ -2,11 +2,11 @@
 
 ## My Solution
 
-Project was built with CRA for the frontend and AWS AppSync for the backend.
+The project has been built with CRA for the frontend and AWS AppSync for the backend.
 
 The project is live at: https://rodrigo.d1fkwqzove8rxw.amplifyapp.com/
 
-If you want to run the code locally, fell free to:
+If you want to run the code locally, feel free to:
 
 - clone the repo
 - `yarn install`
@@ -14,7 +14,7 @@ If you want to run the code locally, fell free to:
 
 ## Design
 
-The backend architecture is managed and deployed with AWS AppSync. A GraphQL API sits a top a DynamoDB instance that persists the user data. It is easily extensible and quick to redeploy/scale.
+The backend architecture is managed and deployed with AWS AppSync. A GraphQL API sits atop a DynamoDB instance that persists the user data. It is easily extensible and quick to redeploy/scale.
 
 The frontend was built with React with Create React App facilititaing the tooling. The project is structured in the following manner:
 
@@ -78,7 +78,8 @@ The frontend was built with React with Create React App facilititaing the toolin
 - [x] You don't have to write configuration from scratch (you can use eg. CRA for React application)
   - Used CRA
 - [] Feel free to use a preprocessor like SASS/SCSS/Less or CSS in JS
-- [] Provide E2E and unit tests
+- [x] Provide E2E and unit tests
+  - Added Input component tests to show how it can be done. Production application would need way more than the simple unit tests I added.
 - [x] Feel free to choose MAPS service (GoogleMaps, OpenStreetMap etc)
 - [x] Please **do not** use any additional libraries with predefined styles like `react-bootstrap`, `material-ui` etc.
 - [x] Write clear **documentation** on how the app was designed and how to run the code.
