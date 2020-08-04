@@ -7,7 +7,9 @@ const Input = (props) => {
 
   useEffect(() => {
     const updateValue = (val) => {
-      if (val) {
+      if (val === "clear") {
+        setValue("");
+      } else if (val) {
         setValue(val);
       }
     };

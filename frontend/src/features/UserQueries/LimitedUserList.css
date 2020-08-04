@@ -1,0 +1,9 @@
+.limited-user-list-error {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  row-gap: 60px;
+}
