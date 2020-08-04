@@ -4,7 +4,7 @@ import { Query } from "react-apollo";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
 import Typography from "../components/Typography/Typography";
-import UserCard from "../features/UserCard/UserCard";
+import UserList from "../features/UserList/UserList";
 import UserModal from "../features/UserModal/UserModal";
 import WatchLoader from "../components/Loader/WatchLoader";
 
@@ -16,23 +16,17 @@ const DashboardView = () => {
   const [activeUser, setActiveUser] = useState(null);
 
   const users = () => (
-    <Query query={listUsers}>
+    <Query query={listUsers} variables={{ limit: 6 }}>
       {({ loading, error, data }) => {
         if (loading) return <WatchLoader />;
         if (error) return `Error! ${error.message}`;
 
         return (
-          <div className="middle-row">
-            {data.listUsers.items.map((user) => {
-              return (
-                <UserCard
-                  key={user.id}
-                  onPencilClick={onEditClick}
-                  user={user}
-                />
-              );
-            })}
-          </div>
+          <UserList
+            users={data.listUsers.items}
+            token={data.listUsers.nextToken}
+            onEditClick={onEditClick}
+          />
         );
       }}
     </Query>
@@ -56,7 +50,7 @@ const DashboardView = () => {
             <Input placeholder="Search..." />
           </div>
 
-          {users()}
+          <div className="middle-row">{users()}</div>
 
           <div className="bottom-row">
             <Button variant="primary">Load More</Button>
