@@ -29,23 +29,25 @@ Build a GraphQL API that can `create/read/update/delete` user data from a persis
 
 ### Basic Requirements
 
-  - Use AWS AppSync (preferred) or AWS Lambda + API Gateway approach
-  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
-  - Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
-  - Write concise and clear commit messages.
-  - Write clear **documentation** on how it has been designed and how to run the code.
+- Use AWS AppSync (preferred) or AWS Lambda + API Gateway approach
+- Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
+- Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
+- Write concise and clear commit messages.
+- Write clear **documentation** on how it has been designed and how to run the code.
 
 ### Bonus
-  - Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
-  - Provide proper unit tests.
-  - Providing an online demo is welcomed, but not required.
-  - Bundle npm modules into your Lambdas
+
+- Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
+- Provide proper unit tests.
+- Providing an online demo is welcomed, but not required.
+- Bundle npm modules into your Lambdas
 
 ### Advanced Requirements
 
 These may be used for further challenges. You can freely skip these; feel free to try out if you feel up to it.
-  - Describe your strategy for Lambda error handling, retries, and DLQs
-  - Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
+
+- Describe your strategy for Lambda error handling, retries, and DLQs
+- Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
 
 ## UI context
 
@@ -110,3 +112,34 @@ Fork this repo and send us a pull request when you think you are done. There is 
 > What if I have a question?
 
 Create a new issue in this repo and we will respond and get back to you quickly.
+
+## Solution
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `yarn start`
+
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
+
+### `yarn test`
+
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `yarn build`
+
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
