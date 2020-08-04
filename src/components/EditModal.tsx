@@ -8,17 +8,17 @@ ReactModal.setAppElement("#modal-root");
 type EditModalProps = {
   showModal: boolean;
   handleClose: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  data: UserEdit;
+  user: UserEdit;
 };
 
 class EditModal extends Component<EditModalProps, any> {
   constructor(props: EditModalProps) {
     super(props);
     this.state = {
-      id: props.data.id,
-      name: props.data.name,
-      address: props.data.address,
-      description: props.data.description,
+      id: props.user.id,
+      name: props.user.name,
+      address: props.user.address,
+      description: props.user.description,
     };
   }
 

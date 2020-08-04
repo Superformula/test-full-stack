@@ -20,11 +20,20 @@ class Card extends Component<CardProps, any> {
         month: "short",
         year: "numeric",
       }),
+      user: this.props.user,
     };
   }
 
-  closeModal = () => this.setState({ showModal: false });
-  openModal = () => this.setState({ showModal: true });
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+    console.log(this.state.showModal);
+  };
+  openModal = () => {
+    console.log(this.state.showModal);
+    this.setState({ showModal: true });
+    console.log(this.state.showModal);
+  };
 
   render() {
     return (
@@ -45,12 +54,7 @@ class Card extends Component<CardProps, any> {
         <EditModal
           showModal={this.state.showModal}
           handleClose={this.closeModal}
-          data={{
-            id: this.props.user.id,
-            name: this.props.user.name,
-            address: this.props.user.address,
-            description: this.props.user.description,
-          }}
+          user={this.state.user}
         />
       </div>
     );
