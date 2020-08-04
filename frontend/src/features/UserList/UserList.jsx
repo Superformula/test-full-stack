@@ -11,7 +11,7 @@ const UserList = (props) => {
           return (
             <UserCard
               key={user.id}
-              onPencilClick={props.onEditClick}
+              onEditClick={props.onEditClick}
               user={user}
               picturesList={props.picturesList}
             />
