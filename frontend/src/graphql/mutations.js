@@ -1,7 +1,8 @@
+import gql from "graphql-tag";
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createUser = /* GraphQL */ `
+export const createUser = /* GraphQL */ gql`
   mutation CreateUser($input: CreateUserInput!) {
     createUser(input: $input) {
       id
@@ -14,7 +15,7 @@ export const createUser = /* GraphQL */ `
     }
   }
 `;
-export const updateUser = /* GraphQL */ `
+export const updateUser = /* GraphQL */ gql`
   mutation UpdateUser($input: UpdateUserInput!) {
     updateUser(input: $input) {
       id
@@ -27,7 +28,7 @@ export const updateUser = /* GraphQL */ `
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
+export const deleteUser = /* GraphQL */ gql`
   mutation DeleteUser($input: DeleteUserInput!) {
     deleteUser(input: $input) {
       id

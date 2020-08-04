@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Mutation } from "react-apollo";
 
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -6,6 +7,7 @@ import Map from "../../components/Map/Map";
 import Modal from "../../components/Modal/Modal";
 import Typography from "../../components/Typography/Typography";
 
+import { updateUser } from "../../graphql/mutations";
 import "./UserModal.css";
 
 // TODO: Add Map implementation
@@ -18,6 +20,30 @@ const UserModal = (props) => {
     const userReset = Object.assign({}, props.user);
     setActiveUser(userReset);
     props.closeModal();
+  };
+
+  const updateUserMutation = () => {
+    if (activeUser) {
+      return (
+        <Mutation
+          mutation={updateUser}
+          variables={{
+            input: {
+              id: activeUser.id,
+              name: activeUser.name,
+              address: activeUser.address,
+              description: activeUser.description,
+            },
+          }}
+        >
+          {(updateUserData) => (
+            <Button variant="primary" onClick={updateUserData}>
+              Save
+            </Button>
+          )}
+        </Mutation>
+      );
+    }
   };
 
   const updateActiveUserName = (value) => {
@@ -78,7 +104,7 @@ const UserModal = (props) => {
             onChange={updateActiveUserDescription}
           />
           <div className="usermodal-buttons">
-            <Button variant="primary">Save</Button>
+            {updateUserMutation()}
             <Button variant="Secondary" onClick={closeModal}>
               Cancel
             </Button>
