@@ -1,7 +1,8 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
+import gql from "graphql-tag";
 
-export const onCreateUser = /* GraphQL */ `
+export const onCreateUser = /* GraphQL */ gql`
   subscription OnCreateUser(
     $id: ID
     $name: String
@@ -26,7 +27,7 @@ export const onCreateUser = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateUser = /* GraphQL */ `
+export const onUpdateUser = /* GraphQL */ gql`
   subscription OnUpdateUser(
     $id: ID
     $name: String
@@ -51,7 +52,7 @@ export const onUpdateUser = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteUser = /* GraphQL */ `
+export const onDeleteUser = /* GraphQL */ gql`
   subscription OnDeleteUser(
     $id: ID
     $name: String

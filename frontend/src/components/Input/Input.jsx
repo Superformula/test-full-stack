@@ -21,6 +21,7 @@ const Input = (props) => {
   const onChange = (event) => {
     const value = event.target.value;
     setValue(value);
+    props.onChange(value);
   };
 
   const id = props.id ? props.id : props.label;
