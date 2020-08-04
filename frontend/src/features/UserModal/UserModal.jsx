@@ -7,19 +7,42 @@ import Modal from "../../components/Modal/Modal";
 import Typography from "../../components/Typography/Typography";
 
 import "./UserModal.css";
+import { act } from "react-dom/test-utils";
 
 // TODO: Add Map implementation
 const UserModal = (props) => {
-  const [activeUser, setActiveUser] = useState(props.user);
+  const [activeUser, setActiveUser] = useState(
+    props.user ? Object.assign({}, props.user) : null
+  );
 
-  const closeModal = (event) => {
-    event.preventDefault();
+  const closeModal = () => {
+    const userReset = Object.assign({}, props.user);
+    setActiveUser(userReset);
+    console.log(userReset);
     props.closeModal();
+  };
+
+  const updateActiveUserName = (value) => {
+    const user = Object.assign({}, activeUser);
+    user.name = value;
+    setActiveUser(user);
+  };
+
+  const updateActiveUserAddress = (value) => {
+    const user = Object.assign({}, activeUser);
+    user.address = value;
+    setActiveUser(user);
+  };
+
+  const updateActiveUserDescription = (value) => {
+    const user = Object.assign({}, activeUser);
+    user.description = value;
+    setActiveUser(user);
   };
 
   useEffect(() => {
     const updateActiveUser = (user) => {
-      setActiveUser(user);
+      setActiveUser(Object.assign({}, user));
     };
 
     updateActiveUser(props.user);
@@ -42,16 +65,19 @@ const UserModal = (props) => {
             label="Name"
             value={activeUser ? activeUser.name : ""}
             className="userdetails-input"
+            onChange={updateActiveUserName}
           />
           <Input
             label="Address"
             value={activeUser ? activeUser.address : ""}
             className="userdetails-input"
+            onChange={updateActiveUserAddress}
           />
           <Input
             label="Description"
             value={activeUser ? activeUser.description : ""}
             className="userdetails-input"
+            onChange={updateActiveUserDescription}
           />
           <div className="usermodal-buttons">
             <Button variant="primary">Save</Button>

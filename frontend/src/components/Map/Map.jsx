@@ -3,7 +3,9 @@ import mapboxgl from "mapbox-gl";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./Map.css";
+
 // TODO: Obfuscate mapbox api credential
+// TODO: Implement AWS Lambda to search location information. Ask project owner which information is needed.
 
 const MAP_BOX_API_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 const ACCESS_TOKEN =
@@ -11,6 +13,7 @@ const ACCESS_TOKEN =
 
 const Map = (props) => {
   const [map, setMap] = useState(null);
+  const [address, setAddress] = useState(props.address ? props.address : null);
   const [mapInfo, setMapInfo] = useState(null);
   const mapContainer = useRef(null);
 
