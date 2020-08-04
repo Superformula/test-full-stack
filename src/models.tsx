@@ -27,6 +27,12 @@ export interface QueryVariablesWithFilter extends QueryVariables {
   }
 }
 
-export interface Search {
+export interface EditModalProps {
+  modalIsOpen: boolean;
+  handleClose: any;
+  user: UserEdit;
+};
+
+export interface SearchProps {
   handleNameSearch: any;
 }

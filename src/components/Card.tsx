@@ -14,7 +14,7 @@ class Card extends Component<CardProps, any> {
   constructor(props: CardProps) {
     super(props);
     this.state = {
-      showModal: false,
+      modalIsOpen: false,
       createdAt: new Date(props.user.createdAt).toLocaleDateString("en-US", {
         day: "2-digit",
         month: "short",
@@ -26,13 +26,12 @@ class Card extends Component<CardProps, any> {
 
 
   closeModal = () => {
-    this.setState({ showModal: false });
-    console.log(this.state.showModal);
+    console.log("hello close");
+    this.setState({ modalIsOpen: false });
   };
   openModal = () => {
-    console.log(this.state.showModal);
-    this.setState({ showModal: true });
-    console.log(this.state.showModal);
+    console.log("hello open");
+    this.setState({ modalIsOpen: true });
   };
 
   render() {
@@ -52,7 +51,7 @@ class Card extends Component<CardProps, any> {
           <p>{this.props.user.description}</p>
         </div>
         <EditModal
-          showModal={this.state.showModal}
+          modalIsOpen={this.state.modalIsOpen}
           handleClose={this.closeModal}
           user={this.state.user}
         />

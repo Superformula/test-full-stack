@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "../assets/App.scss";
-import { Search } from "../models";
+import { SearchProps } from "../models";
 
-class SearchInput extends Component<Search, any> {
+class SearchInput extends Component<SearchProps, any> {
  
   render() {
     return (
