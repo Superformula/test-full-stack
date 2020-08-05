@@ -8,12 +8,12 @@ type Props = {
 
 export const ErrorBoundary = Catch(function MyErrorBoundary(
   props: Props,
-  error?: Error,
+  error?: Error
 ) {
   if (error) {
     return (
       <ErrorDialog errorMessage={`An error has occured: ${error?.message}`} />
     );
   }
-    return <>{props.children}</>;
+  return <>{props.children}</>;
 });

@@ -16,6 +16,7 @@ export const UserCard = () => {
         imageUrl="https://source.unsplash.com/random/168x168/?headshot&idx=1"
         userName={text('User Name', 'Joe Schmo')}
         userDescription={text('User Description', 'This is an example user')}
+        onEdit={() => {}}
       />
     </div>
   );

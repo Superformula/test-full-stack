@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { color } from 'styled-system';
 
 export const UserListContainer = styled.div`
   position: relative;
@@ -6,7 +7,7 @@ export const UserListContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 64px;
-  background: ${(props) => props.theme.colors.background};
+  ${color}
 `;
 
 export const UserCardContainer = styled.div``;

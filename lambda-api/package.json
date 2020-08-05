@@ -4,7 +4,7 @@
   "private": true,
   "main": "handler.js",
   "scripts": {
-    "clean": "rimraf ./build && rimraf ./.serverless && rimraf ./.webpack",
+    "clean": "rimraf ./build",
     "deploy:execute": "yarn clean && sls deploy --verbose",
     "deploy:teardown": "sls remove --verbose",
     "dynamo:create-seed-data": "ts-node src/test-fixtures/genDynamoSeedData.ts",

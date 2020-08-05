@@ -7,8 +7,12 @@ const colors = {
   [color.background]: '#F8F8F8',
   [color.primary]: '#5B2C6F',
   [color.secondary]: '#FFFFFF',
+  [color.disabled]: 'rgba(0, 0, 0, 0.5)',
 };
 
-const DefaultTheme: Theme = { globalStyles, colors };
+const DefaultTheme: Theme = {
+  globalStyles,
+  colors,
+};
 
 export default DefaultTheme;

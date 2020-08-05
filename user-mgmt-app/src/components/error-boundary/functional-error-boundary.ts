@@ -7,18 +7,18 @@ import React from 'react';
 type ErrorHandler = (error: Error, info: React.ErrorInfo) => void;
 type ErrorHandlingComponent<Props> = (
   props: Props,
-  error?: Error,
+  error?: Error
 ) => React.ReactNode;
 
 type ErrorState = { error?: Error };
 
 export default function Catch<Props extends {}>(
   component: ErrorHandlingComponent<Props>,
-  errorHandler?: ErrorHandler,
+  errorHandler?: ErrorHandler
 ): React.ComponentType<Props> {
   return class extends React.Component<Props, ErrorState> {
     // eslint-disable-next-line react/state-in-constructor
-    state: ErrorState = {error: undefined,};
+    state: ErrorState = { error: undefined };
 
     static getDerivedStateFromError(error: Error) {
       return { error };

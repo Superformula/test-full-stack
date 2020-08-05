@@ -5,7 +5,7 @@ import { UsersDocument } from 'graphql/user-api/queries/generated/userapi-querie
 import { useCallback, useEffect, useState } from 'react';
 import { Optional } from 'types';
 
-type UseUserData = {
+export interface UserData {
   /**
    * The user data as state
    */
@@ -30,6 +30,10 @@ type UseUserData = {
    *
    */
   isMoreData: boolean;
+}
+
+type UseUserData = {
+  userData: UserData;
   /**
    *  Initialize the state using an optional search criteria
    *
@@ -47,7 +51,7 @@ type UseUserData = {
   /**
    * Update the filter in place
    */
-  updateFilter: (userNameFragment: string) => Promise<void>;
+  updateFilter: (userNameFragment: Optional<string>) => Promise<void>;
 };
 
 interface CursorState {
@@ -58,13 +62,14 @@ interface CursorState {
 }
 
 /**
- *  Hook to create a pending reservation
+ *  Hook to manage filtering/infinite scroll of {@link User} data
  */
 export const useUserData = (pageSize = 10): UseUserData => {
   const apolloClient = useApolloClient();
 
-  // Manage currently rendered users via state
+  // Currently rendered users
   const [users, setUsers] = useState<User[]>([]);
+  // Current cursor state
   const [cursorState, setCursorState] = useState<CursorState>({
     currentPageNumber: 0,
     isMoreData: true,
@@ -73,7 +78,7 @@ export const useUserData = (pageSize = 10): UseUserData => {
   const [loading, setLoading] = useState(false);
   // Error state
   const [error, setError] = useState<string | undefined>();
-  // Number of pages to load async
+  // Number of pages to load async on initialization
   const [pagesToLoad, setPagesToLoad] = useState(0);
 
   const logAndGenerateErrorString = (
@@ -151,15 +156,16 @@ export const useUserData = (pageSize = 10): UseUserData => {
   };
 
   /**
-   * Reset the state
+   * Initialize the infinite scroll with an optional filter and page number
    *
    * @param userFilter An optional user filter value
-   * @param pageNumber an optional page number to advance to
+   * @param pageNumber an optional page number to advance to during initialization
    */
   const initialize = async (
     userFilter?: Optional<string>,
     pageNumber?: Optional<number>
   ): Promise<void> => {
+    setError(undefined);
     setUsers([]);
     setCursorState({
       nameFilter: userFilter,
@@ -172,15 +178,18 @@ export const useUserData = (pageSize = 10): UseUserData => {
   };
 
   /**
-   * Perform initial load of data to restore state from URI params
+   * initialize populates pagesToLoad  state and this effect will count down and load the specified number of pages
+   * of data from the server.
    */
   useEffect(() => {
     const loadFn = async () => {
       await loadNextPage();
     };
+    // Anything to do?
     if (pagesToLoad > 0) {
       if (cursorState.isMoreData) {
         loadFn().then(() => {
+          // Update state with the decremented page count
           setPagesToLoad(pagesToLoad - 1);
           // eslint-disable-next-line no-console
           console.info(`Page ${pagesToLoad} loaded`);
@@ -195,45 +204,56 @@ export const useUserData = (pageSize = 10): UseUserData => {
   }, [pagesToLoad, cursorState.isMoreData]);
 
   /**
-   * Update to a new filter value
+   * Update to a new filter value.  This function will first attempt to filter loaded data and if no data is found,
+   * make a page load call.
    *
    * @param userNameFragment The new user name filter value
    */
   const updateFilter = useCallback(
-    async (userNameFragment: string): Promise<void> => {
-      // If the new filter is an extension of the last filter value, just filter the list that we already have in
-      // memory Pagination wil still work since the next page fetch will use an absolute offset via cursor value
-      if (
-        !cursorState.nameFilter ||
-        (cursorState.nameFilter &&
-          userNameFragment.startsWith(cursorState.nameFilter))
-      ) {
-        // Update the filter in state
-        setCursorState({
-          ...cursorState,
-          nameFilter: userNameFragment,
-        });
-        // Filter the current user list state by the new filter
-        const filteredUsers = users.filter((user) => {
-          return user.name.includes(userNameFragment);
-        });
-        // Upate state with the filtered list
-        setUsers(filteredUsers);
-      } else {
-        // If the new filter isn't an extension of the last filter value, reset state and re-query
-        await initialize(userNameFragment);
+    async (userNameFragment: Optional<string>): Promise<void> => {
+      if (userNameFragment) {
+        // If the new filter is an extension of the last filter value, just filter the list that we already have in
+        // memory Pagination wil still work since the next page fetch will use an absolute offset via cursor value
+        if (
+          cursorState.nameFilter &&
+          userNameFragment.startsWith(cursorState.nameFilter)
+        ) {
+          // Update the filter in state
+          setCursorState({
+            ...cursorState,
+            nameFilter: userNameFragment,
+          });
+
+          // Filter the current user list state by the new filter
+          const filteredUsers = users.filter((user) => {
+            return user.name.includes(userNameFragment);
+          });
+
+          // If there is data available after filtering, we're done.  Set state and get on with life.  If no data,
+          // fall through to initialize so we try to fetch the first filtered page.
+          if (filteredUsers.length > 0) {
+            // Upate state with the filtered list
+            setUsers(filteredUsers);
+            return;
+          }
+        }
       }
+
+      // If the new filter isn't an extension of the last filter value, reset state and re-query
+      await initialize(userNameFragment);
     },
     [cursorState, users]
   );
 
   return {
-    users,
-    pageNumber: cursorState.currentPageNumber,
-    nameFilter: cursorState.nameFilter,
-    isMoreData: cursorState.isMoreData,
-    loading,
-    error,
+    userData: {
+      users,
+      pageNumber: cursorState.currentPageNumber,
+      nameFilter: cursorState.nameFilter,
+      isMoreData: cursorState.isMoreData,
+      loading,
+      error,
+    },
     initialize,
     loadNextPage,
     updateFilter,

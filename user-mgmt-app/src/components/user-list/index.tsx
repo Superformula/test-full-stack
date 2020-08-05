@@ -5,6 +5,7 @@ import {
 } from 'components/user-list/styles';
 import React from 'react';
 import { User } from 'graphql/user-api/@types/types';
+import { color } from 'theme/token';
 
 export interface UserListProps {
   users: User[];
@@ -24,7 +25,9 @@ const UserListComponent: React.FC<UserListProps> = ({ users }) => {
     </UserCardContainer>
   ));
 
-  return <UserListContainer>{userCards}</UserListContainer>;
+  return (
+    <UserListContainer bg={color.background}>{userCards}</UserListContainer>
+  );
 };
 
 export const UserList = UserListComponent;

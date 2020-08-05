@@ -7,6 +7,7 @@ import {
   EditIconContainer,
 } from 'components/user-card/styles';
 import React from 'react';
+import { color } from 'theme/token';
 
 export interface UserCardProps {
   imageUrl: string;
@@ -22,13 +23,15 @@ const UserCardComponent: React.FC<UserCardProps> = ({
   onEdit,
 }) => {
   return (
-    <UserCardDiv>
+    <UserCardDiv bg={color.secondary}>
       <EditIconContainer>
         <EditIcon onClick={onEdit} />
       </EditIconContainer>
       <StyledAvatar imageUrl={imageUrl} />
-      <NameLabel>{userName}</NameLabel>
-      <DescriptionLabel>{userDescription}</DescriptionLabel>
+      <NameLabel title={userName}>{userName}</NameLabel>
+      <DescriptionLabel title={userDescription}>
+        {userDescription}
+      </DescriptionLabel>
     </UserCardDiv>
   );
 };
