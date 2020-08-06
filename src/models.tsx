@@ -54,6 +54,10 @@ export interface EditFormProps {
   cancel: any;
 };
 
+export interface EditMapProps {
+  address: String;
+};
+
 export interface EditUserProps {
   name: String,
   address: String,
