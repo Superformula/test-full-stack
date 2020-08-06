@@ -43,6 +43,7 @@ mutation UpdateUser($id: ID!, $name: String, $address: String, $description: Str
   }) {
     id
     name
+    avatar
     address
     description
     updatedAt
