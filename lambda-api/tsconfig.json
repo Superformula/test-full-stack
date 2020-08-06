@@ -2,7 +2,9 @@
   "compilerOptions": {
     "outDir": "./build",
     "allowJs": true,
-    "lib": ["es2017"],
+    "lib": [
+      "es2017"
+    ],
     "removeComments": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -11,7 +13,16 @@
     "noUnusedParameters": true,
     "target": "es2017",
     "esModuleInterop": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
   },
   "types": [
     "node",

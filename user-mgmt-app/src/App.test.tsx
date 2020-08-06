@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import App from './App';
 
 describe(' App', () => {
-  it('Should render', () => {
+  it('Should render', async () => {
     const { getByText } = render(<App />);
-    const hallo = getByText(/Hallo/i);
-    expect(hallo).toBeInTheDocument();
+    const usersList = getByText(/Loading.../i);
+    expect(usersList).toBeInTheDocument();
   });
 });

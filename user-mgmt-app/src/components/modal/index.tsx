@@ -33,6 +33,7 @@ const ModalComponent: React.FC<ModalProps & { children: React.ReactNode }> = ({
   return (
     <ModalBackground>
       <ModalDiv
+        data-testid="Modal"
         height={height}
         width={width}
         color="#F8F8F8"

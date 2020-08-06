@@ -40,7 +40,7 @@ const UserManagementPage: React.FC<
   const [userEditing, setUserEditing] = useState<Optional<User>>();
 
   // Debounce the filter value for type ahead
-  const debouncedFilterValue = useDebounce<Optional<string>>(filterValue, 500);
+  const debouncedFilterValue = useDebounce<Optional<string>>(filterValue, 750);
 
   /**
    * Initialize once on load
@@ -87,7 +87,7 @@ const UserManagementPage: React.FC<
    * When the user input is debounced, update the name filter on the user data hook
    */
   useEffect(() => {
-    if (debouncedFilterValue && !loading) {
+    if (!loading) {
       updateFilter(debouncedFilterValue).then(() =>
         console.debug('Filter updated')
       );

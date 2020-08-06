@@ -1,5 +1,5 @@
-import { AvatarDiv } from 'components/avatar/styles';
 import React from 'react';
+import { AvatarDiv } from 'components/avatar/styles';
 
 export interface AvatarProps {
   imageUrl: string;

@@ -18,5 +18,9 @@ export interface EditIconProps {
 }
 
 export const EditIcon: React.FC<EditIconProps> = ({ onClick }) => {
-  return <div onClick={onClick}>{editIconSvg}</div>;
+  return (
+    <div data-testid="EditIcon" onClick={onClick}>
+      {editIconSvg}
+    </div>
+  );
 };
