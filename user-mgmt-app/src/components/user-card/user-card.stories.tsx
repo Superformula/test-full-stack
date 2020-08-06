@@ -1,11 +1,13 @@
-import { text } from '@storybook/addon-knobs';
 import React from 'react';
 import { UserCard as UserCardComponent } from './index';
+import users from 'test/User.json';
 
 export default {
   title: 'UserCard',
   component: UserCardComponent,
 };
+
+const user = users[5];
 
 export const UserCard = () => {
   return (
@@ -14,9 +16,10 @@ export const UserCard = () => {
     >
       <UserCardComponent
         imageUrl="https://source.unsplash.com/random/168x168/?headshot&idx=1"
-        userName={text('User Name', 'Joe Schmo')}
-        userDescription={text('User Description', 'This is an example user')}
-        onEdit={() => {}}
+        user={user}
+        onEdit={(user) => {
+          alert(`User edit invoked ${JSON.stringify(user)}`);
+        }}
       />
     </div>
   );

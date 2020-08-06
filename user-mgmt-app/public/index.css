@@ -1,6 +1,7 @@
 body {
   width: 1800px;
   height: 1600px;
+  min-height: 1600px;
   background-color: #F8F8F8;
-  position: absolute;
+  position: relative;
 }

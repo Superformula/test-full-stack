@@ -5,12 +5,12 @@ import { VIEWPORT_BREAKPOINTS } from './viewport-breakpoints';
 import { ThemeKnob } from './theme-knob';
 
 addParameters({
-    viewport: {
-        viewports: VIEWPORT_BREAKPOINTS,
-    },
+  viewport: {
+    viewports: VIEWPORT_BREAKPOINTS,
+  },
 });
 
 addDecorator(withKnobs);
 
-const ThemeDecorator = storyFn => <ThemeKnob>{storyFn()}</ThemeKnob>;
+const ThemeDecorator = (storyFn) => <ThemeKnob>{storyFn()}</ThemeKnob>;
 addDecorator(ThemeDecorator);

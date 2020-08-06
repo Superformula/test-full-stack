@@ -14,7 +14,7 @@ const editIconSvg = (
 );
 
 export interface EditIconProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const EditIcon: React.FC<EditIconProps> = ({ onClick }) => {

@@ -1,6 +1,6 @@
 import { ModalBackground, ModalDiv } from 'components/modal/styles';
 import { withTheme } from 'emotion-theming';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export interface ModalProps {
   visible: boolean;
@@ -15,13 +15,34 @@ const ModalComponent: React.FC<ModalProps & { children: React.ReactNode }> = ({
   width,
   children,
 }) => {
-  return visible ? (
+  const [transitioning, setTransitioning] = useState(false);
+  const [modalVisible, setModalVisible] = useState(visible);
+
+  useEffect(() => {
+    if (!transitioning && !visible) {
+      setTransitioning(true);
+      setTimeout(() => {
+        setModalVisible(false);
+      }, 400);
+    } else if (transitioning && visible) {
+      setTransitioning(false);
+      setModalVisible(true);
+    }
+  }, [transitioning, visible]);
+
+  return (
     <ModalBackground>
-      <ModalDiv height={height} width={width} color="#FFFFFF">
+      <ModalDiv
+        height={height}
+        width={width}
+        color="#F8F8F8"
+        visible={visible}
+        modalVisible={modalVisible}
+      >
         {children}
       </ModalDiv>
     </ModalBackground>
-  ) : null;
+  );
 };
 
 export const Modal = withTheme(ModalComponent);

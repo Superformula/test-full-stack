@@ -41,4 +41,41 @@ export const globalStyles = css`
     font-size: 16px;
     line-height: 20px;
   }
+
+  .zoom-in {
+    /* start state */
+    .mfp-with-anim {
+      opacity: 0;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      transform: scale(0.8);
+    }
+
+    &.mfp-bg {
+      opacity: 0;
+      transition: all 0.3s ease-out;
+    }
+
+    /* animate in */
+    &.mfp-ready {
+      .mfp-with-anim {
+        opacity: 1;
+        transform: scale(1);
+      }
+      &.mfp-bg {
+        opacity: 0.8;
+      }
+    }
+
+    /* animate out */
+    &.mfp-removing {
+      .mfp-with-anim {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      &.mfp-bg {
+        opacity: 0;
+      }
+    }
+  }
 `;

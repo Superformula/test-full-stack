@@ -46,13 +46,13 @@ Retries are also implemented in the SPA via a retry middleware configured for th
 ### Setup
 
 #### Environment
-This project is set up to use `dotenv` for managing environment variable via a '.env' file in the root of [root dir]/lambdaapi.  Any key/value pair in this file will override the environment provided by the host OS.  This is convenient for local development as project don't need to pollute the global environment.  Of course standard environment variables may also be used.
-
 In order to execute requests against the Lamda API both locally and on AWS, the following environment variables need to be set:
 
 | Tables        | Are           |
 | ------------- |:-------------:|
 | MAPBOX_API_TOKEN  | This is a token (generated or public) needed to use mapbox.com API for geocoding |
+
+This project is set up to use `dotenv` for managing environment variable via a '.env' file in the root of [root dir]/lambdaapi.  Any key/value pair in this file will override the environment provided by the host OS.  This is convenient for local development as project don't need to pollute the global environment.  Of course standard environment variables may also be used.
 
 ### Running locally
 In order to run your Serverless stack locally execute the following:

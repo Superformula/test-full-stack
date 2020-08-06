@@ -1,4 +1,4 @@
-/* eslint-disable */
+// eslint-disable
 import * as Types from '../../@types/types';
 
 import { UserFragment } from './user-fragment';

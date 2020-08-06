@@ -26,8 +26,8 @@ export interface UserData {
    * Error state
    */
   error: Optional<string>;
-  /** Is more data available?  i.e. should a next page operation be permitted?
-   *
+  /**
+   * Is more data available?  i.e. should a next page operation be permitted?
    */
   isMoreData: boolean;
 }
@@ -52,6 +52,10 @@ type UseUserData = {
    * Update the filter in place
    */
   updateFilter: (userNameFragment: Optional<string>) => Promise<void>;
+  /**
+   * Update a single user in the user cache
+   */
+  updateUserData: (user: User) => void;
 };
 
 interface CursorState {
@@ -245,17 +249,36 @@ export const useUserData = (pageSize = 10): UseUserData => {
     [cursorState, users]
   );
 
+  /**
+   * Update a single user in the user cache
+   */
+  const updateUserData = (user: User) => {
+    const updatedUsers =
+      users &&
+      users.map((oldUser) => {
+        // If the id matches, spread the new user data on the old user data otherwise return the old user
+        return oldUser.id === user.id
+          ? {
+              ...oldUser,
+              ...user,
+            }
+          : { ...oldUser };
+      });
+    setUsers(updatedUsers);
+  };
+
   return {
     userData: {
       users,
       pageNumber: cursorState.currentPageNumber,
       nameFilter: cursorState.nameFilter,
       isMoreData: cursorState.isMoreData,
-      loading,
+      loading: loading || pagesToLoad > 0,
       error,
     },
     initialize,
     loadNextPage,
     updateFilter,
+    updateUserData,
   };
 };

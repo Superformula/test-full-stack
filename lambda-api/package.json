@@ -64,6 +64,7 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "serverless": "^1.77.1",
+    "serverless-dotenv-plugin": "^3.0.0",
     "serverless-dynamodb-local": "^0.2.37",
     "serverless-offline": "^6.5.0",
     "serverless-plugin-monorepo": "^0.9.0",

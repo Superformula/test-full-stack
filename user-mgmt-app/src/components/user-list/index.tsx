@@ -9,18 +9,16 @@ import { color } from 'theme/token';
 
 export interface UserListProps {
   users: User[];
+  onEdit: (user: User) => void;
 }
 
-const UserListComponent: React.FC<UserListProps> = ({ users }) => {
-  const handleOnEdit = () => {};
-
+const UserListComponent: React.FC<UserListProps> = ({ users, onEdit }) => {
   const userCards = users.map((user, index) => (
     <UserCardContainer>
       <UserCard
-        userName={user.name}
-        userDescription={user.description}
+        user={user}
         imageUrl={`https://source.unsplash.com/random/168x168/??face${index}`}
-        onEdit={handleOnEdit}
+        onEdit={onEdit}
       />
     </UserCardContainer>
   ));

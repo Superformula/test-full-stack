@@ -2,6 +2,7 @@ service: lambda-api
 frameworkVersion: ">=1.1.0 <2.0.0"
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-plugin-monorepo
   - serverless-webpack
   - serverless-dynamodb-local

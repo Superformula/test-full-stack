@@ -1,23 +1,24 @@
 import { PrimaryButton } from 'components/button';
+import { EditUser } from 'components/edit-user';
 import { ErrorDialog } from 'components/error-dialog';
+import { Loading } from 'components/loading';
 import { UserList } from 'components/user-list';
+import { User } from 'graphql/user-api/@types';
 import { useDebounce } from 'hooks/use-debounce';
 import { useUserData } from 'hooks/use-user-data';
 import {
   RootDiv,
-  SearchInput,
   UserListLabel,
   UserListLayout,
   SearchBarContainer,
   LoadMoreContainer,
-  SearchInputContainer,
-  SearchLabel,
 } from 'pages/user-management/styles';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { RouteParams } from 'routes';
 import { color } from 'theme/token';
 import { Optional } from 'types';
+import { Input } from 'components/input';
 
 export interface UserManagementPageProps {
   nameFilter?: Optional<string>;
@@ -27,9 +28,16 @@ export interface UserManagementPageProps {
 const UserManagementPage: React.FC<
   UserManagementPageProps & RouteComponentProps
 > = ({ nameFilter, currentPage, history, location }) => {
-  const { userData, loadNextPage, initialize, updateFilter } = useUserData(6);
+  const {
+    userData,
+    loadNextPage,
+    initialize,
+    updateFilter,
+    updateUserData,
+  } = useUserData(6);
   const [showError, setShowError] = useState(false);
   const [filterValue, setFilterValue] = useState<Optional<string>>();
+  const [userEditing, setUserEditing] = useState<Optional<User>>();
 
   // Debounce the filter value for type ahead
   const debouncedFilterValue = useDebounce<Optional<string>>(filterValue, 500);
@@ -40,7 +48,9 @@ const UserManagementPage: React.FC<
   useEffect(() => {
     const initFn = async () => {
       await initialize(nameFilter, currentPage);
-      setFilterValue(nameFilter);
+      if (!loading) {
+        setFilterValue(nameFilter);
+      }
     };
     // eslint-disable-next-line no-console
     initFn().then(() => console.log('Initialized'));
@@ -62,10 +72,13 @@ const UserManagementPage: React.FC<
   }, [userData.pageNumber, userData.nameFilter]);
 
   const users = !userData.loading && !userData.error && userData.users;
-  const { error, isMoreData } = userData;
+  const { error, isMoreData, loading } = userData;
 
+  /**
+   * Show an error dialog on errors
+   */
   useEffect(() => {
-    if (error && showError) {
+    if (error && !showError) {
       setShowError(true);
     }
   }, [error, showError]);
@@ -74,45 +87,76 @@ const UserManagementPage: React.FC<
    * When the user input is debounced, update the name filter on the user data hook
    */
   useEffect(() => {
-    updateFilter(debouncedFilterValue);
+    if (debouncedFilterValue && !loading) {
+      updateFilter(debouncedFilterValue).then(() =>
+        console.debug('Filter updated')
+      );
+    }
     // eslint-disable-next-line
   }, [debouncedFilterValue]);
 
+  const editUser = (user: User) => {
+    setUserEditing(user);
+  };
+
+  const finishEditUser = (user?: Optional<User>) => {
+    // When editing is complete, update the cached User to keep UI state in sync
+    if (user) {
+      updateUserData(user);
+    }
+    setUserEditing(undefined);
+  };
+
   return (
     <RootDiv bg={color.background}>
+      <Loading message="Loading..." visible={loading} />
+
+      {userEditing && (
+        <EditUser
+          user={userEditing!}
+          visible={!!userEditing}
+          onClose={finishEditUser}
+        />
+      )}
+
+      {showError && (
+        <ErrorDialog
+          errorMessage={error}
+          onDismiss={() => {
+            setShowError(false);
+            initialize(nameFilter, currentPage).then(() =>
+              console.log('Reinitialized after loading error ack')
+            );
+          }}
+        />
+      )}
+
       <UserListLayout bg={color.background}>
         {users && (
           <>
             <SearchBarContainer>
               <UserListLabel>Users list</UserListLabel>
               <form>
-                <SearchInputContainer>
-                  <SearchLabel htmlFor="searchinput" visbile={!!filterValue}>
-                    Search
-                  </SearchLabel>
-                  <SearchInput
-                    id="searchinput"
-                    name="searchinput"
-                    value={filterValue ?? undefined}
-                    placeholder="Search..."
-                    onChange={(e) => setFilterValue(e.target.value)}
-                  />
-                </SearchInputContainer>
+                <Input
+                  name="searchinput"
+                  value={filterValue}
+                  label="Search"
+                  placeholder="Search..."
+                  onChange={(newValue: Optional<string>) => {
+                    if (newValue !== filterValue) {
+                      setFilterValue(newValue);
+                    }
+                  }}
+                />
               </form>
             </SearchBarContainer>
-            <UserList users={users} />
+            <UserList users={users} onEdit={editUser} />
           </>
         )}
-        {!showError && isMoreData && (
+        {!showError && isMoreData && !loading && (
           <LoadMoreContainer>
             <PrimaryButton onClick={loadNextPage}>Load more</PrimaryButton>
           </LoadMoreContainer>
-        )}
-        {showError && (
-          <ErrorDialog
-            errorMessage={error}
-            onDimiss={() => setShowError(false)}
-          />
         )}
       </UserListLayout>
     </RootDiv>

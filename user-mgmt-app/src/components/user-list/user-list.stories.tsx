@@ -12,7 +12,12 @@ export const UserList = () => {
     <div
       style={{ width: 1800, height: 1600, background: ' #F8F8F8', padding: 20 }}
     >
-      <UserListComponent users={users} />
+      <UserListComponent
+        users={users}
+        onEdit={(user) => {
+          alert(`User edit invoked ${JSON.stringify(user)}`);
+        }}
+      />
     </div>
   );
 };
