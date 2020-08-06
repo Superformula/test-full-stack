@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./assets/App.scss";
 import Amplify from "aws-amplify";
-import _ from "lodash";
 import Card from "./components/Card";
 import aws_exports from "./aws-exports";
 import { User } from "./models";

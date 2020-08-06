@@ -6,16 +6,15 @@ class EditMap extends Component<EditMapProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      lng: 5,
-      lat: 34,
+      longitude: 5,
+      latitude: 34,
       zoom: 2,
     };
   }
 
   render() {
     return (
-      <div>
-        {this.props.address}
+      <div className="Edit-map">
         <InteractiveMap
           width="500px"
           height="300px"

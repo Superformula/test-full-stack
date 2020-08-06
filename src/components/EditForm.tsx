@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { EditFormProps } from "../models";
+import { EditFormProps, UpdateUserQueryVariables } from "../models";
+import { GqlRetry, UpdateUser } from "../superformula-api";
 
 class EditForm extends Component<EditFormProps, any> {
   constructor(props: any) {
@@ -9,23 +10,30 @@ class EditForm extends Component<EditFormProps, any> {
       name: this.props.user.name,
       address: this.props.user.address,
       description: this.props.user.description,
+      latitude: null,
+      longitude: null,
     };
   }
 
-  submit = (event: React.FormEvent) => {
-    this.props.submit(this.state);
-    event.preventDefault();
+  submit = async (event: React.FormEvent) => {
+    const variables: UpdateUserQueryVariables = {
+      id: this.props.user.id,
+      name: this.state.name,
+      address: this.state.address,
+      description: this.state.description,
+      expectedVersion: this.props.user.version,
+    };
+    await GqlRetry(UpdateUser, variables);
   };
 
   updateText = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ [e.target.name]: e.target.value });
 
   handleAddress = _.debounce(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
-    const geocodeLookup = await fetch(
-      "https://api.mapbox.com/geocoding/v5/mapbox.places/Washington.json?limit=2&access_token=pk.eyJ1Ijoic3RlaW5rbGF0cmUiLCJhIjoiY2tkajEzb2tjMGFnNDMybzB6YnJoOWV3ZSJ9.IKb0brXr269EUis2xTsh4w"
-    );
-    console.log(geocodeLookup);
+    const data = await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${this.state.address}.json?limit=2&access_token=pk.eyJ1Ijoic3RlaW5rbGF0cmUiLCJhIjoiY2tkajEzb2tjMGFnNDMybzB6YnJoOWV3ZSJ9.IKb0brXr269EUis2xTsh4w`
+    )
+    console.log(data)
   }, 200);
 
   render() {

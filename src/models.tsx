@@ -38,7 +38,7 @@ export interface UpdateUserQueryVariables {
 }
 
 export interface CardProps {
-  activeUser: any;
+  activeUser: User;
   propagateUser: any;
 }
 
@@ -50,7 +50,6 @@ export interface EditModalProps {
 
 export interface EditFormProps {
   user: User;
-  submit: any;
   cancel: any;
 };
 

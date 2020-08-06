@@ -31,6 +31,13 @@
         flex-direction: column;
       }
     }
+
+    .Edit-modal-actions {
+      margin-top: 60px; // TODO: not responsive at all
+      button {
+        margin: 10px;
+      }
+    }
   }
 }
 
