@@ -1,9 +1,9 @@
 export interface User {
-  id: String;
-  name: String;
+  id: string;
+  name: string;
   avatar: String;
-  address: String;
-  description: String;
+  address: string;
+  description: string;
   createdAt: Date;
   version: Number;
 }
@@ -37,11 +37,28 @@ export interface UpdateUserQueryVariables {
   expectedVersion: Number;
 }
 
+export interface CardProps {
+  activeUser: any;
+  propagateUser: any;
+}
+
 export interface EditModalProps {
   modalIsOpen: boolean;
   handleClose: any;
-  user: UserEdit;
+  user: User;
 };
+
+export interface EditFormProps {
+  user: User;
+  submit: any;
+  cancel: any;
+};
+
+export interface EditUserProps {
+  name: String,
+  address: String,
+  description: String,
+}
 
 export interface SearchProps {
   handleNameSearch: any;

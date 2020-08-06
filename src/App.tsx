@@ -7,6 +7,7 @@ import Card from "./components/Card";
 import aws_exports from "./aws-exports";
 import { User, QueryVariables, QueryVariablesWithFilter } from "./models";
 import { GqlRetry, ListUsers } from "./superformula-api";
+import EditModal from "./components/EditModal";
 Amplify.configure(aws_exports);
 Amplify.Logger.LOG_LEVEL = "INFO";
 
@@ -14,15 +15,12 @@ class App extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      isLoading: false,
+      activeUser: null,
+      modalIsOpen: false,
       nextToken: "",
       users: [],
       searchValue: "",
     };
-  }
-
-  async componentDidMount() {
-    this.getUsers();
   }
 
   setNextToken = (token: String) => {
@@ -74,6 +72,19 @@ class App extends Component<any, any> {
     this.setState({ isLoading: false });
   };
 
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+  };
+  
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
+
+  setActiveUser = (user: User) => {
+    this.setState({activeUser: user});
+    this.openModal();
+  };
+
   render() {
     return (
       <div className="App">
@@ -82,22 +93,14 @@ class App extends Component<any, any> {
           <SearchInput handleNameSearch={this.handleNameSearch} />
         </header>
         <div className="App-content">
-          <div className="Card-list">
-            {this.state.users.map((user: User, index: any) => (
-              <Card
-                key={index}
-                user={{
-                  id: user.id,
-                  name: user.name,
-                  avatar: user.avatar,
-                  address: user.address,
-                  description: user.description,
-                  createdAt: user.createdAt,
-                  version: user.version,
-                }}
-              />
-            ))}
-          </div>
+          <Card 
+            activeUser={this.state.activeUser}
+            propagateUser={this.setActiveUser} />
+          { this.state.activeUser ? <EditModal
+            modalIsOpen={this.state.modalIsOpen}
+            handleClose={this.closeModal}
+            user={this.state.activeUser}
+          /> : null }
           <div className="Loader">
             {this.state.isLoading ? <h4>Loading...</h4> : null}
           </div>
@@ -107,9 +110,9 @@ class App extends Component<any, any> {
             ) : null}
           </div>
           <div className="Load-more-button-container">
-            {this.state.nextToken && this.state.users.length ? (
+            {/* {this.state.nextToken && this.state.users.length ? ( */}
               <button onClick={this.getNextUser}>Load More...</button>
-            ) : null}
+            {/* ) : null} */}
           </div>
         </div>
       </div>

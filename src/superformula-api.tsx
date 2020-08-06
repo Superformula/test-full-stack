@@ -1,6 +1,21 @@
 import { graphqlOperation, API } from "aws-amplify";
 import retry from "async-retry";
 
+export const SubscribeToUsers = `
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    name
+    avatar
+    address
+    description
+    createdAt
+    version
+  }
+}
+`;
+
+
 export const ListUsers = `
 query ListUsers($limit: Int, $nextToken: String, $filter: ModelUserFilterInput) {
   listUsers(limit: $limit, nextToken: $nextToken, filter: $filter) {
