@@ -1,0 +1,18 @@
+{
+  "data": {
+    "listUsers": {
+      "nextToken": "eyJ2ZXJzaW9uIjoyLCJ0b2tlbiI6IkFRSUNBSGg5OUIvN3BjWU41eE96NDZJMW5GeGM4WUNGeG1acmFOMUpqajZLWkFDQ25BRWdQRStSZkVFK2RacnczaXR2bnZhN0FBQUNCakNDQWdJR0NTcUdTSWIzRFFFSEJxQ0NBZk13Z2dIdkFnRUFNSUlCNkFZSktvWklodmNOQVFjQk1CNEdDV0NHU0FGbEF3UUJMakFSQkF3MEY2NFpsYzJmbnJOb1p2UUNBUkNBZ2dHNWNIMXhuM0RIbFhza2wrMi9XVWJwcUc2TWg3MTNXaXI4ZFAzMHFvSG4xaGNpYm11WkpqS0c1bThCanROdVlZWVFsNThRMmNmTzZKcnRWaDUvbVJ4QXZGeUF1VGU5Uy8raDc2RExyT2dzajRER1ZHemVGVnRHdWE0U0kya0xseHBWSFQrTE15VUwvaW50Qi9BN3drQkdiUWtUbGk2MGIxOWpHZjliQjJocnUxcE0rQk9QK3VkeWE5MWRCREhIaDNXNmpFcEFPYmV2dDhQZ04wZG9nTnEyVnpEUjhEcGY0YjU5OWhlczVIMytOWCtnQjJreTA4MkpTMDY0c2l6cnZ3KzdHYTQrSCtLR2JpK1ZZQVVyQS9GMjBLcTNNQUt2amVzNFZNRHpMc1NhNTBLVnJFbW41REJqWVRqc0w1ZVlUK2Z6aC9BbWJTazZrY1UxY2IvT3FQYzRYRTRnUm8wbzZZSW5xOUMweERHRTUrYVUrNVpEMHhLNjV2bEpPalpFSDM5MlBSdVBkRUNWUHdwTVdnK2IwczNSNEZmRE1jYi94V0NOc1BQVFNMd09raXl2SlhNckJCRUVNOFk4Lzh6bDB2UWlVaWE4ZVpDcmtWOVMrdzNnSjlGQVFJSUdRMnFDYTgyY1BKYkloU1pjNHJ1eUVpbTh3bXNMYjRKYzZOSVZzSWh0ejVnWmEvZU8vVVJxNHpOMEpPckFVdzJMdDFoUDFpRjJacno1NzlDRmsyNW03ZVFhSEU4Qmo5ZDZ3M0VIN3RSVnFPQXB4TkpnSmlSeSJ9",
+      "items": [
+        {
+          "id": "87f61d0a-8c76-4c18-8d24-840a84aeaf35",
+          "name": "Bradley Huntington Jr",
+          "avatar": "https://source.unsplash.com/random/?avatar,man,surf",
+          "address": "53 Pennsylvania Avenue, Brooklyn, NY",
+          "description": "It's a wonderful life isn't it?",
+          "createdAt": "2020-08-04T02:02:10.120Z",
+          "version": 11
+        }
+      ]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-# Superformula Developer Test (v1.0.0)
+# Superformula Developer Test (v1.1.0)
 
 This project is for a full stack developer take home test. The live demo can be found at [https://master.d1murkhtb2ui4y.amplifyapp.com/](https://master.d1murkhtb2ui4y.amplifyapp.com/)
 
@@ -25,9 +25,8 @@ This project is for a full stack developer take home test. The live demo can be 
 In the project directory, you can run:
 
 - `yarn start`. Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
 - `yarn test` Launches the test runner in the interactive watch mode.
-
+- `npm run cypress` Launches the e2e cypress testing suite.
 - `yarn build` Builds the app for production to the `build` folder.
 
 ## Deployment

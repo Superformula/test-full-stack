@@ -30,6 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,6 +50,8 @@
   },
   "devDependencies": {
     "@types/async-retry": "^1.4.2",
-    "@types/mapbox-gl": "^1.11.1"
+    "@types/mapbox-gl": "^1.11.1",
+    "cypress": "^4.12.1",
+    "eslint-plugin-cypress": "^2.11.1"
   }
 }

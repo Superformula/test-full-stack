@@ -1,0 +1,63 @@
+{
+  "data": {
+    "listUsers": {
+      "nextToken": "eyJ2ZXJzaW9uIjoyLCJ0b2tlbiI6IkFRSUNBSGg5OUIvN3BjWU41eE96NDZJMW5GeGM4WUNGeG1acmFOMUpqajZLWkFDQ25BRWhwcUlZaVpyb2xxeEtVVFAyenBoSkFBQUNCakNDQWdJR0NTcUdTSWIzRFFFSEJxQ0NBZk13Z2dIdkFnRUFNSUlCNkFZSktvWklodmNOQVFjQk1CNEdDV0NHU0FGbEF3UUJMakFSQkF3a01jcUd2UTBOUTlsY0JXSUNBUkNBZ2dHNTEzcGxNdXVZejhKZkI2L1FBSGdqL1ZkSnVwa1JFSGtyaVBDRGMrN3hwd3hkL2QyVkNtRGFxdWhiZU1oWTZJWUJKdjlUcUZqdW1BQnhDdmJkZTc4WUxyL1g4UFZDTjhrTzNXbzdqL2FtczRmcjJtaVk4Q0FJdGlNRUVpTnVhRlFUVEFHWTBXdC8zWjhVYURyM04rdEhlWWxPRzhuNEhPdlBscVExR2hKMWVrejFTbnVTUGpQNmM0dEhCb2lrV1lEaml5a0Nzcm5hQ3ZBa214KzRmRCtRTzUxRmxKUmkxdlB3MHVBZ20yL1hHeVMrcXk2TEx6RC83MkprbUhCRDNyVjZ1M1VSWVFieWcvaTBDR3pjV2NNZXhvaGVIRjRrNWFxZjlwa0hlY1N1djdlbU5Ma2ZFeFY3dE1uc2JjM1NXVXdjemp4RFFSYUJJNWdwdEExWUJkZFFqT0liYlRrOW5qMExMK3k4dGtkd1c5UklSSFNhMzVxb2piUDVGMUVQYjdrMW1vMW1kMmhUQmJtQXNZNXBCNHJWcXRrTjZlblNLM083bVFFOFhnZnpZOTJ3QlNHSm8yd1lsUkNMZ01Qdkp2T3QzN1Jxc1VtSUxZSGEzU0E3bzI4YzBSa2Y1Rlkwd3EvajJQaW9iTTBnUE5tQWFiYUtIRVNFZTVvWUxpM0VtTnZSN2NtSE1VTW1RUjRsVXI4NUlPYU1tQTE4RGNieGdlSm0rOCs2YUNwWnl0bDUxeGg4M3crendPL1IzVjI2VnpEK1J2VGZLQlhTMmw5bSJ9",
+      "items": [
+        {
+          "id": "30e59887-5a2e-4d7c-829b-d6f83c64f3d6",
+          "name": "Sarah Johansburg",
+          "avatar": "https://source.unsplash.com/random/?avatar,woman,sad",
+          "address": "148 Central Ave, New York, NY",
+          "description": "This is a good day to die. Kaplah!",
+          "createdAt": "2020-08-04T02:02:57.436Z",
+          "version": 34
+        },
+        {
+          "id": "9892b226-5a32-4d4c-9f2d-6c313c445b15",
+          "name": "Usaf Khalif Jr",
+          "avatar": "https://source.unsplash.com/random/?avatar,man,beach",
+          "address": "983 Washington Drive Washington, DC",
+          "description": "I drink and I know things.",
+          "createdAt": "2020-08-04T02:03:47.674Z",
+          "version": 9
+        },
+        {
+          "id": "87f61d0a-8c76-4c18-8d24-840a84aeaf35",
+          "name": "Bradley Huntington Jr",
+          "avatar": "https://source.unsplash.com/random/?avatar,man,surf",
+          "address": "53 Pennsylvania Avenue, Brooklyn, NY",
+          "description": "It's a wonderful life isn't it?",
+          "createdAt": "2020-08-04T02:02:10.120Z",
+          "version": 11
+        },
+        {
+          "id": "1f09bc47-9e1f-4935-a454-d3e657d99e90",
+          "name": "Sally Plainville",
+          "avatar": "https://source.unsplash.com/random/?avatar,woman,night",
+          "address": "West 134 Street, Hawthorne, Los Angeles, CA",
+          "description": "Hopefully this works the way I expect it to!",
+          "createdAt": "2020-08-04T02:00:22.844Z",
+          "version": 1
+        },
+        {
+          "id": "b012cdf2-e3be-4e68-a2e7-559d5dbcfc00",
+          "name": "Bob Dirty",
+          "avatar": "https://source.unsplash.com/random/?avatar,man",
+          "address": "Calle Bob Dylan, 58, Alhaur�n de la Torre, Spain",
+          "description": "It's a sunny day in Spain today. Care to join me for tea?",
+          "createdAt": "2020-08-04T01:58:52.442Z",
+          "version": 2
+        },
+        {
+          "id": "6288e119-726e-474b-9785-b0cc6a5655ab",
+          "name": "Jack Flax",
+          "avatar": "https://source.unsplash.com/random/?avatar,man,plane",
+          "address": "4674 West Los Angeles Avenue, Simi Valley, CA",
+          "description": "This is what I do and how I do it.",
+          "createdAt": "2020-08-04T02:10:02.753Z",
+          "version": 1
+        }
+      ]
+    }
+  }
+}

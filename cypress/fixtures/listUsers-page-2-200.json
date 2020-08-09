@@ -1,0 +1,36 @@
+{
+  "data": {
+    "listUsers": {
+      "nextToken": null,
+      "items": [
+        {
+          "id": "02811022-7801-41d9-a00d-efb7b4a0b475",
+          "name": "Olivia Surval",
+          "avatar": "https://source.unsplash.com/random/?avatar,woman,plane",
+          "address": "4678 East Los Angeles Avenue, Simi Valley, CA",
+          "description": "Amazing day in paridise today, let's do this!",
+          "createdAt": "2020-08-04T02:05:35.912Z",
+          "version": 1
+        },
+        {
+          "id": "1edf97f3-8136-43e9-83eb-7851c96d25fc",
+          "name": "Janet Doe",
+          "avatar": "https://source.unsplash.com/random/?avatar,woman,car",
+          "address": "128 Carnegie Row, Norwood, MA",
+          "description": "A totally legit person is listed here.",
+          "createdAt": "2020-08-04T02:04:31.637Z",
+          "version": 2
+        },
+        {
+          "id": "96a89e42-d946-47b0-8c5c-1186f7b2f9bb",
+          "name": "John Doe",
+          "avatar": "https://source.unsplash.com/random/?avatar,happy,man",
+          "address": "45 Florida Avenue Northeast, Washington, DC",
+          "description": "Another fancy description for this person.",
+          "createdAt": "2020-08-04T02:01:17.389Z",
+          "version": 1
+        }
+      ]
+    }
+  }
+}
