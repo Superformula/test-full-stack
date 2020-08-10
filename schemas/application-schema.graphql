@@ -4,6 +4,8 @@ type User @model @versioned {
   avatar: String!
   dob: AWSDate
   address: String!
+  lat: String
+  long: String
   description: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
