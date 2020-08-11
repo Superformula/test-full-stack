@@ -5,9 +5,11 @@ import { EditModalProps } from "../models";
 import EditForm from "./EditForm";
 import EditMap from "./EditMap";
 
-ReactModal.setAppElement("#modal-root");
-
 class EditModal extends Component<EditModalProps, any> {
+
+  componentDidMount() {
+    ReactModal.setAppElement("#modal-root");
+  }
 
   handleCancel = () => {
     this.props.handleClose();
