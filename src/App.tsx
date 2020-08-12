@@ -20,13 +20,13 @@ class App extends Component<any, any> {
   closeModal = () => {
     this.setState({ modalIsOpen: false });
   };
-  
+
   openModal = () => {
     this.setState({ modalIsOpen: true });
   };
 
   setActiveUser = (user: User) => {
-    this.setState({activeUser: user});
+    this.setState({ activeUser: user });
     this.openModal();
   };
 
@@ -34,14 +34,17 @@ class App extends Component<any, any> {
     return (
       <div className="App">
         <div className="App-content">
-          <Card 
+          <Card
             activeUser={this.state.activeUser}
-            propagateUser={this.setActiveUser} />
-          { this.state.activeUser ? <EditModal
-            modalIsOpen={this.state.modalIsOpen}
-            handleClose={this.closeModal}
-            user={this.state.activeUser}
-          /> : null }
+            propagateUser={this.setActiveUser}
+          />
+          {this.state.activeUser ? (
+            <EditModal
+              modalIsOpen={this.state.modalIsOpen}
+              handleClose={this.closeModal}
+              user={this.state.activeUser}
+            />
+          ) : null}
         </div>
       </div>
     );

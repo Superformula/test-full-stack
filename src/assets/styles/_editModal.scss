@@ -22,6 +22,10 @@
     align-items: center;
     justify-content: space-evenly;
 
+    .Edit-modal-map {
+      padding: 5px;
+    }
+
     .Edit-modal-form {
       display: flex;
       flex-direction: column;

@@ -8,6 +8,8 @@ subscription OnUpdateUser {
     name
     avatar
     address
+    latitude
+    longitude
     description
     createdAt
     version
@@ -25,6 +27,8 @@ query ListUsers($limit: Int, $nextToken: String, $filter: ModelUserFilterInput) 
       name
       avatar
       address
+      latitude
+      longitude
       description
       createdAt
       version
@@ -33,11 +37,13 @@ query ListUsers($limit: Int, $nextToken: String, $filter: ModelUserFilterInput) 
 }`;
 
 export const UpdateUser = `
-mutation UpdateUser($id: ID!, $name: String, $address: String, $description: String, $expectedVersion: Int!) {
+mutation UpdateUser($id: ID!, $name: String, $address: String, $latitude: Float, $longitude: Float, $description: String, $expectedVersion: Int!) {
   updateUser( input: {
-    id: $id, 
-    name: $name, 
-    address: $address, 
+    id: $id
+    name: $name
+    address: $address
+    latitude: $latitude
+    longitude: $longitude
     description: $description
     expectedVersion: $expectedVersion
   }) {
