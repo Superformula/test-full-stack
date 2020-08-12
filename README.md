@@ -18,7 +18,13 @@ This project is for a full stack developer take home test. The live demo can be 
 - [ ] The search functionality performs real time filtering: client side data
 - [x] List of users updates automatically after single user is updated
 - [x] Appear/Disappear of modal is animated via CSS
-- [ ] Map with user location updates async - when user changes "location" field
+- [x] Map with user location updates async - when user changes "location" field
+
+## Installation
+
+In the project directory, you can run:
+
+- `yarn install` this will install all required packages for development and/or deployment
 
 ## Development
 
@@ -30,8 +36,18 @@ In the project directory, you can run:
 - `yarn build` Builds the app for production to the `build` folder.
 
 ## Deployment
+ 
+Utilizing AWS tooling, this is easily deployed using AWS Amplify to host the frontend and backend to include the API.
 
-Will update in a follow up commit.
+1. Ensure you've followed the installation sections instructions above.
+2. Ensure you've set up your AWS account and settings. These installation instructions assume you have set up the AWS Amplify CLI before.
+3. `amplify init` to initialize the directory as an AWS Amplify Javascript app using the React framework.
+    - Note: For the profile I chose to provide the access key of a user to simplify data access.
+4. `amplify push` Provision your cloud resources based on the local setup and configured features. 
+   - Note: When asked to generate code, answer NO (answering YES overwrites the current custom files in the src/graphql folder).
+5. `amplify add hosting` to publish the frontend code.
+   - Note: Choose hosting with Amplify Console
+   - Note: Choose continous deployment
 
 ## Developer Reasoning & Ramblings
 
@@ -41,4 +57,4 @@ I had naively thought that React can't be that much different from Angular or Vu
 
 My biggest struggles and time losses were in the subscription response as I kept getting a null response. I had to just scrap it and move on and at this point I would reach out to my peers and see what silly thing I was overlooking.
 
-If time and skills allow I will be taking the plunge into learning how the AWS Lambda functions work as the address to lat/long lookup doesn't belong on the client side (my gut feeling).
+~If time and skills allow I will be taking the plunge into learning how the AWS Lambda functions work as the address to lat/long lookup doesn't belong on the client side.~ I've implemented the Google geocode api cient side as diving into the Lambda world without a mentor seems a tad daunting. It makes sense to me what/how it works but tying it all together has escaped me.
