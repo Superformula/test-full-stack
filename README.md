@@ -19,6 +19,7 @@ This project is for a full stack developer take home test. The live demo can be 
 - [x] List of users updates automatically after single user is updated
 - [x] Appear/Disappear of modal is animated via CSS
 - [x] Map with user location updates async - when user changes "location" field
+- [ ] Unit Tests (not doing most likely, see Testing note below)
 
 ## Installation
 
@@ -58,3 +59,9 @@ I had naively thought that React can't be that much different from Angular or Vu
 My biggest struggles and time losses were in the subscription response as I kept getting a null response. I had to just scrap it and move on and at this point I would reach out to my peers and see what silly thing I was overlooking.
 
 ~If time and skills allow I will be taking the plunge into learning how the AWS Lambda functions work as the address to lat/long lookup doesn't belong on the client side.~ I've implemented the Google geocode api cient side as diving into the Lambda world without a mentor seems a tad daunting. It makes sense to me what/how it works but tying it all together has escaped me.
+
+## Unit Tests
+
+I am at a crossroads with these unit tests. For this particular app I ran into two road blocks. First one being the only functions that made sense to unit test are very simple state changes and second one being I am not sure how to actually do unit tests in react.
+
+So obviously, I can write a unit test but the react testing ecosystem is a bit strange from what I am gathering. You can use the rendering and enzyme tools to render the output and check for it but then why would I use cypress? I also wasn't sure how to stub and mock things out. Perhaps I am just so used to the component stuff in angular and vue? In the end I just found it super frustrating in particular with the card rendering stuff. I gave it the mock data but the tests would fail because the card itself was off the virtual DOM I think? 🤔  Not quite sure here.
