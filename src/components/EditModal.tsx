@@ -16,7 +16,6 @@ class EditModal extends Component<EditModalProps, any> {
 
   render() {
     return (
-      <div onClick={e => e.stopPropagation()}>
       <div onClick={(e) => e.stopPropagation()}>
         <ReactModal
           isOpen={this.props.modalIsOpen}
