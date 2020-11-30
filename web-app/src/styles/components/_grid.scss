@@ -1,0 +1,27 @@
+.grid {
+  @include grid-base($desk-grid-width);
+
+  @media screen and (max-width: $grid-tablet-breakpoint) {
+    width: $tab-grid-width;
+  }
+
+  @media screen and (max-width: $grid-mobile-breakpoint) {
+    width: $mob-grid-width;
+  }
+
+  &-0 {
+    @include grid-base(100%);
+  }
+}
+
+.col {
+  @include columns-loop(desk, $grid-desktop-columns, $desk-gutter);
+
+  @media screen and (max-width: $grid-tablet-breakpoint) {
+    @include columns-loop(tab, $grid-tablet-columns, $tab-gutter);
+  }
+
+  @media screen and (max-width: $grid-mobile-breakpoint) {
+    @include columns-loop(mob, $grid-mobile-columns, $mob-gutter);
+  }
+}

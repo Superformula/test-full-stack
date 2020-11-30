@@ -1,0 +1,92 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/// Regular font family
+/// @type List
+$text-font-stack: 'Source Sans Pro',
+'Open Sans',
+'Helvetica Neue Light',
+'Helvetica Neue',
+'Helvetica',
+'Arial',
+sans-serif !default;
+
+/// Code (monospace) font family
+/// @type List
+$code-font-stack: 'Courier New',
+'DejaVu Sans Mono',
+'Bitstream Vera Sans Mono',
+'Monaco',
+monospace !default;
+
+/// Copy text color
+/// @type Color
+$text-color: rgb(34, 34, 34) !default;
+
+// Light background color
+$light-background-color: rgb(248, 248, 248, 1) !default;
+
+/// Main brand color
+/// @type Color
+$brand-color: rgb(229, 0, 80) !default;
+
+/// Light grey
+/// @type Color
+$light-grey: rgb(237, 237, 237) !default;
+
+/// Medium grey
+/// @type Color
+$mid-grey: rgb(153, 153, 153) !default;
+
+/// Dark grey
+/// @type Color
+$dark-grey: rgb(68, 68, 68) !default;
+
+/// Container's maximum width
+/// @type Length
+$max-width: 1430px !default;
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: ('small': 320px,
+  'medium': 768px,
+  'large': 1024px,
+) !default;
+
+/// Relative or absolute URL where all assets are served from
+/// @type String
+/// @example scss - When using a CDN
+$base-url: '/assets/' !default;
+
+/// Flex grid variables
+$grid-desktop-columns: 12;
+$grid-desktop-sideMargin: 80px;
+$grid-desktop-gutter: 64px;
+$grid-desktop-breakpoint: 1400px;
+// tablet grid
+$grid-tablet-columns: 12;
+$grid-tablet-sideMargin: 60px;
+$grid-tablet-gutter: 30px;
+$grid-tablet-breakpoint: 1020px;
+
+// mobile grid
+$grid-mobile-columns: 4;
+$grid-mobile-sideMargin: 32px;
+$grid-mobile-gutter: 20px;
+$grid-mobile-breakpoint: 620px;
+
+// pixels to % variables
+$desk-grid-width: 100% - (($grid-desktop-sideMargin * 2 / $grid-desktop-breakpoint) * 100%);
+$tab-grid-width: 100% - (($grid-tablet-sideMargin * 2 / $grid-tablet-breakpoint) * 100%);
+$mob-grid-width: 100% - (($grid-mobile-sideMargin * 2 / $grid-mobile-breakpoint) * 100%);
+
+$desk-gutter: (($grid-desktop-gutter / ($grid-desktop-breakpoint - ($grid-desktop-sideMargin * 2))) * 100%);
+$tab-gutter: (($grid-tablet-gutter / ($grid-tablet-breakpoint - ($grid-tablet-sideMargin * 2))) * 100%);
+$mob-gutter: (($grid-mobile-gutter / ($grid-mobile-breakpoint - ($grid-mobile-sideMargin * 2))) * 100%);
+
+// Paddings and margins utilities
+// Utilities : Paddings, Margins
+$spaces: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+$sides: (top, right, bottom, left);

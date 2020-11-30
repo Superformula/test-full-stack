@@ -1,0 +1,32 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+input {
+  width: 400px;
+  height: 64px;
+  padding: 16px;
+
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.ng-invalid:not(form)  {
+  border: 2px solid rgb(200, 0, 0);
+}
+
+.input-label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  display: flex;
+}
+
+input:focus {
+  border: 2px solid rgba(0, 0, 0, 0.200);
+}

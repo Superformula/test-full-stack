@@ -1,0 +1,17 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+.card {
+  width: 400px;
+  height: 336px;
+
+  background: #FFFFFF;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.card:hover {
+  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+}
