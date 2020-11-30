@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  GOOGLE_MAPS_API: 'AIzaSyCQgK1lTdWc-p8opAKYJf8BxYFI7cuYvEs'
 };
