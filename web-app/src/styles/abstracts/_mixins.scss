@@ -1,0 +1,100 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+/// Event wrapper
+/// @author Harry Roberts
+/// @param {Bool} $self [false] - Whether or not to include current selector
+@mixin on-event($self: false) {
+  @if $self {
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+
+  @else {
+
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+/// Make a context based selector a little more friendly
+/// @author Hugo Giraudel
+/// @param {String} $context
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+/// Flex grid mixins
+@function col-width($i, $columns) {
+  @return 100% / $columns * $i;
+}
+
+@mixin col-props($i, $columns, $gutter) {
+  box-sizing: border-box;
+  width: col-width($i, $columns);
+}
+
+@mixin columns-loop($name, $columns, $gutter) {
+  @for $i from 0 through $columns {
+    &-#{$name}-#{$i} {
+      @include col-props($i, $columns, $gutter);
+    }
+
+    &-#{$name}-shift-#{$i} {
+      margin-left: col-width($i, $columns);
+    }
+  }
+}
+
+@mixin grid-base($width) {
+  box-sizing: border-box;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  max-width: $grid-desktop-breakpoint;
+}
+
+@each $space in $spaces {
+  .m-#{$space} {
+    margin: #{$space/4}rem;
+  }
+
+  .p-#{$space} {
+    padding: #{$space/4}rem;
+  }
+
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space/4}rem !important;
+    }
+
+    .p#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space/4}rem !important;
+    }
+  }
+}
+
+// Width and height utilities
+@for $value from 1 through 12 {
+  $percent: percentage($value/12);
+
+  .w-#{$value} {
+    width: $percent;
+  }
+
+  .h-#{$value} {
+    width: $percent;
+  }
+}
