@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { DynamooseModule } from 'nestjs-dynamoose';
 
 import { UserModule } from './user/user.module';
+import { LocationModule } from './location/location.module';
 
 export const dynamooseConfiguration = {
   local: process.env.IS_DDB_LOCAL === 'true',
@@ -27,6 +28,9 @@ export const graphQLConfiguration = {
     DynamooseModule.forRoot(dynamooseConfiguration),
 
     UserModule,
+
+    LocationModule,
   ],
+  controllers: [],
 })
 export class AppModule { }
