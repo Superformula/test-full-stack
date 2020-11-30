@@ -2,8 +2,6 @@
 import { Subject } from 'rxjs';
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 
-import { defaultNavigation } from 'src/app/layout/navigation';
-
 @Component({
   selector: 'basic-layout',
   templateUrl: './basic.component.html',
@@ -12,7 +10,6 @@ import { defaultNavigation } from 'src/app/layout/navigation';
 })
 export class BasicLayoutComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
-  public menuItems = defaultNavigation;
 
   constructor() {
     this.unsubscribeAll = new Subject();
