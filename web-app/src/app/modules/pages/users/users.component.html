@@ -36,7 +36,7 @@
 
   <div class="center" *ngIf="users?.length > 0">
     <button class="btn uppercase" (click)="loadMore()" [class.disabled]="loadMoreDisabled"
-    [disabled]="loadMoreDisabled">Load more</button>
+      [disabled]="loadMoreDisabled">Load more</button>
   </div>
 </div>
 
@@ -46,9 +46,17 @@
 
     <form class="grid" [formGroup]="userForm">
       <div class="col-desk-6">
-        <agm-map [latitude]="lat" [zoom]="15" [longitude]="lng">
-          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-        </agm-map>
+        <ng-template [ngIf]="location" [ngIfElse]="loadingMap">
+          <agm-map [latitude]="location.lat" [zoom]="15" [longitude]="location.long">
+            <agm-marker [latitude]="location.lat" [longitude]="location.long"></agm-marker>
+          </agm-map>
+        </ng-template>
+
+        <ng-template #loadingMap>
+          <div class="center">
+            <img src="../../../../assets/utils/loader.svg" alt="Loader">
+          </div>
+        </ng-template>
       </div>
 
       <div class="col-desk-6">
@@ -70,8 +78,8 @@
     </form>
 
     <div class="right">
-      <button type="submit" (click)="showDialog = !showDialog" class="btn mr-12 uppercase" [class.disabled]="userForm.invalid"
-        [disabled]="userForm.invalid" (click)="updateUser()">Save</button>
+      <button type="submit" (click)="showDialog = !showDialog" class="btn mr-12 uppercase"
+        [class.disabled]="userForm.invalid" [disabled]="userForm.invalid" (click)="updateUser()">Save</button>
       <button type="button" (click)="showDialog = !showDialog" class="btn btn-secondary uppercase">Close</button>
     </div>
   </div>

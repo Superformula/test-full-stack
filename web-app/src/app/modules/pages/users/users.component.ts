@@ -6,8 +6,10 @@ import { Params, Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from 'src/app/data/model/user';
+import { Location } from 'src/app/data/model/location';
 import { PageInput } from 'src/app/data/enum/query-input.enum';
 import { UsersService } from 'src/app/core/users/services/users.service';
+import { LocationService } from 'src/app/core/location/services/location.service';
 
 @Component({
   selector: 'app-users',
@@ -15,15 +17,14 @@ import { UsersService } from 'src/app/core/users/services/users.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  lat = -23.8779431;
-  lng = -49.8046873;
+  public location: Location;
 
   // Page controls
   public showDialog = false;
   public loading = true;
   public currentPage = 1;
   public loadMoreDisabled = false;
-  private subscription: Subscription;
+  private subscriptions: Subscription[] = [];
   public nameSearchControl = new FormControl();
 
   public activeUser: User;
@@ -33,8 +34,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private locationService: LocationService,
     private usersService: UsersService,
-    private formBuilder: FormBuilder) { }
+  ) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -45,7 +48,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   private initializeForm(): void {
@@ -57,6 +62,18 @@ export class UsersComponent implements OnInit, OnDestroy {
           description: [null, Validators.required],
         }
       );
+
+    // Watch for address change
+    const addressSearchSubscription = this.userForm.get('address')
+      .valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(async address => {
+        if (address) {
+          this.location = await this.locationService.getLocationByAddress(address);
+        }
+      });
+
+    this.subscriptions.push(addressSearchSubscription);
   }
 
   private handleQueryParams(): void {
@@ -77,7 +94,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   private async initializeSearch(): Promise<void> {
-    this.subscription = this.nameSearchControl
+    const nameSearchSubscription = this.nameSearchControl
       .valueChanges
       .pipe(debounceTime(1000))
       .subscribe(name => {
@@ -90,11 +107,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
         this.usersService.findUserByName(name);
       });
+
+    this.subscriptions.push(nameSearchSubscription);
   }
 
   public openEditModal(user: User): void {
     this.showDialog = true;
-    this.applyFormValue(user);
+    this.applyEditValues(user);
     this.activeUser = user;
   }
 
@@ -144,12 +163,16 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  private applyFormValue(user: User): void {
+  private async applyEditValues(user: User): Promise<void> {
+    this.location = null;
+
     this.userForm.patchValue({
       name: user.name,
       address: user.address,
       description: user.description
     });
+
+    this.location = await this.locationService.getLocationByAddress(user.address);
   }
 
   public createMockUsersInDynamo(): void {
