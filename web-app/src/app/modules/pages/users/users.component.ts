@@ -123,6 +123,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.queryParamName.name = null;
           this.hideLoadingMoreButton = true;
           this.updateQueryParams(this.queryParamName);
+          if (this.queryParamPage.page > 0) { this.updateQueryParams(this.queryParamPage); }
 
           this.usersService.listUsers({ page: this.queryParamPage.page });
           return;
