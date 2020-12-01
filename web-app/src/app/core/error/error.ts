@@ -4,7 +4,7 @@ import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 Sentry.init({
-  dsn: 'https://a@sentry.io/1'
+  dsn: "https://2041093e66b8441997a2dc50b5a66ebc@o485348.ingest.sentry.io/5540575",
 });
 
 @Injectable()
