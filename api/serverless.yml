@@ -10,6 +10,7 @@ provider:
     STAGE: ${self:provider.stage}
     REGION: ${self:provider.region}
     NO_COLOR: ${env:NO_COLOR, 'true'}
+    MAPBOX_API: ${env:MAPBOX_API, 'true'}
   apiGateway:
     shouldStartNameWithService: true
   iamRoleStatements:
