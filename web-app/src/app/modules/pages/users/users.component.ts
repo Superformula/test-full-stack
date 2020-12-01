@@ -144,7 +144,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.activeUser = user;
   }
 
-  public loadMore(): void {
+  public async loadMore(): Promise<void> {
     this.isLoadingButton = true;
 
     ++this.queryParamPage.page;
@@ -157,7 +157,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       ).toString()
     );
 
-    this.usersService.listUsers({ page: this.queryParamPage.page });
+    await this.usersService.listUsers({ page: this.queryParamPage.page });
+
+    // Smooth scroll to bottom
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
   }
 
   private async getUsers(): Promise<void> {

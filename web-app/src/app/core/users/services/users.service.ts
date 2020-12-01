@@ -28,18 +28,18 @@ export class UsersService {
         const user = users[Math.floor(Math.random() * users.length)];
 
         const createUsers = gql`
-        mutation {
-          createUser(
-            input: {
-              name: "${user.name}"
-              dob: "${user.dob}"
-              description: "${user.description}"
-              address: "${user.address}"
+          mutation {
+            createUser(
+              input: {
+                name: "${user.name}"
+                dob: "${user.dob}"
+                description: "${user.description}"
+                address: "${user.address}"
+              }
+            ) {
+              id
             }
-          ) {
-            id
-          }
-        }`;
+          }`;
 
         this.apollo.mutate({ mutation: createUsers }).subscribe();
       });
