@@ -1,14 +1,16 @@
-import {NgModule} from '@angular/core';
-import {HttpLink} from 'apollo-angular/http';
-import {APOLLO_OPTIONS} from 'apollo-angular';
-import {ApolloClientOptions, InMemoryCache} from '@apollo/client/core';
+import { NgModule } from '@angular/core';
+import { HttpLink } from 'apollo-angular/http';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 
-// const uri = 'http://localhost:3000/dev/graphql';
-const uri = 'https://wqjm9ch055.execute-api.us-east-1.amazonaws.com/dev/graphql';
+import { environment } from 'src/environments/environment';
+
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
+  const uri = environment.APOLLO_CLIENT_URI;
+
   return {
-    link: httpLink.create({uri}),
+    link: httpLink.create({ uri }),
     cache: new InMemoryCache(),
   };
 }
@@ -22,4 +24,4 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     },
   ],
 })
-export class GraphQLModule {}
+export class GraphQLModule { }

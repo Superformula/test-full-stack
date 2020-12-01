@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  GOOGLE_MAPS_API: 'AIzaSyCQgK1lTdWc-p8opAKYJf8BxYFI7cuYvEs'
+  GOOGLE_MAPS_API: 'AIzaSyCQgK1lTdWc-p8opAKYJf8BxYFI7cuYvEs',
+  APOLLO_CLIENT_URI: 'http://localhost:3000/dev/graphql'
 };
 
 /*
