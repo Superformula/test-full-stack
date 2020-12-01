@@ -1,0 +1,35 @@
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  margin: 64px 0px;
+  justify-content: center;
+}
+
+.modalContent {
+  padding: 48px;
+}
+
+.modalContent > h1 {
+  margin: 0;
+  width: 750px;
+}
+
+.modalContentLayout {
+  margin-top: 36px;
+  margin-bottom: 36px;
+  display: grid;
+  grid-template-areas: "map form";
+  grid-template-columns: 2fr 3fr;
+  column-gap: 24px;
+}
+
+.modalContentLayout input {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.modalButtonsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+}

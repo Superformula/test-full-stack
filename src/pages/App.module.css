@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.searchBar {
+  min-width: 300px;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  column-gap: 36px;
+  row-gap: 36px;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  margin: 64px 0px;
+  justify-content: center;
+}

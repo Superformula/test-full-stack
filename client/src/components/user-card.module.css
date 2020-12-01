@@ -1,0 +1,47 @@
+.cardContent {
+  position: relative;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardContent button {
+  outline: none;
+  opacity: 0;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 100%;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+}
+
+.cardContent button:hover {
+  background-color: var(--color-background);
+}
+
+.cardContent:hover button {
+  opacity: 1;
+}
+
+.cardDetails {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cardDetails > h2, p {
+  margin-top: 0px;
+  margin-bottom: 4px;
+}

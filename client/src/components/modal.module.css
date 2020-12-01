@@ -1,0 +1,39 @@
+.modalBackground {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.3);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  pointer-events: all;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modalContainer {
+  border-radius: 8px;
+  background-color: var(--color-background);
+  transition: all 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modalContainer:hover {
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.08);
+}
+
+.hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

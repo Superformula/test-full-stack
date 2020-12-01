@@ -1,0 +1,30 @@
+.button {
+  outline: none;
+  background-color: var(--color-background);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 180px;
+  min-height: 56px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.button:hover {
+  border: 2px solid rgba(0, 0, 0, 0.4);
+}
+
+.button:focus {
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.button > p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 30px;
+  text-transform: uppercase;
+}
+
+.disabled {
+  color: rgba(0, 0, 0, 0.5);;
+}

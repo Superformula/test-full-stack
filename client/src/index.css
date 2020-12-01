@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap');
+
+* {
+  font-family: 'Source Sans Pro', sans-serif, system-ui;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Layout */
+  --max-width-content: 1080px;
+  --max-width-page-content: 780px;
+  --padding-content: 64px;
+  --default-border-radius: 1rem;
+
+  /* Brand colors */
+  --color-background: #F8F8F8;
+
+  /* Shades of grey */
+  --color-white: #FFFFFF;
+}
+
+html, body {
+  margin: 0;
+  background-color: var(--color-background);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: 48px;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 21px;
+}
+
+p {
+  font-weight: 300;
+  font-size: 16px;
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+input::placeholder {
+  font-weight: 300;
+  font-size: 16px;
+}
+
+
+.pageContent {
+  margin: 0 auto;
+  padding: 4rem var(--padding-content);
+  max-width: var(--max-width-content);
+}
