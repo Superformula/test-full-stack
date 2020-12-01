@@ -8,18 +8,18 @@ import { PageInput } from 'src/app/data/enum/query-input.enum';
 
 @Injectable()
 export class UsersService {
-  private categories$ = new BehaviorSubject<User[]>(null);
+  private $users = new BehaviorSubject<User[]>(null);
 
   constructor(
     private http: HttpClient,
     private apollo: Apollo) { }
 
-  private setUsers(categories: User[]): void {
-    this.categories$.next(categories);
+  private setUsers(users: User[]): void {
+    this.$users.next(users);
   }
 
   public getUsers(): Observable<Array<User>> {
-    return this.categories$.asObservable();
+    return this.$users.asObservable();
   }
 
   public createUser(): void {
