@@ -10,7 +10,7 @@
 
 <div *ngIf="!isLoadingData; else loadingActive">
   <div class="grid">
-    <div class="col-desk-4 col-tab-6 col-mob-12 pb-16" *ngFor="let user of users">
+    <div class="col-desk-4 col-tab-6 col-mob-12 pb-16" *ngFor="let user of users; let i = index">
       <div class="card p-10" (click)="openEditModal(user)" id="card">
         <div class="edit-information mr-4 edit-icon">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="center mb-7">
-          <img class="avatar" src="https://source.unsplash.com/random/168x168">
+          <img class="avatar" [src]="'https://source.unsplash.com/random?sig=' + i">
         </div>
 
         <div class="grid mb-2">
