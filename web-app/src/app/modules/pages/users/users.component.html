@@ -4,13 +4,13 @@
   </div>
 
   <div class="col-desk-4">
-    <input type="text" placeholder="Search..." [formControl]="nameSearchControl">
+    <search-user></search-user>
   </div>
 </div>
 
-<div *ngIf="!isLoadingData; else loadingActive">
+<div *ngIf="!usersService.isLoadingData; else loadingActive">
   <div class="grid">
-    <div class="col-desk-4 col-tab-6 col-mob-12 pb-16" *ngFor="let user of users; let i = index">
+    <div class="col-desk-4 col-tab-6 col-mob-12 pb-16" *ngFor="let user of usersService.users; let i = index">
       <div class="card p-10" (click)="openEditModal(user)" id="card">
         <div class="edit-information mr-4 edit-icon">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,10 +42,10 @@
   </div>
 </div>
 
-<div class="center" *ngIf="users?.length > 0">
-  <ng-template [ngIf]="!isLoadingButton" [ngIfElse]="loadingMoreData">
+<div class="center" *ngIf="usersService.users?.length > 0">
+  <ng-template [ngIf]="!usersService.isLoadingButton" [ngIfElse]="loadingMoreData">
     <button class="btn uppercase" (click)="loadMore()" [class.disabled]="loadMoreDisabled" [disabled]="loadMoreDisabled"
-      *ngIf="hideLoadingMoreButton">Load more</button>
+      *ngIf="usersService.hideLoadingMoreButton">Load more</button>
   </ng-template>
 
   <ng-template #loadingMoreData>
@@ -53,49 +53,8 @@
   </ng-template>
 </div>
 
-<app-dialog [(visible)]="showDialog">
-  <div class="p-16">
-    <h1 class="mb-16">Edit user</h1>
-
-    <form class="grid" [formGroup]="userForm">
-      <div class="col-desk-6">
-        <ng-template [ngIf]="geoLocation" [ngIfElse]="loadingMap">
-          <agm-map [latitude]="geoLocation.lat" [zoom]="15" [longitude]="geoLocation.long">
-            <agm-marker [latitude]="geoLocation.lat" [longitude]="geoLocation.long"></agm-marker>
-          </agm-map>
-        </ng-template>
-
-        <ng-template #loadingMap>
-          <div class="center">
-            <img src="../../../../assets/utils/loader.svg" alt="Loader">
-          </div>
-        </ng-template>
-      </div>
-
-      <div class="col-desk-6">
-        <div class="mb-9">
-          <span class="input-label mb-2">Name</span>
-          <input class="w-12" type="text" placeholder="Name..." formControlName="name">
-        </div>
-
-        <div class="mb-9">
-          <span class="input-label mb-2">Address</span>
-          <input class="w-12" type="text" placeholder="Address..." formControlName="address">
-        </div>
-
-        <div class="mb-9">
-          <span class="input-label mb-2">Description</span>
-          <input class="w-12" type="text" placeholder="Description..." formControlName="description">
-        </div>
-      </div>
-    </form>
-
-    <div class="right">
-      <button type="submit" (click)="showDialog = !showDialog" class="btn mr-12 uppercase"
-        [class.disabled]="userForm.invalid" [disabled]="userForm.invalid" (click)="updateUser()">Save</button>
-      <button type="button" (click)="showDialog = !showDialog" class="btn btn-secondary uppercase">Close</button>
-    </div>
-  </div>
+<app-dialog [(visible)]="usersEditService.showDialog">
+  <edit-user></edit-user>
 </app-dialog>
 
 <ng-template #loadingActive>
