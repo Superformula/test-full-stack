@@ -6,4 +6,18 @@
 agm-map {
   width: 500px;
   height: 350px;
- }
+}
+
+.edit-information {
+  visibility: hidden;
+}
+
+#card:hover .edit-information {
+  visibility: visible;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 0;
+  top: 15px;
+}
