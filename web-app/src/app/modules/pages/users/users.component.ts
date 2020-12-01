@@ -1,12 +1,13 @@
 
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { Location, LocationStrategy } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from 'src/app/data/model/user';
-import { Location } from 'src/app/data/model/location';
+import { GeoLocation } from 'src/app/data/model/geo-location';
 import { PageInput } from 'src/app/data/enum/query-input.enum';
 import { UsersService } from 'src/app/core/users/services/users.service';
 import { LocationService } from 'src/app/core/location/services/location.service';
@@ -17,19 +18,28 @@ import { LocationService } from 'src/app/core/location/services/location.service
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  public location: Location;
+  public geoLocation: GeoLocation;
 
   // Page controls
+  // Loader of the entire page, used when we need to fetch data
+  public isLoadingData = true;
+  // Loader of the button "LOAD MORE"
+  public isLoadingButton = false;
+  // Show/hide the button "LOAD MORE"
+  public hideLoadingMoreButton = true;
+
   public showDialog = false;
-  public loading = true;
-  public currentPage = 1;
   public loadMoreDisabled = false;
   private subscriptions: Subscription[] = [];
-  public nameSearchControl = new FormControl();
+
+  // Query params context
+  private queryParamPage: Params = { page: 1 };
+  private queryParamName: Params = { name: '' };
 
   public activeUser: User;
   public users: User[];
   public userForm: FormGroup;
+  public nameSearchControl = new FormControl();
 
   constructor(
     private router: Router,
@@ -37,13 +47,14 @@ export class UsersComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private locationService: LocationService,
     private usersService: UsersService,
+    private location: Location,
+    private locationStrategy: LocationStrategy
   ) { }
 
   ngOnInit(): void {
     this.getUsers();
     this.initializeForm();
-    this.initializeSearch();
-
+    this.watchSearch();
     this.handleQueryParams();
   }
 
@@ -69,7 +80,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(1000))
       .subscribe(async address => {
         if (address) {
-          this.location = await this.locationService.getLocationByAddress(address);
+          this.geoLocation = await this.locationService.getLocationByAddress(address);
         }
       });
 
@@ -78,32 +89,47 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private handleQueryParams(): void {
     this.activatedRoute.queryParams
-      .subscribe(params => {
-        if (params.createUser) { this.createMockUsersInDynamo(); }
-
-        this.loading = true;
-
-        if (params.page) { this.currentPage = params.page; }
-        else {
-          this.loadMoreDisabled = false;
-          this.currentPage = 1;
+      .subscribe(async params => {
+        if (params.createUser) {
+          this.createMockUsersInDynamo();
+          return;
         }
 
-        this.listUsers(true);
+        this.isLoadingData = true;
+
+        if (params.page) {
+          this.queryParamPage = { page: params.page };
+          await this.usersService.listUsers({ page: params.page });
+        }
+        else if (params.name) {
+          this.nameSearchControl.setValue(params.name);
+        }
+        else {
+          await this.usersService.listUsers({});
+        }
       });
   }
 
-  private async initializeSearch(): Promise<void> {
+  private async watchSearch(): Promise<void> {
     const nameSearchSubscription = this.nameSearchControl
       .valueChanges
       .pipe(debounceTime(1000))
       .subscribe(name => {
-        this.loading = true;
+        this.isLoadingData = true;
+        this.hideLoadingMoreButton = false;
 
         if (!name) {
-          this.listUsers();
+          // Empty search, recall search with current query context for page;
+          this.queryParamName.name = null;
+          this.hideLoadingMoreButton = true;
+          this.updateQueryParams(this.queryParamName);
+
+          this.usersService.listUsers({ page: this.queryParamPage.page });
           return;
         }
+
+        this.queryParamName.name = name;
+        this.updateQueryParams(this.queryParamName);
 
         this.usersService.findUserByName(name);
       });
@@ -118,53 +144,47 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   public loadMore(): void {
-    const newParams: Params = { page: ++this.currentPage };
+    this.isLoadingButton = true;
 
-    this.router.navigate([],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: newParams,
-        queryParamsHandling: 'merge',
-      });
-  }
+    ++this.queryParamPage.page;
+    this.updateQueryParams(this.queryParamPage);
 
-  public async listUsers(listByParams = false): Promise<void> {
-    await this.usersService.listUsers({ page: this.currentPage });
+    this.location.replaceState(
+      this.router.createUrlTree(
+        [this.locationStrategy.path().split('?')[0]],
+        { queryParams: this.queryParamPage }
+      ).toString()
+    );
 
-    if (this.currentPage > 1 && listByParams) {
-      this.loadMoreDisabled = this.users.length < (this.currentPage * PageInput.LIMIT);
-
-      setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
-      }, 100);
-    }
+    this.usersService.listUsers({ page: this.queryParamPage.page });
   }
 
   private async getUsers(): Promise<void> {
-    this.listUsers();
-
     this.usersService.getUsers()
       .subscribe(users => {
-        if (users === null) { return; }
+        if (users == null) { return; }
+
+        if (this.queryParamPage.page > 1) { this.loadMoreDisabled = users.length < (this.queryParamPage.page * PageInput.LIMIT); }
 
         this.users = users;
-        this.loading = false;
+        this.isLoadingData = false;
+        this.isLoadingButton = false;
       });
   }
 
   public async updateUser(): Promise<void> {
-    this.loading = true;
+    this.isLoadingData = true;
+    this.hideLoadingMoreButton = false;
 
     await this.usersService.updateUser({ ...this.activeUser, ...this.userForm.value, });
-    await this.usersService.listUsers({ page: this.currentPage, refetch: true });
+    await this.usersService.listUsers({ page: this.queryParamPage.page, refetch: true });
 
-    this.nameSearchControl.reset();
-
-    this.loading = false;
+    this.isLoadingData = false;
+    this.hideLoadingMoreButton = true;
   }
 
   private async applyEditValues(user: User): Promise<void> {
-    this.location = null;
+    this.geoLocation = null;
 
     this.userForm.patchValue({
       name: user.name,
@@ -172,7 +192,16 @@ export class UsersComponent implements OnInit, OnDestroy {
       description: user.description
     });
 
-    this.location = await this.locationService.getLocationByAddress(user.address);
+    this.geoLocation = await this.locationService.getLocationByAddress(user.address);
+  }
+
+  private updateQueryParams(newParams: Params): void {
+    this.location.replaceState(
+      this.router.createUrlTree(
+        [this.locationStrategy.path().split('?')[0]],
+        { queryParams: newParams }
+      ).toString()
+    );
   }
 
   public createMockUsersInDynamo(): void {

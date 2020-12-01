@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Location } from '../../../data/model/location'
+import { GeoLocation } from '../../../data/model/geo-location';
 
 @Injectable()
 export class LocationService {
   constructor(private apollo: Apollo) { }
 
-  public getLocationByAddress(address: string): Promise<Location> {
+  public getLocationByAddress(address: string): Promise<GeoLocation> {
     return new Promise((resolve, reject) => {
       const queryStmt = gql`
         {
@@ -20,7 +20,7 @@ export class LocationService {
         .query({
           query: queryStmt,
         }).subscribe((location: any) => {
-          resolve(location.data.getLocation as Location);
+          resolve(location.data.getLocation as GeoLocation);
         });
     });
   }
