@@ -6,6 +6,7 @@ import { ErrorManager } from './error/error';
 import { ErrorService } from './error/services/error.service';
 import { UsersService } from './users/services/users.service';
 import { ReuseStrategy } from './cache/reuse-strategy/reuse-strategy';
+import { LocationService } from './location/services/location.service';
 import { HttpErrorInterceptor } from './error/interceptors/http-error.interceptor';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { HttpErrorInterceptor } from './error/interceptors/http-error.intercepto
     ErrorService,
 
     UsersService,
+    LocationService,
 
     {
       provide: HTTP_INTERCEPTORS,
