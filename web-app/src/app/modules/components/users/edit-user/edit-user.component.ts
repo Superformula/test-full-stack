@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/core/users/services/users.service';
 import { UsersEditService } from 'src/app/core/users/services/users-edit.service';
 import { UsersQueryService } from 'src/app/core/users/services/users-query.service';
 import { LocationService } from 'src/app/core/location/services/location.service';
+
 @Component({
   selector: 'edit-user',
   templateUrl: './edit-user.component.html',
@@ -14,10 +15,10 @@ import { LocationService } from 'src/app/core/location/services/location.service
 export class EditUserComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private locationService: LocationService,
     private usersService: UsersService,
     public usersEditService: UsersEditService,
-    private usersQueryService: UsersQueryService
+    private usersQueryService: UsersQueryService,
+    private locationService: LocationService
   ) { }
 
   ngOnInit(): void {

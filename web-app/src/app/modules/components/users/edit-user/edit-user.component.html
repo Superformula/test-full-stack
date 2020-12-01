@@ -3,10 +3,15 @@
 
   <form class="grid" [formGroup]="usersEditService.userForm">
     <div class="col-desk-6">
+
       <ng-template [ngIf]="usersEditService.geoLocation" [ngIfElse]="loadingMap">
-        <agm-map [latitude]="usersEditService.geoLocation.lat" [zoom]="15" [longitude]="usersEditService.geoLocation.long">
-          <agm-marker [latitude]="usersEditService.geoLocation.lat" [longitude]="usersEditService.geoLocation.long"></agm-marker>
-        </agm-map>
+        <div class="pr-10">
+          <agm-map [zoom]="15" [latitude]="usersEditService.geoLocation.lat"
+            [longitude]="usersEditService.geoLocation.long">
+            <agm-marker [latitude]="usersEditService.geoLocation.lat" [longitude]="usersEditService.geoLocation.long">
+            </agm-marker>
+          </agm-map>
+        </div>
       </ng-template>
 
       <ng-template #loadingMap>
@@ -35,8 +40,10 @@
   </form>
 
   <div class="right">
-    <button type="submit" (click)="usersEditService.showDialog = !usersEditService.showDialog" class="btn mr-12 uppercase"
-      [class.disabled]="usersEditService.userForm.invalid" [disabled]="usersEditService.userForm.invalid" (click)="updateUser()">Save</button>
-    <button type="button" (click)="usersEditService.showDialog = !usersEditService.showDialog" class="btn btn-secondary uppercase">Close</button>
+    <button type="submit" (click)="usersEditService.showDialog = !usersEditService.showDialog"
+      class="btn mr-12 uppercase" [class.disabled]="usersEditService.userForm.invalid"
+      [disabled]="usersEditService.userForm.invalid" (click)="updateUser()">Save</button>
+    <button type="button" (click)="usersEditService.showDialog = !usersEditService.showDialog"
+      class="btn btn-secondary uppercase">Close</button>
   </div>
 </div>

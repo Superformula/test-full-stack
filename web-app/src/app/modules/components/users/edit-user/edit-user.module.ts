@@ -8,12 +8,12 @@ import { FormModule } from 'src/app/common/modules/form.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormModule,
-
     AgmCoreModule.forRoot({
       apiKey: environment.GOOGLE_MAPS_API
     }),
+
+    CommonModule,
+    FormModule,
   ],
   exports: [EditUserComponent],
   declarations: [EditUserComponent],
