@@ -23,14 +23,14 @@ export class SearchUserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.watchSearch();
+
     this.activatedRoute.queryParams
       .subscribe(async params => {
         if (params.name) {
           this.nameSearchControl.setValue(params.name);
         }
       });
-
-    this.watchSearch();
   }
 
   ngOnDestroy(): void {
