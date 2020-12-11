@@ -1,3 +1,31 @@
+# Superformula Full Stack Developer Test - Solution
+
+## Development
+
+#### Local development
+
+To run the application locally you need to follow these steps:
+
+1. Copy the `.env.example` as `.env` located in the `backend` and `frontend` folders; and fill the environment variables.
+2. Install the dependencies with `npm i`.
+3. Run the server with `npm start`.
+4. Once the server is running, open the [GraphiQl UI](http://localhost:20002/).
+
+You can also run `eslint` in both projects by running `npm run lint`.
+
+#### Deployment
+
+To deploy the application you need to follow these steps:
+
+1. Install the [AWS CLI](https://aws.amazon.com/cli/).
+2. Configure your AWS CLI with `aws configure` (need to configure the `AWS Access Key ID` and `AWS Secret Access Key`).
+2. Copy the `.env.example` as `.env` located in the `backend` and `frontend` folders; and fill the environment variables.
+3. Install the dependencies with `npm i`.
+4. Deploy the server with `npm deploy`.
+
+## Extra Information
+Detailed information is available on the README.md files inside the `backend` and `frontend` folders.
+
 # Superformula Full Stack Developer Test
 
 Be sure to read **all** of this document carefully, and follow the guidelines within.
