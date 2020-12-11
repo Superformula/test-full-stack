@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "test-full-stack",
   "scripts": {
+    "preinstall": "npm install --prefix backend",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint . --ext .js,.ts,.tsx",
     "lint:js:fix": "npm run lint:js -- --fix",
     "lint:style": "stylelint **/*.scss **/*.css",
-    "lint:style:fix": "npm run lint:style -- --fix"
+    "lint:style:fix": "npm run lint:style -- --fix",
+    "deploy:backend": "npm run deploy --prefix backend",
+    "deploy": "npm run deploy:backend",
+    "start:backend": "npm start --prefix backend",
+    "start": "npm-run-all --parallel start:backend"
   },
   "repository": {
     "type": "git",

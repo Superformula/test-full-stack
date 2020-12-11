@@ -1,0 +1,114 @@
+service: test-full-stack
+useDotenv: true
+
+plugins:
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-appsync-simulator
+  - serverless-offline
+  - serverless-appsync-plugin
+
+provider:
+  name: aws
+  region: us-east-2
+  runtime: nodejs12.x
+  environment:
+    MAPBOX_ACCESS_TOKEN: ${env:MAPBOX_ACCESS_TOKEN}
+    SENTRY_DSN: ${env:SENTRY_DSN}
+
+functions:
+  getLocation:
+    handler: functions/getLocation.handler
+
+custom:
+  appSync:
+    name: test-full-stack
+    authenticationType: API_KEY
+    mappingTemplates:
+      - dataSource: Users
+        type: Query
+        field: user
+        request: 'getUserById-request.vtl'
+        response: 'response.vtl'
+      - dataSource: Users
+        type: Query
+        field: searchUsers
+        request: 'searchUsers-request.vtl'
+        response: 'searchUsers-response.vtl'
+      - dataSource: LocationLambda
+        type: Query
+        field: getLocation
+        request: 'getLocation-request.vtl'
+        response: 'response.vtl'
+      - dataSource: Users
+        type: Mutation
+        field: createUser
+        request: 'createUser-request.vtl'
+        response: 'response.vtl'
+      - dataSource: Users
+        type: Mutation
+        field: updateUser
+        request: 'updateUser-request.vtl'
+        response: 'response.vtl'
+      - dataSource: Users
+        type: Mutation
+        field: deleteUser
+        request: 'deleteUser-request.vtl'
+        response: 'response.vtl'
+
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: Users
+        description: 'Users Table'
+        config:
+          tableName: { Ref: UserTable }
+      - type: AWS_LAMBDA
+        name: LocationLambda
+        description: 'Location Lambda'
+        config:
+          functionName: getLocation
+  appsync-simulator:
+    apiKey: ${env:SLS_API_KEY}
+  dynamodb:
+    stages:
+      - dev
+    start:
+      migrate: true
+      seed: true
+    seed:
+      dev:
+        sources:
+          - table: Users
+            sources: [./migrations/users.json]
+  serverless-offline:
+    apiKey: ${env:SLS_API_KEY}
+  webpack:
+    includeModules: true
+
+resources:
+  Resources:
+    UserTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: 'Users'
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: name-index
+            KeySchema:
+              - AttributeName: name
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

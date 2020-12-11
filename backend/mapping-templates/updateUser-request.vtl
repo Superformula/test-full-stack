@@ -1,0 +1,19 @@
+{
+  "version": "2017-02-28",
+  "operation": "UpdateItem",
+  "key": {
+    "id": $util.dynamodb.toDynamoDBJson($ctx.args.id)
+  },
+  "update": {
+    "expression": "SET #name = :name, address = :address, description = :description, updatedAt = :updatedAt",
+    "expressionNames": {
+      "#name": "name"
+    },
+    "expressionValues": {
+      ":name": $util.dynamodb.toDynamoDBJson($ctx.args.user.name),
+      ":address": $util.dynamodb.toDynamoDBJson($ctx.args.user.address),
+      ":description": $util.dynamodb.toDynamoDBJson($ctx.args.user.description),
+      ":updatedAt": { "S" : "${util.time.nowISO8601()}" }
+    }
+  }
+}

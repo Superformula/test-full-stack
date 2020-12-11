@@ -1,0 +1,37 @@
+{
+  "name": "test-full-stack",
+  "version": "1.0.0",
+  "description": "test-full-stack",
+  "scripts": {
+    "prestart": "sls dynamodb install",
+    "deploy": "sls deploy",
+    "start": "sls offline start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezequielgarcia88/test-full-stack.git"
+  },
+  "author": "Ezequiel Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ezequielgarcia88/test-full-stack/issues"
+  },
+  "homepage": "https://github.com/ezequielgarcia88/test-full-stack#readme",
+  "dependencies": {
+    "@sentry/serverless": "^5.29.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "babel-loader": "^8.2.2",
+    "serverless": "^2.15.0",
+    "serverless-appsync-plugin": "^1.4.0",
+    "serverless-appsync-simulator": "^0.8.1",
+    "serverless-bundle": "^4.1.0",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-offline": "^6.8.0",
+    "serverless-webpack": "^5.3.5",
+    "webpack": "^4.44.2",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
