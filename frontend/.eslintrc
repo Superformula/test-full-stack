@@ -6,15 +6,20 @@
   "env": {
     "browser": true,
     "jest": true,
+    "cypress/globals": true,
   },
   "plugins": [
     "@typescript-eslint",
     "react-hooks",
+    "cypress",
+    "chai-friendly",
   ],
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
+    "plugin:cypress/recommended",
+    "plugin:chai-friendly/recommended"
   ],
   "settings": {
     "react": {

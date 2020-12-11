@@ -20,3 +20,11 @@ To run the application Unit Tests simply run:
 ```
 npm test
 ```
+
+#### E2E Tests
+
+To run the application E2e Tests simply start the FE and BE in another tab and then run:
+
+```
+npm run test:e2e
+```
