@@ -1,0 +1,45 @@
+{
+  "name": "test-full-stack",
+  "version": "1.0.0",
+  "description": "test-full-stack",
+  "scripts": {
+    "lint": "npm run lint:js && npm run lint:style",
+    "lint:js": "eslint . --ext .js,.ts,.tsx",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "lint:style": "stylelint **/*.scss **/*.css",
+    "lint:style:fix": "npm run lint:style -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezequielgarcia88/test-full-stack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ezequielgarcia88/test-full-stack/issues"
+  },
+  "homepage": "https://github.com/ezequielgarcia88/test-full-stack#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.12.7",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": "npm run lint:js:fix",
+    "**/*.{scss,css}": "npm run lint:style:fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

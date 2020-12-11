@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "declaration-colon-newline-after": null,
+    "declaration-empty-line-before": "never",
+    "order/properties-alphabetical-order": true
+  }
+}

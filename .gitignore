@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+.dynamodb
+.serverless
+.env
+.webpack
+build
+npm-debug.log*
+.eslintcache
+*.d.ts
