@@ -49,8 +49,6 @@ const App: React.FC = () => {
     document.body.style.overflow = user ? 'hidden' : '';
   };
 
-  console.log('zeta', loading, error, data);
-
   if (loading) return <p>Loading...</p>;
   if (error || !data) return <p>Error</p>;
 

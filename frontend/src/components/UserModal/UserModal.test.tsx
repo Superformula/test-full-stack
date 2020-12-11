@@ -3,6 +3,10 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import UserModal from './UserModal';
 import styles from './UserModal.module.scss';
 
+jest.mock('mapbox-gl/dist/mapbox-gl', () => ({
+  Map: () => ({}),
+}));
+
 const user = {
   id: '1',
   name: 'Test',
@@ -14,6 +18,8 @@ test('should render the UserModal', () => {
   );
   const modalElement = container.querySelector(`.${styles.modal}`);
   expect(modalElement).toBeInTheDocument();
+  const noLocationElement = screen.getByText(/No Location Entered/i);
+  expect(noLocationElement).toBeInTheDocument();
 });
 
 test('should update the user and return it on save', () => {
