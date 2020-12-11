@@ -8,3 +8,4 @@ build
 npm-debug.log*
 .eslintcache
 *.d.ts
+coverage

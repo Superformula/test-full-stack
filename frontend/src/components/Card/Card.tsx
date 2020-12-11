@@ -6,7 +6,7 @@ import { User } from '../../types';
 
 type Props = {
   user: User;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const parseDate = (date?: string) => moment(date).format('DD MMM YYYY');

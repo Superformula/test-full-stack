@@ -12,7 +12,7 @@ type Props = {
   onSave: (user: User) => void;
 };
 
-const Modal: React.FC<Props> = ({ user, onClose, onSave }) => {
+const UserModal: React.FC<Props> = ({ user, onClose, onSave }) => {
   const [userInModal, setUserInModal] = useState<User>({
     id: '',
     name: '',
@@ -91,4 +91,4 @@ const Modal: React.FC<Props> = ({ user, onClose, onSave }) => {
   );
 };
 
-export default Modal;
+export default UserModal;

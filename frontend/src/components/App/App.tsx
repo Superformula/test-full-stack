@@ -109,7 +109,7 @@ const App: React.FC = () => {
             },
           })
         }
-      ></UserModal>
+      />
     </div>
   );
 };

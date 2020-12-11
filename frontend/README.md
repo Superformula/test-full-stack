@@ -12,3 +12,11 @@ To run the application locally you need to follow these steps:
 2. Install the dependencies with `npm i`.
 3. Run the server with `npm start`.
 4. The application will start running in [http://localhost:3000/](http://localhost:3000/).
+
+#### Unit Tests
+
+To run the application Unit Tests simply run:
+
+```
+npm test
+```
