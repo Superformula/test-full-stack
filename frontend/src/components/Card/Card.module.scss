@@ -1,0 +1,62 @@
+.wrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 336px;
+  padding: 40px 32px;
+  width: 400px;
+
+  &:hover {
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+  }
+}
+
+.avatar {
+  background-color: #f8f8f8;
+  border-radius: 50%;
+  display: block;
+  height: 168px;
+  margin: 0 auto;
+  width: 168px;
+}
+
+.middleInfo {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 26px;
+  margin: 32px 0 10px;
+}
+
+.name {
+  flex: 1;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 26px;
+  margin-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dateText {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 21px;
+  margin-right: 3px;
+}
+
+.dateValue {
+  color: #b01e1e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.description {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px;
+}

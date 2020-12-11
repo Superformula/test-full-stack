@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23px;
+  margin-bottom: 5px;
+}
+
+.input {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  height: 64px;
+  line-height: 30px;
+  padding: 0 16px;
+
+  &::placeholder,
+  &::-ms-input-placeholder,
+  &:-ms-input-placeholder {
+    font-weight: 300;
+    opacity: 1;
+  }
+}

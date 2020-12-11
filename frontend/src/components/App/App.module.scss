@@ -1,0 +1,40 @@
+.content {
+  margin: 0 auto;
+  max-width: 1328px;
+  padding-top: 64px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 60px;
+  margin: 0;
+}
+
+.search {
+  width: 400px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-right: -64px;
+
+  > div {
+    margin: 0 64px 64px 0;
+  }
+}
+
+.loadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 64px;
+}

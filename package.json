@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "test-full-stack",
   "scripts": {
-    "preinstall": "npm install --prefix backend",
+    "preinstall": "npm install --prefix backend && npm install --prefix frontend",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint . --ext .js,.ts,.tsx",
     "lint:js:fix": "npm run lint:js -- --fix",
@@ -12,7 +12,8 @@
     "deploy:backend": "npm run deploy --prefix backend",
     "deploy": "npm run deploy:backend",
     "start:backend": "npm start --prefix backend",
-    "start": "npm-run-all --parallel start:backend"
+    "start:frontend": "npm start --prefix frontend",
+    "start": "npm-run-all --parallel start:backend start:frontend"
   },
   "repository": {
     "type": "git",
