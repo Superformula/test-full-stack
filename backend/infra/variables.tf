@@ -14,6 +14,6 @@ variable "appName" {
 }
 
 variable "es_domain" {
-  default = "superformula-appsync-es"
+  default = "superformula-fullstack-es"
   description = "The elastic search domain used in this appsync project"
 }

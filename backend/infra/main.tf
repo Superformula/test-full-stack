@@ -49,3 +49,51 @@ module "appsync" {
     }
   }
 }
+
+
+// Manually create the elastic search resolver because the TF module can't properly create them with the ES version I'm
+// using
+resource "aws_iam_role" "elastic_datasource_role" {
+  name = "${var.appName}_elasticserch_datasource"
+  assume_role_policy = <<EOL
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "appsync.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOL
+}
+
+resource "aws_iam_role_policy_attachment" "add_elastic_access-appsync_datasource" {
+  policy_arn = aws_iam_policy.elastic_search_access.arn
+  role = aws_iam_role.elastic_datasource_role.name
+}
+
+resource "aws_appsync_datasource" "elastic_search_datasource" {
+  api_id = module.appsync.this_appsync_graphql_api_id
+  name = "elasticsearch1"
+  type = "AMAZON_ELASTICSEARCH"
+  service_role_arn = aws_iam_role.elastic_datasource_role.arn
+
+  elasticsearch_config {
+    endpoint = "https://${aws_elasticsearch_domain.terraform-appsync-elasticsearch.endpoint}"
+    region = var.region
+  }
+}
+
+resource "aws_appsync_resolver" "elastic_search_resolver" {
+  api_id = module.appsync.this_appsync_graphql_api_id
+  field = "searchAuthor"
+  request_template = file("graphql/searchAuthor-request-map.vtl")
+  response_template = file("graphql/searchAuthor-response-map.vtl")
+  type = "Query"
+  data_source = aws_appsync_datasource.elastic_search_datasource.name
+}
+
