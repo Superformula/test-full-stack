@@ -13,16 +13,24 @@ type GetAllUsersResult {
 
 type Mutation {
     createUser(input: UserInput!): User!
+    "     updateUser(id: ID!, input: UpdateUserInput!): User!"
+    deleteUser(id: ID!): User!
 }
 
 type Query {
-    getAllUsers: GetAllUsersResult
     " TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes"
+    getAllUsers: GetAllUsersResult
     searchUsers(limit: Int, name: String, skip: Int): UserSearchResult
 }
 
 type Subscription {
     onCreateUser: User
+    """
+
+    onUpdateUser: User
+    @aws_subscribe(mutations: ["updateUser"])
+    """
+    onDeleteUser: User
 }
 
 type User {

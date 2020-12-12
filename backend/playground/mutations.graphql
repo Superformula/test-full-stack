@@ -21,3 +21,19 @@ mutation createUser{
         createdAt
     }
 }
+
+
+mutation deleteUser {
+    deleteUser(id: "83bd4bd4-0e94-4461-8bd9-1eeb07150f8c"){
+        id
+        name
+        dob
+        description
+        longitude
+        latitude
+        updatedAt
+        createdAt
+        avatar
+        address
+    }
+}

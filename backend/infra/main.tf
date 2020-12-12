@@ -47,6 +47,12 @@ module "appsync" {
       request_template  = file("graphql/mutations/createUser-request-map.vtl")
       response_template = file("graphql/mutations/createUser-response-map.vtl")
     }
+
+    "Mutation.deleteUser" = {
+      data_source       = "superformula_dynamodb4437"
+      request_template  = file("graphql/mutations/deleteUser-request-map.vtl")
+      response_template = file("graphql/mutations/deleteUser-response-map.vtl")
+    }
   }
 }
 
