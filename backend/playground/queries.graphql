@@ -1,0 +1,17 @@
+query getAllUsers {
+    getAllUsers{
+        items{
+            id
+            name
+            dob
+            address
+            description
+            latitude
+            longitude
+            avatar
+            updatedAt
+            createdAt
+        }
+        nextToken
+    }
+}

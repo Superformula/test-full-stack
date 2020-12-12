@@ -5,7 +5,7 @@ type Mutation {
 }
 
 type Query {
-    getAllUsers: [User!]! #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
+    getAllUsers: GetAllUsersResult #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
     #searchUsers(name: String, limit: Int, skip: Int): UserSearchResult
 }
 
@@ -17,6 +17,11 @@ type Subscription {
     #    @aws_subscribe(mutations: ["updateUser"])
     #    onDeleteUser: User
     #    @aws_subscribe(mutations: ["deleteUser"])
+}
+
+type GetAllUsersResult {
+    items: [User!]!
+    nextToken: String
 }
 
 type User {

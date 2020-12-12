@@ -6,12 +6,17 @@ schema {
     subscription: Subscription
 }
 
+type GetAllUsersResult {
+    items: [User!]!
+    nextToken: String
+}
+
 type Mutation {
     createUser(input: UserInput!): User!
 }
 
 type Query {
-    getAllUsers: [User!]!
+    getAllUsers: GetAllUsersResult
 }
 
 type Subscription {
