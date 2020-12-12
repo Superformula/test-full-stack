@@ -15,3 +15,17 @@ query getAllUsers {
         nextToken
     }
 }
+
+query searchUser {
+    searchUsers{
+        hasMore
+        items{
+            id
+            name
+            avatar
+            dob
+            createdAt
+            updatedAt
+        }
+    }
+}

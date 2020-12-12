@@ -1,0 +1,26 @@
+#if( !$ctx.args.skip )
+  #set ( $ctx.args.skip = 0 )
+#end
+
+#if( !$ctx.args.limit )
+  #set ( $ctx.args.limit = 6 )
+#end
+
+#if($ctx.args.limit + $ctx.args.skip < $context.result.hits.total)
+  #set ( $hasMore = true )
+#else
+  #set ( $hasMore = false )
+#end
+
+## TODO: Map empty array when the cluster hasn't initialized yet
+
+{
+  "hasMore": $hasMore ,
+  "items": [
+#foreach($entry in $context.result.hits.hits)
+  #if( $velocityCount > 1 ) , #end
+  $util.toJson($entry.get("_source"))
+#end
+  ]
+}
+

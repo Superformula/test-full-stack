@@ -5,8 +5,10 @@ type Mutation {
 }
 
 type Query {
-    getAllUsers: GetAllUsersResult #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
-    #searchUsers(name: String, limit: Int, skip: Int): UserSearchResult
+    searchUsers(name: String, limit: Int, skip: Int): UserSearchResult
+
+    #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
+    getAllUsers: GetAllUsersResult
 }
 
 

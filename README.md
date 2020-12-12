@@ -19,3 +19,8 @@ This document describes the architecture of the application and how to run int
     - Run `terraform init`
     - Run `terraform apply`
     - Add a disclaimer about long Terraforming times due to the creation of an Elastic Search domain (creation ranges from 10 - 20 min)
+  
+  
+## Technical debts
+
+- Improve AWS typing in the `elasticWriter` component and avoid using private AWS SDK APIs

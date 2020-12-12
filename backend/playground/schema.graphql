@@ -17,6 +17,8 @@ type Mutation {
 
 type Query {
     getAllUsers: GetAllUsersResult
+    " TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes"
+    searchUsers(limit: Int, name: String, skip: Int): UserSearchResult
 }
 
 type Subscription {

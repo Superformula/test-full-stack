@@ -1,0 +1,47 @@
+## Build search pattern
+#if( $ctx.args.name )
+  #set ( $name = $ctx.args.name.toLowerCase() )
+#else
+  #set ( $name = "" )
+#end
+
+#set ( $star = "*" )
+#set ( $pattern = "$name$star" )
+
+## Add constraints to the maximum size of this query
+#if( $ctx.args.limit > 20 )
+  #set ( $limit = 20 )
+#elseif( $ctx.args.limit )
+  #set ( $limit = $ctx.args.limit )
+#else
+  #set ( $limit = 6 )
+#end
+
+
+## Set default value for the Skip for the filter
+#if( !$context.arguments.skip )
+  #set ( $context.arguments.skip = 0 )
+#end
+
+{
+  "version": "2017-02-28",
+  "operation": "GET",
+  "path": "/id/user/_search",
+  "params": {
+    "headers": {},
+    "queryString": {},
+    "body": {
+      "from": $context.arguments.skip,
+      "size": $limit,
+      "query": {
+        "wildcard": {
+          "name": {
+              "value": "$pattern",
+              "boost": 1.0,
+              "rewrite": "constant_score"
+          }
+        }
+      }
+    }
+  }
+}

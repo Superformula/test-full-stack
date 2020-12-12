@@ -38,7 +38,7 @@ module "appsync" {
   resolvers = {
     "Query.getAllUsers" = {
       data_source       = "superformula_dynamodb4437"
-      request_template  = file("graphql/queries/listUsers-request-mapping.vtl")
+      request_template  = file("graphql/queries/listUsers-request-map.vtl")
       response_template = file("graphql/queries/listUsers-response-map.vtl")
     }
 
@@ -51,8 +51,8 @@ module "appsync" {
 }
 
 
-// Manually create the elastic search resolver because the TF module can't properly create them with the ES version I'm
-// using
+// Manually create the elastic search data source and resolvers because the TF module above can't properly create them
+
 resource "aws_iam_role" "elastic_datasource_role" {
   name = "${var.appName}_elasticserch_datasource"
   assume_role_policy = <<EOL
@@ -90,9 +90,9 @@ resource "aws_appsync_datasource" "elastic_search_datasource" {
 
 resource "aws_appsync_resolver" "elastic_search_resolver" {
   api_id = module.appsync.this_appsync_graphql_api_id
-  field = "searchAuthor"
-  request_template = file("graphql/searchAuthor-request-map.vtl")
-  response_template = file("graphql/searchAuthor-response-map.vtl")
+  field = "searchUsers"
+  request_template = file("graphql/queries/searchUser-request-map.vtl")
+  response_template = file("graphql/queries/searchUser-response-map.vtl")
   type = "Query"
   data_source = aws_appsync_datasource.elastic_search_datasource.name
 }
