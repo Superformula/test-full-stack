@@ -6,7 +6,7 @@
 #end
 
 #set ( $star = "*" )
-#set ( $pattern = "$name$star" )
+##set ( $pattern = "$name$star" )
 
 ## Add constraints to the maximum size of this query
 #if( $ctx.args.limit > 20 )
@@ -34,13 +34,19 @@
       "from": $context.arguments.skip,
       "size": $limit,
       "query": {
-        "wildcard": {
+#if($ctx.args.name)
+        "match_phrase_prefix": {
           "name": {
-              "value": "$pattern",
-              "boost": 1.0,
-              "rewrite": "constant_score"
+              "query": "$name"
           }
         }
+#else
+        "wildcard": {
+          "name": {
+            "value": "*",
+          }
+        }
+#end
       }
     }
   }

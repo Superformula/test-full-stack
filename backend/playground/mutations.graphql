@@ -1,6 +1,6 @@
 mutation createUser{
     createUser(input: {
-        name: "Pedro"
+        name: "Yan Valadares"
         dob: "2002-05-01"
         address: "SQS 203, BLOCO 5, APTO 203"
         description: "ayy lmao"
@@ -35,5 +35,29 @@ mutation deleteUser {
         createdAt
         avatar
         address
+    }
+}
+mutation updateUser {
+    updateUser(id: "49cae595-7908-43cf-9122-3c7364f5047c", input: {
+        name: "Pedro Yan"
+        dob: "1997-03-04"
+        address: "This is a new updated address"
+        description: "This is an updated description"
+        location: {
+            longitude: -42.0
+            latitude:  56
+        }
+    })
+    {
+        id
+        name
+        address
+        dob
+        longitude
+        latitude
+        updatedAt
+        createdAt
+        description
+        avatar
     }
 }

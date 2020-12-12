@@ -6,6 +6,9 @@ This document describes the architecture of the application and how to run int
 - TODO: Add intro
 
 - TODO: Add a diagram showcasing the overall view of the system and how modules interact with each other
+  - Mention retry policy on the event stream in order to keep eventual consistency on the system
+  - Flexible querying system with Elasticsearch
+
 
 - TODO: describe the data models
 
