@@ -1,0 +1,24 @@
+{
+  "version": "2017-02-28",
+  "operation": "PutItem",
+  "key": {
+    "id": $util.dynamodb.toDynamoDBJson($util.autoId()),
+  },
+  "attributeValues": {
+        "name": $util.dynamodb.toDynamoDBJson($context.arguments.input.name),
+        "dob": $util.dynamodb.toDynamoDBJson($context.arguments.input.dob),
+        "address": $util.dynamodb.toDynamoDBJson($context.arguments.input.address),
+        "latitude": $util.dynamodb.toDynamoDBJson($context.arguments.input.location.latitude),
+        "longitude": $util.dynamodb.toDynamoDBJson($context.arguments.input.location.longitude),
+        "description": $util.dynamodb.toDynamoDBJson($context.arguments.input.description),
+        "avatar": { "S": "https://source.unsplash.com/300x300/?people&v=$util.autoId()" },
+        "createdAt": { "N": $util.time.nowEpochMilliSeconds()) },
+        "updatedAt": { "N": $util.time.nowEpochMilliSeconds()) }
+  },
+  "condition": {
+    "expression": "attribute_not_exists(#id)",
+    "expressionNames": {
+      "#id": "id",
+    },
+  },
+}

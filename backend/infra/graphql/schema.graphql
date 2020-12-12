@@ -1,0 +1,51 @@
+type Mutation {
+    createUser(input: UserInput!): User!
+    #    updateUser(id: ID!, input: UpdateUserInput!): User!
+    #    deleteUser(id: ID!): User!
+}
+
+type Query {
+    getAllUsers: [User!]! #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
+    #searchUsers(name: String, limit: Int, skip: Int): UserSearchResult
+}
+
+
+type Subscription {
+    onCreateUser: User
+    @aws_subscribe(mutations: ["createUser"])
+    #    onUpdateUser: User
+    #    @aws_subscribe(mutations: ["updateUser"])
+    #    onDeleteUser: User
+    #    @aws_subscribe(mutations: ["deleteUser"])
+}
+
+type User {
+    id: ID!
+    name: String!
+    dob: AWSDate!
+    address: String!
+    latitude: Float!
+    longitude: Float!
+    description: String!
+    avatar: String!
+    createdAt: AWSTimestamp!
+    updatedAt: AWSTimestamp!
+}
+
+type UserSearchResult {
+    hasMore: Boolean!
+    items: [User!]!
+}
+
+input Coordinates {
+    latitude: Float!
+    longitude: Float!
+}
+
+input UserInput {
+    name: String!
+    dob: AWSDate!
+    address: String!
+    location: Coordinates!
+    description: String!
+}
