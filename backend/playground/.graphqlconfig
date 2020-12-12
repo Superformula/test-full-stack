@@ -1,0 +1,16 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "https://la4kkno7qrfadjczdweoozbf6y.appsync-api.us-east-1.amazonaws.com/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL",
+          "X-Api-Key": "da2-j3gj5ajjtjadjh7ufacgrw4wn4"
+        },
+        "introspect": false
+      }
+    }
+  }
+}
