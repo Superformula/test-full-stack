@@ -13,8 +13,8 @@ type GetAllUsersResult {
 
 type Mutation {
     createUser(input: UserInput!): User!
-    "     updateUser(id: ID!, input: UpdateUserInput!): User!"
     deleteUser(id: ID!): User!
+    updateUser(id: ID!, input: UserInput!): User!
 }
 
 type Query {
@@ -25,12 +25,8 @@ type Query {
 
 type Subscription {
     onCreateUser: User
-    """
-
-    onUpdateUser: User
-    @aws_subscribe(mutations: ["updateUser"])
-    """
     onDeleteUser: User
+    onUpdateUser: User
 }
 
 type User {

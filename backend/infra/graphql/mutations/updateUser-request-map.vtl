@@ -1,0 +1,23 @@
+{
+    "version": "2017-02-28",
+    "operation": "UpdateItem",
+    "key": {
+        "id": $util.dynamodb.toDynamoDBJson($context.arguments.id)
+    },
+    "update": {
+        "expression": "SET #name = :name, dob = :dob, #address = :address, latitude = :lat, longitude = :lng, description = :description, updatedAt = :updatedAt",
+        "expressionNames" : {
+            "#name": "name",
+            "#address": "address"
+        },
+        "expressionValues": {
+            ":name": $util.dynamodb.toDynamoDBJson($context.arguments.input.name),
+            ":dob": $util.dynamodb.toDynamoDBJson($context.arguments.input.dob),
+            ":address": $util.dynamodb.toDynamoDBJson($context.arguments.input.address),
+            ":lat": $util.dynamodb.toDynamoDBJson($context.arguments.input.location.latitude),
+            ":lng": $util.dynamodb.toDynamoDBJson($context.arguments.input.location.longitude),
+            ":description": $util.dynamodb.toDynamoDBJson($context.arguments.input.description),
+            ":updatedAt": { "N": $util.time.nowEpochMilliSeconds() }
+        }
+    }
+}

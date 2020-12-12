@@ -1,6 +1,6 @@
 type Mutation {
     createUser(input: UserInput!): User!
-    #    updateUser(id: ID!, input: UpdateUserInput!): User!
+    updateUser(id: ID!, input: UserInput!): User!
     deleteUser(id: ID!): User!
 }
 
@@ -16,8 +16,8 @@ type Subscription {
     onCreateUser: User
     @aws_subscribe(mutations: ["createUser"])
 
-#    onUpdateUser: User
-#    @aws_subscribe(mutations: ["updateUser"])
+    onUpdateUser: User
+    @aws_subscribe(mutations: ["updateUser"])
 
     onDeleteUser: User
     @aws_subscribe(mutations: ["deleteUser"])
