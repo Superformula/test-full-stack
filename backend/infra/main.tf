@@ -51,6 +51,12 @@ module "appsync" {
       response_template = file("graphql/queries/listUsers-response-map.vtl")
     }
 
+    "Query.getUserById" = {
+      data_source       = "superformula_dynamodb4437"
+      request_template  = file("graphql/queries/getUserById-request-map.vtl")
+      response_template = file("graphql/queries/getUserById-response-map.vtl")
+    }
+
     "Query.getAddresses" = {
       data_source       = "superformula_google_address_api"
       request_template  = file("graphql/queries/getAddresses-request-map.vtl")

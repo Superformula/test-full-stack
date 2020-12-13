@@ -1,3 +1,16 @@
+fragment allInformation on User {
+    id
+    name
+    dob
+    address
+    description
+    latitude
+    longitude
+    avatar
+    updatedAt
+    createdAt
+}
+
 query getAllUsers {
     getAllUsers{
         items{
@@ -41,5 +54,20 @@ query getLocation {
     getCoordinates(placeId: "El9TUVNXIDEwMSBCbG9jbyBIIC0gU2V0b3IgU3Vkb2VzdGUgU3VwZXJxdWFkcmEgU3Vkb2VzdGUgMTAxIC0gQnJhc2lsaWEsIEZlZGVyYWwgRGlzdHJpY3QsIEJyYXppbCIuKiwKFAoSCdtvi1ecOlqTETl86rnBhw52EhQKEgn7jO4dnTpakxG6vx5yR0qR3A"){
         latitude
         longitude
+    }
+}
+
+query getUserById{
+    getUserById(id: "d41883e5-8f0a-4de7-837b-b6d72aef24b5"){
+        id
+        name
+        dob
+        address
+        description
+        latitude
+        longitude
+        avatar
+        updatedAt
+        createdAt
     }
 }

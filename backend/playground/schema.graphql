@@ -32,6 +32,7 @@ type Query {
     " TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes"
     getAllUsers: GetAllUsersResult
     getCoordinates(placeId: String!): Coordinates!
+    getUserById(id: ID!): User
     searchUsers(limit: Int, name: String, skip: Int): UserSearchResult
 }
 

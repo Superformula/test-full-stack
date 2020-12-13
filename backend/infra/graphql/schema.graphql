@@ -6,9 +6,8 @@ type Mutation {
 
 type Query {
     searchUsers(name: String, limit: Int, skip: Int): UserSearchResult
-
+    getUserById(id: ID!): User
     getAddresses(input: String!): [AddressSuggestion!]!
-
     getCoordinates(placeId: String!): Coordinates!
 
     #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
