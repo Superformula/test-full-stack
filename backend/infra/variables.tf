@@ -17,3 +17,7 @@ variable "es_domain" {
   default = "superformula-fullstack-es"
   description = "The elastic search domain used in this appsync project"
 }
+
+variable "gmaps_key" {
+  description = "Your google API key for a project that enabled google maps on it"
+}

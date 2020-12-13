@@ -17,4 +17,4 @@ functions:
 
   mapsService:
     name: maps_service
-    handler: maps/index.handler
+    handler: maps/lambdaEndpoints.handler
