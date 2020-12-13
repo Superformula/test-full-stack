@@ -47,8 +47,8 @@ resource "aws_lambda_function" "dynamo_to_es" {
 
   #Code
   handler = "elasticWriter.handler"
-  filename = "${path.module}/../lambdas/.serverless/lambdas.zip"
-  source_code_hash = filebase64sha256("${path.module}/../lambdas/.serverless/lambdas.zip")
+  filename = "${path.module}/../lambdas/.serverless/elasticWriter.zip"
+  source_code_hash = filebase64sha256("${path.module}/../lambdas/.serverless/elasticWriter.zip")
 
   #Environment
   runtime = "nodejs12.x"

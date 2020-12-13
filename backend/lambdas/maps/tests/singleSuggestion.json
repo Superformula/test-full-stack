@@ -1,0 +1,43 @@
+{
+  "predictions": [{
+    "description": "SQS 114 Bl. H - SHCS Superquadra Sul 114 - Brasilia, Federal District, Brazil",
+    "matched_substrings": [{
+      "length": 13,
+      "offset": 0
+    }],
+    "place_id": "Ek1TUVMgMTE0IEJsLiBIIC0gU0hDUyBTdXBlcnF1YWRyYSBTdWwgMTE0IC0gQnJhc2lsaWEsIEZlZGVyYWwgRGlzdHJpY3QsIEJyYXppbCIuKiwKFAoSCV-i4VRUJVqTEWCldTWQuuEmEhQKEgndHzBmVSVakxGehKUVKoBLmA",
+    "reference": "Ek1TUVMgMTE0IEJsLiBIIC0gU0hDUyBTdXBlcnF1YWRyYSBTdWwgMTE0IC0gQnJhc2lsaWEsIEZlZGVyYWwgRGlzdHJpY3QsIEJyYXppbCIuKiwKFAoSCV-i4VRUJVqTEWCldTWQuuEmEhQKEgndHzBmVSVakxGehKUVKoBLmA",
+    "structured_formatting": {
+      "main_text": "SQS 114 Bl. H",
+      "main_text_matched_substrings": [{
+        "length": 13,
+        "offset": 0
+      }
+      ],
+      "secondary_text": "SHCS Superquadra Sul 114 - Brasilia, Federal District, Brazil"
+    },
+    "terms": [{
+      "offset": 0,
+      "value": "SQS 114 Bl. H"
+    }, {
+      "offset": 16,
+      "value": "SHCS"
+    }, {
+      "offset": 21,
+      "value": "Superquadra Sul 114"
+    }, {
+      "offset": 43,
+      "value": "Brasilia"
+    }, {
+      "offset": 53,
+      "value": "Federal District"
+    }, {
+      "offset": 71,
+      "value": "Brazil"
+    }
+    ],
+    "types": ["route", "geocode"]
+  }
+  ],
+  "status": "OK"
+}

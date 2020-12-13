@@ -1,0 +1,7 @@
+828 Ballard St -> multipleSuggestions_us.json
+SQS 114 BLOCO H -> singleSuggestion.json
+SQS -> multipleSuggestions.json
+
+No Billing details set -> payUs.json
+
+I should probably also setup some contract testing for this lambda if there is time

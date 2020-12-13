@@ -29,18 +29,18 @@ Build a GraphQL API that can `create/read/update` user data from a persistence s
 
 ### Basic Requirements
 
-  - Use **AWS AppSync (preferred)** or AWS Lambda + API Gateway approach
-  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
-  - Write concise and clear commit messages
+  - Use **AWS AppSync (preferred)** or AWS Lambda + API Gateway approach [OK]
+  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred. [OK]
+  - Write concise and clear commit messages [OK]
   - Write clear **documentation** on how it has been designed and how to run the code
   - Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
 
 ### Bonus (in order)
-  1. Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
+  1. Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc. [OK]
   1. Provide proper unit tests
   1. Providing an online demo is welcomed, but not required
-  1. Delete user functionality
-  1. Bundle npm modules into your Lambdas
+  1. Delete user functionality            [OK_SERVER]
+  1. Bundle npm modules into your Lambdas [OK]
 
 ### Advanced Requirements
 

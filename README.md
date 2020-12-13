@@ -5,12 +5,18 @@ This document describes the architecture of the application and how to run int
 
 - TODO: Add intro
 
+
 - TODO: Add a diagram showcasing the overall view of the system and how modules interact with each other
   - Mention retry policy on the event stream in order to keep eventual consistency on the system
   - Flexible querying system with Elasticsearch
 
 
 - TODO: describe the data models
+
+
+- TODO: Add pre-requisites (?)
+  - User authed on the  AWS CLI 
+
 
 - TODO: Give instruction on how to set the code up from scratch
     - Login to your account on the AWS cli
@@ -22,7 +28,7 @@ This document describes the architecture of the application and how to run int
     - Run `terraform init`
     - Run `terraform apply`
     - Add a disclaimer about long Terraforming times due to the creation of an Elastic Search domain (creation ranges from 10 - 20 min)
-  
+
   
 ## Technical debts
 

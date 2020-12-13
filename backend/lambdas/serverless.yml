@@ -9,7 +9,20 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
 
+#There is probably a more evolveable way to package those lambdas
+package:
+  individually: true
+
 functions:
   elasticWriter:
     name: elastic_writer
-    handler: elasticWriter.handler
+    handler: elasticWriter/elasticWriter.handler
+    package:
+      exclude:
+        - mapsService/**
+
+  mapsService:
+    name: maps_service
+    handler: maps/index.handler
+    exclude:
+      - elasticWriter/**
