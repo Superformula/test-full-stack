@@ -16,7 +16,7 @@ describe('Address Suggestion Lambda', () => {
   let nockScope: nock.Scope = null;
 
   beforeEach(() => {
-    input = '';
+    input = 'validInput';
     responseFile = 'tests/responseFiles/singleSuggestion.json';
     httpCode = 200;
     nockScope = nock('https://maps.googleapis.com');
@@ -110,9 +110,6 @@ describe('Address Suggestion Lambda', () => {
 
   it('should fail when API returns something different than OK and ZERO_RESULTS', async () => {
     //Arrange
-    input = 'something';
-
-    //It is worth nothing that google replies with HTTP OK even when it rejects requests for known reasons
     responseFile = 'tests/responseFiles/error_example.json';
 
     //Act
@@ -120,7 +117,7 @@ describe('Address Suggestion Lambda', () => {
       .rejects.toThrow('Address Suggestion API returned an error status: REQUEST_DENIED');
   });
 
-  it('should fail when the resolver does not pass in the required information', async () => {
+  it('should fail when the AppSync resolver does not pass in the required information', async () => {
     //Arrange
     input = undefined;
 
@@ -131,7 +128,6 @@ describe('Address Suggestion Lambda', () => {
 
   it('should fail when google unexpectedly returns a failure code', async () => {
     //Arrange
-    input = 'valid input';
     responseFile = 'tests/responseFiles/error_example.json';
     httpCode = 500;
 

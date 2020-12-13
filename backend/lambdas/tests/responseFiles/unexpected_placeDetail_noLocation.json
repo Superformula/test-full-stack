@@ -1,0 +1,67 @@
+{
+  "html_attributions": [],
+  "result": {
+    "address_components": [
+      {
+        "long_name": "Casa de La Moneda",
+        "short_name": "Casa de La Moneda",
+        "types": [
+          "route"
+        ]
+      },
+      {
+        "long_name": "Casa Bella 1er Sector",
+        "short_name": "Casa Bella 1er Sector",
+        "types": [
+          "sublocality_level_1",
+          "sublocality",
+          "political"
+        ]
+      },
+      {
+        "long_name": "San Nicolás de los Garza",
+        "short_name": "San Nicolás de los Garza",
+        "types": [
+          "locality",
+          "political"
+        ]
+      },
+      {
+        "long_name": "Nuevo León",
+        "short_name": "N.L.",
+        "types": [
+          "administrative_area_level_1",
+          "political"
+        ]
+      },
+      {
+        "long_name": "Mexico",
+        "short_name": "MX",
+        "types": [
+          "country",
+          "political"
+        ]
+      },
+      {
+        "long_name": "66428",
+        "short_name": "66428",
+        "types": [
+          "postal_code"
+        ]
+      }
+    ],
+    "adr_address": "<span class=\"street-address\">Casa de La Moneda</span>, <span class=\"extended-address\">Casa Bella 1er Sector</span>, <span class=\"postal-code\">66428</span> <span class=\"locality\">San Nicolás de los Garza</span>, <span class=\"region\">N.L.</span>, <span class=\"country-name\">Mexico</span>",
+    "formatted_address": "Casa de La Moneda, Casa Bella 1er Sector, 66428 San Nicolás de los Garza, N.L., Mexico",
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png",
+    "name": "Casa de La Moneda",
+    "place_id": "EldDYXNhIGRlIExhIE1vbmVkYSwgQ2FzYSBCZWxsYSAxZXIgU2VjdG9yLCA2NjQyOCBTYW4gTmljb2zDoXMgZGUgbG9zIEdhcnphLCBOLkwuLCBNZXhpY28iLiosChQKEglLq4c4gZRihhF-dYcKBr7T9hIUChIJh_zYpYaUYoYRxz1Qd4nQw_w",
+    "reference": "EldDYXNhIGRlIExhIE1vbmVkYSwgQ2FzYSBCZWxsYSAxZXIgU2VjdG9yLCA2NjQyOCBTYW4gTmljb2zDoXMgZGUgbG9zIEdhcnphLCBOLkwuLCBNZXhpY28iLiosChQKEglLq4c4gZRihhF-dYcKBr7T9hIUChIJh_zYpYaUYoYRxz1Qd4nQw_w",
+    "types": [
+      "route"
+    ],
+    "url": "https://maps.google.com/?q=Casa+de+La+Moneda,+Casa+Bella+1er+Sector,+66428+San+Nicol%C3%A1s+de+los+Garza,+N.L.,+Mexico&ftid=0x866294813887ab4b:0xf6d3be060a87757e",
+    "utc_offset": -360,
+    "vicinity": "Casa Bella 1er Sector"
+  },
+  "status": "OK"
+}

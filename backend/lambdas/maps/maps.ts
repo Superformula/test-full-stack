@@ -22,7 +22,7 @@ export const getAddressSuggestions = async (
     throw new Error(err);
   }
 
-  const response = await axios.get<PlacesApiResponse>(suggestionsEndpoint, {
+  const { data } = await axios.get<PlacesApiResponse>(suggestionsEndpoint, {
     params: {
       input: evt.arguments.input,
       type: 'address',
@@ -31,11 +31,8 @@ export const getAddressSuggestions = async (
     },
   });
 
-  console.log('Status found:', response.status);
-
-  const { data } = response;
-
   //OK and ZERO_RESULTS are the only successful status according to the documentation, so the lambda should fail fast
+  //It is worth nothing that google replies with HTTP OK even when it rejects requests for known reasons
   if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
     console.error('Address Suggestion API returned an error:', data);
     throw new Error(`Address Suggestion API returned an error status: ${data.status}`);
@@ -63,8 +60,6 @@ export const getCoordinates = async (evt: AppSyncResolverEvent<GetCoordinatesArg
       key: KEY,
     },
   });
-
-  fs.writeFile('placeDetail.json', JSON.stringify(data), (f) => {});
 
   //When fetching coordinates, a ZERO_RESULTS also means error because the place no longer exists
   if (data.status !== 'OK') {
