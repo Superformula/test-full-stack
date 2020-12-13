@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { AddressLocation, AddressSuggestions, PlaceDetailsResponse, PlacePrediction, PlacesApiResponse } from './types';
 import * as fs from 'fs';
+import { AppSyncResolverEvent } from 'aws-lambda';
+import { GetCoordinatesArgument, SearchAddressArgument } from '../elasticWriter/types';
 
 require('dotenv').config();
 
@@ -11,15 +13,27 @@ const detailsEndpoint = `${baseUrl}/details/json`;
 
 const KEY = process.env.GMAPS_KEY;
 
-export const getAddressSuggestions = async (input: string): Promise<AddressSuggestions[]> => {
-  const { data } = await axios.get<PlacesApiResponse>(suggestionsEndpoint, {
+export const getAddressSuggestions = async (
+  evt: AppSyncResolverEvent<SearchAddressArgument>,
+): Promise<AddressSuggestions[]> => {
+  if (!evt.arguments || !evt.arguments.input) {
+    const err = 'Input argument not provided to the function';
+    console.error(err, evt);
+    throw new Error(err);
+  }
+
+  const response = await axios.get<PlacesApiResponse>(suggestionsEndpoint, {
     params: {
-      input: input,
+      input: evt.arguments.input,
       type: 'address',
       language: 'en-US',
       key: KEY,
     },
   });
+
+  console.log('Status found:', response.status);
+
+  const { data } = response;
 
   //OK and ZERO_RESULTS are the only successful status according to the documentation, so the lambda should fail fast
   if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
@@ -35,10 +49,17 @@ export const getAddressSuggestions = async (input: string): Promise<AddressSugge
   );
 };
 
-export const getCoordinates = async (placeId: string): Promise<AddressLocation> => {
+export const getCoordinates = async (evt: AppSyncResolverEvent<GetCoordinatesArgument>): Promise<AddressLocation> => {
+  if (!evt.arguments || !evt.arguments.placeId) {
+    const err = 'placeId argument not provided to the function';
+    console.error(err, evt);
+    throw new Error(err);
+  }
+
+  const placeId = evt.arguments.placeId;
   const { data } = await axios.get<PlaceDetailsResponse>(detailsEndpoint, {
     params: {
-      placeid: placeId,
+      placeid: evt.arguments.placeId,
       key: KEY,
     },
   });
@@ -62,7 +83,3 @@ export const getCoordinates = async (placeId: string): Promise<AddressLocation> 
     longitude: data.result.geometry.location.lng,
   };
 };
-
-getCoordinates(
-  'EldDYXNhIGRlIExhIE1vbmVkYSwgQ2FzYSBCZWxsYSAxZXIgU2VjdG9yLCBTYW4gTmljb2zDoXMgZGUgbG9zIEdhcnphLCBOdWV2byBMZW9uLCBNZXhpY28iLiosChQKEglLq4c4gZRihhF-dYcKBr7T9hIUChIJh_zYpYaUYoYRxz1Qd4nQw_w',
-);
