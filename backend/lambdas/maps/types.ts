@@ -3,6 +3,14 @@ export type AddressSuggestions = {
   description: string;
 };
 
+export type SearchAddressArgument = {
+  input?: string;
+};
+
+export type GetCoordinatesArgument = {
+  placeId?: string;
+};
+
 //Definitions from https://developers.google.com/places/web-service/autocomplete
 
 type LengthOffset = {

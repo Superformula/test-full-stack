@@ -1,9 +1,14 @@
 import axios from 'axios';
-import { AddressLocation, AddressSuggestions, PlaceDetailsResponse, PlacePrediction, PlacesApiResponse } from './types';
-import * as fs from 'fs';
+import {
+  AddressLocation,
+  AddressSuggestions,
+  GetCoordinatesArgument,
+  PlaceDetailsResponse,
+  PlacePrediction,
+  PlacesApiResponse,
+  SearchAddressArgument,
+} from './types';
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { GetCoordinatesArgument, SearchAddressArgument } from '../elasticWriter/types';
-
 require('dotenv').config();
 
 const baseUrl = 'https://maps.googleapis.com/maps/api/place';
@@ -13,18 +18,10 @@ const detailsEndpoint = `${baseUrl}/details/json`;
 
 const KEY = process.env.GMAPS_KEY;
 
-export const getAddressSuggestions = async (
-  evt: AppSyncResolverEvent<SearchAddressArgument>,
-): Promise<AddressSuggestions[]> => {
-  if (!evt.arguments || !evt.arguments.input) {
-    const err = 'Input argument not provided to the function';
-    console.error(err, evt);
-    throw new Error(err);
-  }
-
+export const getAddressSuggestions = async (input: string): Promise<AddressSuggestions[]> => {
   const { data } = await axios.get<PlacesApiResponse>(suggestionsEndpoint, {
     params: {
-      input: evt.arguments.input,
+      input: input,
       type: 'address',
       language: 'en-US',
       key: KEY,
@@ -46,17 +43,10 @@ export const getAddressSuggestions = async (
   );
 };
 
-export const getCoordinates = async (evt: AppSyncResolverEvent<GetCoordinatesArgument>): Promise<AddressLocation> => {
-  if (!evt.arguments || !evt.arguments.placeId) {
-    const err = 'placeId argument not provided to the function';
-    console.error(err, evt);
-    throw new Error(err);
-  }
-
-  const placeId = evt.arguments.placeId;
+export const getCoordinates = async (placeId: string): Promise<AddressLocation> => {
   const { data } = await axios.get<PlaceDetailsResponse>(detailsEndpoint, {
     params: {
-      placeid: evt.arguments.placeId,
+      placeid: placeId,
       key: KEY,
     },
   });

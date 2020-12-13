@@ -1,10 +1,9 @@
-import { getAddressSuggestions } from '../maps/maps';
 import * as fs from 'fs';
 import * as util from 'util';
 import nock from 'nock';
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { SearchAddressArgument } from '../elasticWriter/types';
-import { AddressSuggestions } from '../maps/types';
+import { AddressSuggestions, SearchAddressArgument } from '../maps/types';
+import { getAddressHandler } from '../maps/lambdaEndpoints';
 
 describe('Address Suggestion Lambda', () => {
   const readFileAsync = util.promisify(fs.readFile);
@@ -44,7 +43,7 @@ describe('Address Suggestion Lambda', () => {
     console.log('nock HTTP Status', httpCode);
     nockScope.get(regex).optionally().reply(httpCode, responseObj);
 
-    return getAddressSuggestions({
+    return getAddressHandler({
       arguments: {
         input: input,
       },

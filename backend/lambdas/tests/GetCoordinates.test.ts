@@ -1,10 +1,9 @@
-import { getCoordinates } from '../maps/maps';
 import * as fs from 'fs';
 import * as util from 'util';
 import nock from 'nock';
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { GetCoordinatesArgument, SearchAddressArgument } from '../elasticWriter/types';
-import { AddressLocation, AddressSuggestions } from '../maps/types';
+import { AddressLocation, GetCoordinatesArgument } from '../maps/types';
+import { getCoordinatesHandler } from '../maps/lambdaEndpoints';
 
 describe('Address Suggestion Lambda', () => {
   const readFileAsync = util.promisify(fs.readFile);
@@ -43,7 +42,7 @@ describe('Address Suggestion Lambda', () => {
     const regex = /\/maps\/api\/place\/details\/json\?placeid=(.*)&key=(.*)/;
     nockScope.get(regex).reply(httpCode, responseObj);
 
-    return getCoordinates({
+    return getCoordinatesHandler({
       arguments: {
         placeId: input,
       },

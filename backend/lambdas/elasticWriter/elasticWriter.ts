@@ -23,6 +23,8 @@ function postDocumentToES(doc: string, endpointUrl: string, region: string): Pro
   //  2. There will be plenty of opportunities elsewhere in the code to demonstrate my TS skills
   //  3. Time is short and I want to implement as many interesting things as I can in this project :)
 
+  //TODO: Apply Strangler Pattern (sort of) on the code below to facilitate refactoring this out later
+
   //@ts-ignore
   const req = new AWS.HttpRequest(endpoint);
 
