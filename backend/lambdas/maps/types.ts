@@ -70,7 +70,33 @@ export type PlacePrediction = {
   }[];
 };
 
+export type GoogleStatus =
+  | 'OK'
+  | 'ZERO_RESULTS'
+  | 'OVER_QUERY_LIMIT'
+  | 'REQUEST_DENIED'
+  | 'INVALID_REQUEST'
+  | 'UNKNOWN_ERROR';
+
 export type PlacesApiResponse = {
-  status: 'OK' | 'ZERO_RESULTS' | 'OVER_QUERY_LIMIT' | 'REQUEST_DENIED' | 'INVALID_REQUEST' | 'UNKNOWN_ERROR';
+  status: GoogleStatus;
   predictions: PlacePrediction[];
+};
+
+//I won't fully type this to save time, but you get the idea from the type above
+export type PlaceDetailsResponse = {
+  status: GoogleStatus | 'NOT_FOUND ';
+  result?: {
+    geometry?: {
+      location?: {
+        lat: number;
+        lng: number;
+      };
+    };
+  };
+};
+
+export type AddressLocation = {
+  latitude: number;
+  longitude: number;
 };
