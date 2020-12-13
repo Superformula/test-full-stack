@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { ApolloProvider } from '@apollo/client';
+import UsersPage from './components/UsersPage';
+import { buildAppSyncApolloClient } from './api/buildAppSyncApolloClient';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const client = buildAppSyncApolloClient();
+
+const App = (): JSX.Element => (
+  <>
+    <ApolloProvider client={client}>
+      <UsersPage />
+    </ApolloProvider>
+  </>
+);
 
 export default App;

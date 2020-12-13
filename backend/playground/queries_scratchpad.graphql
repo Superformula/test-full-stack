@@ -1,3 +1,16 @@
+fragment allInformation on User {
+    id
+    name
+    dob
+    address
+    description
+    latitude
+    longitude
+    avatar
+    updatedAt
+    createdAt
+}
+
 query getAllUsers {
     getAllUsers{
         items{
@@ -16,8 +29,8 @@ query getAllUsers {
     }
 }
 
-query searchUser($name: String) {
-    searchUsers (name: $name){
+query searchUser {
+    searchUsers (name: "Bele"){
         hasMore
         items{
             id
