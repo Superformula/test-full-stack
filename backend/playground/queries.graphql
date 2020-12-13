@@ -29,3 +29,17 @@ query searchUser {
         }
     }
 }
+
+query getAddresses {
+    getAddresses(input: "SQS"){
+        description
+        placeId
+    }
+}
+
+query getLocation {
+    getCoordinates(placeId: "El9TUVNXIDEwMSBCbG9jbyBIIC0gU2V0b3IgU3Vkb2VzdGUgU3VwZXJxdWFkcmEgU3Vkb2VzdGUgMTAxIC0gQnJhc2lsaWEsIEZlZGVyYWwgRGlzdHJpY3QsIEJyYXppbCIuKiwKFAoSCdtvi1ecOlqTETl86rnBhw52EhQKEgn7jO4dnTpakxG6vx5yR0qR3A"){
+        latitude
+        longitude
+    }
+}
