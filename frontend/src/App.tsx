@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import { ApolloProvider } from '@apollo/client';
+import styles from './App.module.scss';
 import UsersPage from './components/UsersPage';
 import { buildAppSyncApolloClient } from './api/buildAppSyncApolloClient';
 
@@ -9,7 +9,9 @@ const client = buildAppSyncApolloClient();
 const App = (): JSX.Element => (
   <>
     <ApolloProvider client={client}>
-      <UsersPage />
+      <div className={styles.App}>
+        <UsersPage />
+      </div>
     </ApolloProvider>
   </>
 );

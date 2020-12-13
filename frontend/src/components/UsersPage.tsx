@@ -44,7 +44,6 @@ const UsersPage: React.FC = () => {
     searchUserLazy({ variables: { name: 'p' } });
   }, []);
 
-  // Subscription
   useEffect(() => {
     const subscription = apolloClient
       .subscribe({
@@ -59,6 +58,10 @@ const UsersPage: React.FC = () => {
           console.log('Update received', updated);
         },
       });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   console.log('Users received!', data);
