@@ -1,14 +1,13 @@
 import axios from 'axios';
 import {
   AddressLocation,
-  AddressSuggestions,
+  AddressSuggestion,
   GetCoordinatesArgument,
   PlaceDetailsResponse,
   PlacePrediction,
   PlacesApiResponse,
   SearchAddressArgument,
 } from './types';
-import { AppSyncResolverEvent } from 'aws-lambda';
 require('dotenv').config();
 
 const baseUrl = 'https://maps.googleapis.com/maps/api/place';
@@ -18,7 +17,7 @@ const detailsEndpoint = `${baseUrl}/details/json`;
 
 const KEY = process.env.GMAPS_KEY;
 
-export const getAddressSuggestions = async (input: string): Promise<AddressSuggestions[]> => {
+export const getAddressSuggestions = async (input: string): Promise<AddressSuggestion[]> => {
   const { data } = await axios.get<PlacesApiResponse>(suggestionsEndpoint, {
     params: {
       input: input,
@@ -35,8 +34,10 @@ export const getAddressSuggestions = async (input: string): Promise<AddressSugge
     throw new Error(`Address Suggestion API returned an error status: ${data.status}`);
   }
 
+  if (data.status === 'ZERO_RESULTS') return [];
+
   return data.predictions.map(
-    (p: PlacePrediction): AddressSuggestions => ({
+    (p: PlacePrediction): AddressSuggestion => ({
       description: p.description,
       placeId: p.place_id,
     }),

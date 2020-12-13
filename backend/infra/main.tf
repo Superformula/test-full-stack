@@ -33,6 +33,15 @@ module "appsync" {
       region     = var.region
     }
 
+    superformula_google_address_api = {
+      type         = "AWS_LAMBDA"
+      function_arn = aws_lambda_function.google_api_getAddress_lambda.arn
+    }
+
+    superformula_google_coordinates_api = {
+      type         = "AWS_LAMBDA"
+      function_arn = aws_lambda_function.google_api_getCoordinates_lambda.arn
+    }
   }
 
   resolvers = {
@@ -40,6 +49,18 @@ module "appsync" {
       data_source       = "superformula_dynamodb4437"
       request_template  = file("graphql/queries/listUsers-request-map.vtl")
       response_template = file("graphql/queries/listUsers-response-map.vtl")
+    }
+
+    "Query.getAddresses" = {
+      data_source       = "superformula_google_address_api"
+      request_template  = file("graphql/queries/getAddresses-request-map.vtl")
+      response_template = file("graphql/queries/getAddresses-response-map.vtl")
+    }
+
+    "Query.getCoordinates" = {
+      data_source       = "superformula_google_coordinates_api"
+      request_template  = file("graphql/queries/getCoordinates-request-map.vtl")
+      response_template = file("graphql/queries/getCoordinates-response-map.vtl")
     }
 
     "Mutation.createUser" = {

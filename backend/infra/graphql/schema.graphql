@@ -7,6 +7,10 @@ type Mutation {
 type Query {
     searchUsers(name: String, limit: Int, skip: Int): UserSearchResult
 
+    getAddresses(input: String!): [AddressSuggestion!]!
+
+    getCoordinates(placeId: String!): Coordinates!
+
     #TODO: Remove this once I plug elastic search in. I will use this just for debugging purposes
     getAllUsers: GetAllUsersResult
 }
@@ -41,12 +45,22 @@ type User {
     updatedAt: AWSTimestamp!
 }
 
+type AddressSuggestion {
+    placeId: String!
+    description: String!
+}
+
 type UserSearchResult {
     hasMore: Boolean!
     items: [User!]!
 }
 
-input Coordinates {
+type Coordinates {
+    latitude: Float!
+    longitude: Float!
+}
+
+input CoordinatesInput {
     latitude: Float!
     longitude: Float!
 }
@@ -55,6 +69,6 @@ input UserInput {
     name: String!
     dob: AWSDate!
     address: String!
-    location: Coordinates!
+    location: CoordinatesInput!
     description: String!
 }

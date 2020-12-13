@@ -18,6 +18,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": [
       "node_modules/@types"

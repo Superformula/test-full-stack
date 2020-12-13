@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as util from 'util';
 import nock from 'nock';
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { AddressSuggestions, SearchAddressArgument } from '../maps/types';
+import { AddressSuggestion, SearchAddressArgument } from '../maps/types';
 import { getAddressHandler } from '../maps/lambdaEndpoints';
 
 describe('Address Suggestion Lambda', () => {
@@ -55,7 +55,7 @@ describe('Address Suggestion Lambda', () => {
     input = 'SQS 114 BLOCO H';
 
     //Act
-    const response: AddressSuggestions[] = await exec();
+    const response: AddressSuggestion[] = await exec();
 
     //Assert
     expect(response.length).toBe(1);
@@ -73,10 +73,10 @@ describe('Address Suggestion Lambda', () => {
     responseFile = 'tests/responseFiles/multipleSuggestions.json';
 
     //Act
-    const response: AddressSuggestions[] = await exec();
+    const response: AddressSuggestion[] = await exec();
 
     //Assert
-    const expectedResponse: AddressSuggestions[] = [
+    const expectedResponse: AddressSuggestion[] = [
       {
         placeId:
           'Ek1TUVMgMTA5IEJsLiBBIC0gU0hDUyBTdXBlcnF1YWRyYSBTdWwgMTA5IC0gQnJhc2lsaWEsIEZlZGVyYWwgRGlzdHJpY3QsIEJyYXppbCIuKiwKFAoSCd8MHVaxOlqTEdMXWUb3OurgEhQKEgkR9IMFtDpakxEuNZpufU8C9g',
@@ -105,6 +105,17 @@ describe('Address Suggestion Lambda', () => {
     ];
 
     expect(response).toEqual(expectedResponse);
+  });
+
+  it('should respond empty array when ZERO_RESULTS code arrives', async () => {
+    //Arrange
+    responseFile = 'tests/responseFiles/zero_results.json';
+
+    //Act
+    const response = await exec();
+
+    //Assert
+    expect(response).toEqual([]);
   });
 
   it('should fail when API returns something different than OK and ZERO_RESULTS', async () => {

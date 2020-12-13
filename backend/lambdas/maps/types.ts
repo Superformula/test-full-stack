@@ -1,4 +1,4 @@
-export type AddressSuggestions = {
+export type AddressSuggestion = {
   placeId: string;
   description: string;
 };
