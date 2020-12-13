@@ -1,6 +1,6 @@
 mutation createUser{
     createUser(input: {
-        name: "Yan Valadares"
+        name: "Beleleu"
         dob: "2002-05-01"
         address: "SQS 203, BLOCO 5, APTO 203"
         description: "ayy lmao"

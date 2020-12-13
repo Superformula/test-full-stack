@@ -17,7 +17,7 @@ query getAllUsers {
 }
 
 query searchUser {
-    searchUsers (name: "Yan"){
+    searchUsers (name: "Bele"){
         hasMore
         items{
             id

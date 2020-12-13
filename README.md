@@ -28,6 +28,9 @@ This document describes the architecture of the application and how to run int
     - Run `terraform init`
     - Run `terraform apply`
     - Add a disclaimer about long Terraforming times due to the creation of an Elastic Search domain (creation ranges from 10 - 20 min)
+  
+
+-  TODO: Add somewhere that all lambdas were packaged together for convenience and in a real world app with multiple lambda functions I would break them down into individual packages
 
   
 ## Technical debts

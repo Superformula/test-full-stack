@@ -46,9 +46,9 @@ resource "aws_lambda_function" "dynamo_to_es" {
   role = aws_iam_role.dynamo_lambda_role.arn
 
   #Code
-  handler = "elasticWriter.handler"
-  filename = "${path.module}/../lambdas/.serverless/elasticWriter.zip"
-  source_code_hash = filebase64sha256("${path.module}/../lambdas/.serverless/elasticWriter.zip")
+  handler = "elasticWriter/elasticWriter.handler"
+  filename = "${path.module}/../lambdas/.serverless/lambdas.zip"
+  source_code_hash = filebase64sha256("${path.module}/../lambdas/.serverless/lambdas.zip")
 
   #Environment
   runtime = "nodejs12.x"
