@@ -38,8 +38,8 @@ mutation deleteUser {
     }
 }
 mutation updateUser {
-    updateUser(id: "3f22b422-b2f7-4c9e-92cb-e4cfc1c7f210", input: {
-        name: "Paulo"
+    updateUser(id: "fd4dc470-389a-4fc2-b046-e4544e3e4e1e", input: {
+        name: "Nome gigantesco para dar um problema na grid"
         dob: "1997-03-04"
         address: "This is a new updated address"
         description: "This is an updated description"

@@ -15,6 +15,10 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1)
   }
 
+  h2 {
+    max-width: 220px;
+  }
+
   p {
     max-width: 200px;
     text-overflow: ellipsis;
