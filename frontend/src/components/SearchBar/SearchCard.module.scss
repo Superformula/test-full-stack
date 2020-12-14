@@ -3,4 +3,19 @@
 
 .input {
   font-family: $sans-pro-font-family;
+  font-size: 24px;
+  font-weight: 300;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0, 0.1);
+  padding-left: 15px;
+  transition: box-shadow .2s ease-in-out;
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  &:focus{
+    box-shadow: $box-shadow;
+    outline-width: 0;
+  }
 }
