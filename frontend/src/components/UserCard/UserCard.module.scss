@@ -1,0 +1,20 @@
+.userImage {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+}
+
+.card{
+  background: #ffffff;
+  transition: box-shadow .2s ease-in-out;
+  padding: 44px;
+  border-radius: 8px;
+
+  &:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1)
+  }
+}
+
+.name {
+  margin-top: 28px;
+}

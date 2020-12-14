@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import styles from './App.module.scss';
 import UsersPage from './components/UsersPage';
-import { buildAppSyncApolloClient } from './api/buildAppSyncApolloClient';
+import buildAppSyncApolloClient from './api/buildAppSyncApolloClient';
 
 const client = buildAppSyncApolloClient();
 

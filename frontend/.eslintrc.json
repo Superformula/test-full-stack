@@ -27,7 +27,8 @@
     "rules": {
         "no-use-before-define": "off",
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-        "import/extensions": "off"
+        "import/extensions": "off",
+        "react/prop-types": "off"
     },
     "settings": {
         "import/resolver": {

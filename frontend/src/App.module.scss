@@ -1,38 +1,42 @@
-.App {
-  text-align: center;
-}
+@import './sass/variables';
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+:global{
+  body, * {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: $default-font-family;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  h1 {
+    font-size: $h1-font-size;
+    font-weight: $h1-font-weight;
+    font-style: $h1-font-style;
+    line-height: $h1-line-height;
+    font-family: $sans-pro-font-family;
+  }
+
+  h2 {
+    font-size: $h2-font-size;
+    font-weight: $h2-font-weight;
+    font-style: $h2-font-style;
+    line-height: $h2-line-height;
+    font-family: $sans-pro-font-family;
+  }
+
+  p {
+    font-weight: 300;
+  }
+
 }
 
-.App-header {
-  background-color: #282c34;
+.App {
+  background-color: $page-background-color;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

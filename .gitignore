@@ -131,3 +131,10 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# sass modules build outputs
+*.module.css
+*.module.css.map
+
+frontend/src/sass/variables.css.map
+frontend/src/sass/variables.css

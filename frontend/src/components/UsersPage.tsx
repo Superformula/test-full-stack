@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { gql, useApolloClient, useLazyQuery } from '@apollo/client';
 import { QuerySearchUsersArgs, User, UserSearchResult } from '../api/types';
+import UserCard from './UserCard/UserCard';
 
 const SEARCH_USER_GQL = gql`
   query searchUser($name: String) {
@@ -44,6 +45,7 @@ const UsersPage: React.FC = () => {
     searchUserLazy({ variables: { name: 'p' } });
   }, []);
 
+  // TODO: Move subscriptions to a hook
   useEffect(() => {
     const subscription = apolloClient
       .subscribe({
@@ -65,7 +67,11 @@ const UsersPage: React.FC = () => {
   }, []);
 
   console.log('Users received!', data);
-  return <div>UsersPage</div>;
+  return (
+    <div>
+      <UserCard name="Pedro Yan" description="Description, lorem ipsum" imageSrc="https://source.unsplash.com/random" />
+    </div>
+  );
 };
 
 export default UsersPage;
