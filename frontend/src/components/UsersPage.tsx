@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserList from './UserList/UserList';
 import styles from './UsersPage.module.scss';
 
@@ -8,11 +8,15 @@ const UsersPage: React.FC = () => {
   return (
     <>
       <div className={styles.header}>
-        <h1>Ola</h1>
+        <h1>User list</h1>
         <input />
       </div>
 
       <UserList />
+
+      <button type="button" onClick={() => console.log('I was clicked and will become a callback later')}>
+        Button
+      </button>
     </>
   );
 };
