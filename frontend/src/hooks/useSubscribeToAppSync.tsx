@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { User } from '../api/types';
-import { onDeleteUser, onDeleteUserData, onUpdateUser } from '../api/subscriptions';
-import { deleteUser, updateUser } from '../store/userList/actions';
+import { onCreateUser, onDeleteUser, onDeleteUserData, onUpdateUser } from '../api/subscriptions';
+import { addUser, deleteUser, updateUser } from '../store/userList/actions';
 
 const useSubscribeToAppSync = (): void => {
   const apolloClient = useApolloClient();
@@ -42,9 +42,23 @@ const useSubscribeToAppSync = (): void => {
         },
       });
 
+    const createSubscription = apolloClient
+      .subscribe({
+        fetchPolicy: 'no-cache',
+        query: onCreateUser,
+      })
+      .subscribe({
+        next(value) {
+          if (!value || !value.data || !value.data.onCreateUser) return;
+
+          dispatch(addUser(value.data.onCreateUser));
+        },
+      });
+
     return () => {
       updateSubscription.unsubscribe();
       deleteSubscription.unsubscribe();
+      createSubscription.unsubscribe();
     };
   }, [dispatch]);
 };

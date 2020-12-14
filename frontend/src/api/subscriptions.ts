@@ -28,3 +28,20 @@ export const onDeleteUser = gql`
     }
   }
 `;
+
+export const onCreateUser = gql`
+  subscription {
+    onCreateUser {
+      id
+      name
+      dob
+      description
+      longitude
+      latitude
+      updatedAt
+      createdAt
+      avatar
+      address
+    }
+  }
+`;
