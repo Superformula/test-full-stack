@@ -1,17 +1,21 @@
 import { useApolloClient } from '@apollo/client';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { SearchUserResponseData, USER_SEARCH_LIST_GQL, UserSearchListResult } from '../api/queries';
+import { SearchUserResponseData, USER_SEARCH_LIST_GQL } from '../api/queries';
 import { QuerySearchUsersArgs } from '../api/types';
 import { updateList } from '../store/userList/actions';
 
-const useGetUsers = (): void => {
+const useGetUsers = (): boolean => {
   const apolloClient = useApolloClient();
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // TODO: Include search term and pagination here
   // variables: { name: "search term" }
   useEffect(() => {
+    setIsLoading(true);
+
     apolloClient
       .query<SearchUserResponseData, QuerySearchUsersArgs>({
         fetchPolicy: 'no-cache',
@@ -31,8 +35,13 @@ const useGetUsers = (): void => {
       })
       .catch((e) => {
         console.error(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [apolloClient]);
+  }, [dispatch, apolloClient]);
+
+  return useMemo(() => isLoading, [isLoading]);
 };
 
 export default useGetUsers;

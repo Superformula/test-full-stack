@@ -9,16 +9,14 @@ import { UserListState } from '../../store/userList/types';
 
 const UserList: React.FC = () => {
   useSubscribeToAppSync();
-  useGetUsers();
+  const isLoading = useGetUsers();
 
   const usersState: UserListState = useSelector<RootState, UserListState>((s) => s.usersRoot);
 
   // TODO: Replace those elements below with prettier ones
-  // TODO: Better strategy for handling loading states. Checking if data is undefined is not good enough due to
-  // error that might occur. Check the useGetUsers for more details
-  // if (usersState) {
-  //   return <p>Loading...</p>;
-  // }
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   if (usersState.users.length === 0) {
     return <p>No users</p>;
