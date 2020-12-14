@@ -1,24 +1,32 @@
 import { gql } from '@apollo/client';
-import { UserSearchResult } from './types';
+import { Scalars, User, UserSearchResult } from './types';
 
 export type SearchUserResponseData = {
-  searchUsers: UserSearchResult;
+  searchUsers: UserSearchListResult;
 };
 
-export const SEARCH_USER_GQL = gql`
+export type UserSearchListResult = {
+  hasMore: boolean;
+  items: UserListItem[];
+};
+
+export type UserListItem = {
+  id: string;
+  name: string;
+  description: string;
+  avatar: string;
+  createdAt: number;
+};
+
+export const USER_SEARCH_LIST_GQL = gql`
   query searchUser($name: String) {
     searchUsers(name: $name) {
       hasMore
       items {
         id
         name
-        dob
-        address
-        description
-        latitude
-        longitude
         avatar
-        updatedAt
+        description
         createdAt
       }
     }

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
 import { QuerySearchUsersArgs, User, UserSearchResult } from '../../api/types';
-import { SEARCH_USER_GQL, SearchUserResponseData } from '../../api/queries';
+import { USER_SEARCH_LIST_GQL, SearchUserResponseData } from '../../api/queries';
 import styles from './UserList.module.scss';
 import UserCard from '../UserCard/UserCard';
 
 const UserList: React.FC = () => {
-  const [searchUserLazy, { data }] = useLazyQuery<SearchUserResponseData, QuerySearchUsersArgs>(SEARCH_USER_GQL);
+  const [searchUserLazy, { data }] = useLazyQuery<SearchUserResponseData, QuerySearchUsersArgs>(USER_SEARCH_LIST_GQL);
 
   useEffect(() => {
     searchUserLazy({ variables: { name: 'p' } });
