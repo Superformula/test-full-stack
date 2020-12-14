@@ -16,8 +16,8 @@ query getAllUsers {
     }
 }
 
-query searchUser($name: String) {
-    searchUsers (name: $name){
+query searchUser {
+    searchUsers(skip: 0){
         hasMore
         items{
             id

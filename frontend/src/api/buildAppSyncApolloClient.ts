@@ -8,9 +8,6 @@ const appSyncUrl = process.env.REACT_APP_APPSYNC_URL;
 const appSyncKey = process.env.REACT_APP_APPSYNC_API_KEY;
 const awsRegion = process.env.REACT_APP_APPSYNC_REGION;
 
-// AppSync + Apollo3 should be working fine without hacks now! :)
-// https://github.com/awslabs/aws-mobile-appsync-sdk-js/pull/561#issuecomment-701696316
-
 const httpLink = new HttpLink({
   uri: appSyncUrl,
 });

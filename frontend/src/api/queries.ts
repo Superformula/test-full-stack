@@ -19,8 +19,8 @@ export type UserListItem = {
 };
 
 export const USER_SEARCH_LIST_GQL = gql`
-  query searchUser($name: String) {
-    searchUsers(name: $name) {
+  query searchUser($name: String, $skip: Int) {
+    searchUsers(name: $name, skip: $skip) {
       hasMore
       items {
         id

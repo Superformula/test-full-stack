@@ -7,10 +7,11 @@ import useGetUsers from '../../hooks/useGetUsers';
 import { RootState } from '../../store';
 import { UserListState } from '../../store/userList/types';
 
-const UserList: React.FC = () => {
-  useSubscribeToAppSync();
-  const isLoading = useGetUsers();
+type UserListProps = {
+  isLoading: boolean;
+};
 
+const UserList: React.FC<UserListProps> = ({ isLoading }) => {
   const usersState: UserListState = useSelector<RootState, UserListState>((s) => s.usersRoot);
 
   // TODO: Replace those elements below with prettier ones

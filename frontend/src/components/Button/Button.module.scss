@@ -1,0 +1,55 @@
+@import '../../sass/variables';
+
+$border-radius: 8px;
+
+$secondary-color: #F8F8F8;
+$primary-color: #FFFFFF;
+
+$disabled-border-color: rgba(0, 0, 0, 0.1);
+$border-color: rgba(0, 0, 0, 0.1);
+$hover-border-color: rgba(0, 0, 0, 0.4);
+$active-border-color: rgba(0, 0, 0, 0.5);
+
+%buttonTransforms {
+  border-color: $border-color;
+
+  &:hover {
+    border-color: $hover-border-color;
+  }
+
+  &:disabled {
+    color: rgba(0, 0, 0, 0.5);
+    border-color: $disabled-border-color;
+  }
+
+  &:active {
+    border-color: $active-border-color;
+  }
+}
+
+.button {
+  border-width: 4px;
+  border-style: solid;
+  border-radius: $border-radius;
+  outline: 0;
+  cursor: pointer;
+
+  transition: border-color .1s ease-in-out;
+
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: $sans-pro-font-family;
+  font-size: 24px;
+  padding: 16px 64px;
+
+  &.primary {
+    background: $primary-color;
+    @extend %buttonTransforms
+  }
+
+  &.secondary {
+    background: $secondary-color;
+    @extend %buttonTransforms
+  }
+
+}

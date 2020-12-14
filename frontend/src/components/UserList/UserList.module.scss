@@ -1,18 +1,14 @@
-%minContainer {
-  min-height: 740px;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 40px;
+  row-gap: 40px;
   min-width: 70vw;
 }
 
-.grid {
-  @extend %minContainer;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 64px;
-  row-gap: 64px;
-}
-
 .container {
-  @extend %minContainer;
+  min-height: 656px;
+  min-width: 70vw;
 
   .loading {
     font-size: 20px;
