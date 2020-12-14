@@ -120,7 +120,7 @@ I will give a brief summary here of what was accomplished because it is still un
     - Works as expected
     
 - [ ] Provide E2E and unit tests (one component&view well tested is enough, no need to test every component/view)
-    - Coming soon
+    - E2E Coming soon. I have to finish the user creation screen
 
     
 
