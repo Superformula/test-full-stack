@@ -1,0 +1,18 @@
+.content {
+  h1 {
+    margin-bottom: 20px;
+  }
+}
+
+.formContent {
+  flex-direction: row;
+  display: flex;
+}
+
+.formRightSide {
+  flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+  min-width: 500px;
+  margin-left: 40px;
+}

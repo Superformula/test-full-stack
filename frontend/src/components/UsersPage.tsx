@@ -5,9 +5,9 @@ import SearchBar from './SearchBar/SearchBar';
 import Button from './Button/Button';
 import useSubscribeToAppSync from '../hooks/useSubscribeToAppSync';
 import useGetUsers from '../hooks/useGetUsers';
-import Modal, { ModalControls } from './Modal/Modal';
-import UserDetailsModalContent from './Modal/UserDetailsModalContent';
-import Map from './Modal/Map';
+import Modal, { ModalControls } from './UserDetailsModal/Modal';
+import UserDetailsModalContent from './UserDetailsModal/UserDetailsModalContent';
+import Map from './UserDetailsModal/Map';
 
 const UsersPage: React.FC = () => {
   useSubscribeToAppSync();

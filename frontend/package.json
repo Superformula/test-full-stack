@@ -15,6 +15,7 @@
     "aws-appsync-auth-link": "^3.0.2",
     "aws-appsync-subscription-link": "^3.0.3",
     "classnames": "^2.2.6",
+    "formik": "^2.2.6",
     "graphql": "^15.4.0",
     "mapbox-gl": "^2.0.0",
     "node-sass": "^4.14.1",
@@ -28,7 +29,8 @@
     "redux": "^4.0.5",
     "typescript": "^4.0.3",
     "use-query-params": "^1.1.9",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",

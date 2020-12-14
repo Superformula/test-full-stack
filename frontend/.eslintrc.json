@@ -31,7 +31,8 @@
         "import/extensions": "off",
         "react/prop-types": "off",
         "no-console": ["warn", { "allow": ["warn", "error"] }],
-        "react-hooks/exhaustive-deps": "error"
+        "react-hooks/exhaustive-deps": "error",
+        "@typescript-eslint/no-explicit-any": "off"
     },
     "settings": {
         "import/resolver": {

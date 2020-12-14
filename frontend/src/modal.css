@@ -22,10 +22,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     min-height: 30%;
-    width: 60%;
+    display: inline-block;
     overflow-y: auto;
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
     z-index: 101;
-    padding: 40px;
+    padding: 30px 40px 40px 40px;
 }

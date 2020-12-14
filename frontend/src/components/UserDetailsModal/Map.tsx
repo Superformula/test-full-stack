@@ -31,8 +31,8 @@ const Map: React.FC = () => {
 
   return (
     <InteractiveMap
-      width="500px"
-      height="300px"
+      width="510px"
+      height="320px"
       zoom={viewport.zoom}
       mapStyle={STYLE}
       latitude={viewport.latitude}
