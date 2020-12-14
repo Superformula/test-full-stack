@@ -1,0 +1,14 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 64px;
+  row-gap: 64px;
+
+}
+.cell {
+  flex: 0 0 32%; /* don't grow, don't shrink, width */
+  margin-bottom: 32px;
+}
+.cell:nth-child(3n) {
+  background-color: #f00;
+}

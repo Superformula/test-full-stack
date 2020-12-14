@@ -9,9 +9,18 @@
   transition: box-shadow .2s ease-in-out;
   padding: 44px;
   border-radius: 8px;
+  min-width: 19vw;
 
   &:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1)
+  }
+
+  p {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
   }
 }
 

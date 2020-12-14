@@ -1,23 +1,7 @@
 import React, { useEffect } from 'react';
 import { gql, useApolloClient, useLazyQuery } from '@apollo/client';
 import { QuerySearchUsersArgs, User, UserSearchResult } from '../api/types';
-import UserCard from './UserCard/UserCard';
-
-const SEARCH_USER_GQL = gql`
-  query searchUser($name: String) {
-    searchUsers(name: $name) {
-      hasMore
-      items {
-        id
-        name
-        avatar
-        dob
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
+import UserList from './UserList/UserList';
 
 const onUpdateUser = gql`
   subscription {
@@ -37,15 +21,9 @@ const onUpdateUser = gql`
 `;
 
 const UsersPage: React.FC = () => {
-  const [searchUserLazy, { data }] = useLazyQuery<UserSearchResult, QuerySearchUsersArgs>(SEARCH_USER_GQL);
-
   const apolloClient = useApolloClient();
 
-  useEffect(() => {
-    searchUserLazy({ variables: { name: 'p' } });
-  }, []);
-
-  // TODO: Move subscriptions to a hook
+  // TODO: Move subscriptions to a hook that will update redux
   useEffect(() => {
     const subscription = apolloClient
       .subscribe({
@@ -66,12 +44,7 @@ const UsersPage: React.FC = () => {
     };
   }, []);
 
-  console.log('Users received!', data);
-  return (
-    <div>
-      <UserCard name="Pedro Yan" description="Description, lorem ipsum" imageSrc="https://source.unsplash.com/random" />
-    </div>
-  );
+  return <UserList />;
 };
 
 export default UsersPage;

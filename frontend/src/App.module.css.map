@@ -1,1 +1,0 @@
-{"version":3,"sourceRoot":"","sources":["sass/variables.scss","App.module.scss"],"names":[],"mappings":"AAAQ;ACGN;EACE;EACA;EACA,aDHkB;ECIlB;EACA;;AAGF;EACE,WDFW;ECGX,aDFa;ECGb,YDFY;ECGZ,aDFa;ECGb,aDXmB;;ACcrB;EACE,WDJW;ECKX,aDJa;ECKb,YDJY;ECKZ,aDJa;ECKb,aDnBmB;;ACsBrB;EACE;;;AAKJ;EACE,kBD3BsB;EC4BtB;EACA;EACA;EACA;EACA;EACA","file":"App.module.css"}
