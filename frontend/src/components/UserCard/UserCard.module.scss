@@ -12,6 +12,8 @@
   padding: 44px;
   border-radius: 8px;
   min-width: 19vw;
+  max-height: 308px;
+
 
   &:hover {
     box-shadow: $box-shadow
@@ -19,6 +21,9 @@
 
   h2 {
     max-width: 220px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   p {
