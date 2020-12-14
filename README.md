@@ -108,4 +108,29 @@ NOTE: This deployment takes a while if you are doing it for the first time, beca
 
 I will give a brief summary here of what was accomplished because it is still under development.
 
-- [ ] 
+- [x] The search functionality should perform real time filtering on client side data and API side data
+    - Only API data is being filtered in real time.
+- [x] List of users should be updated automatically after single user is updated
+    - Subscriptions take care of that
+- [x] Create modal from scratch - please don't use any library for it
+    - Implemented using a Portal with ``React.DOM``
+- [ ] Appear/Disappear of modal should be animated (feel free with choose how)
+  
+- [x] Infinite loading state should be saved in url query (pagination state should be present in URL query (eg ?page=1) to allow for behavior where the user can reload the page while still returning to their current scroll position)
+    - Works as expected
+    
+- [ ] Provide E2E and unit tests (one component&view well tested is enough, no need to test every component/view)
+    - Coming soon
+
+    
+
+## How to run the project
+
+1. Create a ``.env`` file with all variables described on ``.env.sample`` filled
+    1. ``REACT_APP_APPSYNC_REGION`` - AWS Region of the AppSync instance you are trying to connect
+    1. ``REACT_APP_APPSYNC_URL`` - URL of the AppSync instance you are trying to connect
+    1. ``REACT_APP_APPSYNC_API_KEY`` - AppSync API KEY
+    1. ``REACT_APP_MAPBOX_TOKEN`` - MapBox token to view maps in the app
+    1. ``REACT_APP_MAPBOX_STYLE`` - Link for the style you wish to use to display the maps on the app
+1. run ``yarn install``
+1. run ``yarn start``
