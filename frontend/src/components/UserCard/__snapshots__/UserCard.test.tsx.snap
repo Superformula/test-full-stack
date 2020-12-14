@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders avatar and matches snapshot 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    <img
+      alt="User avatar"
+      class="userImage"
+      src="http://photo.com/photo"
+    />
+    <h2
+      class="name"
+    >
+      PEDRO YAN
+    </h2>
+    <p>
+      All good
+    </p>
+  </div>
+</div>
+`;
