@@ -21,8 +21,8 @@ const awsAuthSettings = {
   region: awsRegion,
 };
 
-const buildAppSyncApolloClient = () => {
-  const gqlClient: ApolloClient<ApolloStore> = new ApolloClient({
+const buildAppSyncApolloClient = (): ApolloClient<ApolloStore> =>
+  new ApolloClient({
     cache: new InMemoryCache(),
     link: from([
       createAuthLink(awsAuthSettings),
@@ -45,8 +45,5 @@ const buildAppSyncApolloClient = () => {
       ),
     ]),
   });
-
-  return gqlClient;
-};
 
 export default buildAppSyncApolloClient;

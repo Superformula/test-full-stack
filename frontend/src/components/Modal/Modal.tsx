@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 type Props = {
@@ -21,13 +21,23 @@ const Modal: React.FC<Props> = forwardRef(({ children }, ref) => {
     closeModal: () => close(),
   }));
 
-  const open = () => {
+  const open = useCallback(() => {
     setDisplay(true);
-  };
+  }, []);
 
-  const close = () => {
+  const close = useCallback(() => {
     setDisplay(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const onKeyPressed = (e: KeyboardEvent): void => {
+      if (display && e.code === 'Escape') close();
+    };
+    document.addEventListener('keydown', onKeyPressed);
+    return (): void => {
+      document.removeEventListener('keydown', onKeyPressed);
+    };
+  }, [display, close]);
 
   // Open portal to root
   if (display) {

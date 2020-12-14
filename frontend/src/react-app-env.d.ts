@@ -15,5 +15,12 @@ declare namespace NodeJS {
      * API token that will be used by the application to access the appsync instance
      */
     REACT_APP_APPSYNC_API_KEY: string;
+
+    /**
+     * Map Box token
+     */
+    REACT_APP_MAPBOX_TOKEN: string;
+
+    REACT_APP_MAPBOX_STYLE: string;
   }
 }
