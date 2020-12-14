@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UserList from './UserList/UserList';
 import styles from './UsersPage.module.scss';
+import SearchBar from './SearchBar/SearchBar';
 
 const UsersPage: React.FC = () => {
   console.log('stop collapsing me');
@@ -9,7 +10,7 @@ const UsersPage: React.FC = () => {
     <>
       <div className={styles.header}>
         <h1>User list</h1>
-        <input />
+        <SearchBar />
       </div>
 
       <UserList />

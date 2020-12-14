@@ -1,13 +1,20 @@
+%minContainer {
+  min-height: 740px;
+  min-width: 70vw;
+}
+
 .grid {
+  @extend %minContainer;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 64px;
   row-gap: 64px;
-  min-height: 740px;
-  min-width: 70vw;
-
 }
-.cell {
-  flex: 0 0 32%; /* don't grow, don't shrink, width */
-  margin-bottom: 32px;
+
+.container {
+  @extend %minContainer;
+
+  .loading {
+    font-size: 20px;
+  }
 }

@@ -15,11 +15,19 @@ const UserList: React.FC = () => {
 
   // TODO: Replace those elements below with prettier ones
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className={styles.container}>
+        <p className={styles.loading}>Loading...</p>
+      </div>
+    );
   }
 
   if (usersState.users.length === 0) {
-    return <p>No users</p>;
+    return (
+      <div className={styles.container}>
+        <p>No users</p>
+      </div>
+    );
   }
 
   return (
