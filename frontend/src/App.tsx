@@ -8,6 +8,7 @@ import styles from './App.module.scss';
 import UsersPage from './components/UsersPage';
 import buildAppSyncApolloClient from './api/buildAppSyncApolloClient';
 import Reducers from './store/index';
+import './modal.css';
 
 const client = buildAppSyncApolloClient();
 
