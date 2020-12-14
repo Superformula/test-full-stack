@@ -1,8 +1,13 @@
-import { combineReducers } from 'redux';
+import { CombinedState, combineReducers, Reducer } from 'redux';
 import userListReducer from './userList/reducer';
+import { UserListAction, UserListState } from './userList/types';
 
-const rootReducer = combineReducers({
-  users: userListReducer,
+export type RootState = {
+  usersRoot: UserListState;
+};
+
+const rootReducer: Reducer<CombinedState<RootState>, UserListAction> = combineReducers({
+  usersRoot: userListReducer,
 });
 
 export default rootReducer;

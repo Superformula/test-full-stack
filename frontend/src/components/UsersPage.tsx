@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { gql, useApolloClient, useLazyQuery } from '@apollo/client';
-import { QuerySearchUsersArgs, User, UserSearchResult } from '../api/types';
+import React from 'react';
 import UserList from './UserList/UserList';
 
 const UsersPage: React.FC = () => {

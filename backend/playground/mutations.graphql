@@ -24,7 +24,7 @@ mutation createUser{
 
 
 mutation deleteUser {
-    deleteUser(id: "83bd4bd4-0e94-4461-8bd9-1eeb07150f8c"){
+    deleteUser(id: "3f22b422-b2f7-4c9e-92cb-e4cfc1c7f210"){
         id
         name
         dob
@@ -38,8 +38,8 @@ mutation deleteUser {
     }
 }
 mutation updateUser {
-    updateUser(id: "49cae595-7908-43cf-9122-3c7364f5047c", input: {
-        name: "Pedro Yan"
+    updateUser(id: "3f22b422-b2f7-4c9e-92cb-e4cfc1c7f210", input: {
+        name: "Paulo"
         dob: "1997-03-04"
         address: "This is a new updated address"
         description: "This is an updated description"

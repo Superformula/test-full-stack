@@ -1,42 +1,36 @@
-import React, { useEffect } from 'react';
-import { gql, useLazyQuery } from '@apollo/client';
-import { QuerySearchUsersArgs, User, UserSearchResult } from '../../api/types';
-import { USER_SEARCH_LIST_GQL, SearchUserResponseData } from '../../api/queries';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './UserList.module.scss';
 import UserCard from '../UserCard/UserCard';
+import useSubscribeToAppSync from '../../hooks/useSubscribeToAppSync';
+import useGetUsers from '../../hooks/useGetUsers';
+import { RootState } from '../../store';
+import { UserListState } from '../../store/userList/types';
 
 const UserList: React.FC = () => {
-  const [searchUserLazy, { data }] = useLazyQuery<SearchUserResponseData, QuerySearchUsersArgs>(USER_SEARCH_LIST_GQL);
+  useSubscribeToAppSync();
+  useGetUsers();
 
-  useEffect(() => {
-    searchUserLazy({ variables: { name: 'p' } });
-  }, []);
-
-  console.log('Users received!', data);
+  const usersState: UserListState = useSelector<RootState, UserListState>((s) => s.usersRoot);
 
   // TODO: Replace those elements below with prettier ones
-  if (!data || !data.searchUsers) {
-    // TODO: Better strategy for handling loading states. Checking if data is undefined is not good enough due to
-    // error that might occurr
-    return <p>Loading...</p>;
-  }
+  // TODO: Better strategy for handling loading states. Checking if data is undefined is not good enough due to
+  // error that might occur. Check the useGetUsers for more details
+  // if (usersState) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (!data.searchUsers.items || data.searchUsers.items.length === 0) {
+  if (usersState.users.length === 0) {
     return <p>No users</p>;
   }
 
   return (
     <div className={styles.grid}>
-      {data.searchUsers.items.map((u) => (
+      {usersState.users.map((u) => (
         <UserCard key={u.id} imageSrc={u.avatar} name={u.name} description={u.description} />
       ))}
     </div>
   );
-  // return (
-  //   <div>
-  //     <div>UserList</div>
-  //   </div>
-  // );
 };
 
 export default React.memo(UserList);

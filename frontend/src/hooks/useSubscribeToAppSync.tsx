@@ -60,7 +60,7 @@ const useSubscribeToAppSync = (): void => {
       deleteSubscription.unsubscribe();
       createSubscription.unsubscribe();
     };
-  }, [dispatch]);
+  }, [dispatch, apolloClient]);
 };
 
 export default useSubscribeToAppSync;
