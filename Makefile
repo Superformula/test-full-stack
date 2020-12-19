@@ -4,4 +4,4 @@ start:
 
 .POHNY: test
 test:
-	@pytest .
+	pytest .

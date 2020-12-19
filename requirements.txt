@@ -2,6 +2,7 @@ Django
 
 graphene
 graphene-django
+pytest
 pytest-django
 
 

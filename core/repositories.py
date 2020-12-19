@@ -22,6 +22,8 @@ class UserProfileData:
 
 
 class UserRepository:
+    """Data access layer. Perform basic CRUD using ORM."""
+
     def _convert_to_data(self, instance: UserProfile) -> UserProfileData:
         """Convert a Django model instance to UserProfileData."""
         return UserProfileData(
@@ -32,6 +34,13 @@ class UserRepository:
             created_at=instance.created_at,
             updated_at=instance.updated_at,
         )
+
+    def count(self, name: str = "") -> int:
+        queryset = UserProfile.objects.all()
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+
+        return queryset.count()
 
     def fetch(
         self, *, limit: int, offset: int, name: str = ""
@@ -44,7 +53,7 @@ class UserRepository:
         return [self._convert_to_data(instance) for instance in queryset]
 
     def create(self, *, name: str, date_of_birth: datetime.date) -> UserProfileData:
-        with transaction.atomic:
+        with transaction.atomic():
             username = uuid.uuid4()
             user = UserModel.objects.create_user(username=username)
             profile = UserProfile.objects.create(
