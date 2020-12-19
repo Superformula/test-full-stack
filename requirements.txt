@@ -1,0 +1,15 @@
+Django
+
+graphene
+graphene-django
+pytest-django
+
+
+# Dev tools
+mypy
+black
+flake8
+isort
+ipython
+ipdb
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+python manage.py migrate
+python manage.py collectstatic --settings=profiles.settings --noinput
+python manage.py runserver --settings=profiles.settings 0.0.0.0:8000

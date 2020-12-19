@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:13.1
+        restart: always
+        environment:
+            POSTGRES_DB: profiles
+            POSTGRES_PASSWORD: postgres
+
+    web:
+        command: /code/bin/web
+        build:
+            context: .
+            dockerfile: profiles/Dockerfile
+        environment:
+            DATABASE_URL: postgres://postgres:@db:5432/profiles
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+        volumes:
+            - .:/code
