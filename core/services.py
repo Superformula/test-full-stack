@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import datetime
 import math
 from typing import List
+import uuid
 
 from .repositories import UserProfileData, UserRepository
 
@@ -36,3 +37,19 @@ class UserService:
 
     def create(self, *, name: str, date_of_birth: datetime.date) -> UserProfileData:
         return self.repository.create(name=name, date_of_birth=date_of_birth)
+
+    def update(
+        self,
+        id: uuid.UUID,
+        name: str = None,
+        date_of_birth: datetime.date = None,
+        address: str = None,
+        description: str = None,
+    ) -> UserProfileData:
+        return self.repository.update(
+            id=id,
+            name=name,
+            date_of_birth=date_of_birth,
+            address=address,
+            description=description,
+        )

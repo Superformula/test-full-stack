@@ -60,3 +60,29 @@ class UserRepository:
                 name=name, date_of_birth=date_of_birth, user=user
             )
             return self._convert_to_data(profile)
+
+    def update(
+        self,
+        id: uuid.UUID,
+        name: str = None,
+        date_of_birth: datetime.date = None,
+        address: str = None,
+        description: str = None,
+    ) -> UserProfileData:
+        with transaction.atomic():
+            instance = UserProfile.objects.get(id=id)
+            if name:
+                instance.name = name
+
+            if date_of_birth:
+                instance.date_of_birth = date_of_birth
+
+            if address:
+                instance.address = address
+
+            if description:
+                instance.description = description
+
+            instance.save()
+
+            return self._convert_to_data(instance)
