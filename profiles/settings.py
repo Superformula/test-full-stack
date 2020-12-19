@@ -127,3 +127,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 STATIC_URL = "/static/"
 
 GRAPHENE = {"SCHEMA": "core.graphql.schema.schema"}
+
+
+MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_ACCESS_TOKEN", "dev-access-token")

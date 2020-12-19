@@ -4,6 +4,7 @@ import math
 from typing import List
 import uuid
 
+from .clients import FakeMapboxClient
 from .repositories import UserProfileData, UserRepository
 
 
@@ -53,3 +54,11 @@ class UserService:
             address=address,
             description=description,
         )
+
+
+class LocationService:
+    def __init__(self, client=None) -> None:
+        self.client = FakeMapboxClient()
+
+    def get_locations(self, address: str) -> List[dict]:
+        return self.client.get_locations(address)

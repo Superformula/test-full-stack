@@ -1,5 +1,6 @@
 import datetime
 from unittest import TestCase
+import uuid
 
 from graphene.test import Client
 import pytest
@@ -218,3 +219,23 @@ mutation updateUser {{
         user = response["data"]["updateUser"]["user"]
         assert user["name"] == "New Name"
         assert user["dateOfBirth"] == "2000-01-01"
+
+    def test_update_user_that_does_not_exist(self) -> None:
+        user_id = str(uuid.uuid4())
+        client = Client(schema)
+        response = client.execute(
+            f"""
+mutation updateUser {{
+  updateUser(id: "{user_id}", name: "New Name", dateOfBirth: "2000-01-01") {{
+    user {{
+      id
+      name
+      dateOfBirth
+    }}
+    ok
+  }}
+}}
+            """
+        )
+        assert response["data"]["updateUser"] is None
+        assert response["errors"][0]["message"] == "User does not exist"

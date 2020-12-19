@@ -1,7 +1,8 @@
 import graphene
 
-from core.services import UserService
+from core.services import LocationService, UserService
 
+from .locations.object_types import Location
 from .page_info import PageInfo
 from .users.mutations import CreateUser, UpdateUser
 from .users.object_types import UserConnection, UserEdge
@@ -16,6 +17,11 @@ class Query(graphene.ObjectType):
         page_size=graphene.Int(default_value=5),
         name=graphene.String(default_value=""),
     )
+
+    locations = graphene.List(Location, address=graphene.String(required=True))
+
+    def resolve_locations(root, info, address: str):
+        return LocationService().get_locations(address=address)
 
     def resolve_users(
         root, info, *, page: int, page_size: int, name: str

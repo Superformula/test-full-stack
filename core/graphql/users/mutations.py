@@ -1,7 +1,9 @@
 from datetime import date
 import uuid
 
+from django.core.exceptions import ObjectDoesNotExist
 import graphene
+from graphql import GraphQLError
 
 from core.services import UserService
 
@@ -43,13 +45,18 @@ class UpdateUser(graphene.Mutation):
         address: str = None,
         description: str = None,
     ) -> dict:
-        return {
-            "user": UserService().update(
+        try:
+            user = UserService().update(
                 id=uuid.UUID(id),
                 name=name,
                 date_of_birth=date_of_birth,
                 address=address,
                 description=description,
-            ),
+            )
+        except ObjectDoesNotExist:
+            raise GraphQLError("User does not exist")
+
+        return {
+            "user": user,
             "ok": True,
         }
