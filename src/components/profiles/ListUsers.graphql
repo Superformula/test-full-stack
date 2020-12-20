@@ -1,0 +1,21 @@
+query ListUsers {
+  users(pageSize: 30) {
+    pageInfo {
+      total
+      numPages
+      currentPage
+      pageSize
+
+    }
+    edges {
+      node {
+        id
+        name
+        address
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}

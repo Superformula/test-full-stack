@@ -4,6 +4,7 @@ graphene
 graphene-django
 pytest
 pytest-django
+django-cors-middleware
 
 
 # Dev tools
