@@ -14,13 +14,16 @@ class CreateUser(graphene.Mutation):
     class Arguments:
         name = graphene.String()
         date_of_birth = graphene.Date()
+        address = graphene.String()
 
     ok = graphene.Boolean()
     user = graphene.Field(User)
 
-    def mutate(root, info, name: str, date_of_birth: date) -> dict:
+    def mutate(root, info, name: str, date_of_birth: date, address: str) -> dict:
         return {
-            "user": UserService().create(name=name, date_of_birth=date_of_birth),
+            "user": UserService().create(
+                name=name, date_of_birth=date_of_birth, address=address
+            ),
             "ok": True,
         }
 

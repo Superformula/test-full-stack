@@ -36,8 +36,12 @@ class UserService:
             items=self.repository.fetch(name=name, limit=limit, offset=offset),
         )
 
-    def create(self, *, name: str, date_of_birth: datetime.date) -> UserProfileData:
-        return self.repository.create(name=name, date_of_birth=date_of_birth)
+    def create(
+        self, *, name: str, date_of_birth: datetime.date, address: str
+    ) -> UserProfileData:
+        return self.repository.create(
+            name=name, date_of_birth=date_of_birth, address=address
+        )
 
     def update(
         self,

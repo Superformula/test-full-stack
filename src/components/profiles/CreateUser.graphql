@@ -1,0 +1,14 @@
+mutation createUser($name: String, $dateOfBirth: Date, $address: String) {
+  createUser(name: $name, dateOfBirth: $dateOfBirth, address: $address) {
+    user {
+      id
+      name
+      dateOfBirth
+      address
+      description
+      createdAt
+      updatedAt
+    }
+    ok
+  }
+}

@@ -1,5 +1,5 @@
 query ListUsers {
-  users(pageSize: 30) {
+  users {
     pageInfo {
       total
       numPages

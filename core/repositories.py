@@ -52,12 +52,14 @@ class UserRepository:
         queryset = queryset[offset:limit]
         return [self._convert_to_data(instance) for instance in queryset]
 
-    def create(self, *, name: str, date_of_birth: datetime.date) -> UserProfileData:
+    def create(
+        self, *, name: str, date_of_birth: datetime.date, address: str
+    ) -> UserProfileData:
         with transaction.atomic():
             username = uuid.uuid4()
             user = UserModel.objects.create_user(username=username)
             profile = UserProfile.objects.create(
-                name=name, date_of_birth=date_of_birth, user=user
+                name=name, date_of_birth=date_of_birth, user=user, address=address
             )
             return self._convert_to_data(profile)
 

@@ -16,7 +16,9 @@ class IntegrationTest(TestCase):
     def test_list_users__no_filters__success(self) -> None:
         users = [
             UserRepository().create(
-                name=f"User {i}", date_of_birth=datetime.date(2020, 12, 1 + i)
+                name=f"User {i}",
+                date_of_birth=datetime.date(2020, 12, 1 + i),
+                address="Canada",
             )
             for i in range(10)
         ]
@@ -58,7 +60,9 @@ query ListUsers {
         """The max page size is 20."""
         [
             UserRepository().create(
-                name=f"User {i}", date_of_birth=datetime.date(2020, 12, 1 + i)
+                name=f"User {i}",
+                date_of_birth=datetime.date(2020, 12, 1 + i),
+                address="Canada",
             )
             for i in range(30)
         ]
@@ -97,7 +101,9 @@ query ListUsers {
     def test_list_users__page_out_of_range(self) -> None:
         [
             UserRepository().create(
-                name=f"User {i}", date_of_birth=datetime.date(2020, 12, 1 + i)
+                name=f"User {i}",
+                date_of_birth=datetime.date(2020, 12, 1 + i),
+                address="Canada",
             )
             for i in range(5)
         ]
@@ -134,10 +140,10 @@ query ListUsers {
 
     def test_list_users__search_by_name(self) -> None:
         UserRepository().create(
-            name="Peter Pan", date_of_birth=datetime.date(2020, 12, 1)
+            name="Peter Pan", date_of_birth=datetime.date(2020, 12, 1), address="Canada"
         )
         UserRepository().create(
-            name="John Joe", date_of_birth=datetime.date(2020, 12, 1)
+            name="John Joe", date_of_birth=datetime.date(2020, 12, 1), address="Canada"
         )
         client = Client(schema)
 
@@ -175,7 +181,7 @@ query ListUsers {
         response = client.execute(
             """
 mutation createUser {
-  createUser(name: "Peter", dateOfBirth: "2000-01-01") {
+  createUser(name: "Peter", dateOfBirth: "2000-01-01", address: "Canada") {
     user {
       name
       dateOfBirth
@@ -194,7 +200,11 @@ mutation createUser {
     def test_update_user__success(self) -> None:
         user_id = (
             UserRepository()
-            .create(name="Peter Pan", date_of_birth=datetime.date(2020, 12, 1))
+            .create(
+                name="Peter Pan",
+                date_of_birth=datetime.date(2020, 12, 1),
+                address="Canada",
+            )
             .id
         )
         client = Client(schema)

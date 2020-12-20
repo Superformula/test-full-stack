@@ -6,8 +6,8 @@ import { ListUsers } from './__generated__/ListUsers'
 export const UserList = () => {
   const { loading, error, data } = useQuery<ListUsers>(LIST_USER_QUERY)
 
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
+  if (loading) return <div>'Loading...'</div>
+  if (error) return <div>`Error! ${error.message}`</div>
   if (data?.users?.edges) {
     return (
       <ul>

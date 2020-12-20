@@ -4,4 +4,4 @@ start:
 
 .POHNY: test
 test:
-	pytest .
+	@docker-compose exec web pytest .
