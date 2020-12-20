@@ -1,0 +1,103 @@
+schema {
+  query: Query
+  mutation: Mutations
+}
+
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+type Query {
+  users(page: Int = 1, pageSize: Int = 5, name: String = ""): UserConnection
+  locations(address: String!): [Location]
+}
+
+type UserConnection {
+  pageInfo: PageInfo
+  edges: [UserEdge]
+}
+
+type PageInfo {
+  total: Int
+  pageSize: Int
+  numPages: Int
+  currentPage: Int
+}
+
+type UserEdge {
+  node: User
+}
+
+type User {
+  id: ID!
+  name: String
+  address: String
+  dateOfBirth: Date
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+The `Date` scalar type represents a Date
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar Date
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type Location {
+  id: ID!
+  location: String
+}
+
+type Mutations {
+  createUser(dateOfBirth: Date, name: String): CreateUser
+  updateUser(address: String, dateOfBirth: Date, description: String, id: ID, name: String): UpdateUser
+}
+
+type CreateUser {
+  ok: Boolean
+  user: User
+}
+
+type UpdateUser {
+  ok: Boolean
+  user: User
+}
