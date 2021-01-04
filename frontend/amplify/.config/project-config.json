@@ -1,0 +1,17 @@
+{
+  "projectName": "UserManagement",
+  "version": "3.0",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": ".",
+      "DistributionDir": ".next",
+      "BuildCommand": "build",
+      "StartCommand": "start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}
