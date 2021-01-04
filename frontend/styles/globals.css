@@ -14,3 +14,45 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "Source Sans Pro Light";
+  src: url("/fonts/SourceSansPro/SourceSansPro-Light.ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Source Sans Pro Semibold";
+  src: url("/fonts/SourceSansPro/SourceSansPro-Semibold.ttf");
+  font-style: normal;
+  font-weight: 600;
+}
+
+h1 {
+  font-family: "Source Sans Pro Light";
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 3.75rem;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+h2 {
+  font-family: "Source Sans Pro Semibold";
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+p {
+  font-family: "Source Sans Pro Light";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.25rem;
+}

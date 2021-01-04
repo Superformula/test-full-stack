@@ -1,0 +1,37 @@
+.container {
+  width: 400px;
+  height: 336px;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container:hover {
+  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+}
+
+.avatar {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+}
+.body {
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.body .meta {
+  font-family: Source Sans Pro Light;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 0px;
+  text-align: right;
+}
+.body .meta span {
+  color: #ae1e1e;
+}
