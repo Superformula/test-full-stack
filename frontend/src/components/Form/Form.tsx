@@ -3,9 +3,10 @@ import Button from "@components/Button";
 import { User } from "@components/Card";
 import { updateUser as updateUserMutation } from "@graphql/mutations";
 import { createUser as createUserMutation } from "@graphql/mutations";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./Form.module.css";
-import Input from "./Input";
+import InputField from "./InputField";
 
 interface Props {
   onCancel?: () => void;
@@ -13,7 +14,9 @@ interface Props {
 }
 
 const Form = ({ onCancel, user }: Props) => {
-  const { register, handleSubmit /* errors */ } = useForm();
+  const { register, handleSubmit, reset /* errors */ } = useForm({
+    defaultValues: user || {},
+  });
   const [updateUser] = useMutation(gql(updateUserMutation));
   const [createUser] = useMutation(gql(createUserMutation));
   const onSubmit = (data) => {
@@ -24,6 +27,7 @@ const Form = ({ onCancel, user }: Props) => {
         },
       })
         .then((result) => {
+          onCancel();
           console.log(result);
         })
         .catch((error) => console.error(error));
@@ -38,27 +42,20 @@ const Form = ({ onCancel, user }: Props) => {
       .catch((error) => console.error(error));
   };
 
+  useEffect(() => {
+    const defaults = user ? { ...user } : {};
+    reset(defaults);
+  }, [user, reset]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input ref={register} name="name" defaultValue={user && user.name} />
-      <Input
-        ref={register}
-        name="address"
-        defaultValue={user && user.address}
-      />
-      <Input
-        ref={register}
-        name="description"
-        defaultValue={user && user.description}
-      />
+      <h1>{user ? "Edit user" : "Create user"}</h1>
+      <InputField ref={register} name="name" />
+      <InputField ref={register} name="address" />
+      <InputField ref={register} name="description" />
       <div className={styles.actions}>
         <Button type="submit" label="Save" variant="primary" />
-        <Button
-          type="submit"
-          label="Cancel"
-          variant="secondary"
-          onClick={onCancel}
-        />
+        <Button label="Cancel" variant="secondary" onClick={onCancel} />
       </div>
     </form>
   );

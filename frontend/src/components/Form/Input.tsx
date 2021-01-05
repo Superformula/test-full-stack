@@ -1,18 +1,20 @@
 import { forwardRef } from "react";
-import styles from "./Input.module.css";
+import style from "./Input.module.css";
 
 interface Props {
-  name: string;
-  defaultValue: string;
+  name?: string;
+  placeholder?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
-  const { name, defaultValue } = props;
+  const { name, placeholder } = props;
   return (
-    <div className={styles.field}>
-      <label>{name}</label>
-      <input name={name} defaultValue={defaultValue} ref={ref} />
-    </div>
+    <input
+      className={style.input}
+      name={name}
+      ref={ref}
+      placeholder={placeholder}
+    />
   );
 });
 

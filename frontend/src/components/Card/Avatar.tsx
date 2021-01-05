@@ -13,7 +13,7 @@ const Avatar = () => {
 
   useEffect(() => {
     api.photos
-      .getRandom({ query: "portrait", orientation: "portrait" })
+      .getRandom({})
       .then((result) => {
         setPhotosResponse(result);
       })

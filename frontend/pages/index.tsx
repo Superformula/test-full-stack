@@ -12,6 +12,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
 
   const toggleIsModalOpen = () => {
+    setUser(null);
     setModalIsOpen(!isModalOpen);
   };
   const onListItemClicked = (user: User) => {
@@ -44,7 +45,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Header />
+        <Header onCreateUserClick={toggleIsModalOpen} />
         <UsersList onListItemClicked={onListItemClicked} />
       </main>
 
