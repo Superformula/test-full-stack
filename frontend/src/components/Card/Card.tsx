@@ -3,7 +3,8 @@ import styles from "./Card.module.css";
 import { format } from "date-fns";
 import { useState } from "react";
 
-interface User {
+export interface User {
+  id: string;
   name: string;
   dob: string;
   address: string;
@@ -14,8 +15,10 @@ interface User {
 
 interface Props {
   item: User;
+  onClick: (item: User) => void;
 }
-const Card = ({ item }: Props) => {
+
+const Card = ({ item, onClick }: Props) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   const toggleIsMouseOver = () => {
@@ -27,6 +30,7 @@ const Card = ({ item }: Props) => {
       className={styles.container}
       onMouseOver={toggleIsMouseOver}
       onMouseOut={toggleIsMouseOver}
+      onClick={() => onClick(item)}
     >
       {isMouseOver ? (
         <img className={styles.icon} src="/icons/edit.svg" />

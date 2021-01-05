@@ -4,8 +4,20 @@ import Head from "next/head";
 import Header from "../src/components/Header/Header";
 import UsersList from "../src/components/UsersList";
 import styles from "../styles/Home.module.css";
+import { useState } from "react";
+import { User } from "@components/Card";
 
 export default function Home() {
+  const [isModalOpen, setModalIsOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  const toggleIsModalOpen = () => {
+    setModalIsOpen(!isModalOpen);
+  };
+  const onListItemClicked = (user: User) => {
+    toggleIsModalOpen();
+    setUser(user);
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -33,7 +45,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <Header />
-        <UsersList />
+        <UsersList onListItemClicked={onListItemClicked} />
       </main>
 
       <footer className={styles.footer}>
@@ -46,8 +58,8 @@ export default function Home() {
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
-      <Modal>
-        <Form />
+      <Modal isOpen={isModalOpen}>
+        <Form user={user} onCancel={toggleIsModalOpen} />
       </Modal>
     </div>
   );

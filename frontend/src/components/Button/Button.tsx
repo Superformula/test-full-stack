@@ -4,12 +4,17 @@ interface Props {
   type?: "submit";
   label: string;
   variant: "primary" | "secondary";
+  onClick?: () => void;
 }
 
 const Button = (props: Props) => {
-  const { type, label, variant } = props;
+  const { type, label, variant, onClick } = props;
   return (
-    <button className={`${styles.button} ${styles[variant]}`} type={type}>
+    <button
+      className={`${styles.button} ${styles[variant]}`}
+      type={type}
+      onClick={onClick}
+    >
       {label}
     </button>
   );
