@@ -29,6 +29,13 @@ a {
   font-weight: 600;
 }
 
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("/fonts/SourceSansPro/SourceSansPro-Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+
 h1 {
   font-family: "Source Sans Pro Light";
   font-size: 3rem;

@@ -12,6 +12,6 @@
 
 .content {
   width: 600px;
-  height: 400px;
-  background-color: white;
+  background: #f8f8f8;
+  padding: 2rem;
 }

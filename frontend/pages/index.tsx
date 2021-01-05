@@ -1,4 +1,5 @@
 import Modal from "@components/Modal";
+import Form from "@components/Form";
 import Head from "next/head";
 import Header from "../src/components/Header/Header";
 import UsersList from "../src/components/UsersList";
@@ -16,13 +17,24 @@ export default function Home() {
           as="font"
           crossOrigin=""
         />
+        <link
+          rel="preload"
+          href="/fonts/SourceSansPro/SourceSansPro-Semibold.ttf"
+          as="font"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/SourceSansPro/SourceSansPro-Regular.ttf"
+          as="font"
+          crossOrigin=""
+        />
       </Head>
 
       <main className={styles.main}>
         <Header />
         <UsersList />
       </main>
-      <Modal />
 
       <footer className={styles.footer}>
         <a
@@ -34,6 +46,9 @@ export default function Home() {
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
+      <Modal>
+        <Form />
+      </Modal>
     </div>
   );
 }
