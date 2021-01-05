@@ -1,3 +1,4 @@
+import Modal from "@components/Modal";
 import Head from "next/head";
 import Header from "../src/components/Header/Header";
 import UsersList from "../src/components/UsersList";
@@ -21,6 +22,7 @@ export default function Home() {
         <Header />
         <UsersList />
       </main>
+      <Modal />
 
       <footer className={styles.footer}>
         <a
