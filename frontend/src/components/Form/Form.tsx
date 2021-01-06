@@ -10,10 +10,11 @@ import InputField from "./InputField";
 
 interface Props {
   onCancel?: () => void;
+  onSuccess?: () => void;
   user?: User;
 }
 
-const Form = ({ onCancel, user }: Props) => {
+const Form = ({ onCancel, user, onSuccess }: Props) => {
   const { register, handleSubmit, reset /* errors */ } = useForm({
     defaultValues: user || {},
   });
@@ -26,9 +27,8 @@ const Form = ({ onCancel, user }: Props) => {
           input: { id: user.id, ...data, updatedAt: new Date().toISOString() },
         },
       })
-        .then((result) => {
-          onCancel();
-          console.log(result);
+        .then(() => {
+          onSuccess();
         })
         .catch((error) => console.error(error));
     }

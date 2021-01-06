@@ -10,9 +10,11 @@ import { useState } from "react";
 import { User } from "@components/Card";
 import { listUsers } from "@graphql/queries";
 
+const PAGE_LIMIT = 6;
 export default function Home() {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [searchText, setSearchText] = useState("");
 
   const toggleIsModalOpen = () => {
     setUser(null);
@@ -23,7 +25,9 @@ export default function Home() {
     setUser(user);
   };
 
-  const { loading, error, data, refetch } = useQuery(gql(listUsers));
+  const { loading, data, refetch, fetchMore } = useQuery(gql(listUsers), {
+    variables: { limit: PAGE_LIMIT, filter: null },
+  });
 
   return (
     <div className={styles.container}>
@@ -54,16 +58,37 @@ export default function Home() {
         <Header
           onCreateUserClick={toggleIsModalOpen}
           onSearchChange={(text) => {
-            refetch({ filter: { name: { contains: text } } });
+            setSearchText(text);
+            refetch({
+              limit: PAGE_LIMIT,
+              filter: { name: { contains: text } },
+            });
           }}
         />
         <UsersList
           onListItemClicked={onListItemClicked}
           items={loading ? [] : data.listUsers.items}
+          onLoadMore={() => {
+            if (!data.listUsers.nextToken) {
+              return;
+            }
+
+            fetchMore({
+              variables: {
+                limit: PAGE_LIMIT,
+                nextToken: data.listUsers.nextToken,
+                filter: searchText ? { name: { contains: searchText } } : null,
+              },
+            });
+          }}
         />
       </main>
       <Modal isOpen={isModalOpen}>
-        <Form user={user} onCancel={toggleIsModalOpen} />
+        <Form
+          user={user}
+          onCancel={toggleIsModalOpen}
+          onSuccess={toggleIsModalOpen}
+        />
       </Modal>
     </div>
   );

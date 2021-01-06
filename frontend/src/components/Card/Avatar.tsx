@@ -22,8 +22,6 @@ const Avatar = () => {
       });
   }, []);
 
-  console.log(data);
-
   if (!data) {
     return null;
   }
