@@ -4,9 +4,10 @@ import styles from "./Header.module.css";
 
 interface Props {
   onCreateUserClick: () => void;
+  onSearchChange: (text: string) => void;
 }
 
-const Header = ({ onCreateUserClick }: Props) => {
+const Header = ({ onCreateUserClick, onSearchChange }: Props) => {
   return (
     <div className={styles.container}>
       <h1>Users list</h1>
@@ -16,7 +17,7 @@ const Header = ({ onCreateUserClick }: Props) => {
           label="Create user"
           onClick={onCreateUserClick}
         />
-        <Input placeholder="Search..." />
+        <Input placeholder="Search..." onChange={onSearchChange} />
       </div>
     </div>
   );

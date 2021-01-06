@@ -1,11 +1,14 @@
 import Modal from "@components/Modal";
 import Form from "@components/Form";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import Header from "../src/components/Header/Header";
 import UsersList from "../src/components/UsersList";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import { User } from "@components/Card";
+import { listUsers } from "@graphql/queries";
 
 export default function Home() {
   const [isModalOpen, setModalIsOpen] = useState(false);
@@ -19,6 +22,9 @@ export default function Home() {
     toggleIsModalOpen();
     setUser(user);
   };
+
+  const { loading, error, data, refetch } = useQuery(gql(listUsers));
+
   return (
     <div className={styles.container}>
       <Head>
@@ -45,8 +51,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Header onCreateUserClick={toggleIsModalOpen} />
-        <UsersList onListItemClicked={onListItemClicked} />
+        <Header
+          onCreateUserClick={toggleIsModalOpen}
+          onSearchChange={(text) => {
+            refetch({ filter: { name: { contains: text } } });
+          }}
+        />
+        <UsersList
+          onListItemClicked={onListItemClicked}
+          items={loading ? [] : data.listUsers.items}
+        />
       </main>
       <Modal isOpen={isModalOpen}>
         <Form user={user} onCancel={toggleIsModalOpen} />
