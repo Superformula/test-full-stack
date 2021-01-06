@@ -9,9 +9,11 @@ import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import { User } from "@components/Card";
 import { listUsers } from "@graphql/queries";
+import console from "console";
 
 const PAGE_LIMIT = 6;
 export default function Home() {
+  console.log("Test CI");
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [searchText, setSearchText] = useState("");
