@@ -12,7 +12,6 @@ import { listUsers } from "@graphql/queries";
 
 const PAGE_LIMIT = 6;
 export default function Home() {
-  console.log("Test CI");
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [searchText, setSearchText] = useState("");
