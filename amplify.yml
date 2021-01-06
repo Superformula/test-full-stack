@@ -6,7 +6,7 @@ frontend:
         - yarn
     build:
       commands:
-        - yarn run export
+        - yarn run build
   artifacts:
     baseDirectory: out
     files:
