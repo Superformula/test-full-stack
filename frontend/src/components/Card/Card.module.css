@@ -7,17 +7,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1rem;
   padding: 1rem;
   transition: all 0.3s;
 }
 
-@media only screen and (min-width: 928px) {
+@media only screen and (min-width: 1000px) {
   .container {
-    padding: 2rem;
+    width: 300px;
+  }
+}
+@media only screen and (min-width: 1300px) {
+  .container {
     width: 400px;
   }
 }
+
 .container:hover {
   filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
 }

@@ -12,7 +12,6 @@ const Header = ({ onCreateUserClick }: Props) => {
       <h1>Users list</h1>
       <div className={styles.actions}>
         <Button
-          style={{ marginRight: "1rem" }}
           variant="primary"
           label="Create user"
           onClick={onCreateUserClick}
