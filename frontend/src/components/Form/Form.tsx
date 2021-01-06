@@ -36,8 +36,8 @@ const Form = ({ onCancel, user, onSuccess }: Props) => {
     return createUser({
       variables: { input: { ...data, createdAt: new Date().toISOString() } },
     })
-      .then((result) => {
-        console.log(result);
+      .then(() => {
+        onSuccess();
       })
       .catch((error) => console.error(error));
   };
