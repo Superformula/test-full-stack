@@ -2,19 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const users = /* GraphQL */ `
-  query Users {
-    users {
-      id
-      name
-      dob
-      address
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -30,7 +17,7 @@ export const getUser = /* GraphQL */ `
 `;
 export const listUsers = /* GraphQL */ `
   query ListUsers(
-    $filter: TableUserFilterInput
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -45,6 +32,35 @@ export const listUsers = /* GraphQL */ `
         updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const searchUsers = /* GraphQL */ `
+  query SearchUsers(
+    $filter: SearchableUserFilterInput
+    $sort: SearchableUserSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchUsers(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        id
+        name
+        dob
+        address
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
     }
   }
 `;

@@ -3,8 +3,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const createUser = /* GraphQL */ `
-  mutation CreateUser($input: CreateUserInput!) {
-    createUser(input: $input) {
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
       id
       name
       dob
@@ -16,8 +19,11 @@ export const createUser = /* GraphQL */ `
   }
 `;
 export const updateUser = /* GraphQL */ `
-  mutation UpdateUser($input: UpdateUserInput!) {
-    updateUser(input: $input) {
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
       id
       name
       dob
@@ -29,8 +35,11 @@ export const updateUser = /* GraphQL */ `
   }
 `;
 export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser($input: DeleteUserInput!) {
-    deleteUser(input: $input) {
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
       id
       name
       dob
