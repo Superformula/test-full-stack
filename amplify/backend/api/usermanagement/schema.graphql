@@ -1,4 +1,4 @@
-type User @model @searchable {
+type User @model {
   id: ID!
   name: String!
   dob: String

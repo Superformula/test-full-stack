@@ -24,7 +24,7 @@ a {
 
 @font-face {
   font-family: "Source Sans Pro Semibold";
-  src: url("/fonts/SourceSansPro/SourceSansPro-Semibold.ttf");
+  src: url("/fonts/SourceSansPro/SourceSansPro-SemiBold.ttf");
   font-style: normal;
   font-weight: 600;
 }
@@ -38,7 +38,7 @@ a {
 
 h1 {
   font-family: "Source Sans Pro Light";
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-style: normal;
   font-weight: 300;
   line-height: 3.75rem;

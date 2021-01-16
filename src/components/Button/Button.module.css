@@ -1,13 +1,13 @@
 .button {
   text-transform: uppercase;
   width: 200px;
-  height: 64px;
+  height: 48px;
   border: 4px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   border-radius: 8px;
 
   font-family: Source Sans Pro;
-  font-size: 24px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 600;
   line-height: 30px;
