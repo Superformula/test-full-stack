@@ -1,0 +1,39 @@
+.user-card-container {
+    padding: 25px 20px;
+    margin: 20px 20px 20px 0;
+    max-width: 20em;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.user-card-image {
+    border-radius: 90px;
+    margin: 0 auto;
+    display: block;
+}
+
+.user-card-header {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-card-header p, h2 {
+    margin: 15px 0;
+}
+
+.user-card-created-date {
+    font-size: 16px;
+    line-height: 32px;
+    color: #c92020;
+}
+
+.user-card-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    margin-top: 0;
+}
+
