@@ -1,0 +1,33 @@
+service: apollo-lambda
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  graphql:
+    handler: graphql.graphqlHandler
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    UserTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: name
+            KeyType: RANGE
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
+        TableName: 'Users'
