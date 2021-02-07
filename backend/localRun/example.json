@@ -1,0 +1,5 @@
+{
+  "httpMethod": "POST",
+  "headers": {},
+  "body": "{\n    \"operationName\": null,\n    \"query\": \"query { getUsers(limit: 2, lastKey: \\\"\\\", name: \\\"\\\") { data { id } } }\",\n    \"variables\": {\n        \"limit\": 2\n    }\n}"
+}

@@ -61,7 +61,6 @@ const getUserLocation = (args) => {
       };
       return new Promise((resolve, reject) => {
         const req = https.request(options, (res) => {
-          console.log('Received mapbox request with code: ' + res.statusCode)
           if (res.statusCode !== 200) {
             reject(new Error('Something bad has happened: ' + res.statusMessage))
           }
@@ -77,15 +76,14 @@ const getUserLocation = (args) => {
             } catch(e) {
               reject('Received a bad JSON from MapBox response');
             }
-            console.log('Parsed Body' + JSON.stringify(body))
             resolve(body);
           });
         });
         req.end()
-      }).then(r => {
-        console.log('Result from mapbox resolved correctly with value: ' + JSON.stringify(r))
-        return r['features']
       })
+        .then(r => {
+          return r['features']
+        })
         .catch(error => {
           throw new Error('Something bad has happened ' + error)
         })
