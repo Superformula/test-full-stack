@@ -10,12 +10,12 @@ const getClient = () => {
   return client
 }
 
-const resetClient = () => {
+const clearInstance = () => {
   client = null
 }
 
 exports.client = {
-  resetClient,
+  clearInstance,
   initializeClient,
   getClient
 }

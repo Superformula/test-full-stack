@@ -1,11 +1,10 @@
 const https = require('https');
 const { client: { getClient } } = require('../../common/dynamodb')
 
-// TODO: Change for process.env.TABLE_NAME
-const TABLE_NAME = 'Users';
-const DEFAULT_SSL_PORT = 443
-const MAPBOX_HOST = 'api.mapbox.com'
-const ACCESS_TOKEN = 'pk.eyJ1IjoiZmFsY29hZ3VzdGluIiwiYSI6ImNra3U2bGY3MDBzMzAyb3BoYWRobHI2N2EifQ.rLgsHWrt0sBpzN1D14SmvA'
+const TABLE_NAME = process.env.DYNAMODB_TABLE
+const MAPBOX_HOST = process.env.MAPBOX_HOST
+const MAPBOX_PORT = process.env.MAPBOX_PORT
+const ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN
 
 const getUsers = (args) => {
   const { limit, lastKey, name } = args;
@@ -55,7 +54,7 @@ const getUserLocation = (args) => {
       const { address } = res.Item
       const options = {
         hostname: MAPBOX_HOST,
-        port: DEFAULT_SSL_PORT,
+        port: MAPBOX_PORT,
         path: `/geocoding/v5/mapbox.places/${encodeURI(address)}.json?access_token=${ACCESS_TOKEN}`,
         method: 'GET'
       };

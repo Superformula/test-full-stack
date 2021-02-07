@@ -6,6 +6,10 @@ provider:
   region: us-east-1
   environment:
     DYNAMODB_TABLE: 'Users'
+    MAPBOX_HOST: 'api.mapbox.com'
+    MAPBOX_PORT: 443
+    # Public access token for Mapbox API
+    MAPBOX_ACCESS_TOKEN: 'pk.eyJ1IjoiZmFsY29hZ3VzdGluIiwiYSI6ImNra3U2bGY3MDBzMzAyb3BoYWRobHI2N2EifQ.rLgsHWrt0sBpzN1D14SmvA'
   iamRoleStatements:
     - Effect: Allow
       Action:
