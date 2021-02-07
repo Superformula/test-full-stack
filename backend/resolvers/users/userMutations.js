@@ -1,5 +1,6 @@
 const moment = require('moment');
 const { client: { getClient } } = require('../../common/dynamodb')
+const { ValidationError } = require('../../common/resolverErrors')
 const { getRandomHash } = require('../../common/hash')
 
 const TABLE_NAME = process.env.DYNAMODB_TABLE;
@@ -9,11 +10,11 @@ const createUser = (args) => {
   const { name, dob, address, description } = args
   const date = moment(dob, DEFAULT_DATE_FORMAT)
   if (!date.isValid()) {
-    throw new Error('Invalid date format for field: [dob]; Format should be: ' + DEFAULT_DATE_FORMAT)
+    throw new ValidationError('Invalid date format for field: [dob]; Format should be: ' + DEFAULT_DATE_FORMAT)
   }
 
   if (!name || !address || !description) {
-    throw new Error('Invalid empty input for one of the fields: [name, address, description]')
+    throw new ValidationError('Invalid empty input for one of the fields: [name, address, description]')
   }
 
   const id = getRandomHash()
@@ -45,7 +46,7 @@ const createUser = (args) => {
 const updateUser = (args) => {
   const { id, name, address, description } = args;
   if (!name || !address || !description) {
-    throw new Error('Invalid empty input for one of the fields: [name, address, description]')
+    throw new ValidationError('Invalid empty input for one of the fields: [name, address, description]')
   }
 
   const params = {

@@ -1,13 +1,18 @@
 const { client: { initializeClient, clearInstance } } = require('../common/dynamodb')
 
-const setupMockClient = (operation, data) => {
-  initializeClient(documentClient(operation, data))
+const setupMockClient = (operation, data, err = null) => {
+  initializeClient(documentClient(operation, data, err))
 }
 
-const documentClient = (operation, data) => {
+const documentClient = (operation, data, rej) => {
   return {
     [operation]: () => ({
-      promise: () => Promise.resolve(data)
+      promise: () => {
+        if (!rej) {
+          return Promise.resolve(data)
+        }
+        return Promise.reject(rej)
+      }
     })
   }
 }

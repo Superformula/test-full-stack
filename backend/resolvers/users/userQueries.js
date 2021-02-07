@@ -1,4 +1,5 @@
 const https = require('https');
+const { ValidationError } = require('../../common/resolverErrors')
 const { client: { getClient } } = require('../../common/dynamodb')
 
 const TABLE_NAME = process.env.DYNAMODB_TABLE
@@ -9,7 +10,7 @@ const ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN
 const getUsers = (args) => {
   const { limit, lastKey, name } = args;
   if (!limit) {
-    throw new Error('Invalid input field cannot be 0: [limit]')
+    throw new ValidationError('Invalid input field cannot be 0: [limit]')
   }
 
   let params = {

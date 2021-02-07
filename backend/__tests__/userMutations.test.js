@@ -1,3 +1,4 @@
+const { ValidationError } = require('../common/resolverErrors')
 const { utils: { setupMockClient, resetMockClient } } = require('./utils');
 const { userMutations: { createUser, deleteUser, updateUser } } = require('../resolvers/users/userMutations');
 
@@ -25,33 +26,33 @@ describe('test create user functionality', () => {
   test('validate create user with invalid name', () => {
     expect(() => {
       createUser({ ...DEFAULT_TEST_USER, name: '' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
   });
 
   test('validate create user with invalid address', () => {
     expect(() => {
       createUser({ ...DEFAULT_TEST_USER, address: '' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
   });
 
   test('validate create user with invalid description', () => {
     expect(() => {
       createUser({ ...DEFAULT_TEST_USER, description: '' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
   });
 
   test('validate create user with invalid date of birth format', () => {
     expect(() => {
       createUser({ ...DEFAULT_TEST_USER, dob: '10-10-2020' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
 
     expect(() => {
       createUser({ ...DEFAULT_TEST_USER, dob: '10 Oct 2020' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
 
     expect(() => {
       createUser({ ...DEFAULT_TEST_USER, dob: 'A real unexpected date' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
   });
 });
 
@@ -71,19 +72,26 @@ describe('test update user functionality', () => {
   test('validate update user with invalid name', () => {
     expect(() => {
       updateUser({ ...DEFAULT_TEST_USER, name: '' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
   });
 
   test('validate update user with invalid address', () => {
     expect(() => {
       updateUser({ ...DEFAULT_TEST_USER, address: '' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
   });
 
   test('validate update user with invalid description', () => {
     expect(() => {
       updateUser({ ...DEFAULT_TEST_USER, description: '' })
-    }).toThrow(Error)
+    }).toThrow(ValidationError)
+  });
+
+  test('update user with non existing id', () => {
+    setupMockClient('update', {}, () => new Error('User does not exists'))
+    expect(() => {
+      updateUser({ ...DEFAULT_TEST_USER, description: '' })
+    }).toThrow(ValidationError)
   });
 });
 

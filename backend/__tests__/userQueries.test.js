@@ -1,3 +1,4 @@
+const { ValidationError } = require('../common/resolverErrors')
 const { getRandomHash } = require('../common/hash');
 const { utils: { setupMockClient, resetMockClient } } = require('./utils');
 const { userQueries: { getUsers }} = require('../resolvers/users/userQueries');
@@ -20,7 +21,7 @@ describe('test get user functionality', () => {
   test('validate input is invalid', () => {
     expect(() => {
       return getUsers({ limit: 0 })
-    }).toThrow(Error);
+    }).toThrow(ValidationError);
   });
 
   test('gets users last key for pagination', () => {
