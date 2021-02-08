@@ -6,6 +6,8 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
     z-index: 999;
+    animation-duration: 1s;
+    animation-name: animate;
 }
 
 .modal-main {
@@ -27,11 +29,8 @@
 .display-none {
     display: none;
 }
-/*@-webkit-keyframes animatetop {*/
-/*    from {top:-300px; opacity:0}*/
-/*    to {top:0; opacity:1}*/
-/*}*/
-/*@keyframes animatetop {*/
-/*    from {top:-300px; opacity:0}*/
-/*    to {top:0; opacity:1}*/
-/*}*/
+
+@keyframes animate {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}

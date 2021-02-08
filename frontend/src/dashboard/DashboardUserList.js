@@ -34,7 +34,6 @@ export const DashboardUserList = ({ currentSearch, users, loading }) => {
       }
       return i
     })])
-    console.log(newUser)
   }
 
   return loading ? <Loading /> : storedUsers.map((i, index) => {

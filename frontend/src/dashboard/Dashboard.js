@@ -12,6 +12,11 @@ export const Dashboard = () => {
   const [searchValue, setSearchValue] = useState('')
   const [lastKey, setLastKey] = useState('')
 
+  const handleOnSearchChange = (val) => {
+    setLastKey('')
+    setSearchValue(val)
+  }
+
   const { loading, error, data } = useQuery(GET_USERS, {
     variables: { limit: DEFAULT_LIMIT, lastKey: lastKey, name: searchValue }
   })
@@ -28,7 +33,7 @@ export const Dashboard = () => {
 
   return (
     <div>
-      <SearchBar value={searchValue} label={'User list'} placeholder={'Search...'} onChange={setSearchValue} />
+      <SearchBar value={searchValue} label={'User list'} placeholder={'Search...'} onChange={handleOnSearchChange} />
       <DashboardUserList currentSearch={searchValue} users={data ? data.getUsers.data : []} loading={loading}/>
       <Button label={'Load more'} onClick={handleOnClick}/>
     </div>
