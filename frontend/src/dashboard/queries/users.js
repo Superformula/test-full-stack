@@ -8,6 +8,7 @@ export const GET_USERS = gql`
                 name
                 dob
                 description
+                address
             }
             lastKey
         }

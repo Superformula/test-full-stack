@@ -8,6 +8,11 @@
     position: relative;
 }
 
+.user-card-container:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
 .user-card-image {
     border-radius: 90px;
     margin: 0 auto;
@@ -51,4 +56,13 @@
     bottom: 25px;
     left: 20px;
     width: 90%;
+}
+
+.user-card-pencil-icon-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.user-card-pencil-icon {
+    cursor: pointer;
 }

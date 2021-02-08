@@ -1,0 +1,28 @@
+.edit-user-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-user-map-container {
+    margin-top: 25px;
+    width: 50%;
+}
+
+.edit-user-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-user-button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.edit-user-properties-container {
+    width: 50%;
+}
+
+.edit-user-button-container div {
+    width: auto;
+}

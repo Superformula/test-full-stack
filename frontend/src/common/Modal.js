@@ -1,12 +1,14 @@
 import React from 'react'
+import './Modal.css'
 
-export const Modal = () => {
+export const Modal = ({ children, open }) => {
+  const showHideClassName = open ? "modal display-block" : "modal display-none";
+
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close">&times;</span>
-        <p>Some text in the Modal..</p>
-      </div>
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        {children}
+      </section>
     </div>
   )
 }

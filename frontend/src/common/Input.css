@@ -1,0 +1,19 @@
+.input-label {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    margin-top: 0;
+}
+
+.input-container {
+    margin: 25px 0;
+}
+
+.input-text-box {
+    width: 98%;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding-left: 10px;
+}
