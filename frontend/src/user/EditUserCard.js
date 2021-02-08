@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from '../common/Input';
 import './EditUserCard.css'
-import {Button} from "../common/Button";
+import { Button } from '../common/Button';
 
 const EDIT_USER_TITLE = 'Edit';
 
