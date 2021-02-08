@@ -1,9 +1,11 @@
 .user-card-container {
     padding: 25px 20px;
-    margin: 20px 20px 20px 0;
-    max-width: 20em;
+    margin: 20px 0 20px 0;
+    min-width: 400px;
+    min-height: 336px;
     background-color: #ffffff;
-    border-radius: 15px;
+    border-radius: 8px;
+    position: relative;
 }
 
 .user-card-image {
@@ -22,6 +24,13 @@
     margin: 15px 0;
 }
 
+.user-card-header h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 26px;
+}
+
 .user-card-created-date {
     font-size: 16px;
     line-height: 32px;
@@ -37,3 +46,9 @@
     margin-top: 0;
 }
 
+.user-card-header-container {
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    width: 90%;
+}

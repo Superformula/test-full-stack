@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchBar.css';
 
-export const SearchBar = ({ label, placeholder, onChange }) => {
+export const SearchBar = ({ value, label, placeholder, onChange }) => {
   const handleOnChange = (event) => {
     const { value } = event.target;
     onChange(value);
@@ -10,7 +10,7 @@ export const SearchBar = ({ label, placeholder, onChange }) => {
   return (
     <div className={'search-bar-container'}>
       <h1>{label}</h1>
-      <input onChange={handleOnChange} type={'text'} placeholder={placeholder}/>
+      <input value={value} onChange={handleOnChange} type={'text'} placeholder={placeholder}/>
     </div>
   )
 };

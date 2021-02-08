@@ -4,6 +4,7 @@
 
 #root {
   height: 100vh;
+  font-family: "Source Sans Pro";
 }
 
 .App-logo {
@@ -42,8 +43,9 @@
 }
 
 .body-container {
-  max-width: 50%;
-  margin: 15em auto 0 auto;
+  max-width: 60%;
+  margin: 10em auto 0 auto;
   height: 100vh;
   padding: 20px;
+  background: #F8F8F8;
 }

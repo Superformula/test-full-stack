@@ -1,20 +1,19 @@
 import React from 'react';
 import './App.css';
-import { UserCard } from "./user/UserCard";
-import { SearchBar } from "./common/SearchBar";
+import { Dashboard } from './dashboard/Dashboard';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
-const SEARCH_BAR_LABEL = 'User list'
-const SEARCH_BAR_PLACEHOLDER = 'Search...'
+const client = new ApolloClient({
+  uri: 'https://q2u0wjvapi.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  cache: new InMemoryCache()
+});
 
 export const App = () => {
   return (
-    <div className={'body-container'}>
-      <SearchBar label={SEARCH_BAR_LABEL} placeholder={SEARCH_BAR_PLACEHOLDER} />
-      <UserCard
-        name={'test'}
-        description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor risus a nulla pretium, in vestibulum neque commodo.'}
-        createdAt={'01 feb 2020'}
-      />
-    </div>
+    <ApolloProvider client={client}>
+      <div className={'body-container'}>
+        <Dashboard />
+      </div>
+    </ApolloProvider>
   );
 };

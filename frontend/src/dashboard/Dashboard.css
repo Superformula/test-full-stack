@@ -1,0 +1,4 @@
+.dashboard-user-list {
+    display: flex;
+    justify-content: space-between;
+}
