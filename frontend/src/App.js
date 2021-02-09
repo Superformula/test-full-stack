@@ -4,7 +4,7 @@ import { Dashboard } from './dashboard/Dashboard';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://q2u0wjvapi.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  uri: 'https://9uviau5uch.execute-api.us-east-1.amazonaws.com/dev/graphql',
   cache: new InMemoryCache()
 });
 
