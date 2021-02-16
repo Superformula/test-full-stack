@@ -3,6 +3,10 @@
     justify-content: space-between;
 }
 
+.edit-user-button-container button {
+    max-width: 200px;
+}
+
 .edit-user-map-container {
     margin-top: 25px;
     width: 50%;
