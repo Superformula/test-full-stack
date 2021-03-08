@@ -15,6 +15,11 @@ resource "aws_appsync_graphql_api" "appsync" {
   name                = "${var.prefix}_appsync"
   schema              = file("schema.graphql")
   authentication_type = "API_KEY"
+  xray_enabled = var.enableTracing
+  log_config {
+    cloudwatch_logs_role_arn = aws_iam_role.iam_appsync_role.arn
+    field_log_level = var.apiLoggingLevel
+  }
 }
 
 # Create the API key.
