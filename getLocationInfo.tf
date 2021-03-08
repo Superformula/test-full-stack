@@ -13,4 +13,5 @@ resource "aws_lambda_function" "getLocationInfo_lambda" {
   source_code_hash = data.archive_file.getLocationInfo_lambda_zip.output_base64sha256
   runtime       = "nodejs12.x"
   handler = "index.handler"
+  layers = [aws_lambda_layer_version.nodeFetch_lambda_layer.arn]
 }
