@@ -16,7 +16,10 @@ export class MapBoxAPI implements LocationAPI {
     const response = await fetch(urlWithAddress);
     const data = await response.json();
     const locations:LocationBasicData[] = [];
-    const features = data.features || [];
+    if (!Array.isArray(data.features)) {
+      throw new Error(`Response data is not iterable: ${data}`);
+    }
+    const features = data.features;
     features.forEach((feature:any) => {
       if (!feature.properties) {
         return;

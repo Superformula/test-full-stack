@@ -7,7 +7,10 @@ export const LocationService:LocationAPI = new MapBoxAPI();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const handler = async (event:AppSyncEvent, _context?:any) => {
-  const { address } = (event.arguments || {});
+  if (!event.arguments) {
+    return [];
+  }
+  const { address } = event.arguments;
   try {
     const locations = await LocationService.getLocationData(address);
     return locations;

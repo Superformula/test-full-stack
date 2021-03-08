@@ -51,18 +51,18 @@ describe('MapBoxAPI instance', () => {
     it('should return mapped location data from valid response features', () => {
       expect(result).toEqual([
         {
-          name: geoLocationResponseData.features[0].properties.place_name,
-          category: geoLocationResponseData.features[0].properties.category,
-          isLandmark: !!geoLocationResponseData.features[0].properties.landmark,
-          address: geoLocationResponseData.features[0].properties.address,
-          coordinates: geoLocationResponseData.features[0].center
+          name: geoLocationResponseData?.features[0]?.properties?.place_name,
+          category: geoLocationResponseData?.features[0]?.properties?.category,
+          isLandmark: !!geoLocationResponseData?.features[0]?.properties?.landmark,
+          address: geoLocationResponseData?.features[0]?.properties?.address,
+          coordinates: geoLocationResponseData?.features[0]?.center
         },
         {
-          name: geoLocationResponseData.features[2].properties.place_name,
-          category: geoLocationResponseData.features[2].properties.category,
-          isLandmark: !!geoLocationResponseData.features[2].properties.landmark,
-          address: geoLocationResponseData.features[2].properties.address,
-          coordinates: geoLocationResponseData.features[2].center
+          name: geoLocationResponseData?.features[2]?.properties?.place_name,
+          category: geoLocationResponseData?.features[2].properties?.category,
+          isLandmark: !!geoLocationResponseData?.features[2].properties?.landmark,
+          address: geoLocationResponseData?.features[2].properties?.address,
+          coordinates: geoLocationResponseData?.features[2]?.center
         }
       ]);
     });

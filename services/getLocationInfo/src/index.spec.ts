@@ -29,6 +29,14 @@ describe('handler', () => {
   it('should return data directly from location data service', () => {
     expect(result).toEqual(mockLocationServiceData);
   });
+  describe('when no arguments are received', () => {
+    beforeAll(async () => {
+      result = await handler({ arguments: undefined });
+    });
+    it('should return an empty array', () => {
+      expect(result).toEqual([]);
+    });
+  });
   describe('when location service throws an error', () => {
     beforeAll(async () => {
       mockedLocationService.getLocationData.mockImplementationOnce(() => Promise.reject(new Error('random error')));
@@ -36,6 +44,9 @@ describe('handler', () => {
     });
     it('should create new Error object', () => {
       expect(ErrorFactory.create).toHaveBeenCalledWith(new Error('random error'), event, ERROR_TYPE.ERROR);
+    });
+    it('should return an empty array', () => {
+      expect(result).toEqual([]);
     });
   });
 });
