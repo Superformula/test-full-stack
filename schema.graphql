@@ -1,0 +1,150 @@
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
+
+type Mutation {
+	createUser(input: CreateUserInput!): User
+	updateUser(input: UpdateUserInput!): User
+	deleteUser(input: DeleteUserInput!): User
+}
+
+type Query {
+	getLocationInfo: [LocationInfo]!
+	listUsers(filter: TableUserFilterInput, limit: Int, nextToken: String): UserConnection
+}
+
+type Subscription {
+	onCreateUser(
+		id: ID,
+		name: String,
+		dob: String,
+		address: String,
+		description: String
+	): User
+		@aws_subscribe(mutations: ["createUser"])
+	onUpdateUser(
+		id: ID,
+		name: String,
+		dob: String,
+		address: String,
+		description: String
+	): User
+		@aws_subscribe(mutations: ["updateUser"])
+	onDeleteUser(
+		id: ID,
+		name: String,
+		dob: String,
+		address: String,
+		description: String
+	): User
+		@aws_subscribe(mutations: ["deleteUser"])
+}
+
+type User {
+	id: ID!
+	name: String!
+	dob: String!
+	address: String!
+	description: String!
+	createdAt: Float!
+	updatedAt: Float!
+}
+
+type UserConnection {
+	items: [User]
+	nextToken: String
+}
+
+type LocationInfo {
+	address: String!
+}
+
+input CreateUserInput {
+	name: String!
+	dob: String!
+	address: String!
+	description: String!
+	createdAt: Float!
+	updatedAt: Float!
+}
+
+input DeleteUserInput {
+	id: ID!
+}
+
+input TableBooleanFilterInput {
+	ne: Boolean
+	eq: Boolean
+}
+
+input TableFloatFilterInput {
+	ne: Float
+	eq: Float
+	le: Float
+	lt: Float
+	ge: Float
+	gt: Float
+	contains: Float
+	notContains: Float
+	between: [Float]
+}
+
+input TableIDFilterInput {
+	ne: ID
+	eq: ID
+	le: ID
+	lt: ID
+	ge: ID
+	gt: ID
+	contains: ID
+	notContains: ID
+	between: [ID]
+	beginsWith: ID
+}
+
+input TableIntFilterInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	contains: Int
+	notContains: Int
+	between: [Int]
+}
+
+input TableStringFilterInput {
+	ne: String
+	eq: String
+	le: String
+	lt: String
+	ge: String
+	gt: String
+	contains: String
+	notContains: String
+	between: [String]
+	beginsWith: String
+}
+
+input TableUserFilterInput {
+	id: TableIDFilterInput
+	name: TableStringFilterInput
+	dob: TableStringFilterInput
+	address: TableStringFilterInput
+	description: TableStringFilterInput
+	createdAt: TableFloatFilterInput
+	updatedAt: TableFloatFilterInput
+}
+
+input UpdateUserInput {
+	id: ID!
+	name: String
+	dob: String
+	address: String
+	description: String
+	createdAt: Float
+	updatedAt: Float
+}
