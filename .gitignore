@@ -4,3 +4,4 @@ variables.tf
 zip/**
 .env
 node_modules
+dist
