@@ -15,3 +15,15 @@ resource "aws_lambda_function" "getLocationInfo_lambda" {
   handler = "index.handler"
   layers = [aws_lambda_layer_version.nodeFetch_lambda_layer.arn]
 }
+
+# Lambda Function Log Group
+resource "aws_cloudwatch_log_group" "getLocationInfo_lambda_log_group" {
+  name              = "/aws/lambda/${var.prefix}_getLocationInfo_lambda"
+  retention_in_days = 14
+}
+
+# Allow lambda to push logs
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+  role       = aws_iam_role.iam_lambda_role.name
+  policy_arn = aws_iam_policy.iam_push_logs_policy.arn
+}
