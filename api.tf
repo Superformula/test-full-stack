@@ -37,7 +37,7 @@ resource "aws_iam_role_policy_attachment" "appsync_manage_UserTable" {
   policy_arn = aws_iam_policy.iam_UserTable_policy.arn
 }
 
-# Create resolver using templates in /resolvers/crud.
+# Create resolvers using templates in /resolvers/crud.
 resource "aws_appsync_resolver" "listUsers_resolver" {
   api_id      = aws_appsync_graphql_api.appsync.id
   type        = "Query"
@@ -46,4 +46,14 @@ resource "aws_appsync_resolver" "listUsers_resolver" {
 
   request_template  = file("./resolvers/crud/list/request.vtl")
   response_template = file("./resolvers/crud/list/response.vtl")
+}
+
+resource "aws_appsync_resolver" "createUser_resolver" {
+  api_id      = aws_appsync_graphql_api.appsync.id
+  type        = "Mutation"
+  field       = "createUser"
+  data_source = aws_appsync_datasource.UserTable_datasource.name
+
+  request_template  = file("./resolvers/crud/create/request.vtl")
+  response_template = file("./resolvers/crud/create/response.vtl")
 }
