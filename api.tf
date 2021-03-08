@@ -74,6 +74,17 @@ resource "aws_appsync_resolver" "updateUser_resolver" {
   response_template = file("./resolvers/crud/update/response.vtl")
 }
 
+resource "aws_appsync_resolver" "deleteUser_resolver" {
+  api_id      = aws_appsync_graphql_api.appsync.id
+  type        = "Mutation"
+  field       = "deleteUser"
+  data_source = aws_appsync_datasource.UserTable_datasource.name
+
+  request_template  = file("./resolvers/crud/delete/request.vtl")
+  response_template = file("./resolvers/crud/delete/response.vtl")
+}
+
+
 
 ## GetLocationInfo Lambda ##
 
