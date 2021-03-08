@@ -14,6 +14,11 @@ resource "aws_lambda_function" "getLocationInfo_lambda" {
   runtime       = "nodejs12.x"
   handler = "index.handler"
   layers = [aws_lambda_layer_version.nodeFetch_lambda_layer.arn]
+  environment {
+    variables = {
+      "MAPBOX_ACCESS_TOKEN" = var.MAPBOX_ACCESS_TOKEN
+    }
+  }
 }
 
 # Lambda Function Log Group
