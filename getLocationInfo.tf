@@ -1,7 +1,7 @@
 # Zip source code
 data "archive_file" "getLocationInfo_lambda_zip" {
   type        = "zip"
-  source_file = "./services/getLocationInfo/src/index.js"
+  source_dir = "./services/getLocationInfo/dist"
   output_path = "./zip/getLocationInfo.zip"
 }
 
