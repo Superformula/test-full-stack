@@ -12,5 +12,5 @@ resource "aws_lambda_function" "getLocationInfo_lambda" {
   filename         = data.archive_file.getLocationInfo_lambda_zip.output_path
   source_code_hash = data.archive_file.getLocationInfo_lambda_zip.output_base64sha256
   runtime       = "nodejs12.x"
-  handler = "handler"
+  handler = "index.handler"
 }
