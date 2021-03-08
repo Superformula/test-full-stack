@@ -2,3 +2,5 @@
 terraform.tfstate*
 variables.tf
 zip/**
+.env
+node_modules
