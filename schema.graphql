@@ -11,7 +11,7 @@ type Mutation {
 }
 
 type Query {
-	getLocationInfo: [LocationInfo]!
+	getLocationInfo(address: String): [LocationInfo]!
 	listUsers(filter: TableUserFilterInput, limit: Int, nextToken: String): UserConnection
 }
 
