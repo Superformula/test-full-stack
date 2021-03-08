@@ -59,7 +59,7 @@ type UserConnection {
 
 type LocationInfo {
   isLandmark: Boolean!
-  address: String!
+  address: String
   name: String
   category: String
   coordinates: [Float!]
