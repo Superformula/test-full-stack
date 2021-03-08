@@ -4,6 +4,12 @@ resource "aws_iam_role" "iam_appsync_role" {
   assume_role_policy = file("./roles/appSync.json")
 }
 
+# Attach Invoke Lambda policy to AppSync role.
+resource "aws_iam_role_policy_attachment" "appsync_invoke_lambda" {
+  role       = aws_iam_role.iam_appsync_role.name
+  policy_arn = aws_iam_policy.iam_invoke_lambda_policy.arn
+}
+
 # Create the AppSync GraphQL api.
 resource "aws_appsync_graphql_api" "appsync" {
   name                = "${var.prefix}_appsync"
@@ -66,4 +72,29 @@ resource "aws_appsync_resolver" "updateUser_resolver" {
 
   request_template  = file("./resolvers/crud/update/request.vtl")
   response_template = file("./resolvers/crud/update/response.vtl")
+}
+
+
+## GetLocationInfo Lambda ##
+
+# Create data source in appsync from lambda function.
+resource "aws_appsync_datasource" "getLocationInfo_datasource" {
+  api_id           = aws_appsync_graphql_api.appsync.id
+  name             = "${var.prefix}_getLocationInfo_datasource"
+  service_role_arn = aws_iam_role.iam_appsync_role.arn
+  type             = "AWS_LAMBDA"
+  lambda_config {
+    function_arn = aws_lambda_function.getLocationInfo_lambda.arn
+  }
+}
+
+# Create resolver using templates in /resolvers/lambda.
+resource "aws_appsync_resolver" "getLocationInfo_resolver" {
+  api_id      = aws_appsync_graphql_api.appsync.id
+  type        = "Query"
+  field       = "getLocationInfo"
+  data_source = aws_appsync_datasource.getLocationInfo_datasource.name
+
+  request_template  = file("./resolvers/lambda/request.vtl")
+  response_template = file("./resolvers/lambda/response.vtl")
 }
