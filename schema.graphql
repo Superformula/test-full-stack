@@ -58,7 +58,11 @@ type UserConnection {
 }
 
 type LocationInfo {
-	address: String!
+  isLandmark: boolean!
+  address: String!
+  name: String
+  category: string;
+  coordinates: [Float!]
 }
 
 input CreateUserInput {
