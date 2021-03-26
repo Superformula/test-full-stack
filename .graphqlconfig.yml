@@ -1,0 +1,12 @@
+projects:
+  usermanagementAPI:
+    schemaPath: webclient/graphql/schema.json
+    includes:
+      - webclient/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: webclient/API.ts
+        docsFilePath: webclient/graphql
