@@ -27,7 +27,21 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "4.2.3",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "typescript": "^4.2.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn type-check"
+    }
+  },
+  "lint-staged": {
+    "*.@(ts|tsx|js)": [
+      "yarn lint",
+      "yarn format"
+    ]
   }
 }
