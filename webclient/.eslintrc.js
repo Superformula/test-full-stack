@@ -43,14 +43,37 @@ module.exports = {
       { ignoreConsecutiveComments: true }
     ],
     'arrow-body-style': [ERROR, 'as-needed'],
+    'object-curly-spacing': OFF,
     'no-implicit-coercion': ERROR,
     'react/react-in-jsx-scope': OFF,
     'react/prop-types': OFF,
-    '@typescript-eslint/explicit-function-return-type': OFF,
-    '@typescript-eslint/explicit-member-accessibility': OFF,
-    '@typescript-eslint/member-delimiter-style': OFF,
-    '@typescript-eslint/no-explicit-any': OFF,
-    '@typescript-eslint/no-use-before-define': OFF,
+    '@typescript-eslint/explicit-function-return-type': ERROR,
+    '@typescript-eslint/explicit-member-accessibility': [ERROR],
+    '@typescript-eslint/no-use-before-define': ERROR,
+    '@typescript-eslint/consistent-type-definitions': [ERROR, 'interface'],
+    '@typescript-eslint/prefer-ts-expect-error': ERROR,
+    '@typescript-eslint/prefer-optional-chain': ERROR,
+    '@typescript-eslint/no-unnecessary-type-constraint': ERROR,
+    '@typescript-eslint/object-curly-spacing': [
+      ERROR,
+      'always',
+      {
+        arraysInObjects: false
+      }
+    ],
+    '@typescript-eslint/member-delimiter-style': [
+      ERROR,
+      {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true
+        },
+        singleline: {
+          delimiter: 'comma',
+          requireLast: false
+        }
+      }
+    ],
     '@typescript-eslint/no-unused-vars': [
       ERROR,
       {

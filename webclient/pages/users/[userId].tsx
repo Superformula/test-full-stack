@@ -17,8 +17,8 @@ import { AppContext } from '../../interfaces'
 import styles from '../../styles/Home.module.css'
 
 interface Props {
-  user: User
-  context: AppContext
+  user: User;
+  context: AppContext;
 }
 
 // TODO: rework modal with custom solution
@@ -49,7 +49,7 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
       <main className={styles.main}>
         <Modal
           isOpen={true} // The modal should always be shown on page load
-          onRequestClose={() => router.push('/')}
+          onRequestClose={(): Promise<boolean> => router.push('/')}
           contentLabel="User modal"
         >
           <UserCard data={user} dispatch={dispatch} />
@@ -65,7 +65,14 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
-  async function fetchUsersPaths() {
+  async function fetchUsersPaths(): Promise<{
+    paths: {
+      params: {
+        userId: string;
+      };
+    }[];
+    fallback: boolean;
+  }> {
     let result: GraphQLResult<ListUsersQuery>
 
     try {
@@ -98,7 +105,11 @@ export const getStaticPaths: GetStaticPaths = () => {
 }
 
 export const getStaticProps: GetStaticProps = ({ params: { userId } }) => {
-  async function fetchUser() {
+  async function fetchUser(): Promise<{
+    props: {
+      user: User;
+    };
+  }> {
     let result: GraphQLResult<GetUserQuery>
 
     try {

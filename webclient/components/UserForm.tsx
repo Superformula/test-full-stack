@@ -19,9 +19,9 @@ type UserEdit = Pick<User, UserEditableParams>
 type UserEditableFields = keyof Omit<UserEdit, 'id'>
 
 interface Props {
-  dispatch: Dispatch<ActionType>
-  user?: User
-  action: 'create' | 'update'
+  dispatch: Dispatch<ActionType>;
+  user?: User;
+  action: 'create' | 'update';
 }
 
 export default function UserForm({
@@ -36,7 +36,7 @@ export default function UserForm({
 
   const handleFieldEdit = (fieldName: UserEditableFields) => (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
     setIsDirty(true)
     setUserDetails({ ...userDetails, [fieldName]: event.target.value })
   }

@@ -1,5 +1,5 @@
 import { Reducer, Dispatch, BaseSyntheticEvent } from 'react'
-import produce from 'immer'
+import { Immutable, produce } from 'immer'
 
 import callGraphQL from '../models/graphql-api'
 import {
@@ -79,8 +79,8 @@ async function handleDeleteUser(
   }
 }
 
-export type State = {
-  users: User[]
+export interface State {
+  readonly users: Immutable<User[]>;
 }
 
 const reducer: Reducer<State, ActionType> = (state, action) =>

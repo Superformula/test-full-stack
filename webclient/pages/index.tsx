@@ -20,9 +20,11 @@ import { AppContext } from '../interfaces'
 import styles from '../styles/Home.module.css'
 
 interface Props {
-  users: User[]
-  context: AppContext
+  users: User[];
+  context: AppContext;
 }
+
+type ListUsersType = ListUsersQuery['listUsers']['items']
 
 // TODO: rework modal with custom solution
 Modal.setAppElement('#__next')
@@ -44,7 +46,7 @@ export default function App({
     <div className={styles.container}>
       <Modal
         isOpen={Boolean(router.query.userId)}
-        onRequestClose={() => router.push('/')}
+        onRequestClose={(): Promise<boolean> => router.push('/')}
         contentLabel="User modal"
       >
         <UserCard
@@ -75,7 +77,9 @@ export default function App({
               <p>{user.description}</p>
               <button
                 type="button"
-                onClick={() => handleDeleteUser(dispatch, user.id)}
+                onClick={(): Promise<void> =>
+                  handleDeleteUser(dispatch, user.id)
+                }
               >
                 delete user
               </button>
@@ -96,7 +100,9 @@ export default function App({
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  async function fetchUsers() {
+  async function fetchUsers(): Promise<{
+    props: { users: ListUsersType };
+  }> {
     let result: GraphQLResult<ListUsersQuery>
 
     try {

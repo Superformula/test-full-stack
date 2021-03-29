@@ -6,8 +6,8 @@ import User from '../models/user'
 import { ActionType } from '../interfaces'
 
 interface Props {
-  data: User
-  dispatch: Dispatch<ActionType>
+  data: User;
+  dispatch: Dispatch<ActionType>;
 }
 
 export default function UserCard({ data, dispatch }: Props): ReactElement {

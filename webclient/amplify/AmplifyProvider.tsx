@@ -6,7 +6,7 @@ import awsConfig from '../aws-exports'
 Amplify.configure({ ...awsConfig })
 
 interface Props {
-  children: ReactElement
+  children: ReactElement;
 }
 
 function AmplifyProvider({ children }: Props): ReactElement {
