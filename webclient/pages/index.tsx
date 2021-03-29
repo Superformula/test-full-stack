@@ -1,65 +1,125 @@
+import { useEffect, ReactElement } from 'react'
 import Head from 'next/head'
+import { GraphQLResult } from '@aws-amplify/api'
+import { GetStaticProps } from 'next'
+import Modal from 'react-modal'
+import { useRouter } from 'next/router'
+import Link from 'next/Link'
+
+import UserForm from '../components/UserForm'
+import UserCard from '../components/UserCard'
+
+import { ListUsersQuery } from '../API'
+import { listUsers } from '../graphql/queries'
+import callGraphQL from '../models/graphql-api'
+import User, { handleDeleteUser } from '../models/user'
+import { HYDRATE_USERS } from '../constants/ActionTypes'
+
+import { AppContext } from '../interfaces'
+
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+interface Props {
+  users: User[]
+  context: AppContext
+}
+
+// TODO: rework modal with custom solution
+Modal.setAppElement('#__next')
+
+export default function App({
+  users,
+  context: { state, dispatch }
+}: Props): ReactElement {
+  const router = useRouter()
+
+  // Populate users upon retrieval from server
+  useEffect(() => {
+    dispatch({ type: HYDRATE_USERS, payload: users })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // TODO: implement loading state by checking incoming 'users'
+
   return (
     <div className={styles.container}>
+      <Modal
+        isOpen={Boolean(router.query.userId)}
+        onRequestClose={() => router.push('/')}
+        contentLabel="User modal"
+      >
+        <UserCard
+          dispatch={dispatch}
+          data={state.users.find(u => router.query.userId === u.id)}
+        />
+      </Modal>
+
       <Head>
-        <title>Create Next App</title>
+        <title>Users list app</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>Users list</h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          <code className={styles.code}>{state.users.length}</code>
+          users
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          {state.users.map(user => (
+            <div className={styles.card} key={user.id}>
+              <Link as={`/users/${user.id}`} href={`/?userId=${user.id}`}>
+                <h3>{user.name}</h3>
+              </Link>
+              <p>{user.description}</p>
+              <button
+                type="button"
+                onClick={() => handleDeleteUser(dispatch, user.id)}
+              >
+                delete user
+              </button>
+            </div>
+          ))}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <div className={styles.card}>
+            <h3 className={styles.title}>New User</h3>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            <UserForm dispatch={dispatch} action="create" />
+          </div>
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <footer className={styles.footer}>Users list © 2021</footer>
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+  async function fetchUsers() {
+    let result: GraphQLResult<ListUsersQuery>
+
+    try {
+      result = await callGraphQL<ListUsersQuery>(listUsers)
+    } catch ({ errors }) {
+      console.error(errors)
+    }
+
+    if (result.errors) {
+      console.error('Failed to fetch a list of users', result.errors)
+      return {
+        props: {
+          users: null
+        }
+      }
+    }
+
+    return {
+      props: {
+        users: result.data.listUsers.items
+      }
+    }
+  }
+
+  return fetchUsers()
 }
