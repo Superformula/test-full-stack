@@ -38,12 +38,12 @@ export default function UserCard({ user, onUserDelete }: Props): ReactElement {
       />
       <div className={styles.body}>
         <div className={styles.header}>
-          <h3 className={`${styles.heading} ${styles.headerItem}`}>
+          <h3 className={styles.heading}>
             {user.name}
           </h3>
-          created{' '}
-          <span className={`${styles.meta} ${styles.headerItem}`}>
-            {formatDate(user.createdAt)}
+          <span className={styles.meta}>
+            created{' '}
+            <span className={styles.date}>{formatDate(user.createdAt)}</span>
           </span>
         </div>
         <p className={styles.description}>{user.description}</p>

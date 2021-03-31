@@ -14,8 +14,8 @@
   position: relative;
   margin: 1rem;
   width: 30%;
-  box-shadow: 0 1px 2px shadowColor;
-  transition: transform 0.35s ease-in-out;
+  box-shadow: 0 1px 3px shadowColor;
+  transition: transform 0.3s ease-in-out;
 }
 
 .wrapper::after {
@@ -28,7 +28,7 @@
   top: 0;
   left: 0;
   border-radius: borderRadius;
-  box-shadow: 3px 3px 7px shadowColor;
+  box-shadow: 4px 4px 9px shadowColor;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
@@ -38,13 +38,13 @@
 }
 
 .wrapper:hover {
-  transform: scale(1.007);
+  transform: scale(1);
 }
 
 .wrapper:hover .actionButton {
-  transition: opacity 0.35s ease-in;
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.35s ease-in;
 }
 
 .avatar {
@@ -65,31 +65,32 @@
 }
 
 .body {
-  position: absolute;
-  bottom: 25px;
-  left: 20px;
-  width: 90%;
+  margin-bottom: 16px;
 }
 
 .header {
   margin-bottom: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.headerItem {
-  margin: 15px 0;
+  padding: 1rem 0;
 }
 
 .heading {
   font-style: normal;
+  text-transform: uppercase;
   font-weight: 600;
-  font-size: 21px;
+  font-size: 19px;
   line-height: 26px;
+  text-align: left;
+  margin: 0;
 }
 
 .meta {
+  text-align: right;
+  font-size: 14px;
+}
+
+.date {
   font-size: 16px;
   line-height: 32px;
   color: metaColor;
@@ -98,6 +99,7 @@
 /* trim text here to show ellipsis */
 .description {
   margin-top: 0;
+  margin-bottom: 6px;
   white-space: nowrap;
   width: 252px;
   overflow: hidden;

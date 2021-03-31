@@ -12,6 +12,7 @@
   border-radius: borderRadius;
   resize: vertical;
   padding: 12px;
+  font-size: 1rem;
 }
 
 .textbox:focus {
