@@ -6,11 +6,16 @@ import {
   HYDRATE_USERS,
   CREATE_USER,
   UPDATE_USER,
-  DELETE_USER
+  DELETE_USER,
+  SEARCH_USERS
 } from '../config/ActionTypes'
+import { listUsers } from './../graphql/queries'
 import { createUser, updateUser, deleteUser } from '../graphql/mutations'
 
 import {
+  ListUsersQuery,
+  ListUsersQueryVariables,
+  ModelUserFilterInput,
   GetUserQuery,
   CreateUserMutation,
   CreateUserMutationVariables,
@@ -59,8 +64,8 @@ async function handleUpdateUser(
     } as UpdateUserMutationVariables)
 
     dispatch({ type: UPDATE_USER, payload: data.updateUser })
-  } catch (error) {
-    console.error('Updating a user failed', error)
+  } catch ({ errors }) {
+    console.error('Updating a user failed', ...errors)
   }
 }
 
@@ -79,6 +84,27 @@ async function handleDeleteUser(
   }
 }
 
+async function handleSearchUsers(
+  dispatch: Dispatch<ActionType>,
+  searchTerm: string
+): Promise<void> {
+  const searchFilter: ModelUserFilterInput = {
+    name: {
+      contains: searchTerm
+    }
+  }
+
+  try {
+    const { data } = await callGraphQL<ListUsersQuery>(listUsers, {
+      filter: searchFilter
+    } as ListUsersQueryVariables)
+
+    dispatch({ type: SEARCH_USERS, payload: data.listUsers.items })
+  } catch ({ errors }) {
+    console.error('Search operation failed', ...errors)
+  }
+}
+
 export type StateUsers = Immutable<User[]>
 export interface State {
   users: StateUsers;
@@ -88,6 +114,7 @@ const reducer: Reducer<State, ActionType> = (state, action) =>
   produce(state, draftState => {
     switch (action.type) {
       case HYDRATE_USERS:
+      case SEARCH_USERS:
         draftState.users = action.payload
         break
 
@@ -125,5 +152,6 @@ export {
   handleCreateUser,
   handleUpdateUser,
   handleDeleteUser,
+  handleSearchUsers,
   reducer as userReducer
 }

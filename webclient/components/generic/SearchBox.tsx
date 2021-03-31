@@ -20,7 +20,7 @@ export default function SearchBox({
       <Input
         value={value}
         onInput={onSearchTermChange}
-        type={'text'}
+        type="text"
         placeholder={placeholder}
         className={styles.searchInput}
       />

@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement, ChangeEvent } from 'react'
+import { useEffect, ReactElement } from 'react'
 import Head from 'next/head'
 import { GraphQLResult } from '@aws-amplify/api'
 import { GetStaticProps } from 'next'
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 import UserGrid from '../components/Users/UserGrid'
 import UserForm from '../components/Users/UserForm'
-import SearchBox from '../components/generic/SearchBox'
+import UserSearch from '../components/Users/UserSearch'
 
 import { ListUsersQuery } from '../API'
 import { listUsers } from '../graphql/queries'
@@ -34,7 +34,6 @@ export default function App({
   users,
   context: { state, dispatch }
 }: Props): ReactElement {
-  const [searchTerm, setSearchTerm] = useState('')
   const router = useRouter()
   const { title: appTitle } = siteMetadata
 
@@ -44,9 +43,6 @@ export default function App({
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // TODO: implement loading state by checking incoming 'users'
-
-  const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>): void =>
-    setSearchTerm(event.target.value)
 
   return (
     <div className={styles.container}>
@@ -71,10 +67,7 @@ export default function App({
         <div className={styles.header}>
           <h1 className={styles.title}>{appTitle}</h1>
 
-          <SearchBox
-            value={searchTerm}
-            onSearchTermChange={handleSearchTermChange}
-          />
+          <UserSearch dispatch={dispatch} />
         </div>
 
         <UserGrid users={state.users} dispatch={dispatch} />
