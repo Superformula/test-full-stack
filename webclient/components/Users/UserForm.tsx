@@ -24,14 +24,13 @@ type UserEditableFields = keyof Omit<UserEdit, 'id'>
 interface Props {
   dispatch: Dispatch<ActionType>;
   user?: User;
-  action: 'create' | 'update';
 }
 
 export default function UserForm({
   dispatch,
-  user,
-  action
+  user
 }: Props): ReactElement {
+  const isUpdateMode = Boolean(user)
   const [userDetails, setUserDetails] = useState(user)
   const [isDirty, setIsDirty] = useState(false)
 
@@ -60,12 +59,12 @@ export default function UserForm({
   }
 
   const ActionButton: ReactElement =
-    action === 'create' ? (
-      <Button>Create</Button>
-    ) : (
+    isUpdateMode ? (
       <Button disabled={!isDirty} type="button" onClick={handleUserUpdate}>
         Save
       </Button>
+    ) : (
+      <Button>Create</Button>
     )
 
   return (

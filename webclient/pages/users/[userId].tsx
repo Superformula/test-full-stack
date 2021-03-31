@@ -52,7 +52,7 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
           onRequestClose={(): Promise<boolean> => router.push('/')}
           contentLabel="User modal"
         >
-          <UserForm user={user} dispatch={dispatch} action="update" />
+          <UserForm user={user} dispatch={dispatch} />
         </Modal>
         <h1 className={styles.title}>{user.name}</h1>
 

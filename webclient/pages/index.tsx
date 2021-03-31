@@ -54,7 +54,6 @@ export default function App({
         <UserForm
           user={state.users.find(u => router.query.userId === u.id)}
           dispatch={dispatch}
-          action="update"
         />
       </Modal>
 
@@ -75,7 +74,7 @@ export default function App({
         <div className={styles.card}>
           <h3 className={styles.title}>New User</h3>
 
-          <UserForm dispatch={dispatch} action="create" />
+          <UserForm dispatch={dispatch} />
         </div>
       </main>
     </div>
