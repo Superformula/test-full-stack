@@ -1,0 +1,19 @@
+@value theme: "../theme.css";
+
+@value baseBackground from theme;
+@value shadowColor from theme;
+@value borderRadius from theme;
+
+.textbox {
+  width: 98%;
+  min-height: 40px;
+  background: baseBackground;
+  border: 1px solid shadowColor;
+  border-radius: borderRadius;
+  resize: vertical;
+  padding: 12px;
+}
+
+.textbox:focus {
+  outline: none;
+}

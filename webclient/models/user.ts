@@ -7,7 +7,7 @@ import {
   CREATE_USER,
   UPDATE_USER,
   DELETE_USER
-} from '../constants/ActionTypes'
+} from '../config/ActionTypes'
 import { createUser, updateUser, deleteUser } from '../graphql/mutations'
 
 import {
@@ -79,8 +79,9 @@ async function handleDeleteUser(
   }
 }
 
+export type StateUsers = Immutable<User[]>
 export interface State {
-  readonly users: Immutable<User[]>;
+  users: StateUsers;
 }
 
 const reducer: Reducer<State, ActionType> = (state, action) =>

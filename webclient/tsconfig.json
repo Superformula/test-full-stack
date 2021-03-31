@@ -14,7 +14,7 @@
     "noUnusedParameters": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "jsx": "preserve"
   },
   "include": ["aws-exports.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Modal from 'react-modal'
 
-import UserCard from '../../components/UserCard'
+import UserForm from '../../components/Users/UserForm'
 
 import callGraphQL from '../../models/graphql-api'
 import { GetUserQuery, GetUserQueryVariables, ListUsersQuery } from '../../API'
@@ -52,7 +52,7 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
           onRequestClose={(): Promise<boolean> => router.push('/')}
           contentLabel="User modal"
         >
-          <UserCard data={user} dispatch={dispatch} />
+          <UserForm user={user} dispatch={dispatch} action="update" />
         </Modal>
         <h1 className={styles.title}>{user.name}</h1>
 

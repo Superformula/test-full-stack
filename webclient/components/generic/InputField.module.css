@@ -1,0 +1,13 @@
+@value theme: "../theme.css";
+
+.wrapper {
+  margin: 25px 0;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  margin-top: 0;
+}

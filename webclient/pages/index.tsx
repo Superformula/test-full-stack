@@ -1,19 +1,20 @@
-import { useEffect, ReactElement } from 'react'
+import { useState, useEffect, ReactElement, ChangeEvent } from 'react'
 import Head from 'next/head'
 import { GraphQLResult } from '@aws-amplify/api'
 import { GetStaticProps } from 'next'
 import Modal from 'react-modal'
 import { useRouter } from 'next/router'
-import Link from 'next/Link'
 
-import UserForm from '../components/UserForm'
-import UserCard from '../components/UserCard'
+import UserGrid from '../components/Users/UserGrid'
+import UserForm from '../components/Users/UserForm'
+import SearchBox from '../components/generic/SearchBox'
 
 import { ListUsersQuery } from '../API'
 import { listUsers } from '../graphql/queries'
 import callGraphQL from '../models/graphql-api'
-import User, { handleDeleteUser } from '../models/user'
-import { HYDRATE_USERS } from '../constants/ActionTypes'
+import User from '../models/user'
+import { siteMetadata } from '../config/constants'
+import { HYDRATE_USERS } from '../config/ActionTypes'
 
 import { AppContext } from '../interfaces'
 
@@ -33,7 +34,9 @@ export default function App({
   users,
   context: { state, dispatch }
 }: Props): ReactElement {
+  const [searchTerm, setSearchTerm] = useState('')
   const router = useRouter()
+  const { title: appTitle } = siteMetadata
 
   // Populate users upon retrieval from server
   useEffect(() => {
@@ -42,6 +45,9 @@ export default function App({
 
   // TODO: implement loading state by checking incoming 'users'
 
+  const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>): void =>
+    setSearchTerm(event.target.value)
+
   return (
     <div className={styles.container}>
       <Modal
@@ -49,52 +55,36 @@ export default function App({
         onRequestClose={(): Promise<boolean> => router.push('/')}
         contentLabel="User modal"
       >
-        <UserCard
+        <UserForm
+          user={state.users.find(u => router.query.userId === u.id)}
           dispatch={dispatch}
-          data={state.users.find(u => router.query.userId === u.id)}
+          action="update"
         />
       </Modal>
 
       <Head>
-        <title>Users list app</title>
+        <title>{appTitle} app</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Users list</h1>
+        <div className={styles.header}>
+          <h1 className={styles.title}>{appTitle}</h1>
 
-        <p className={styles.description}>
-          <code className={styles.code}>{state.users.length}</code>
-          users
-        </p>
+          <SearchBox
+            value={searchTerm}
+            onSearchTermChange={handleSearchTermChange}
+          />
+        </div>
 
-        <div className={styles.grid}>
-          {state.users.map(user => (
-            <div className={styles.card} key={user.id}>
-              <Link as={`/users/${user.id}`} href={`/?userId=${user.id}`}>
-                <h3>{user.name}</h3>
-              </Link>
-              <p>{user.description}</p>
-              <button
-                type="button"
-                onClick={(): Promise<void> =>
-                  handleDeleteUser(dispatch, user.id)
-                }
-              >
-                delete user
-              </button>
-            </div>
-          ))}
+        <UserGrid users={state.users} dispatch={dispatch} />
 
-          <div className={styles.card}>
-            <h3 className={styles.title}>New User</h3>
+        <div className={styles.card}>
+          <h3 className={styles.title}>New User</h3>
 
-            <UserForm dispatch={dispatch} action="create" />
-          </div>
+          <UserForm dispatch={dispatch} action="create" />
         </div>
       </main>
-
-      <footer className={styles.footer}>Users list © 2021</footer>
     </div>
   )
 }

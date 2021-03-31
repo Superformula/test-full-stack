@@ -5,7 +5,7 @@ import {
   CREATE_USER,
   UPDATE_USER,
   DELETE_USER
-} from '../constants/ActionTypes'
+} from '../config/ActionTypes'
 import User, { State } from '../models/user'
 
 export type ActionType =
@@ -18,3 +18,5 @@ export interface AppContext {
   state: State;
   dispatch: Dispatch<ActionType>;
 }
+
+export type HTMLElementType = 'input' | 'textarea'

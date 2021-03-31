@@ -1,0 +1,16 @@
+@value theme: "../theme.css";
+
+@value shadowColor from theme;
+
+.searchInput {
+  width: 240px;
+  height: 45px;
+}
+
+.searchInput::placeholder {
+  font-size: 15px;
+}
+
+.searchInput:focus {
+  outline: shadowColor;
+}
