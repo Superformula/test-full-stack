@@ -9,8 +9,9 @@ import {
 import SearchBox from '../generic/SearchBox'
 
 import { handleSearchUsers } from '../../models/user'
-import { ActionType } from '../../interfaces'
 import { useDebouncedFunction } from '../../hooks/useDebouncedFunction'
+
+import { ActionType } from '../../interfaces'
 
 interface Props {
   dispatch: Dispatch<ActionType>;
