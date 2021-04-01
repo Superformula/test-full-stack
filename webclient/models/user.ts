@@ -158,7 +158,7 @@ const reducer: Reducer<State, ActionType> = (state, action) =>
     switch (action.type) {
       case HYDRATE_USERS:
       case SEARCH_USERS:
-        draftState.users = action.payload
+        draftState.users = action.payload || []
         break
 
       case CREATE_USER:

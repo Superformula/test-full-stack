@@ -6,6 +6,7 @@ import Modal from 'react-modal'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import Loader from '../components/generic/Loader'
 import Button from '../components/generic/Button'
 import LinkFunctionalChildWrapper from '../components/generic/LinkFunctionalChildWrapper'
 import UserGrid from '../components/User/UserGrid'
@@ -44,18 +45,23 @@ export default function App({
   const { title: appTitle } = siteMetadata
   const pageQueryParam = parsePageQueryParam(router.query)
   const redirectPath = pageQueryParam ? `/?page=${pageQueryParam}` : '/'
-  const hasMoreUsers = Boolean(nextToken)
+  const hasMoreUsers = users && Boolean(nextToken)
 
   // Populate users upon retrieval from server
   useEffect(() => {
     dispatch({ type: HYDRATE_USERS, payload: users })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // TODO: implement loading state by checking incoming users
-
   const loadMoreUsers = async (): Promise<void> => {
     await handleLoadMoreUsers(dispatch, nextToken)
     scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+  }
+
+  const isLoadingUsers =
+    users && (users.length === 0 || state.users.length === 0)
+
+  if (isLoadingUsers) {
+    return <Loader />
   }
 
   return (
