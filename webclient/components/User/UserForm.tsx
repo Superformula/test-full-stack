@@ -8,12 +8,14 @@ import {
   MouseEventHandler,
   ChangeEventHandler
 } from 'react'
+import { useRouter } from 'next/router'
 
 import Form from '../generic/Form'
 import InputField from '../generic/InputField'
 import Button from '../generic/Button'
 
 import User, { handleCreateUser, handleUpdateUser } from '../../models/user'
+import { parsePageQueryParam } from '../../utils/helpers'
 
 import { ActionType } from '../../interfaces'
 
@@ -26,13 +28,11 @@ interface Props {
   user?: User;
 }
 
-export default function UserForm({
-  dispatch,
-  user
-}: Props): ReactElement {
+export default function UserForm({ dispatch, user }: Props): ReactElement {
   const isUpdateMode = Boolean(user)
   const [userDetails, setUserDetails] = useState(user)
   const [isDirty, setIsDirty] = useState(false)
+  const router = useRouter()
 
   const { name, address, description } = userDetails || {}
 
@@ -46,7 +46,10 @@ export default function UserForm({
 
   const handleUserSubmit: FormEventHandler = (
     event: FormEvent<HTMLFormElement>
-  ) => handleCreateUser(dispatch, event)
+  ) => {
+    const pageQueryParam = parsePageQueryParam(router.query)
+    return handleCreateUser(dispatch, event, pageQueryParam)
+  }
 
   const handleUserUpdate: MouseEventHandler = () => {
     const data: UserEdit = {
@@ -58,14 +61,13 @@ export default function UserForm({
     return handleUpdateUser(dispatch, data)
   }
 
-  const ActionButton: ReactElement =
-    isUpdateMode ? (
-      <Button disabled={!isDirty} type="button" onClick={handleUserUpdate}>
-        Save
-      </Button>
-    ) : (
-      <Button>Create</Button>
-    )
+  const ActionButton: ReactElement = isUpdateMode ? (
+    <Button disabled={!isDirty} type="button" onClick={handleUserUpdate}>
+      Save
+    </Button>
+  ) : (
+    <Button>Create</Button>
+  )
 
   return (
     <Form onSubmit={handleUserSubmit}>

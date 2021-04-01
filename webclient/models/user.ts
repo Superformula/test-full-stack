@@ -7,10 +7,12 @@ import {
   CREATE_USER,
   UPDATE_USER,
   DELETE_USER,
-  SEARCH_USERS
+  SEARCH_USERS,
+  LOAD_MORE_USERS
 } from '../config/ActionTypes'
 import { listUsers } from './../graphql/queries'
 import { createUser, updateUser, deleteUser } from '../graphql/mutations'
+import { DEFAULT_PAGE_SIZE } from '../config/constants'
 
 import {
   ListUsersQuery,
@@ -31,7 +33,8 @@ type User = Omit<GetUserQuery['getUser'], '__typename'>
 
 async function handleCreateUser(
   dispatch: Dispatch<ActionType>,
-  event: BaseSyntheticEvent
+  event: BaseSyntheticEvent,
+  page?: number
 ): Promise<void> {
   event.preventDefault()
 
@@ -48,7 +51,11 @@ async function handleCreateUser(
       input: userData
     } as CreateUserMutationVariables)
 
-    dispatch({ type: CREATE_USER, payload: data.createUser })
+    const payload = {
+      user: data.createUser,
+      page
+    }
+    dispatch({ type: CREATE_USER, payload })
   } catch ({ errors }) {
     console.error('Creating a user failed', ...errors)
   }
@@ -84,14 +91,44 @@ async function handleDeleteUser(
   }
 }
 
+async function handleLoadMoreUsers(
+  dispatch: Dispatch<ActionType>,
+  nextToken?: string
+): Promise<void> {
+  try {
+    const { data } = await callGraphQL<ListUsersQuery>(listUsers, {
+      limit: DEFAULT_PAGE_SIZE,
+      nextToken
+    } as ListUsersQueryVariables)
+
+    const users = data.listUsers.items
+    const hasReachedEndOfList = users.length === 0 && !data.listUsers.nextToken
+
+    // Bail out on running out of items to load
+    if (hasReachedEndOfList) {
+      return
+    }
+
+    dispatch({ type: LOAD_MORE_USERS, payload: users })
+  } catch ({ errors }) {
+    console.error('Loading more users has failed', ...errors)
+  }
+}
+
 async function handleSearchUsers(
   dispatch: Dispatch<ActionType>,
-  searchTerm: string
+  searchTerm: string,
+  isPristine: boolean
 ): Promise<void> {
   const searchFilter: ModelUserFilterInput = {
     name: {
       contains: searchTerm
     }
+  }
+
+  // Prevent network calls unless the search was initiated
+  if (isPristine) {
+    return
   }
 
   try {
@@ -108,6 +145,12 @@ async function handleSearchUsers(
 export type StateUsers = Immutable<User[]>
 export interface State {
   users: StateUsers;
+  nextToken?: string;
+}
+
+function isEligibleToShowMoreUsers(state: State, page = 1): boolean {
+  const expectedNumberOfVisibleUsers = page * DEFAULT_PAGE_SIZE
+  return state.users.length < expectedNumberOfVisibleUsers
 }
 
 const reducer: Reducer<State, ActionType> = (state, action) =>
@@ -119,7 +162,9 @@ const reducer: Reducer<State, ActionType> = (state, action) =>
         break
 
       case CREATE_USER:
-        draftState.users.push(action.payload)
+        if (isEligibleToShowMoreUsers(state, action.payload.page)) {
+          draftState.users.push(action.payload.user)
+        }
         break
 
       case UPDATE_USER: {
@@ -142,6 +187,10 @@ const reducer: Reducer<State, ActionType> = (state, action) =>
         break
       }
 
+      case LOAD_MORE_USERS:
+        draftState.users.push(...action.payload)
+        break
+
       default:
         return state
     }
@@ -153,5 +202,6 @@ export {
   handleUpdateUser,
   handleDeleteUser,
   handleSearchUsers,
+  handleLoadMoreUsers,
   reducer as userReducer
 }

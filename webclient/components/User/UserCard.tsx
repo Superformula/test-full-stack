@@ -1,19 +1,16 @@
-import { ReactElement, ReactNode, forwardRef } from 'react'
+import { ReactElement } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Avatar from '../generic/Avatar'
+import LinkFunctionalChildWrapper from '../generic/LinkFunctionalChildWrapper'
 import EditIcon from '../icons/EditIcon'
 import TrashIcon from '../icons/TrashIcon'
 import User from '../../models/user'
 import { formatDate } from '../../utils/date-helpers'
+import { parsePageQueryParam } from '../../utils/helpers'
 
 import styles from './UserCard.module.css'
-
-interface RefProps {
-  children: ReactNode;
-  onClick?: () => void;
-  href?: string;
-}
 
 interface Props {
   user: User;
@@ -21,23 +18,22 @@ interface Props {
 }
 
 export default function UserCard({ user, onUserDelete }: Props): ReactElement {
-  const LinkChildWrapper = forwardRef<HTMLAnchorElement, RefProps>(function LinkChildWrapper({ children, onClick, href }: { children: ReactNode, onClick: () => void, href: string }, ref) {
-    return (
-      <a href={href} onClick={onClick} ref={ref}>
-        {children}
-      </a>
-    )
-  })
+  const router = useRouter()
+  const pageQueryParam = parsePageQueryParam(router.query)
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.actionButtonsWrapper}>
         <span className={styles.actionButton} title="Edit User">
-          {/* Ref: https://nextjs.org/docs/api-reference/next/link#if-the-child-is-a-function-component */}
-          <Link as={`/users/${user.id}`} href={`/?userId=${user.id}`} passHref>
-            <LinkChildWrapper>
+          <Link
+            as={`/users/${user.id}?page=${pageQueryParam}`}
+            href={`/?userId=${user.id}&page=${pageQueryParam}`}
+            passHref
+            scroll={false}
+          >
+            <LinkFunctionalChildWrapper>
               <EditIcon />
-            </LinkChildWrapper>
+            </LinkFunctionalChildWrapper>
           </Link>
         </span>
         <span
@@ -55,9 +51,7 @@ export default function UserCard({ user, onUserDelete }: Props): ReactElement {
       />
       <div className={styles.body}>
         <div className={styles.header}>
-          <h3 className={styles.heading}>
-            {user.name}
-          </h3>
+          <h3 className={styles.heading}>{user.name}</h3>
           <span className={styles.meta}>
             created{' '}
             <span className={styles.date}>{formatDate(user.createdAt)}</span>

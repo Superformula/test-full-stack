@@ -5,12 +5,19 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Modal from 'react-modal'
 
-import UserForm from '../../components/Users/UserForm'
+import UserForm from '../../components/User/UserForm'
 
 import callGraphQL from '../../models/graphql-api'
-import { GetUserQuery, GetUserQueryVariables, ListUsersQuery } from '../../API'
+import {
+  GetUserQuery,
+  GetUserQueryVariables,
+  ListUsersQuery,
+  ListUsersQueryVariables
+} from '../../API'
 import { getUser, listUsers } from '../../graphql/queries'
 import User from '../../models/user'
+import { DEFAULT_PAGE_SIZE } from '../../config/constants'
+import { parsePageQueryParam } from '../../utils/helpers'
 
 import { AppContext } from '../../interfaces'
 
@@ -26,6 +33,8 @@ Modal.setAppElement('#__next')
 
 const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
   const router = useRouter()
+  const pageQueryParam = parsePageQueryParam(router.query)
+  const redirectPath = pageQueryParam ? `/?page=${pageQueryParam}` : '/'
 
   useEffect(() => {
     router.prefetch('/')
@@ -49,16 +58,11 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
       <main className={styles.main}>
         <Modal
           isOpen={true} // The modal should always be shown on page load
-          onRequestClose={(): Promise<boolean> => router.push('/')}
+          onRequestClose={(): Promise<boolean> => router.push(redirectPath)}
           contentLabel="User modal"
         >
           <UserForm user={user} dispatch={dispatch} />
         </Modal>
-        <h1 className={styles.title}>{user.name}</h1>
-
-        <pre className={styles.description}>
-          {JSON.stringify(user, null, 2)}
-        </pre>
       </main>
     </div>
   )
@@ -76,7 +80,9 @@ export const getStaticPaths: GetStaticPaths = () => {
     let result: GraphQLResult<ListUsersQuery>
 
     try {
-      result = await callGraphQL<ListUsersQuery>(listUsers)
+      result = await callGraphQL<ListUsersQuery>(listUsers, {
+        limit: DEFAULT_PAGE_SIZE
+      } as ListUsersQueryVariables)
     } catch ({ errors }) {
       console.error(errors)
     }

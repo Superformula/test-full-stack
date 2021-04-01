@@ -1,19 +1,23 @@
 import { useEffect, ReactElement } from 'react'
 import Head from 'next/head'
 import { GraphQLResult } from '@aws-amplify/api'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Modal from 'react-modal'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-import UserGrid from '../components/Users/UserGrid'
-import UserForm from '../components/Users/UserForm'
-import UserSearch from '../components/Users/UserSearch'
+import Button from '../components/generic/Button'
+import LinkFunctionalChildWrapper from '../components/generic/LinkFunctionalChildWrapper'
+import UserGrid from '../components/User/UserGrid'
+import UserForm from '../components/User/UserForm'
+import UserSearch from '../components/User/UserSearch'
 
-import { ListUsersQuery } from '../API'
+import { ListUsersQuery, ListUsersQueryVariables } from '../API'
 import { listUsers } from '../graphql/queries'
 import callGraphQL from '../models/graphql-api'
-import User from '../models/user'
-import { siteMetadata } from '../config/constants'
+import User, { handleLoadMoreUsers } from '../models/user'
+import { siteMetadata, DEFAULT_PAGE_SIZE } from '../config/constants'
+import { parsePageQueryParam } from '../utils/helpers'
 import { HYDRATE_USERS } from '../config/ActionTypes'
 
 import { AppContext } from '../interfaces'
@@ -23,6 +27,7 @@ import styles from '../styles/Home.module.css'
 interface Props {
   users: User[];
   context: AppContext;
+  nextToken?: string;
 }
 
 type ListUsersType = ListUsersQuery['listUsers']['items']
@@ -32,27 +37,36 @@ Modal.setAppElement('#__next')
 
 export default function App({
   users,
-  context: { state, dispatch }
+  context: { state, dispatch },
+  nextToken
 }: Props): ReactElement {
   const router = useRouter()
   const { title: appTitle } = siteMetadata
+  const pageQueryParam = parsePageQueryParam(router.query)
+  const redirectPath = pageQueryParam ? `/?page=${pageQueryParam}` : '/'
+  const hasMoreUsers = Boolean(nextToken)
 
   // Populate users upon retrieval from server
   useEffect(() => {
     dispatch({ type: HYDRATE_USERS, payload: users })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // TODO: implement loading state by checking incoming 'users'
+  // TODO: implement loading state by checking incoming users
+
+  const loadMoreUsers = async (): Promise<void> => {
+    await handleLoadMoreUsers(dispatch, nextToken)
+    scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+  }
 
   return (
     <div className={styles.container}>
       <Modal
         isOpen={Boolean(router.query.userId)}
-        onRequestClose={(): Promise<boolean> => router.push('/')}
+        onRequestClose={(): Promise<boolean> => router.push(redirectPath)}
         contentLabel="User modal"
       >
         <UserForm
-          user={state.users.find(u => router.query.userId === u.id)}
+          user={state.users.find(user => router.query.userId === user.id)}
           dispatch={dispatch}
         />
       </Modal>
@@ -65,15 +79,24 @@ export default function App({
       <main className={styles.main}>
         <div className={styles.header}>
           <h1 className={styles.title}>{appTitle}</h1>
-
           <UserSearch dispatch={dispatch} />
         </div>
 
         <UserGrid users={state.users} dispatch={dispatch} />
 
+        {hasMoreUsers && (
+          <Link href={`/?page=${pageQueryParam + 1}`} scroll={false}>
+            <LinkFunctionalChildWrapper>
+              <Button type="button" onClick={loadMoreUsers}>
+                Load more
+              </Button>
+            </LinkFunctionalChildWrapper>
+          </Link>
+        )}
+
+        {/* TODO: Find a more suitable UX pattern for a New Form. Most likely, move this over to a modal form. */}
         <div className={styles.card}>
           <h3 className={styles.title}>New User</h3>
-
           <UserForm dispatch={dispatch} />
         </div>
       </main>
@@ -81,14 +104,17 @@ export default function App({
   )
 }
 
-export const getStaticProps: GetStaticProps = () => {
+export const getServerSideProps: GetServerSideProps = ({ query }) => {
   async function fetchUsers(): Promise<{
-    props: { users: ListUsersType };
+    props: { users: ListUsersType, nextToken?: string };
   }> {
     let result: GraphQLResult<ListUsersQuery>
+    const pageQueryParam = parsePageQueryParam(query)
 
     try {
-      result = await callGraphQL<ListUsersQuery>(listUsers)
+      result = await callGraphQL<ListUsersQuery>(listUsers, {
+        limit: DEFAULT_PAGE_SIZE * pageQueryParam
+      } as ListUsersQueryVariables)
     } catch ({ errors }) {
       console.error(errors)
     }
@@ -104,7 +130,8 @@ export const getStaticProps: GetStaticProps = () => {
 
     return {
       props: {
-        users: result.data.listUsers.items
+        users: result.data.listUsers.items,
+        nextToken: result.data.listUsers.nextToken
       }
     }
   }

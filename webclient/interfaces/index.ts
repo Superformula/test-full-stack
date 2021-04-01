@@ -5,16 +5,18 @@ import {
   CREATE_USER,
   UPDATE_USER,
   DELETE_USER,
-  SEARCH_USERS
+  SEARCH_USERS,
+  LOAD_MORE_USERS
 } from '../config/ActionTypes'
 import User, { State } from '../models/user'
 
 export type ActionType =
   | { type: typeof HYDRATE_USERS, payload: User[] }
-  | { type: typeof CREATE_USER, payload: User }
+  | { type: typeof CREATE_USER, payload: { user: User, page?: number } }
   | { type: typeof UPDATE_USER, payload: User }
   | { type: typeof DELETE_USER, payload: string }
   | { type: typeof SEARCH_USERS, payload: User[] }
+  | { type: typeof LOAD_MORE_USERS, payload: User[] }
 
 export interface AppContext {
   state: State;

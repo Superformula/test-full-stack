@@ -19,9 +19,10 @@ interface Props {
 
 export default function UserSearch({ dispatch }: Props): ReactElement {
   const [searchTerm, setSearchTerm] = useState('')
+  const [isPristine, setIsPristine] = useState(true)
 
   const memoizedSearchHandler = useCallback(
-    () => handleSearchUsers(dispatch, searchTerm),
+    () => handleSearchUsers(dispatch, searchTerm, isPristine),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchTerm]
   )
@@ -32,6 +33,7 @@ export default function UserSearch({ dispatch }: Props): ReactElement {
     event: ChangeEvent<HTMLInputElement>
   ): void => {
     setSearchTerm(event.target.value)
+    setIsPristine(false)
   }
 
   return (
