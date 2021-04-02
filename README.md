@@ -29,24 +29,26 @@ Build a GraphQL API that can `create/read/update` user data from a persistence s
 
 ### Basic Requirements
 
-  - Use **AWS AppSync (preferred)** or AWS Lambda + API Gateway approach
-  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
-  - Write concise and clear commit messages
-  - Write clear **documentation** on how it has been designed and how to run the code
-  - Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
+- Use **AWS AppSync (preferred)** or AWS Lambda + API Gateway approach
+- Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
+- Write concise and clear commit messages
+- Write clear **documentation** on how it has been designed and how to run the code
+- Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
 
 ### Bonus (in order)
-  1. Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
-  1. Provide proper unit tests
-  1. Providing an online demo is welcomed, but not required
-  1. Delete user functionality
-  1. Bundle npm modules into your Lambdas
+
+1. Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
+1. Provide proper unit tests
+1. Providing an online demo is welcomed, but not required
+1. Delete user functionality
+1. Bundle npm modules into your Lambdas
 
 ### Advanced Requirements
 
 These may be used for further challenges. You can freely skip these; feel free to try out if you feel up to it.
-  - Describe your strategy for Lambda error handling, retries, and DLQs
-  - Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
+
+- Describe your strategy for Lambda error handling, retries, and DLQs
+- Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
 
 ## UI context
 
@@ -105,6 +107,7 @@ Here's what you should strive for:
 - Extensible code.
 
 ## Q&A
+
 > Where should I send back the result when I'm done?
 
 Fork this repo and send us a pull request when you think you are done. There is no deadline for this task unless otherwise noted to you directly.
@@ -120,6 +123,7 @@ Please assume a hard requirement has not been set by the product owner. We welco
 > What is the location format?
 
 Examples:
+
 - Seattle, Washington
 - Digital Nomad
 - New Jersey

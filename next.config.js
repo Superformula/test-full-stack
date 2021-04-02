@@ -1,4 +1,5 @@
 module.exports = {
   reactStrictMode: true,
-  poweredByHeader: false
+  poweredByHeader: false,
+  distDir: 'build'
 }

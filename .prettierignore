@@ -1,5 +1,7 @@
 node_modules
 .next
+build
+amplify
 package.json
 package-lock.json
 yarn.lock

@@ -1,7 +1,7 @@
 import { useReducer, ReactNode } from 'react'
 import { AppProps } from 'next/app'
 
-import { AmplifyProvider } from '../amplify/AmplifyProvider'
+import { AmplifyProvider } from '../components/AmplifyProvider'
 import { userReducer } from '../models/user'
 
 import { AppContext } from '../interfaces'
