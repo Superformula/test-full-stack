@@ -1,7 +1,8 @@
-build
-amplify
-.next
-public
-**/node_modules/**
+build/**
+amplify/**
+out/**
+.next/**
+public/**
+node_modules/**
 graphql/**
 API.ts
