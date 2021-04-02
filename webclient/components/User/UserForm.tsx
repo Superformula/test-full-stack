@@ -52,8 +52,6 @@ export default function UserForm({
 
   const handleUserSubmit: FormEventHandler = (event: BaseSyntheticEvent) => {
     event.preventDefault()
-    event.target.reset()
-    console.log('event.target', event.target)
 
     const form = new FormData(event.target)
     const userData = {

@@ -3,8 +3,8 @@ import { useEffect, ReactElement } from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Modal from 'react-modal'
 
+import Modal from '../../components/generic/Modal'
 import UserForm from '../../components/User/UserForm'
 
 import callGraphQL from '../../models/graphql-api'
@@ -15,9 +15,10 @@ import {
   ListUsersQueryVariables
 } from '../../API'
 import { getUser, listUsers } from '../../graphql/queries'
-import User from '../../models/user'
+import User, { handleUpdateUser, UserEdit } from '../../models/user'
 import { DEFAULT_PAGE_SIZE } from '../../config/constants'
 import { parsePageQueryParam } from '../../utils/helpers'
+import { useModal } from '../../hooks/useModal'
 
 import { AppContext } from '../../interfaces'
 
@@ -28,11 +29,9 @@ interface Props {
   context: AppContext;
 }
 
-// TODO: rework modal with custom solution
-Modal.setAppElement('#__next')
-
 const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
   const router = useRouter()
+  const { toggleModal } = useModal()
   const pageQueryParam = parsePageQueryParam(router.query)
   const redirectPath = pageQueryParam ? `/?page=${pageQueryParam}` : '/'
 
@@ -48,6 +47,16 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
     )
   }
 
+  const toggleModuleWithRouteHandler = async (): Promise<void> => {
+    await router.push(redirectPath)
+    toggleModal()
+  }
+
+  const onUpdateUser = (data: UserEdit): void => {
+    toggleModuleWithRouteHandler()
+    handleUpdateUser(dispatch, data)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -58,10 +67,15 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
       <main className={styles.main}>
         <Modal
           isOpen={true} // The modal should always be shown on page load
-          onRequestClose={(): Promise<boolean> => router.push(redirectPath)}
-          contentLabel="User modal"
+          onHide={toggleModuleWithRouteHandler}
+          title="Edit user"
         >
-          <UserForm user={user} dispatch={dispatch} />
+          <UserForm
+            user={user}
+            action="update"
+            onUpdateUser={onUpdateUser}
+            onCancelUpdateUser={toggleModuleWithRouteHandler}
+          />
         </Modal>
       </main>
     </div>
