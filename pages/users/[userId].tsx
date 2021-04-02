@@ -93,9 +93,13 @@ export const getStaticPaths: GetStaticPaths = () => {
     const { API } = withSSRContext()
 
     try {
-      result = await callGraphQL<ListUsersQuery>(listUsers, {
-        limit: DEFAULT_PAGE_SIZE
-      } as ListUsersQueryVariables, API)
+      result = await callGraphQL<ListUsersQuery>(
+        listUsers,
+        {
+          limit: DEFAULT_PAGE_SIZE
+        } as ListUsersQueryVariables,
+        API
+      )
     } catch ({ errors }) {
       console.error(errors)
     }
@@ -133,9 +137,13 @@ export const getStaticProps: GetStaticProps = ({ params: { userId } }) => {
     const { API } = withSSRContext()
 
     try {
-      result = await callGraphQL<GetUserQuery>(getUser, {
-        id: userId
-      } as GetUserQueryVariables, API)
+      result = await callGraphQL<GetUserQuery>(
+        getUser,
+        {
+          id: userId
+        } as GetUserQueryVariables,
+        API
+      )
     } catch ({ errors }) {
       console.error(errors)
     }

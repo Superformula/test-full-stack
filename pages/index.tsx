@@ -185,9 +185,13 @@ export const getServerSideProps: GetServerSideProps = ({ req, query }) => {
     const { API } = withSSRContext({ req })
 
     try {
-      result = await callGraphQL<ListUsersQuery>(listUsers, {
-        limit: DEFAULT_PAGE_SIZE * pageQueryParam
-      } as ListUsersQueryVariables, API)
+      result = await callGraphQL<ListUsersQuery>(
+        listUsers,
+        {
+          limit: DEFAULT_PAGE_SIZE * pageQueryParam
+        } as ListUsersQueryVariables,
+        API
+      )
     } catch ({ errors }) {
       console.error(errors)
     }

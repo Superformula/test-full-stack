@@ -4,6 +4,8 @@ build
 amplify
 package.json
 package-lock.json
+/.serverless/
+/.serverless_nextjs/
 yarn.lock
 public
 graphql
