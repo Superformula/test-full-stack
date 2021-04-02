@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import Modal from '../../components/generic/Modal'
+import Loader from '../../components/generic/Loader'
 import UserForm from '../../components/User/UserForm'
 
 import callGraphQL from '../../models/graphql-api'
@@ -40,11 +41,7 @@ const UserPage = ({ user, context: { dispatch } }: Props): ReactElement => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (router.isFallback) {
-    return (
-      <div className={styles.container}>
-        <h1 className={styles.title}>Loading user&hellip;</h1>
-      </div>
-    )
+    return <Loader />
   }
 
   const toggleModuleWithRouteHandler = async (): Promise<void> => {
