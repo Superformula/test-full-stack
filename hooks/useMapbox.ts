@@ -2,7 +2,13 @@ import { useRef, useEffect, MutableRefObject } from 'react'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 import { LngLatBoundsLike, LngLatLike } from 'mapbox-gl'
 
-const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_ACCESS_TOKEN
+// NOTE: I'd never expose secret keys in production. The reason I went with
+// this approach here is because the serverless deployment approach I ended up
+// gave me some headache with exposing env vars. In a better scenario I'd probably go with parameter store, with environment variables
+// exposed by AWS Amplify. But, as I said before, AWS Amplify doesn't
+// support SSR apps yet. It's work in progress. So I use what I can.
+// TODO: Rework env vars approach before shipping to production!
+const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_ACCESS_TOKEN || 'pk.eyJ1Ijoibmlja3NwMjAyMSIsImEiOiJja216dWgyaGgwMW5qMnJsOHlucHp4aXZjIn0.XGSWNUwwZ38lvgCk3tgC9Q'
 const mapboxAPIBaseURI = 'https://api.mapbox.com/geocoding/v5'
 
 interface FeaturesProps {

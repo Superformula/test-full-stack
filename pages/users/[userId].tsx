@@ -1,3 +1,4 @@
+import { withSSRContext } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
 import { useEffect, ReactElement } from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
@@ -89,11 +90,12 @@ export const getStaticPaths: GetStaticPaths = () => {
     fallback: boolean;
   }> {
     let result: GraphQLResult<ListUsersQuery>
+    const { API } = withSSRContext()
 
     try {
       result = await callGraphQL<ListUsersQuery>(listUsers, {
         limit: DEFAULT_PAGE_SIZE
-      } as ListUsersQueryVariables)
+      } as ListUsersQueryVariables, API)
     } catch ({ errors }) {
       console.error(errors)
     }
@@ -128,11 +130,12 @@ export const getStaticProps: GetStaticProps = ({ params: { userId } }) => {
     };
   }> {
     let result: GraphQLResult<GetUserQuery>
+    const { API } = withSSRContext()
 
     try {
       result = await callGraphQL<GetUserQuery>(getUser, {
         id: userId
-      } as GetUserQueryVariables)
+      } as GetUserQueryVariables, API)
     } catch ({ errors }) {
       console.error(errors)
     }

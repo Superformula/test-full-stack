@@ -1,5 +1,6 @@
 import { useEffect, ReactElement } from 'react'
 import Head from 'next/head'
+import { withSSRContext } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -175,17 +176,18 @@ export default function App({
  * without Next.js doing any pre-rendering. For that, I'll need to run some
  * metrics and measure performance before ding things prematurely.
  */
-export const getServerSideProps: GetServerSideProps = ({ query }) => {
+export const getServerSideProps: GetServerSideProps = ({ req, query }) => {
   async function fetchUsers(): Promise<{
     props: { users: ListUsersType, nextToken?: string };
   }> {
     let result: GraphQLResult<ListUsersQuery>
     const pageQueryParam = parsePageQueryParam(query)
+    const { API } = withSSRContext({ req })
 
     try {
       result = await callGraphQL<ListUsersQuery>(listUsers, {
         limit: DEFAULT_PAGE_SIZE * pageQueryParam
-      } as ListUsersQueryVariables)
+      } as ListUsersQueryVariables, API)
     } catch ({ errors }) {
       console.error(errors)
     }

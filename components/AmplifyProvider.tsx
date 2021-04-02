@@ -3,7 +3,7 @@ import Amplify from 'aws-amplify'
 
 import awsConfig from '../aws-exports'
 
-Amplify.configure({ ...awsConfig })
+Amplify.configure({ ...awsConfig, ssr: true })
 
 interface Props {
   children: ReactElement;
