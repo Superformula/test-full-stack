@@ -1,0 +1,14 @@
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 440px) {
+  .actionButtons {
+    flex-direction: column;
+  }
+}
+
+.actionButtons button {
+  margin-left: 12px;
+}

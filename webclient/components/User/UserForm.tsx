@@ -1,38 +1,44 @@
 import {
   useState,
-  Dispatch,
   ReactElement,
   ChangeEvent,
-  FormEvent,
+  BaseSyntheticEvent,
   FormEventHandler,
   MouseEventHandler,
   ChangeEventHandler
 } from 'react'
-import { useRouter } from 'next/router'
 
 import Form from '../generic/Form'
 import InputField from '../generic/InputField'
 import Button from '../generic/Button'
 
-import User, { handleCreateUser, handleUpdateUser } from '../../models/user'
-import { parsePageQueryParam } from '../../utils/helpers'
+import User, {
+  UserEdit,
+  UserCreate,
+  UserEditableFields
+} from '../../models/user'
 
-import { ActionType } from '../../interfaces'
-
-type UserEditableParams = 'id' | 'name' | 'address' | 'description'
-type UserEdit = Pick<User, UserEditableParams>
-type UserEditableFields = keyof Omit<UserEdit, 'id'>
+import styles from './UserForm.module.css'
 
 interface Props {
-  dispatch: Dispatch<ActionType>;
   user?: User;
+  action?: 'create' | 'update';
+  onCancelUpdateUser?: () => void;
+  onUpdateUser?: (data: UserEdit) => void;
+  onCreateUser?: (data: UserCreate) => void;
 }
 
-export default function UserForm({ dispatch, user }: Props): ReactElement {
-  const isUpdateMode = Boolean(user)
+export default function UserForm({
+  user,
+  action = 'create',
+  onCancelUpdateUser,
+  onUpdateUser,
+  onCreateUser
+}: Props): ReactElement {
+  const isUpdateMode = action === 'update'
+
   const [userDetails, setUserDetails] = useState(user)
   const [isDirty, setIsDirty] = useState(false)
-  const router = useRouter()
 
   const { name, address, description } = userDetails || {}
 
@@ -44,11 +50,19 @@ export default function UserForm({ dispatch, user }: Props): ReactElement {
     return
   }
 
-  const handleUserSubmit: FormEventHandler = (
-    event: FormEvent<HTMLFormElement>
-  ) => {
-    const pageQueryParam = parsePageQueryParam(router.query)
-    return handleCreateUser(dispatch, event, pageQueryParam)
+  const handleUserSubmit: FormEventHandler = (event: BaseSyntheticEvent) => {
+    event.preventDefault()
+    event.target.reset()
+    console.log('event.target', event.target)
+
+    const form = new FormData(event.target)
+    const userData = {
+      name: form.get('name'),
+      description: form.get('description'),
+      address: form.get('address')
+    } as UserCreate
+
+    return onCreateUser(userData)
   }
 
   const handleUserUpdate: MouseEventHandler = () => {
@@ -58,7 +72,7 @@ export default function UserForm({ dispatch, user }: Props): ReactElement {
       address,
       description
     }
-    return handleUpdateUser(dispatch, data)
+    return onUpdateUser(data)
   }
 
   const ActionButton: ReactElement = isUpdateMode ? (
@@ -103,7 +117,14 @@ export default function UserForm({ dispatch, user }: Props): ReactElement {
         rows={3}
       />
 
-      {ActionButton}
+      <div className={styles.actionButtons}>
+        {ActionButton}
+        {isUpdateMode && (
+          <Button type="button" onClick={onCancelUpdateUser}>
+            Cancel
+          </Button>
+        )}
+      </div>
     </Form>
   )
 }

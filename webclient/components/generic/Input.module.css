@@ -5,7 +5,7 @@
 @value borderRadius from theme;
 
 .textbox {
-  width: 98%;
+  width: 100%;
   min-height: 40px;
   background: baseBackground;
   border: 1px solid shadowColor;

@@ -1,4 +1,4 @@
-import { Reducer, Dispatch, BaseSyntheticEvent } from 'react'
+import { Reducer, Dispatch } from 'react'
 import { Immutable, produce } from 'immer'
 
 import callGraphQL from '../models/graphql-api'
@@ -31,21 +31,16 @@ import { ActionType } from '../interfaces'
 // Model type
 type User = Omit<GetUserQuery['getUser'], '__typename'>
 
+type UserEditableParams = 'id' | 'name' | 'address' | 'description'
+export type UserEdit = Pick<User, UserEditableParams>
+export type UserCreate = Omit<UserEdit, 'id'>
+export type UserEditableFields = keyof UserCreate
+
 async function handleCreateUser(
   dispatch: Dispatch<ActionType>,
-  event: BaseSyntheticEvent,
+  userData: UserCreate,
   page?: number
 ): Promise<void> {
-  event.preventDefault()
-
-  const form = new FormData(event.target)
-
-  const userData = {
-    name: form.get('name'),
-    description: form.get('description'),
-    address: form.get('address')
-  }
-
   try {
     const { data } = await callGraphQL<CreateUserMutation>(createUser, {
       input: userData

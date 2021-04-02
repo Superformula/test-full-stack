@@ -1,4 +1,4 @@
-import React, { ReactElement, InputHTMLAttributes } from 'react'
+import { ReactElement, InputHTMLAttributes } from 'react'
 
 import Input from './Input'
 
