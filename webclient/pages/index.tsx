@@ -139,6 +139,18 @@ export default function App({
   )
 }
 
+/**
+ * I use `getServerSideProps` because I need to statically pre-render the page
+ * whose data must be fetched at request time depending on the URL query param.
+ * That is, to support collection data pagination via the `?page` query param/
+ * CAUTION: This isn't the most efficient variant as page transitions
+ * (which happen in the app when operating the modal), result in
+ * `getServerSideProps` running each time a transition happen.
+ * With more time at hand, I'd reconsider the loading logic, and likely would
+ * use the hybrid approach where I fetch paginated users data on client-side
+ * without Next.js doing any pre-rendering. For that, I'll need to run some
+ * metrics and measure performance before ding things prematurely.
+ */
 export const getServerSideProps: GetServerSideProps = ({ query }) => {
   async function fetchUsers(): Promise<{
     props: { users: ListUsersType, nextToken?: string };
