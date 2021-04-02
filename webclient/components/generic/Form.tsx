@@ -6,6 +6,14 @@ interface Props {
   className?: string;
 }
 
-export default function Form({ onSubmit, children, className }: Props): ReactElement {
-  return <form onSubmit={onSubmit} className={className}>{children}</form>
+export default function Form({
+  onSubmit,
+  children,
+  className
+}: Props): ReactElement {
+  return (
+    <form onSubmit={onSubmit} className={className}>
+      {children}
+    </form>
+  )
 }

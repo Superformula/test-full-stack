@@ -46,13 +46,20 @@ export default function App({
   nextToken
 }: Props): ReactElement {
   const router = useRouter()
-  const { isOpen: isEditUserModalOpen, toggleModal: toggleEditUserModal } = useModal()
-  const { isOpen: isNewUserModalOpen, toggleModal: toggleNewUserModal } = useModal()
+  const {
+    isOpen: isEditUserModalOpen,
+    toggleModal: toggleEditUserModal
+  } = useModal()
+  const {
+    isOpen: isNewUserModalOpen,
+    toggleModal: toggleNewUserModal
+  } = useModal()
   const { title: appTitle } = siteMetadata
   const pageQueryParam = parsePageQueryParam(router.query)
   const redirectPath = pageQueryParam ? `/?page=${pageQueryParam}` : '/'
   const hasMoreUsers = users && Boolean(nextToken)
-  const shouldOpenEditUserModal = isEditUserModalOpen && Boolean(router.query.userId)
+  const shouldOpenEditUserModal =
+    isEditUserModalOpen && Boolean(router.query.userId)
 
   // Populate users upon retrieval from server
   useEffect(() => {
@@ -115,13 +122,19 @@ export default function App({
       <Head>
         <title>{appTitle} app</title>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
 
       <main className={styles.main}>
         <div className={styles.header}>
           <h1 className={styles.title}>{appTitle}</h1>
           <div className={styles.newUserButtonWrapper}>
-            <Button type="button" onClick={toggleNewUserModal}>New User</Button>
+            <Button type="button" onClick={toggleNewUserModal}>
+              New User
+            </Button>
           </div>
           <UserSearch dispatch={dispatch} />
         </div>
@@ -143,9 +156,7 @@ export default function App({
           onHide={toggleNewUserModalWithRouteHandler}
           title="New user"
         >
-          <UserForm
-            onCreateUser={onCreateUser}
-          />
+          <UserForm onCreateUser={onCreateUser} />
         </Modal>
       </main>
     </div>

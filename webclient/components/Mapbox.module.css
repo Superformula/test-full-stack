@@ -1,0 +1,19 @@
+@value theme: "./theme.css";
+
+@value mapBackground from theme;
+@value borderRadius from theme;
+
+.map {
+  border-radius: borderRadius;
+  background-color: mapBackground;
+  float: left;
+  width: 30%;
+  height: 295px;
+  overflow: hidden;
+  position: relative;
+  top: 2rem;
+}
+
+.map canvas:focus {
+  outline: none;
+}

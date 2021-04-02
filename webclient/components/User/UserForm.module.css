@@ -12,3 +12,8 @@
 .actionButtons button {
   margin-left: 12px;
 }
+
+.form {
+  float: right;
+  width: 66%;
+}
