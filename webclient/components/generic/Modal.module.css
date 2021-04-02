@@ -86,10 +86,8 @@
 }
 
 .content {
-  display: flex;
   padding: 10px;
   max-height: 30rem;
   overflow-x: hidden;
   overflow-y: auto;
-  justify-content: space-between;
 }

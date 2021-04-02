@@ -28,6 +28,16 @@
   }
 }
 
+.newUserButtonWrapper > * {
+  margin: 0
+}
+
+.newUserButtonWrapper button {
+  font-size: 12px;
+  line-height: 1.5;
+  height: 45px;
+}
+
 .title {
   margin: 0;
   line-height: 1.15;

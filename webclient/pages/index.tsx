@@ -46,12 +46,13 @@ export default function App({
   nextToken
 }: Props): ReactElement {
   const router = useRouter()
-  const { isOpen, toggleModal } = useModal()
+  const { isOpen: isEditUserModalOpen, toggleModal: toggleEditUserModal } = useModal()
+  const { isOpen: isNewUserModalOpen, toggleModal: toggleNewUserModal } = useModal()
   const { title: appTitle } = siteMetadata
   const pageQueryParam = parsePageQueryParam(router.query)
   const redirectPath = pageQueryParam ? `/?page=${pageQueryParam}` : '/'
   const hasMoreUsers = users && Boolean(nextToken)
-  const shouldOpenModal = isOpen && Boolean(router.query.userId)
+  const shouldOpenEditUserModal = isEditUserModalOpen && Boolean(router.query.userId)
 
   // Populate users upon retrieval from server
   useEffect(() => {
@@ -60,7 +61,7 @@ export default function App({
 
   useEffect(() => {
     if (router.query.userId) {
-      toggleModal()
+      toggleEditUserModal()
     }
   }, [router.query.userId]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -76,33 +77,38 @@ export default function App({
     return <Loader />
   }
 
-  const toggleModuleWithRouteHandler = async (): Promise<void> => {
+  const toggleEditUserModalWithRouteHandler = async (): Promise<void> => {
     await router.push(redirectPath)
-    toggleModal()
+    toggleEditUserModal()
+  }
+
+  const toggleNewUserModalWithRouteHandler = async (): Promise<void> => {
+    await router.push(redirectPath)
+    toggleNewUserModal()
   }
 
   const onCreateUser = (data: UserCreate): void => {
+    toggleNewUserModalWithRouteHandler()
     handleCreateUser(dispatch, data, pageQueryParam)
-    scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const onUpdateUser = (data: UserEdit): void => {
-    toggleModuleWithRouteHandler()
+    toggleEditUserModalWithRouteHandler()
     handleUpdateUser(dispatch, data)
   }
 
   return (
     <div className={styles.container}>
       <Modal
-        isOpen={shouldOpenModal}
-        onHide={toggleModuleWithRouteHandler}
+        isOpen={shouldOpenEditUserModal}
+        onHide={toggleEditUserModalWithRouteHandler}
         title="Edit user"
       >
         <UserForm
           user={state.users.find(user => router.query.userId === user.id)}
           action="update"
           onUpdateUser={onUpdateUser}
-          onCancelUpdateUser={toggleModuleWithRouteHandler}
+          onCancelUpdateUser={toggleEditUserModalWithRouteHandler}
         />
       </Modal>
 
@@ -114,6 +120,9 @@ export default function App({
       <main className={styles.main}>
         <div className={styles.header}>
           <h1 className={styles.title}>{appTitle}</h1>
+          <div className={styles.newUserButtonWrapper}>
+            <Button type="button" onClick={toggleNewUserModal}>New User</Button>
+          </div>
           <UserSearch dispatch={dispatch} />
         </div>
 
@@ -129,11 +138,15 @@ export default function App({
           </Link>
         )}
 
-        {/* TODO: Find a more suitable UX pattern for a New Form. Most likely, move this over to a modal form. */}
-        <div className={styles.card}>
-          <h3 className={styles.title}>New User</h3>
-          <UserForm onCreateUser={onCreateUser} />
-        </div>
+        <Modal
+          isOpen={isNewUserModalOpen}
+          onHide={toggleNewUserModalWithRouteHandler}
+          title="New user"
+        >
+          <UserForm
+            onCreateUser={onCreateUser}
+          />
+        </Modal>
       </main>
     </div>
   )
