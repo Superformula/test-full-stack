@@ -2,6 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getLocation = /* GraphQL */ `
+  query GetLocation($query: String!) {
+    getLocation(query: $query) {
+      bbox
+      center
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {

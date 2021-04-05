@@ -1,0 +1,10 @@
+{
+  "name": "locationsearch",
+  "version": "2.0.0",
+  "description": "Lambda function to fetch location information based off the user's address",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}

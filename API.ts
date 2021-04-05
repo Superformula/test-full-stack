@@ -89,6 +89,12 @@ export type DeleteUserInput = {
   id?: string | null,
 };
 
+export type LocationFeaturesProps = {
+  __typename: "LocationFeaturesProps",
+  bbox?: Array< number | null > | null,
+  center?: Array< number | null > | null,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -175,6 +181,18 @@ export type DeleteUserMutation = {
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type GetLocationQueryVariables = {
+  query?: string,
+};
+
+export type GetLocationQuery = {
+  getLocation?:  {
+    __typename: "LocationFeaturesProps",
+    bbox?: Array< number | null > | null,
+    center?: Array< number | null > | null,
   } | null,
 };
 

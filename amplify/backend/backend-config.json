@@ -17,5 +17,12 @@
       }
     }
   },
-  "hosting": {}
+  "hosting": {},
+  "function": {
+    "locationsearch": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
 }
