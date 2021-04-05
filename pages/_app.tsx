@@ -12,7 +12,7 @@ export default function UserManagementApp({
   Component,
   pageProps
 }: AppProps): ReactNode {
-  const initialUsers = []
+  const initialUsers = null
   const [state, dispatch] = useReducer(userReducer, { users: initialUsers })
 
   return (

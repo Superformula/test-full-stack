@@ -139,7 +139,7 @@ async function handleSearchUsers(
 
 export type StateUsers = Immutable<User[]>
 export interface State {
-  users: StateUsers;
+  users?: StateUsers;
   nextToken?: string;
 }
 
@@ -153,7 +153,7 @@ const reducer: Reducer<State, ActionType> = (state, action) =>
     switch (action.type) {
       case HYDRATE_USERS:
       case SEARCH_USERS:
-        draftState.users = action.payload || []
+        draftState.users = action.payload || null
         break
 
       case CREATE_USER:

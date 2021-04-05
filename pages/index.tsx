@@ -78,8 +78,7 @@ export default function App({
     scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
   }
 
-  const isLoadingUsers =
-    users && (users.length === 0 || state.users.length === 0)
+  const isLoadingUsers = (users && users.length === 0) || !state.users
 
   if (isLoadingUsers) {
     return <Loader />
