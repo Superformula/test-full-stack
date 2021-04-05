@@ -1,6 +1,16 @@
 import { useRef, useEffect, MutableRefObject } from 'react'
 import mapboxgl, { LngLatBoundsLike, LngLatLike } from 'mapbox-gl'
 
+import callGraphQL from '../models/graphql-api'
+import { getLocation } from '../graphql/queries'
+
+import { GetLocationQuery, GetLocationQueryVariables } from '../API'
+
+interface FeaturesProps {
+  bbox: LngLatBoundsLike;
+  center: LngLatLike;
+}
+
 // NOTE: I'd never expose secret keys in production. The reason I went with
 // this approach here is because the serverless deployment approach I ended up
 // gave me some headache with exposing env vars. In a better scenario I'd probably go with parameter store, with environment variables
@@ -10,22 +20,19 @@ import mapboxgl, { LngLatBoundsLike, LngLatLike } from 'mapbox-gl'
 const accessToken =
   process.env.NEXT_PUBLIC_MAPBOX_API_ACCESS_TOKEN ||
   'pk.eyJ1Ijoibmlja3NwMjAyMSIsImEiOiJja216dWgyaGgwMW5qMnJsOHlucHp4aXZjIn0.XGSWNUwwZ38lvgCk3tgC9Q'
-const mapboxAPIBaseURI = 'https://api.mapbox.com/geocoding/v5'
 
-interface FeaturesProps {
-  bbox: LngLatBoundsLike;
-  center: LngLatLike;
-}
+const getGeoCode = async (query: string): Promise<FeaturesProps> => {
+  try {
+    const { data } = await callGraphQL<GetLocationQuery>(getLocation, {
+      query
+    } as GetLocationQueryVariables)
 
-interface FeaturesType {
-  features: (FeaturesProps | undefined)[];
-}
-
-const getGeoCode = async (query: string): Promise<FeaturesType> => {
-  const requestURL = `${mapboxAPIBaseURI}/mapbox.places/${query}.json?access_token=${accessToken}`
-  const response = await fetch(requestURL)
-  const result = await response.json()
-  return result as FeaturesType
+    // @ts-expect-error: Types are incompatible between graphql and code
+    // but technically are the same. So, I'll keep it for type-safety.
+    return data.getLocation
+  } catch (error) {
+    console.error('Performing geocoding has failed', error.message)
+  }
 }
 
 export const useMapbox = (
@@ -42,7 +49,7 @@ export const useMapbox = (
           return
         }
 
-        const location = (await getGeoCode(query)).features[0]
+        const location = await getGeoCode(query)
         if (location) {
           const element = targetRef.current
 
