@@ -1,0 +1,27 @@
+.element {
+  padding: 64px;
+  background: #F8F8F8;
+
+  h1 {
+    margin: initial;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 2fr;
+    grid-auto-flow: column;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 64px;
+    button {
+      width: 280px;
+      &:first-child {
+        margin-right: 64px;
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+.element {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 336px;
+  padding: 32px;
+  .editIcon {
+    opacity: 0;
+    position: absolute;
+    height: 24px;
+    right: 50px;
+    cursor: pointer;
+  }
+  h2, p {
+    margin: 0 0 9px;
+  }
+  .description {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 336px;
+  }
+  &:hover {
+    .editIcon {
+      opacity: 1;
+    }
+    .name p {
+      opacity: 1;
+    }
+  }
+  .name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      opacity: 0;
+      span {
+        color: #af1e1e;
+        font-weight: 400;
+      }
+    }
+  }
+  .avatar {
+    align-self: center;
+    margin-top: 12px;
+    margin-bottom: 28px;
+  }
+}

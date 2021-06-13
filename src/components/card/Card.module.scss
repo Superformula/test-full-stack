@@ -1,0 +1,8 @@
+.element {
+  background: #FFFFFF;
+  border-radius: 8px;
+
+  &:hover {
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+  }
+}

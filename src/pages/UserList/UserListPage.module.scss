@@ -1,0 +1,29 @@
+.element {
+  max-width: 1328px;
+  margin: 50px auto;
+  display: block;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .content {
+    display: grid;
+    grid-gap: 64px;
+    grid-template-columns: repeat(auto-fill, 400px);
+    justify-content: center;
+  }
+
+  .loadMore {
+    display: flex;
+    justify-content: center;
+    margin-top: 64px;
+    button {
+      width: 280px;
+    }
+  }
+}
