@@ -26,6 +26,7 @@ function UserListPageComponent(props: UserListPageProps) {
         />
       </div>
       <div className={classes.content}>
+        {props.loading && props.data.length === 0 && <div>Loading...</div>}
         {props.data?.map((item) => {
           return (
             <UserCard

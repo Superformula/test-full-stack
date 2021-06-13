@@ -65,7 +65,7 @@ function UserEditModalProviderComponent(props: ModalProviderProps) {
       </div>,
       document.body
     );
-  }, [className, closeDialog, isShow]);
+  }, [className, closeDialog, isShow, props.modalComponent]);
 
   return (
     <ModalContext.Provider value={controller}>

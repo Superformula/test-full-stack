@@ -5,9 +5,9 @@ import { useUserEditModal } from '../../components/modal/ModalComponent';
 import { StringParam, useQueryParam } from 'use-query-params';
 
 function UserListPageComponent() {
-  const [fetch, { data, fetchMore }] = useFetchUsersLazyQuery();
+  const [fetch, { data, fetchMore, loading }] = useFetchUsersLazyQuery();
   const { openDialog } = useUserEditModal();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [nextPaginationKey, setNextPaginationKey] = useQueryParam(
     'key',
     StringParam
@@ -80,7 +80,7 @@ function UserListPageComponent() {
   return (
     <Element
       onSearch={onSearch}
-      loading={loading}
+      loading={isLoading || loading}
       hasMore={hasMore}
       onLoadMoreClick={onLoadMoreClick}
       data={data?.users.list || []}
