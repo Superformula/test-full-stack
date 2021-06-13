@@ -3,13 +3,39 @@
   background: #F8F8F8;
 
   h1 {
-    margin: initial;
+    margin: 0 0 64px;
   }
 
+  @media (max-width: 800px) {
+    h1 {
+      margin: 0 0 34px !important;
+    }
+  }
   .content {
-    display: grid;
-    grid-template-columns: 2fr;
-    grid-auto-flow: column;
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: 800px) {
+      flex-direction: column;
+      align-items: center;
+      form {
+        margin-left: initial !important;
+        margin-top: 36px;
+      }
+    }
+    form {
+      width: 100%;
+      margin-left: 60px;
+    }
+    .input {
+      margin-bottom: 36px;
+    }
+  }
+
+  .errorMessage {
+    text-align: right;
+    color: red;
+    height: 20px;
   }
 
   .footer {

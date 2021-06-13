@@ -10,11 +10,12 @@ interface AvatarProps {
 }
 
 function AvatarComponent(props: AvatarProps) {
+  const imageUrl = props.src ? props.src : 'assets/profile.jpg';
   return (
     <div
       className={classnames(classes.element, props.className)}
       style={{
-        backgroundImage: `url("${props.src}"), url("assets/profile.jpg")`,
+        backgroundImage: `url("${imageUrl}")`,
       }}
     />
   );

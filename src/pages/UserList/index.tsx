@@ -33,9 +33,10 @@ function UserListPageComponent() {
   );
 
   const onLoadMoreClick = useCallback(() => {
-    setNextPaginationKey(data?.users.nextPaginationKey);
-    if (fetchMore && nextPaginationKey && !!data?.users && !loading) {
+    const nextKey = data?.users.nextPaginationKey;
+    if (fetchMore && nextKey && !!data?.users && !loading) {
       setLoading(true);
+      setNextPaginationKey(nextKey);
       fetchMore({
         updateQuery: (previousResult, { fetchMoreResult }) => {
           return {
@@ -49,7 +50,7 @@ function UserListPageComponent() {
           };
         },
         variables: {
-          nextPaginationKey: nextPaginationKey,
+          nextPaginationKey: nextKey,
         },
       }).finally(() => setLoading(false));
     }

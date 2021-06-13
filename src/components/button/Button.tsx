@@ -8,11 +8,13 @@ interface ButtonProps extends ChildrenProps {
   secondary?: boolean;
   disabled?: boolean;
   onClick?: MouseEventHandler;
+  type?: 'submit' | 'reset' | 'button';
 }
 
 function ButtonComponent(props: ButtonProps) {
   return (
     <button
+      type={props.type}
       className={classnames(classes.element, {
         [classes.secondary]: props.secondary,
       })}

@@ -15,7 +15,6 @@ interface UserListPageProps {
 }
 
 function UserListPageComponent(props: UserListPageProps) {
-  console.log(props.data);
   return (
     <div className={classes.element}>
       <div className={classes.header}>
