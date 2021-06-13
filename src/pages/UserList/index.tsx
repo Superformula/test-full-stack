@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { UserListPage as Element } from './UserListPage';
 import { useFetchUsersLazyQuery, User } from '../../generated/graphql';
-import { useUserEditModal } from '../UserEdit/modal/ModalComponent';
+import { useUserEditModal } from '../../components/modal/ModalComponent';
 import { StringParam, useQueryParam } from 'use-query-params';
 
 function UserListPageComponent() {
@@ -54,13 +54,7 @@ function UserListPageComponent() {
         },
       }).finally(() => setLoading(false));
     }
-  }, [
-    data?.users,
-    fetchMore,
-    loading,
-    nextPaginationKey,
-    setNextPaginationKey,
-  ]);
+  }, [data?.users, fetchMore, loading, setNextPaginationKey]);
 
   const onSearch = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {

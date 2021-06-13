@@ -1,10 +1,16 @@
 import classNames from 'classnames';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, {
+  memo,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 import classes from './Modal.module.scss';
-import { ChildrenProps } from '../../../components/General';
-import { UserEditModal } from '../';
-import { User } from '../../../generated/graphql';
+import { ChildrenProps } from '../General';
+import { User } from '../../generated/graphql';
 
 interface ModalController {
   openDialog(user: User): void;
@@ -25,9 +31,10 @@ export function useUserEditModal(): ModalController {
 
 interface ModalProviderProps extends ChildrenProps {
   className?: string;
+  modalComponent: ReactNode;
 }
 
-export function UserEditModalProvider(props: ModalProviderProps) {
+function UserEditModalProviderComponent(props: ModalProviderProps) {
   const [user, setUser] = useState<User>();
   const [isShow, setShow] = useState(false);
   const { children, className } = props;
@@ -54,9 +61,7 @@ export function UserEditModalProvider(props: ModalProviderProps) {
     return createPortal(
       <div className={classNames(classes.modal, className)}>
         <div className={classes.backdrop} onClick={closeDialog} />
-        <div className={classes.modalWindow}>
-          <UserEditModal />
-        </div>
+        <div className={classes.modalWindow}>{props.modalComponent}</div>
       </div>,
       document.body
     );
@@ -69,3 +74,5 @@ export function UserEditModalProvider(props: ModalProviderProps) {
     </ModalContext.Provider>
   );
 }
+
+export const UserEditModalProvider = memo(UserEditModalProviderComponent);

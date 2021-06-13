@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UserEditModal as Element } from './UserEditModal';
-import { useUserEditModal } from './modal/ModalComponent';
+import { useUserEditModal } from '../../components/modal/ModalComponent';
 import {
   useLookupAddressLazyQuery,
   User,
