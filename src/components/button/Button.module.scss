@@ -1,8 +1,9 @@
-.element {
-  background: #FFFFFF;
+@import "../../commons/styles/index";
+.button {
+  background: #ffffff;
   border: 4px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: $border-radius;
   height: 90px;
   padding: 11px 14px;
   cursor: pointer;
@@ -11,7 +12,7 @@
   font-size: 24px;
   line-height: 30px;
 
-  &.secondary {
+  &__secondary {
     background: initial;
   }
 
@@ -26,6 +27,6 @@
   &:disabled {
     cursor: initial;
     border-color: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.5);;
+    color: rgba(0, 0, 0, 0.5);
   }
 }

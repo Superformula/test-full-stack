@@ -8,15 +8,16 @@ import React, {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import classes from './Modal.module.scss';
-import { ChildrenProps } from '../General';
+
 import { User } from '../../generated/graphql';
+import { ChildrenProps } from '../General';
+import classes from './Modal.module.scss';
 
 interface ModalController {
   openDialog(user: User): void;
   closeDialog(): void;
   isShow: boolean;
-  user?: User;
+  modalProps?: any;
 }
 
 const ModalContext = React.createContext<ModalController>({
@@ -25,7 +26,7 @@ const ModalContext = React.createContext<ModalController>({
   isShow: false,
 });
 
-export function useUserEditModal(): ModalController {
+export function useModal(): ModalController {
   return useContext(ModalContext);
 }
 
@@ -35,22 +36,22 @@ interface ModalProviderProps extends ChildrenProps {
 }
 
 function UserEditModalProviderComponent(props: ModalProviderProps) {
-  const [user, setUser] = useState<User>();
+  const [modalProps, setModalProps] = useState<any>();
   const [isShow, setShow] = useState(false);
   const { children, className } = props;
 
-  const openDialog = useCallback((user: User) => {
-    setUser(user);
+  const openDialog = useCallback((user: any) => {
+    setModalProps(user);
     setShow(true);
   }, []);
   const closeDialog = useCallback(() => {
-    setUser(undefined);
+    setModalProps(undefined);
     setShow(false);
   }, []);
 
   const controller: ModalController = useMemo(
-    () => ({ openDialog, closeDialog, isShow, user }),
-    [openDialog, closeDialog, isShow, user]
+    () => ({ openDialog, closeDialog, isShow, modalProps }),
+    [openDialog, closeDialog, isShow, modalProps]
   );
 
   const dialog = useMemo(() => {
@@ -60,8 +61,8 @@ function UserEditModalProviderComponent(props: ModalProviderProps) {
 
     return createPortal(
       <div className={classNames(classes.modal, className)}>
-        <div className={classes.backdrop} onClick={closeDialog} />
-        <div className={classes.modalWindow}>{props.modalComponent}</div>
+        <div className={classes.modal__backdrop} onClick={closeDialog} />
+        <div className={classes.modal__modalWindow}>{props.modalComponent}</div>
       </div>,
       document.body
     );

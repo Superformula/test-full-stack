@@ -1,7 +1,8 @@
 import { memo, MouseEventHandler } from 'react';
-import classes from './UserCard.module.scss';
+
 import { Avatar } from '../../../components/avatar/Avatar';
 import { Card } from '../../../components/card/Card';
+import classes from './UserCard.module.scss';
 
 interface UserCardProps {
   createdAt: string;
@@ -15,8 +16,8 @@ function UserCardComponent(props: UserCardProps) {
   return (
     <Card className={classes.element}>
       <img
-        src="assets/edit-icon.svg"
-        alt="Edit icon"
+        src='assets/edit-icon.svg'
+        alt='Edit icon'
         className={classes.editIcon}
         onClick={props.onEditClick}
       />

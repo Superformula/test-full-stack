@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
 import { render, screen } from '@testing-library/react';
-import { UserEditModalProvider, useUserEditModal } from '../ModalComponent';
+import React, { useEffect, Fragment } from 'react';
+
 import { User } from '../../../generated/graphql';
+import { UserEditModalProvider, useModal } from '../ModalComponent';
 
 const user: User = {
   address: '79 bond street',
@@ -15,7 +16,7 @@ const user: User = {
 };
 
 const OpenComponent = () => {
-  const { openDialog } = useUserEditModal();
+  const { openDialog } = useModal();
   useEffect(() => {
     openDialog(user);
   }, [openDialog]);
@@ -41,7 +42,9 @@ test('Should open modal', () => {
 
 test('Should not open modal', () => {
   const { container } = render(
-    <UserEditModalProvider modalComponent={<ModalComponent />} />
+    <UserEditModalProvider modalComponent={<ModalComponent />}>
+      <Fragment />
+    </UserEditModalProvider>
   );
   expect(container).toBeEmptyDOMElement();
 });

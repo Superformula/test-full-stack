@@ -1,12 +1,13 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { UserListPage as Element } from './UserListPage';
-import { useFetchUsersLazyQuery, User } from '../../generated/graphql';
-import { useUserEditModal } from '../../components/modal/ModalComponent';
 import { StringParam, useQueryParam } from 'use-query-params';
 
+import { useModal } from '../../components/modal/ModalComponent';
+import { useFetchUsersLazyQuery, User } from '../../generated/graphql';
+import { UserListPage as Element } from './UserListPage';
+
 function UserListPageComponent() {
-  const [fetch, { data, fetchMore, loading }] = useFetchUsersLazyQuery();
-  const { openDialog } = useUserEditModal();
+  const [fetch, { data, fetchMore, loading, error }] = useFetchUsersLazyQuery();
+  const { openDialog } = useModal();
   const [isLoading, setLoading] = useState(false);
   const [nextPaginationKey, setNextPaginationKey] = useQueryParam(
     'key',
@@ -79,6 +80,7 @@ function UserListPageComponent() {
 
   return (
     <Element
+      errorMessage={error?.message}
       onSearch={onSearch}
       loading={isLoading || loading}
       hasMore={hasMore}

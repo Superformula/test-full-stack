@@ -1,4 +1,6 @@
-.element {
+@import "../../commons/styles/index";
+
+.input {
   display: flex;
   flex-direction: column;
   label {
@@ -8,9 +10,9 @@
     margin-bottom: 8px;
   }
   input {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: $border-radius;
     font-size: 24px;
     padding: 16px;
 

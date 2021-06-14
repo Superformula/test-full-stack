@@ -1,11 +1,12 @@
-import { ApolloClientProvider } from './commons/ApolloClientProvider/ApolloClientProvider';
-import { UserListPage } from './pages/UserList';
-import { UserEditModalProvider } from './components/modal/ModalComponent';
-import { QueryParamProvider } from 'use-query-params';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { UserEditModal } from './pages/UserEdit';
+import { QueryParamProvider } from 'use-query-params';
 
-function App() {
+import { ApolloClientProvider } from './commons/ApolloClientProvider/ApolloClientProvider';
+import { UserEditModalProvider } from './components/modal/ModalComponent';
+import { UserEditModal } from './pages/UserEdit';
+import { UserListPage } from './pages/UserList';
+
+export function App() {
   return (
     <ApolloClientProvider>
       <Router>
@@ -18,5 +19,3 @@ function App() {
     </ApolloClientProvider>
   );
 }
-
-export default App;

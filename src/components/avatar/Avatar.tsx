@@ -1,5 +1,5 @@
-import { memo } from 'react';
 import classnames from 'classnames';
+import { memo } from 'react';
 
 import classes from './Avatar.module.scss';
 
@@ -13,7 +13,7 @@ function AvatarComponent(props: AvatarProps) {
   const imageUrl = props.src ? props.src : 'assets/profile.jpg';
   return (
     <div
-      className={classnames(classes.element, props.className)}
+      className={classnames(classes.avatar, props.className)}
       style={{
         backgroundImage: `url("${imageUrl}")`,
       }}

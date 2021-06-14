@@ -1,14 +1,22 @@
-"""Date custom scalar type"""
+"""
+Date custom scalar type
+"""
 scalar Date
 
 type GeoLocation {
-  """Latitude"""
+  """
+  Latitude
+  """
   latitude: Float!
 
-  """Longitude"""
+  """
+  Longitude
+  """
   longitude: Float!
 
-  """Address response result"""
+  """
+  Address response result
+  """
   address: String!
 }
 
@@ -20,10 +28,14 @@ type Mutation {
 
 type Query {
   users(
-    """User Name"""
+    """
+    User Name
+    """
     name: String
 
-    """User next pagination key"""
+    """
+    User next pagination key
+    """
     nextPaginationKey: String
   ): UserPage!
   user(userId: ID!): User!
@@ -31,53 +43,85 @@ type Query {
 }
 
 type User {
-  """User Id"""
+  """
+  User Id
+  """
   id: String!
 
-  """User Name"""
+  """
+  User Name
+  """
   name: String!
 
-  """User date of birth"""
+  """
+  User date of birth
+  """
   dob: Date!
 
-  """User address"""
+  """
+  User address
+  """
   address: String!
 
-  """User description"""
+  """
+  User description
+  """
   description: String!
 
-  """User created date"""
+  """
+  User created date
+  """
   createdAt: Date
 
-  """User updated date"""
+  """
+  User updated date
+  """
   updatedAt: Date
 
-  """User avatar image url"""
+  """
+  User avatar image url
+  """
   imageUrl: String!
 }
 
 type UserPage {
-  """List of users"""
+  """
+  List of users
+  """
   list: [User!]!
 
-  """Next pagination key"""
+  """
+  Next pagination key
+  """
   nextPaginationKey: String
 }
 
-"""Create User Request"""
+"""
+Create User Request
+"""
 input UserRequest {
-  """User Name"""
+  """
+  User Name
+  """
   name: String!
 
-  """User date of birth"""
+  """
+  User date of birth
+  """
   dob: Date!
 
-  """User address"""
+  """
+  User address
+  """
   address: String!
 
-  """User description"""
+  """
+  User description
+  """
   description: String!
 
-  """User avatar image url"""
+  """
+  User avatar image url
+  """
   imageUrl: String!
 }

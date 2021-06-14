@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import classes from './MapBoxStaticMap.module.scss';
 
 interface MapBoxStaticMapProps {
@@ -8,7 +9,7 @@ interface MapBoxStaticMapProps {
 function MapBoxStaticMapComponent(props: MapBoxStaticMapProps) {
   return (
     <div
-      className={classes.element}
+      className={classes.mapBoxStaticMap}
       style={{
         backgroundImage: `url("${props.src}")`,
       }}

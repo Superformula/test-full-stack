@@ -1,10 +1,15 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -15,7 +20,6 @@ export type Scalars = {
   /** Date custom scalar type */
   Date: any;
 };
-
 
 export type GeoLocation = {
   __typename?: 'GeoLocation';
@@ -34,17 +38,14 @@ export type Mutation = {
   deleteUser: User;
 };
 
-
 export type MutationCreateUserArgs = {
   data: UserRequest;
 };
-
 
 export type MutationUpdateUserArgs = {
   data: UserRequest;
   userId: Scalars['ID'];
 };
-
 
 export type MutationDeleteUserArgs = {
   id: Scalars['ID'];
@@ -57,17 +58,14 @@ export type Query = {
   lookupAddress: GeoLocation;
 };
 
-
 export type QueryUsersArgs = {
   name?: Maybe<Scalars['String']>;
   nextPaginationKey?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryUserArgs = {
   userId: Scalars['ID'];
 };
-
 
 export type QueryLookupAddressArgs = {
   address: Scalars['String'];
@@ -120,64 +118,64 @@ export type FetchUsersQueryVariables = Exact<{
   nextPaginationKey?: Maybe<Scalars['String']>;
 }>;
 
-
-export type FetchUsersQuery = (
-  { __typename?: 'Query' }
-  & { users: (
-    { __typename?: 'UserPage' }
-    & Pick<UserPage, 'nextPaginationKey'>
-    & { list: Array<(
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'address' | 'createdAt' | 'description' | 'dob' | 'imageUrl' | 'updatedAt'>
-    )> }
-  ) }
-);
+export type FetchUsersQuery = { __typename?: 'Query' } & {
+  users: { __typename?: 'UserPage' } & Pick<UserPage, 'nextPaginationKey'> & {
+      list: Array<
+        { __typename?: 'User' } & Pick<
+          User,
+          | 'id'
+          | 'name'
+          | 'address'
+          | 'createdAt'
+          | 'description'
+          | 'dob'
+          | 'imageUrl'
+          | 'updatedAt'
+        >
+      >;
+    };
+};
 
 export type LookupAddressQueryVariables = Exact<{
   address: Scalars['String'];
 }>;
 
-
-export type LookupAddressQuery = (
-  { __typename?: 'Query' }
-  & { lookupAddress: (
-    { __typename?: 'GeoLocation' }
-    & Pick<GeoLocation, 'address' | 'latitude' | 'longitude'>
-  ) }
-);
+export type LookupAddressQuery = { __typename?: 'Query' } & {
+  lookupAddress: { __typename?: 'GeoLocation' } & Pick<
+    GeoLocation,
+    'address' | 'latitude' | 'longitude'
+  >;
+};
 
 export type UpdateUserMutationVariables = Exact<{
   userId: Scalars['ID'];
   data: UserRequest;
 }>;
 
-
-export type UpdateUserMutation = (
-  { __typename?: 'Mutation' }
-  & { updateUser: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'address' | 'name' | 'description'>
-  ) }
-);
-
+export type UpdateUserMutation = { __typename?: 'Mutation' } & {
+  updateUser: { __typename?: 'User' } & Pick<
+    User,
+    'id' | 'address' | 'name' | 'description'
+  >;
+};
 
 export const FetchUsersDocument = gql`
-    query fetchUsers($name: String, $nextPaginationKey: String) {
-  users(name: $name, nextPaginationKey: $nextPaginationKey) {
-    list {
-      id
-      name
-      address
-      createdAt
-      description
-      dob
-      imageUrl
-      updatedAt
+  query fetchUsers($name: String, $nextPaginationKey: String) {
+    users(name: $name, nextPaginationKey: $nextPaginationKey) {
+      list {
+        id
+        name
+        address
+        createdAt
+        description
+        dob
+        imageUrl
+        updatedAt
+      }
+      nextPaginationKey
     }
-    nextPaginationKey
   }
-}
-    `;
+`;
 
 /**
  * __useFetchUsersQuery__
@@ -196,26 +194,47 @@ export const FetchUsersDocument = gql`
  *   },
  * });
  */
-export function useFetchUsersQuery(baseOptions?: Apollo.QueryHookOptions<FetchUsersQuery, FetchUsersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchUsersQuery, FetchUsersQueryVariables>(FetchUsersDocument, options);
-      }
-export function useFetchUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchUsersQuery, FetchUsersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchUsersQuery, FetchUsersQueryVariables>(FetchUsersDocument, options);
-        }
-export type FetchUsersQueryHookResult = ReturnType<typeof useFetchUsersQuery>;
-export type FetchUsersLazyQueryHookResult = ReturnType<typeof useFetchUsersLazyQuery>;
-export type FetchUsersQueryResult = Apollo.QueryResult<FetchUsersQuery, FetchUsersQueryVariables>;
-export const LookupAddressDocument = gql`
-    query lookupAddress($address: String!) {
-  lookupAddress(address: $address) {
-    address
-    latitude
-    longitude
-  }
+export function useFetchUsersQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    FetchUsersQuery,
+    FetchUsersQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FetchUsersQuery, FetchUsersQueryVariables>(
+    FetchUsersDocument,
+    options
+  );
 }
-    `;
+export function useFetchUsersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchUsersQuery,
+    FetchUsersQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FetchUsersQuery, FetchUsersQueryVariables>(
+    FetchUsersDocument,
+    options
+  );
+}
+export type FetchUsersQueryHookResult = ReturnType<typeof useFetchUsersQuery>;
+export type FetchUsersLazyQueryHookResult = ReturnType<
+  typeof useFetchUsersLazyQuery
+>;
+export type FetchUsersQueryResult = Apollo.QueryResult<
+  FetchUsersQuery,
+  FetchUsersQueryVariables
+>;
+export const LookupAddressDocument = gql`
+  query lookupAddress($address: String!) {
+    lookupAddress(address: $address) {
+      address
+      latitude
+      longitude
+    }
+  }
+`;
 
 /**
  * __useLookupAddressQuery__
@@ -233,28 +252,54 @@ export const LookupAddressDocument = gql`
  *   },
  * });
  */
-export function useLookupAddressQuery(baseOptions: Apollo.QueryHookOptions<LookupAddressQuery, LookupAddressQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LookupAddressQuery, LookupAddressQueryVariables>(LookupAddressDocument, options);
-      }
-export function useLookupAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LookupAddressQuery, LookupAddressQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LookupAddressQuery, LookupAddressQueryVariables>(LookupAddressDocument, options);
-        }
-export type LookupAddressQueryHookResult = ReturnType<typeof useLookupAddressQuery>;
-export type LookupAddressLazyQueryHookResult = ReturnType<typeof useLookupAddressLazyQuery>;
-export type LookupAddressQueryResult = Apollo.QueryResult<LookupAddressQuery, LookupAddressQueryVariables>;
-export const UpdateUserDocument = gql`
-    mutation updateUser($userId: ID!, $data: UserRequest!) {
-  updateUser(userId: $userId, data: $data) {
-    id
-    address
-    name
-    description
-  }
+export function useLookupAddressQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    LookupAddressQuery,
+    LookupAddressQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<LookupAddressQuery, LookupAddressQueryVariables>(
+    LookupAddressDocument,
+    options
+  );
 }
-    `;
-export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+export function useLookupAddressLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    LookupAddressQuery,
+    LookupAddressQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<LookupAddressQuery, LookupAddressQueryVariables>(
+    LookupAddressDocument,
+    options
+  );
+}
+export type LookupAddressQueryHookResult = ReturnType<
+  typeof useLookupAddressQuery
+>;
+export type LookupAddressLazyQueryHookResult = ReturnType<
+  typeof useLookupAddressLazyQuery
+>;
+export type LookupAddressQueryResult = Apollo.QueryResult<
+  LookupAddressQuery,
+  LookupAddressQueryVariables
+>;
+export const UpdateUserDocument = gql`
+  mutation updateUser($userId: ID!, $data: UserRequest!) {
+    updateUser(userId: $userId, data: $data) {
+      id
+      address
+      name
+      description
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
 
 /**
  * __useUpdateUserMutation__
@@ -274,10 +319,24 @@ export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, U
  *   },
  * });
  */
-export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
-      }
-export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
-export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
-export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export function useUpdateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UpdateUserDocument,
+    options
+  );
+}
+export type UpdateUserMutationHookResult = ReturnType<
+  typeof useUpdateUserMutation
+>;
+export type UpdateUserMutationResult =
+  Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;

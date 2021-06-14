@@ -1,6 +1,7 @@
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { memo, useCallback } from 'react';
+
 import { User } from '../../../generated/graphql';
 import { UserCard as Element } from './UserCard';
 

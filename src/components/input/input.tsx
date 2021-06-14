@@ -1,6 +1,8 @@
-import { ChangeEventHandler, memo } from 'react';
-import classes from './Input.module.scss';
 import classNames from 'classnames';
+import { ChangeEventHandler, memo } from 'react';
+
+import classes from './Input.module.scss';
+
 interface InputProps {
   placeholder?: string;
   className?: string;
@@ -13,10 +15,10 @@ interface InputProps {
 function InputComponent(props: InputProps) {
   const inputId = `input_${props.name}`;
   return (
-    <div className={classNames(classes.element, props.className)}>
+    <div className={classNames(classes.input, props.className)}>
       {props.label && <label htmlFor={inputId}>{props.label}</label>}
       <input
-        type="text"
+        type='text'
         id={inputId}
         value={props.value}
         placeholder={props.placeholder}

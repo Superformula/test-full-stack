@@ -1,8 +1,8 @@
 mutation updateUser($userId: ID!, $data: UserRequest!) {
-    updateUser(userId: $userId, data: $data) {
-        id
-        address
-        name
-        description
-    }
+  updateUser(userId: $userId, data: $data) {
+    id
+    address
+    name
+    description
+  }
 }

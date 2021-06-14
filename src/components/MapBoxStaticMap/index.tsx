@@ -1,5 +1,6 @@
-import { MapBoxStaticMap as Element } from './MapBoxStaticMap';
 import { memo, useMemo } from 'react';
+
+import { MapBoxStaticMap as Element } from './MapBoxStaticMap';
 
 interface MapBoxStaticMapProps {
   width?: number;

@@ -1,9 +1,9 @@
-.element {
+.userListPage {
   max-width: 1328px;
   margin: 50px auto;
   display: block;
 
-  .header {
+  &__header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -11,14 +11,14 @@
     margin-bottom: 32px;
   }
 
-  .content {
+  &__content {
     display: grid;
     grid-gap: 64px;
     grid-template-columns: repeat(auto-fill, 400px);
     justify-content: center;
   }
 
-  .loadMore {
+  &__loadMore {
     display: flex;
     justify-content: center;
     margin-top: 64px;

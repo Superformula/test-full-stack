@@ -1,8 +1,9 @@
 import { ChangeEventHandler, memo } from 'react';
-import classes from './UserEditModal.module.scss';
-import { Input } from '../../components/input/input';
-import { Button } from '../../components/button/Button';
+
 import { MapBoxStaticMap } from '../../components/MapBoxStaticMap';
+import { Button } from '../../components/button/Button';
+import { Input } from '../../components/input/input';
+import classes from './UserEditModal.module.scss';
 
 interface UserEditModalProps {
   form: any;
@@ -17,10 +18,10 @@ interface UserEditModalProps {
 
 function UserEditModalComponent(props: UserEditModalProps) {
   return (
-    <div className={classes.element}>
+    <div className={classes.userEditModal}>
       <h1>Edit user</h1>
 
-      <div className={classes.content}>
+      <div className={classes.userEditModal__content}>
         <MapBoxStaticMap
           latitude={props.latitude}
           longitude={props.longitude}
@@ -28,29 +29,31 @@ function UserEditModalComponent(props: UserEditModalProps) {
         <form>
           <Input
             value={props.form.name}
-            className={classes.input}
+            className={classes.userEditModal__content__input}
             onChange={props.onInputChange('name')}
             name={'name'}
             label={'Name'}
           />
           <Input
             value={props.form.address}
-            className={classes.input}
+            className={classes.userEditModal__content__input}
             onChange={props.onInputChange('address')}
             name={'address'}
             label={'Address'}
           />
           <Input
             value={props.form.description}
-            className={classes.input}
+            className={classes.userEditModal__content__input}
             onChange={props.onInputChange('description')}
             name={'description'}
             label={'Description'}
           />
         </form>
       </div>
-      <div className={classes.errorMessage}>{props.errorMessage}</div>
-      <div className={classes.footer}>
+      <div className={classes.userEditModal__errorMessage}>
+        {props.errorMessage}
+      </div>
+      <div className={classes.userEditModal__footer}>
         <Button
           type={'submit'}
           onClick={props.onSubmit}

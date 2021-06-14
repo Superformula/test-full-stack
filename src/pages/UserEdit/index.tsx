@@ -1,14 +1,15 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { UserEditModal as Element } from './UserEditModal';
-import { useUserEditModal } from '../../components/modal/ModalComponent';
+
+import { useModal } from '../../components/modal/ModalComponent';
 import {
   useLookupAddressLazyQuery,
   User,
   useUpdateUserMutation,
 } from '../../generated/graphql';
+import { UserEditModal as Element } from './UserEditModal';
 
 function UserEditModalComponent() {
-  const { closeDialog, user } = useUserEditModal();
+  const { closeDialog, modalProps: user } = useModal();
   const [userForm, setUserForm] = useState<any>({});
   const [fetchAddress, { data }] = useLookupAddressLazyQuery();
   const [updateUser, { loading }] = useUpdateUserMutation();

@@ -1,6 +1,8 @@
-.element {
-  background: #FFFFFF;
-  border-radius: 8px;
+@import "../../commons/styles/index";
+
+.card {
+  background: #ffffff;
+  border-radius: $border-radius;
 
   &:hover {
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));

@@ -1,21 +1,23 @@
-.element {
+@import "../../commons/styles/index";
+
+.userEditModal {
   padding: 64px;
-  background: #F8F8F8;
+  background: #f8f8f8;
 
   h1 {
     margin: 0 0 64px;
   }
 
-  @media (max-width: 800px) {
+  @include mobile {
     h1 {
       margin: 0 0 34px !important;
     }
   }
-  .content {
+  &__content {
     display: flex;
     flex-direction: row;
 
-    @media (max-width: 800px) {
+    @include mobile {
       flex-direction: column;
       align-items: center;
       form {
@@ -27,18 +29,18 @@
       width: 100%;
       margin-left: 60px;
     }
-    .input {
+    &__input {
       margin-bottom: 36px;
     }
   }
 
-  .errorMessage {
+  &__errorMessage {
     text-align: right;
     color: red;
     height: 20px;
   }
 
-  .footer {
+  &__footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

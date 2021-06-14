@@ -1,8 +1,8 @@
 import { ApolloClient, ApolloProvider } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client/cache';
 import React, { useMemo } from 'react';
 
 import { ChildrenProps } from '../../components/General';
-import { InMemoryCache } from '@apollo/client/cache';
 
 export function ApolloClientProvider(props: ChildrenProps) {
   const apolloClient = useMemo(
