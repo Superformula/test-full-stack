@@ -1,9 +1,41 @@
+## Developer Setup Instructions
+
+To setup a local developer environment follow the below steps.
+
+- Clone the repo and install the dependencies.
+    ```
+    $ git clone https://github.com/andersonleal1805/test-full-stack.git
+    $ cd test-full-stack
+    $ npm install or yarn
+    ```
+- Create **.env** file to define the Mapbox access token, you can get [here](https://docs.mapbox.com/help/tutorials/get-started-tokens-api/) 
+    ```
+    REACT_APP_MAPBOX_ACCESS_TOKEN= required
+    REACT_APP_GRAPHQL_URI= default is http://localhost:8899/graphql
+   ```
+
+- To create a new graphQL query just add a new `.graphql` file on `/src/queries/` and run:
+     ```
+        $ rpm run codegen
+     ```
+- This command will update the schema.graphql file and generate the hooks for each query defined on the folder.
+
+
+- To start the project
+    ```
+        $ npm run start
+    ```
+
+
+- [Working Demo](https://superformula-c6aa8.web.app/)
+
 # Superformula Full Stack Developer Test
 
 Be sure to read **all** of this document carefully, and follow the guidelines within.
 
 ## Backend Context
 
+Build a GraphQL API that can `create/read/update/delete` user data from a persistence store.
 Build a GraphQL API that can `create/read/update` user data from a persistence store. Delete functionality is not required.
 
 ### User Model
@@ -22,6 +54,9 @@ Build a GraphQL API that can `create/read/update` user data from a persistence s
 
 ### Functionality
 
+- The API should follow typical GraphQL API design pattern.
+- The data should be saved in the DB.
+- Proper error handling should be used.
 - The API should follow typical GraphQL API design pattern
 - The data should be saved in the DB
 - Proper error handling should be used
@@ -29,24 +64,32 @@ Build a GraphQL API that can `create/read/update` user data from a persistence s
 
 ### Basic Requirements
 
-  - Use **AWS AppSync (preferred)** or AWS Lambda + API Gateway approach
-  - Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
-  - Write concise and clear commit messages
-  - Write clear **documentation** on how it has been designed and how to run the code
-  - Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
+- Use AWS AppSync (preferred) or AWS Lambda + API Gateway approach
+- Use **AWS AppSync (preferred)** or AWS Lambda + API Gateway approach
+- Use any AWS Database-as-a-Service persistence store. DynamoDB is preferred.
+- Write concise and clear commit messages
+- Write clear **documentation** on how it has been designed and how to run the code
+- Add a Query to fetch location information based off the user's address (use [NASA](https://api.nasa.gov/api.html) or [Mapbox](https://www.mapbox.com/api-documentation/) APIs); use AWS Lambda
+- Write concise and clear commit messages.
+- Write clear **documentation** on how it has been designed and how to run the code.
 
+### Bonus
+- Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
+- Provide proper unit tests.
+- Providing an online demo is welcomed, but not required.
+- Bundle npm modules into your Lambdas
 ### Bonus (in order)
-  1. Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
-  1. Provide proper unit tests
-  1. Providing an online demo is welcomed, but not required
-  1. Delete user functionality
-  1. Bundle npm modules into your Lambdas
+1. Use Infrastructure-as-code tooling that can be used to deploy all resources to an AWS account. Examples: CloudFormation / SAM, Terraform, Serverless Framework, etc.
+1. Provide proper unit tests
+1. Providing an online demo is welcomed, but not required
+1. Delete user functionality
+1. Bundle npm modules into your Lambdas
 
 ### Advanced Requirements
 
 These may be used for further challenges. You can freely skip these; feel free to try out if you feel up to it.
-  - Describe your strategy for Lambda error handling, retries, and DLQs
-  - Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
+- Describe your strategy for Lambda error handling, retries, and DLQs
+- Describe your cloud-native logging, monitoring, and alarming strategy across all queries/mutations
 
 ## UI context
 
@@ -64,22 +107,36 @@ Use HTML, CSS, and JavaScript (choose one of popular framework) to implement the
 
 - The search functionality should perform real time filtering on client side data and API side data
 - List of users should be updated automatically after single user is updated
+- Infinite loading state should be saved in url query
 - Create modal from scratch - please don't use any library for it
 - Appear/Disappear of modal should be animated (feel free with choose how)
+- Map with user location should update async - when user changes "location" field
 - Infinite loading state should be saved in url query (pagination state should be present in URL query (eg ?page=1) to allow for behavior where the user can reload the page while still returning to their current scroll position)
 
 ### Tech stack
 
 - JS oriented (Typescript preferred)
+- Use **React**, **Angular** or **VUE**.
 - Use **React**, **Angular** or **VUE** (React preferred)
 - Use unsplash.com to show random avatar images
 - You don't have to write configuration from scratch (you can use eg. CRA for React application)
 - Feel free to use a preprocessor like SASS/SCSS/Less or CSS in JS
+- Provide E2E and unit tests
+- Feel free to choose MAPS service (GoogleMaps, OpenStreetMap etc)
 - Provide E2E and unit tests (one component&view well tested is enough, no need to test every component/view)
 - Please **do not** use any additional libraries with predefined styles like `react-bootstrap`, `material-ui` etc.
 
+### Bonus
 ### Bonus (in order)
 
+- Write clear **documentation** on how the app was designed and how to run the code.
+- Provide components in [Storybook](https://storybook.js.org) with tests.
+- Write concise and clear commit messages.
+- Provide an online demo of the application.
+- Include subtle animations to focus attention
+- Describe optimization opportunities when you conclude
+- Handle server errors
+- Handle loading states
 1. Write clear **documentation** on how the app was designed and how to run the code
 1. Providing an online demo is welcomed, but not required.
 1. Provide a description of how you approach mobile friendly apps (what do you use, how)
@@ -105,6 +162,7 @@ Here's what you should strive for:
 - Extensible code.
 
 ## Q&A
+
 > Where should I send back the result when I'm done?
 
 Fork this repo and send us a pull request when you think you are done. There is no deadline for this task unless otherwise noted to you directly.
@@ -128,3 +186,4 @@ Examples:
 > I almost finished, but I don't have time to create everything what is required
 
 Please provide a plan for the rest of the things that you would do.
+

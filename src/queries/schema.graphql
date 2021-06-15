@@ -1,0 +1,127 @@
+"""
+Date custom scalar type
+"""
+scalar Date
+
+type GeoLocation {
+  """
+  Latitude
+  """
+  latitude: Float!
+
+  """
+  Longitude
+  """
+  longitude: Float!
+
+  """
+  Address response result
+  """
+  address: String!
+}
+
+type Mutation {
+  createUser(data: UserRequest!): User!
+  updateUser(data: UserRequest!, userId: ID!): User!
+  deleteUser(id: ID!): User!
+}
+
+type Query {
+  users(
+    """
+    User Name
+    """
+    name: String
+
+    """
+    User next pagination key
+    """
+    nextPaginationKey: String
+  ): UserPage!
+  user(userId: ID!): User!
+  lookupAddress(address: String!): GeoLocation!
+}
+
+type User {
+  """
+  User Id
+  """
+  id: String!
+
+  """
+  User Name
+  """
+  name: String!
+
+  """
+  User date of birth
+  """
+  dob: Date!
+
+  """
+  User address
+  """
+  address: String!
+
+  """
+  User description
+  """
+  description: String!
+
+  """
+  User created date
+  """
+  createdAt: Date
+
+  """
+  User updated date
+  """
+  updatedAt: Date
+
+  """
+  User avatar image url
+  """
+  imageUrl: String!
+}
+
+type UserPage {
+  """
+  List of users
+  """
+  list: [User!]!
+
+  """
+  Next pagination key
+  """
+  nextPaginationKey: String
+}
+
+"""
+Create User Request
+"""
+input UserRequest {
+  """
+  User Name
+  """
+  name: String!
+
+  """
+  User date of birth
+  """
+  dob: Date!
+
+  """
+  User address
+  """
+  address: String!
+
+  """
+  User description
+  """
+  description: String!
+
+  """
+  User avatar image url
+  """
+  imageUrl: String!
+}

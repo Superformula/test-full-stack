@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  background: #f8f8f8;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  h1 {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 60px;
+  }
+
+  h2 {
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px;
+  }
+
+  p {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}

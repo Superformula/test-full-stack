@@ -1,0 +1,7 @@
+query lookupAddress($address: String!) {
+  lookupAddress(address: $address) {
+    address
+    latitude
+    longitude
+  }
+}

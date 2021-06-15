@@ -1,0 +1,55 @@
+@import "../../commons/styles/index";
+
+.userEditModal {
+  padding: 64px;
+  background: #f8f8f8;
+
+  h1 {
+    margin: 0 0 64px;
+  }
+
+  @include mobile {
+    h1 {
+      margin: 0 0 34px !important;
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: row;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      form {
+        margin-left: initial !important;
+        margin-top: 36px;
+      }
+    }
+    form {
+      width: 100%;
+      margin-left: 60px;
+    }
+    &__input {
+      margin-bottom: 36px;
+    }
+  }
+
+  &__errorMessage {
+    text-align: right;
+    color: red;
+    height: 20px;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 64px;
+    button {
+      width: 280px;
+      &:first-child {
+        margin-right: 64px;
+      }
+    }
+  }
+}

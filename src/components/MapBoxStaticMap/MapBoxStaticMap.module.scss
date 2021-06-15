@@ -1,0 +1,9 @@
+@import "../../commons/styles/index";
+
+.mapBoxStaticMap {
+  border-radius: $border-radius;
+  width: 100%;
+  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+}

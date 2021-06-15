@@ -1,0 +1,15 @@
+query fetchUsers($name: String, $nextPaginationKey: String) {
+  users(name: $name, nextPaginationKey: $nextPaginationKey) {
+    list {
+      id
+      name
+      address
+      createdAt
+      description
+      dob
+      imageUrl
+      updatedAt
+    }
+    nextPaginationKey
+  }
+}

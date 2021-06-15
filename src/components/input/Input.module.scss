@@ -1,0 +1,27 @@
+@import "../../commons/styles/index";
+
+.input {
+  display: flex;
+  flex-direction: column;
+  label {
+    font-size: 18px;
+    line-height: 23px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  input {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius;
+    font-size: 24px;
+    padding: 16px;
+
+    &::placeholder {
+      color: red;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
