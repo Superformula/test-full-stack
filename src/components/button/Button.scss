@@ -1,0 +1,30 @@
+.button {
+  width: 280px;
+  height: 90px;
+  cursor: pointer;
+  background: #FFFFFF;
+  color: #000000;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  font-family: Source Sans Pro, serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-transform: capitalize;
+
+  &:hover,
+  &:focus {
+    border: 4px solid rgba(0, 0, 0, 0.4);
+  }
+
+  &:disabled {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
