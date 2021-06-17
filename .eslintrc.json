@@ -4,7 +4,6 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
         "airbnb-typescript",
         "airbnb/hooks"
     ],
@@ -22,5 +21,14 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "react/prop-types": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": [
+                    "**/*.stories.tsx"
+                ]
+            }
+        ]
     }
 }
