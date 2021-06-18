@@ -1,0 +1,36 @@
+.modal {
+  &-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+
+    &-visible {
+      opacity: 1;
+    }
+  }
+
+
+  &-wrapper {
+    width: 50%;
+    background: #F8F8F8;
+    border-radius: 8px;
+    padding: 64px;
+
+    &-header {
+      margin-bottom: 64px;
+    }
+
+    &-footer {
+      margin-top: 64px;
+    }
+
+    &-visible {
+      opacity: 1;
+    }
+  }
+}
