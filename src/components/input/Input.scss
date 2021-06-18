@@ -1,0 +1,41 @@
+.input {
+  &-wrapper {
+    padding: 0;
+    display: inline-block;
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 23px;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+  }
+
+  &-field {
+    width: 400px;
+    height: 64px;
+
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: Source Sans Pro, serif;
+
+    padding: 16px;
+    box-sizing: border-box;
+
+    font-size: 24px;
+    line-height: 30px;
+    color: #000000;
+
+    position: relative;
+
+    &:focus {
+      outline: none;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+
