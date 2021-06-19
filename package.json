@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.20",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -11,6 +12,7 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.7",
     "classnames": "^2.3.1",
+    "graphql": "^15.5.0",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -19,8 +21,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "schema-type": "graphql-codegen --config codegen.yml",
+    "start": "npm run schema-type && react-scripts start",
+    "build": "npm run schema-type && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eslint:fix": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix",
@@ -56,6 +59,8 @@
     ]
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.5",
+    "@graphql-codegen/typescript": "^1.22.1",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
