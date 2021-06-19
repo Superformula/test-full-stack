@@ -8,11 +8,14 @@ type ColorEnum = 'primary' | 'error';
 interface CardProps {
   variant?: VariantEnum
   color?: ColorEnum
+  className?: string
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const Typography: React.FC<CardProps> = ({ children, variant, color = 'primary' }) => (
-  <div className={classnames({
+export const Typography: React.FC<CardProps> = ({
+  children, variant, className, color = 'primary',
+}) => (
+  <div className={classnames(className, {
     [`typography--variant-${variant}`]: variant,
     [`typography--color-${color}`]: color,
   })}

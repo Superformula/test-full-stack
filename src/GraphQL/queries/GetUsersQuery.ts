@@ -7,6 +7,10 @@ const GET_USERS = gql`
                 node{
                     id
                     name
+                    address
+                    description
+                    createdAt
+                    imageUrl
                 }
                 cursor
             }

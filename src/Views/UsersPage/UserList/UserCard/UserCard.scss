@@ -1,0 +1,42 @@
+.user-card {
+  &-avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  &-info {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    display: flex;
+
+    &-name {
+      width: 60%;
+      text-align: left;
+
+    }
+
+    &-created-at {
+      opacity: 0;
+      transition: opacity 300ms ease-in-out;
+
+      span {
+        color: #B01E1E //TODO: Put this into a variable
+      }
+    }
+  }
+
+  &-description {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+  }
+
+  &:hover &-info-created-at {
+    opacity: 1;
+  }
+}

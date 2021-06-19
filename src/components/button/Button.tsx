@@ -7,7 +7,7 @@ type ColorEnum = 'primary' | 'secondary';
 export interface ButtonProps {
   color: ColorEnum
   text: string
-  onClick: () => void
+  onClick?: () => void
   disabled?: boolean
 }
 

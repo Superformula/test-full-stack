@@ -6,12 +6,12 @@ interface UsersInterface {
   users: UsersSearch,
 }
 
-const usePersons = () => {
+const useUserInfiniteList = () => {
   const {
     data, error, loading, fetchMore,
   } = useQuery<UsersInterface>(GET_USERS, {
     variables: {
-      first: 1,
+      first: 3,
     },
   });
 
@@ -34,4 +34,4 @@ const usePersons = () => {
   };
 };
 
-export default usePersons;
+export default useUserInfiniteList;

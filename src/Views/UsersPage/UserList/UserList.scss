@@ -1,0 +1,7 @@
+.user-list {
+  display: grid;
+  justify-content: center;
+  grid-gap: 64px;
+  grid-template-columns: repeat(auto-fill,400px); //TODO: put this into variable
+  padding-bottom: 64px;
+}

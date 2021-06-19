@@ -1,0 +1,15 @@
+.users-page {
+  padding: 193px 236px;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 75px;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: center;
+  }
+}
