@@ -33,18 +33,8 @@ export type DeleteUserInput = {
 
 export type Geocoding = {
   __typename?: 'Geocoding';
-  features: Array<GeocodingFeature>;
-};
-
-export type GeocodingFeature = {
-  __typename?: 'GeocodingFeature';
-  place_name: Scalars['String'];
-  geometry: GeocodingFeatureGeometry;
-};
-
-export type GeocodingFeatureGeometry = {
-  __typename?: 'GeocodingFeatureGeometry';
-  coordinates: Array<Scalars['Float']>;
+  address?: Maybe<Scalars['String']>;
+  coordinates?: Maybe<Array<Maybe<Scalars['Float']>>>;
 };
 
 export type Mutation = {
@@ -131,7 +121,6 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   first: Scalars['Int'];
   after?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
 };
 
 
