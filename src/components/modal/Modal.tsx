@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import './Modal.scss';
 import classnames from 'classnames';
+import ReactDOM from 'react-dom';
 import { Typography } from '../typograph/Typography';
 
 interface ModalProps {
@@ -12,7 +13,7 @@ interface ModalProps {
 // eslint-disable-next-line import/prefer-default-export
 export const Modal: React.FC<ModalProps> = ({
   children, isOpen, title, footer,
-}) => (
+}) => (isOpen ? ReactDOM.createPortal(
   <div className={classnames('modal-overlay', { 'modal-overlay-visible': isOpen })}>
     <div className={classnames('modal-wrapper', { 'modal-wrapper-visible': isOpen })}>
       <div className="modal-wrapper-header">
@@ -26,10 +27,12 @@ export const Modal: React.FC<ModalProps> = ({
       </div>
 
       {footer && (
-        <div className="modal-wrapper-footer">
-          {footer}
-        </div>
+      <div className="modal-wrapper-footer">
+        {footer}
+      </div>
       )}
     </div>
-  </div>
-);
+  </div>,
+  // @ts-ignore
+  document.getElementById('modal-root'),
+) : null);

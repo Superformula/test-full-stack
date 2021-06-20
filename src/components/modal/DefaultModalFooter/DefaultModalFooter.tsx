@@ -7,17 +7,18 @@ interface ModalProps {
   onOkText?: string
   onCancelClick: () => void
   onOkClick: () => void
+  buttonsDisabled?: boolean
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const DefaultModalFooter: React.FC<ModalProps> = ({
-  onCancelText = 'SAVE',
-  onOkText = 'CANCEL',
+  onCancelText = 'CANCEL',
+  onOkText = 'SAVE',
   onCancelClick,
   onOkClick,
+  buttonsDisabled,
 }) => (
   <div className="base-modal-footer">
-    <Button text={onCancelText} color="primary" onClick={onCancelClick} />
-    <Button text={onOkText} color="primary" onClick={onOkClick} />
+    <Button text={onOkText} color="primary" onClick={onOkClick} disabled={buttonsDisabled} />
+    <Button text={onCancelText} color="primary" onClick={onCancelClick} disabled={buttonsDisabled} />
   </div>
 );
