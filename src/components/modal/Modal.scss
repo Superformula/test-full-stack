@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 .modal {
   &-overlay {
     width: 100%;
@@ -21,8 +23,8 @@
 
   &-wrapper {
     width: 50%;
-    background: #F8F8F8;
-    border-radius: 8px;
+    background: $color-off-white;
+    border-radius: $border-radius;
     padding: 64px;
 
     &-header {

@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 .user-card {
   position: relative;
   padding: 44px 23px 40px;
@@ -26,7 +28,7 @@
       transition: opacity 300ms ease-in-out;
 
       span {
-        color: #B01E1E //TODO: Put this into a variable
+        color: $color-red;
       }
     }
   }

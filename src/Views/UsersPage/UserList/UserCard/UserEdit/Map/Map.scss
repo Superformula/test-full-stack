@@ -1,7 +1,9 @@
+@import "src/styles/variables";
+
 .map {
   width: 518px;
   height: 336px;
-  border-radius: 8px;
+  border-radius: $border-radius;
 
   img {
     width: 100%;

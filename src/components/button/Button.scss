@@ -1,12 +1,13 @@
+@import "src/styles/variables";
+
 .button {
   width: 280px;
   height: 90px;
-  cursor: pointer;
-  background: #FFFFFF;
-  color: #000000;
+  background: $color-white;
+  color: $color-black;
   border: 4px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: $border-radius;
 
   font-weight: 600;
   font-size: 24px;
@@ -16,7 +17,7 @@
   justify-content: center;
 
   text-transform: capitalize;
-
+  cursor: pointer;
   &:hover,
   &:focus {
     border: 4px solid rgba(0, 0, 0, 0.4);
