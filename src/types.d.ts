@@ -131,6 +131,7 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   first: Scalars['Int'];
   after?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 

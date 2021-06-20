@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FormEventHandler } from 'react';
 import './Input.scss';
 
 export interface InputProps {
   placeholder?: string
   label?: string
   name?: string
-  onChange?: () => void
+  onChange?: FormEventHandler
   onBlur?: () => void
   ref?: React.Ref<any>
 }
