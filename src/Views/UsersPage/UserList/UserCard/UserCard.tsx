@@ -6,6 +6,7 @@ import { Typography } from '../../../../components/typograph/Typography';
 import { User } from '../../../../types';
 import { formatDate } from '../../../../utils/dates';
 import './UserCard.scss';
+import UserEdit from './UserEdit/UserEdit';
 
 interface UserCardProps {
   user: User
@@ -27,6 +28,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => (
     <div className="user-card-description">
       <Typography variant="paragraph">{user.description}</Typography>
     </div>
+    <UserEdit user={user} className="user-card-edit-button" />
   </Card>
 );
 

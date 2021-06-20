@@ -1,4 +1,7 @@
 .user-card {
+  position: relative;
+  padding: 44px 23px 40px;
+
   &-avatar-wrapper {
     display: flex;
     justify-content: center;
@@ -37,6 +40,18 @@
   }
 
   &:hover &-info-created-at {
+    opacity: 1;
+  }
+
+  &-edit-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  &:hover &-edit-button {
     opacity: 1;
   }
 }

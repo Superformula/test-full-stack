@@ -1,0 +1,22 @@
+.user-edit-icon {
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+}
+
+.modal-content {
+  display: flex;
+
+  &-map {
+    margin-right: 60px;
+  }
+
+  &-form {
+    width: 100%;
+
+    &-input {
+      margin-bottom: 36px;
+    }
+  }
+}

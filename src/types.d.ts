@@ -137,11 +137,11 @@ export type QueryGeocodingArgs = {
 
 export type UpdateUserInput = {
   id: Scalars['String'];
-  name: Scalars['String'];
-  dob: Scalars['String'];
-  address: Scalars['String'];
-  description: Scalars['String'];
-  imageUrl: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  imageUrl?: Maybe<Scalars['String']>;
 };
 
 
