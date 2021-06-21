@@ -21,7 +21,7 @@ const Users: React.FC = () => {
   }, [loadScrollPosition, saveScrollPosition]);
 
   const {
-    users, loading, error, hasNextPage, loadMore,
+    users, loading, error, hasNextPage, loadMore, loadingMore,
   } = useUserInfiniteList();
 
   const { search, users: userSearch } = useUserSearch();
@@ -45,19 +45,21 @@ const Users: React.FC = () => {
         <UserSearch onChange={onUserSearchHandler} />
       </div>
 
-      { loading ? (<span>loading...</span>) : (
-        <>
-          <UserList users={usersArr} />
+      {loading && <span>loading...</span>}
 
-          <div className="users-page-footer">
-            <Button
-              disabled={!hasNextPage || !!userSearch?.length}
-              onClick={loadMore}
-              text="load more"
-              color="primary"
-            />
-          </div>
-        </>
+      {!loading && (
+      <>
+        <UserList users={usersArr} />
+
+        <div className="users-page-footer">
+          <Button
+            disabled={!hasNextPage || !!userSearch?.length || loadingMore}
+            onClick={loadMore}
+            text={loadingMore ? 'Loading...' : 'load more'}
+            color="primary"
+          />
+        </div>
+      </>
       )}
 
     </div>
