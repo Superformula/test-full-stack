@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
-import GET_USERS from '../GraphQL/queries/GetUsersQuery';
+import { useCallback } from 'react';
+import { GET_USERS } from '../GraphQL/queries/GetUsersQuery';
 import { UsersSearch } from '../types';
 
 interface UsersInterface {
@@ -15,19 +16,25 @@ const useUserInfiniteList = () => {
     },
   });
 
-  if (loading && !data?.users) {
-    return { loading, error, users: [] };
-  }
+  const users = data?.users;
+  const edges = users?.edges;
+  const pageInfo = users?.pageInfo;
+  const endCursor = pageInfo?.endCursor;
+  const hasNextPage = pageInfo?.hasNextPage;
 
-  const loadMore = () => fetchMore({
+  const loadMore = useCallback(() => fetchMore({
     variables: {
-      after: data?.users.pageInfo.endCursor,
+      after: endCursor,
     },
-  });
+  }), [endCursor, fetchMore]);
+
+  const isLoadedAndEmpty = loading && !!edges?.length;
+
+  const nodes = isLoadedAndEmpty ? [] : edges?.map(({ node }) => node);
 
   return {
-    users: data?.users?.edges?.map(({ node }) => node),
-    hasNextPage: data?.users?.pageInfo?.hasNextPage,
+    users: nodes,
+    hasNextPage,
     loading,
     error,
     loadMore,

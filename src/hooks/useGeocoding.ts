@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client';
 import { useCallback } from 'react';
-import GET_GEOCODING from '../GraphQL/queries/Geocoding';
+import { GET_GEOCODING } from '../GraphQL/queries/Geocoding';
 import { Geocoding } from '../types';
 
 interface GeocodingInt {

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GET_USERS = gql`
+export const GET_USERS = gql`
     query GetUsers($first: Int!, $after: String) {
         users(first: $first, after: $after) {
             edges{
@@ -21,5 +21,3 @@ const GET_USERS = gql`
         }
     }
 `;
-
-export default GET_USERS;

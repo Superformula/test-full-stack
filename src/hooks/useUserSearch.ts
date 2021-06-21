@@ -1,36 +1,34 @@
 import { useLazyQuery } from '@apollo/client';
+import { useCallback } from 'react';
 import { UsersSearch } from '../types';
-import GET_USER_BY_NAME from '../GraphQL/queries/GetUserByName';
-
-interface UsersInterface {
-  usersByName: UsersSearch,
-}
+import { GET_USER_BY_NAME } from '../GraphQL/queries/GetUserByName';
 
 const useUserInfiniteList = () => {
   const [searchUser, {
     data, error, loading,
   }] = useLazyQuery<UsersInterface>(GET_USER_BY_NAME, { fetchPolicy: 'network-only' });
 
-  const search = (name: string) => searchUser({
+  const search = useCallback((name: string) => searchUser({
     variables: {
-      first: 3,
+      first: 10,
       name,
     },
-  });
+  }), [searchUser]);
 
-  if (loading && !data?.usersByName) {
-    return {
-      loading, error, users: [], search,
-    };
-  }
+  const edges = data?.usersByName?.edges;
+  const isLoadedAndEmpty = loading && !!edges?.length;
+  const nodes = isLoadedAndEmpty ? [] : edges?.map(({ node }) => node);
 
   return {
-    users: data?.usersByName?.edges?.map(({ node }) => node),
-    hasNextPage: data?.usersByName?.pageInfo?.hasNextPage,
+    users: nodes,
     loading,
     error,
     search,
   };
 };
+
+interface UsersInterface {
+  usersByName: UsersSearch,
+}
 
 export default useUserInfiniteList;
