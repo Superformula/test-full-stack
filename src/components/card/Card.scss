@@ -1,5 +1,11 @@
+@import "src/styles/mixins";
+
 .card {
-  width: 400px;
+  width: 100%;
+
+  @include desktop {
+    width: 400px;
+  }
 
   &:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,.1);

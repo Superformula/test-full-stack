@@ -1,8 +1,10 @@
 @import "src/styles/variables";
+@import "src/styles/mixins";
 
 .user-card {
   position: relative;
   padding: 44px 23px 40px;
+  box-sizing: border-box;
 
   &-avatar-wrapper {
     display: flex;
@@ -24,8 +26,11 @@
     }
 
     &-created-at {
-      opacity: 0;
       transition: opacity 300ms ease-in-out;
+
+      @include desktop {
+        opacity: 0;
+      }
 
       span {
         color: $color-red;
@@ -49,8 +54,11 @@
     position: absolute;
     top: 0;
     right: 0;
-    opacity: 0;
     transition: opacity 300ms ease-in-out;
+
+    @include desktop {
+      opacity: 0;
+    }
   }
 
   &:hover &-edit-button {

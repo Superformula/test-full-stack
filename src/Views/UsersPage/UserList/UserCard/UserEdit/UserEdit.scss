@@ -1,3 +1,5 @@
+@import "/src/styles/mixins";
+
 .user-edit-icon {
   background: none;
   border: none;
@@ -7,14 +9,25 @@
 
 .modal-content {
   display: flex;
+  flex-direction: column;
+
+  @include desktop {
+    flex-direction: row;
+  }
 
   &-map {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 60px;
-    width: 518px;
-    height: 336px;
+    margin-bottom: 24px;
+    width: 100%;
+
+    @include desktop {
+      margin-bottom: 0;
+      width: 518px;
+      height: 336px;
+    }
   }
 
   &-form {
@@ -22,6 +35,7 @@
 
     &-input {
       margin-bottom: 36px;
+      display: block;
     }
   }
 }

@@ -1,4 +1,5 @@
 @import "src/styles/variables";
+@import "src/styles/mixins";
 
 .modal {
   &-overlay {
@@ -23,10 +24,18 @@
 
 
   &-wrapper {
-    width: 60%;
+    width: 80%;
     background: $color-off-white;
     border-radius: $border-radius;
-    padding: 64px;
+    box-sizing: border-box;
+    max-height: 80%;
+    overflow-y: scroll;
+    padding: 16px;
+
+    @include desktop {
+      overflow-y: hidden;
+      padding: 64px;
+    }
 
     &-header {
       margin-bottom: 64px;
