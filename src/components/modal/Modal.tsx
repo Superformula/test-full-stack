@@ -10,11 +10,11 @@ interface ModalProps {
   footer?: ReactNode
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const Modal: React.FC<ModalProps> = ({
   children, isOpen, title, footer,
-}) => (isOpen ? ReactDOM.createPortal(
+}) => ReactDOM.createPortal(
   <div className={classnames('modal-overlay', { 'modal-overlay-visible': isOpen })}>
+    {isOpen && (
     <div className={classnames('modal-wrapper', { 'modal-wrapper-visible': isOpen })}>
       <div className="modal-wrapper-header">
         <Typography variant="h1">
@@ -32,7 +32,7 @@ export const Modal: React.FC<ModalProps> = ({
       </div>
       )}
     </div>
+    )}
   </div>,
-  // @ts-ignore
-  document.getElementById('modal-root'),
-) : null);
+  document.getElementById('modal-root')!,
+);
