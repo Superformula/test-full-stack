@@ -14,5 +14,5 @@ export interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   color, disabled, text, onClick,
 }) => (
-  <button type="button" disabled={disabled} className={classnames({ button: true, primary: color === 'primary', secondary: color === 'secondary' })} onClick={onClick}>{text}</button>
+  <button type="button" disabled={disabled} className={classnames({ button: true, primary: color === 'primary', secondary: color === 'secondary' })} onClick={onClick} tabIndex={0}>{text}</button>
 );

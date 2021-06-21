@@ -28,6 +28,7 @@ export const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       onChange={onChange}
       value={value}
+      tabIndex={0}
     />
   </div>
 );

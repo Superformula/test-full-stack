@@ -34,7 +34,7 @@ const UserEdit: React.FC<UserEditProps> = ({ user, className }) => {
 
   return (
     <div className={classnames(className)}>
-      <button type="button" onClick={open} className="user-edit-icon">
+      <button type="button" onClick={open} className="user-edit-icon" tabIndex={-1}>
         <img src={editIcon} alt="edit" />
       </button>
       <Modal isOpen={isOpen} title="Edit user" footer={(<DefaultModalFooter onCancelClick={close} onOkClick={submitForm} buttonsDisabled={loading} />)}>
