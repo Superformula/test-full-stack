@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { debounce } from 'lodash';
 import { Typography } from '../../components/typograph/Typography';
 import useUserInfiniteList from '../../hooks/useUsersInifniteList';
@@ -7,8 +7,19 @@ import { Button } from '../../components/button/Button';
 import './UsersPage.scss';
 import UserSearch from './UserSearch/UserSearch';
 import useUserSearch from '../../hooks/useUserSearch';
+import useScrollPosition from '../../hooks/useScrollPosition';
 
 const Users: React.FC = () => {
+  const { saveScrollPosition, loadScrollPosition } = useScrollPosition();
+
+  useEffect(() => {
+    loadScrollPosition();
+    window.addEventListener('scroll', saveScrollPosition);
+    return () => {
+      window.removeEventListener('scroll', saveScrollPosition);
+    };
+  }, [loadScrollPosition, saveScrollPosition]);
+
   const {
     users, loading, error, hasNextPage, loadMore,
   } = useUserInfiniteList();
