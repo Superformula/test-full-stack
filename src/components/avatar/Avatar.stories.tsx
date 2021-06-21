@@ -8,7 +8,6 @@ export default {
   component: Avatar,
 } as Meta;
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 const Template: Story<AvatarProps> = (args) => <Avatar {...args} />;
 
 export const Primary = Template.bind({});

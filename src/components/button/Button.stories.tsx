@@ -8,7 +8,6 @@ export default {
   component: Button,
 } as Meta;
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 const Template: Story<ButtonProps> = (args) => <Button {...args} />;
 
 export const Primary = Template.bind({});

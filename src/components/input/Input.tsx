@@ -11,7 +11,6 @@ export interface InputProps {
   className?: string
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const Input: React.FC<InputProps> = ({
   name,
   label,

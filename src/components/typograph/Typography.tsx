@@ -11,7 +11,6 @@ interface CardProps {
   className?: string
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const Typography: React.FC<CardProps> = ({
   children, variant, className, color = 'primary',
 }) => (

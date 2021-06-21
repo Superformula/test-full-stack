@@ -9,7 +9,6 @@ export default {
 } as Meta;
 
 const Template: Story = (args:InputProps) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
   <Input {...args} />
 );
 
