@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+# Features
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [x] The search functionality should perform real time filtering on client side data and API side data
+- [x] List of users should be updated automatically after single user is updated
+- [x] Create modal from scratch
+- [x] Appear/Disappear of modal should be animated
+- [x] When the user reloads the page the scroll will return to its previous location (extracted from req. bellow)
+- [-] ~~Infinite loading state should be saved in url query (pagination state should be present in URL query (eg ?page=1) to allow for behavior where~~ **the user can reload the page while still returning to their current scroll position)**
 
-## Available Scripts
+# Language/Tools
 
-In the project directory, you can run:
+- Create React App
+- React
+- SASS
+- TypeScript
+- GraphQL Apollo Client + Apollo3 Cache Persist + GraphQL CodeGen
+- Jest + React Testing Library
+- Eslint + Prettier
+- Storybook
 
-### `npm start`
+# Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+.
+├── public # static files
+├── build # build output
+└── src
+    ├── GraphQL # Apollo Client Queries and Mutations
+    ├── Views # Pages that will be routed
+    ├── assets # Assets like Icons, Images
+    ├── components # Composable Components
+    ├── hooks # Shareable hooks
+    ├── styles # Application styles like variables and mixins
+    └── utils # Shareable util functions
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Getting Started
 
-### `npm test`
+Install all dependencies:
+```sh
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+First copy the .env example file
+```sh
+cp .env.example .env.development.local
+```
 
-### `npm run build`
+Then start the application using the following command:
+```sh
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Open the URL outputed in the browser, this is the application in development mode
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Tests
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Launches the test runner in the interactive watch mode.
 
-### `npm run eject`
+```sh
+npm run test
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# TODO:
+- Code splitting using React Lazy and Suspense
+- Increase unit test coverage
+- Add E2E tests (Cypress maybe)
+- Add form validation (YUP maybe)
