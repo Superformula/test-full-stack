@@ -12,7 +12,7 @@ interface ModalProps {
 
 export const Modal: React.FC<ModalProps> = ({
   children, isOpen, title, footer,
-}) => ReactDOM.createPortal(
+}) => (isOpen ? ReactDOM.createPortal(
   <div className={classnames('modal-overlay', { 'modal-overlay-visible': isOpen })}>
     {isOpen && (
     <div className={classnames('modal-wrapper', { 'modal-wrapper-visible': isOpen })}>
@@ -35,4 +35,4 @@ export const Modal: React.FC<ModalProps> = ({
     )}
   </div>,
   document.getElementById('modal-root')!,
-);
+) : null);
