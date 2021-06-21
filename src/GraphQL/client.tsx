@@ -32,7 +32,7 @@ const client = async () => {
   });
 
   return new ApolloClient({
-    uri: 'https://bjyx82su0i.execute-api.us-east-1.amazonaws.com/dev/graphql',
+    uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
     cache,
   });
 };
