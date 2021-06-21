@@ -9,6 +9,16 @@ export interface MapProps {
 }
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
+interface MapWrapperProps {
+  className?: string
+}
+
+const MapWrapper: React.FC<MapWrapperProps> = ({ children, className }) => (
+  <div className={classnames('map', className)}>
+    {children}
+  </div>
+);
+
 export const Map:React.FC<MapProps> = ({
   className,
   address,
@@ -21,14 +31,26 @@ export const Map:React.FC<MapProps> = ({
     search(address);
   }, [search, address]);
 
-  if (error) return <p>Error :(</p>;
+  if (error || (!loading && !coordinates?.length)) {
+    return (
+      <MapWrapper className={className}>
+        <p>Error locating address</p>
+      </MapWrapper>
+    );
+  }
 
-  if (!loading && !coordinates?.length) return <p>Error locating address</p>;
+  if (loading) {
+    return (
+      <MapWrapper className={className}>
+        <span>loading...</span>
+      </MapWrapper>
+    );
+  }
 
-  return loading ? (<span>loading...</span>) : (
-    <div className={classnames('map', className)}>
+  return (
+    <MapWrapper className={className}>
       <img src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+555555(${coordinates?.[0]},${coordinates?.[1]})/${coordinates?.[0]},${coordinates?.[1]},14,0/800x600?access_token=${accessToken}`} alt="Map of user address" />
-    </div>
+    </MapWrapper>
   );
 };
 

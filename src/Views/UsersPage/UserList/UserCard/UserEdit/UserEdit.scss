@@ -9,7 +9,12 @@
   display: flex;
 
   &-map {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-right: 60px;
+    width: 518px;
+    height: 336px;
   }
 
   &-form {
