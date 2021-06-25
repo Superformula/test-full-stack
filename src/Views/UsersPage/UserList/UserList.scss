@@ -1,0 +1,13 @@
+@import "/src/styles/mixins";
+
+.user-list {
+  display: grid;
+  justify-content: center;
+  grid-gap: 64px;
+  grid-template-columns: repeat(auto-fill, 100%);
+  padding-bottom: 64px;
+
+  @include desktop {
+    grid-template-columns: repeat(auto-fill, 400px);
+  }
+}

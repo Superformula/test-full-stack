@@ -1,0 +1,80 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+.modal {
+  &-overlay {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 300ms;
+
+    &-visible {
+      opacity: 1;
+    }
+  }
+
+
+  &-wrapper {
+    width: 80%;
+    background: $color-off-white;
+    border-radius: $border-radius;
+    box-sizing: border-box;
+    max-height: 80%;
+    overflow-y: scroll;
+    padding: 16px;
+
+    @include desktop {
+      overflow-y: hidden;
+      padding: 64px;
+    }
+
+    &-header {
+      margin-bottom: 64px;
+    }
+
+    &-footer {
+      margin-top: 64px;
+    }
+
+    will-change: transform;
+
+    animation: moveitoutside 300ms ease forwards;
+
+    &-visible {
+      animation: moveit 900ms ease forwards;
+    }
+  }
+}
+
+@keyframes moveit {
+  0% {
+    transform: translateY(0) scale3d(0.96, 0.96, 1);
+  }
+  20% {
+    transform: translateY(0) scale3d(1.1, 1.1, 1);
+  }
+  40% {
+    transform: translateY(0) scale3d(0.98, 0.98, 1);
+  }
+  60% {
+    transform: translateY(0) scale3d(1.05, 1.05, 1);
+  }
+  80% {
+    transform: translateY(0) scale3d(1.01, 1.01, 1);
+  }
+  100% {
+    transform: translateY(0) scale3d(1, 1, 1);
+  }
+}
+
+@keyframes moveitoutside {
+  100% { transform: translateY(-100vh) }
+}

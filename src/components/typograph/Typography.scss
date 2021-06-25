@@ -1,0 +1,40 @@
+@import "src/styles/variables";
+
+.typography {
+  margin: 0;
+
+  &--variant {
+    font-style: normal;
+
+    &-h1 {
+      font-weight: 300;
+      font-size: 48px;
+      line-height: 60px;
+    }
+
+    &-h2 {
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 26px;
+    }
+
+    &-paragraph {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+
+  &--color {
+    &-primary {
+      color: $color-black;
+    }
+
+    &-error {
+      color: #eb5757;
+    }
+  }
+
+}
+
+

@@ -1,0 +1,41 @@
+@import "/src/styles/mixins";
+
+.user-edit-icon {
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+
+  @include desktop {
+    flex-direction: row;
+  }
+
+  &-map {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 60px;
+    margin-bottom: 24px;
+    width: 100%;
+
+    @include desktop {
+      margin-bottom: 0;
+      width: 518px;
+      height: 336px;
+    }
+  }
+
+  &-form {
+    width: 100%;
+
+    &-input {
+      margin-bottom: 36px;
+      display: block;
+    }
+  }
+}

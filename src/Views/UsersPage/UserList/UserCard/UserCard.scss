@@ -1,0 +1,67 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+.user-card {
+  position: relative;
+  padding: 44px 23px 40px;
+  box-sizing: border-box;
+
+  &-avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  &-info {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    display: flex;
+
+    &-name {
+      width: 60%;
+      text-align: left;
+
+    }
+
+    &-created-at {
+      transition: opacity 300ms ease-in-out;
+
+      @include desktop {
+        opacity: 0;
+      }
+
+      span {
+        color: $color-red;
+      }
+    }
+  }
+
+  &-description {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+  }
+
+  &:hover &-info-created-at {
+    opacity: 1;
+  }
+
+  &-edit-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: opacity 300ms ease-in-out;
+
+    @include desktop {
+      opacity: 0;
+    }
+  }
+
+  &:hover &-edit-button {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,37 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-typescript",
+        "airbnb/hooks"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "react/prop-types": "off",
+        "react/destructuring-assignment": "off",
+        "import/prefer-default-export": "off",
+        "react/jsx-props-no-spreading": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": [
+                    "**/*.stories.tsx"
+                ]
+            }
+        ]
+    }
+}

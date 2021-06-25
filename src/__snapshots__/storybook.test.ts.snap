@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Avatar Primary 1`] = `
+<img
+  alt="Man"
+  className="avatar"
+  src="https://images.unsplash.com/photo-1595183265031-b4cb347a8353?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+/>
+`;
+
+exports[`Storyshots Button Disabled 1`] = `
+<button
+  className="button primary"
+  disabled={true}
+  onClick={[Function]}
+  tabIndex={0}
+  type="button"
+>
+  Click me
+</button>
+`;
+
+exports[`Storyshots Button Primary 1`] = `
+<button
+  className="button primary"
+  onClick={[Function]}
+  tabIndex={0}
+  type="button"
+>
+  Click me
+</button>
+`;
+
+exports[`Storyshots Button Secondary 1`] = `
+<button
+  className="button primary"
+  onClick={[Function]}
+  tabIndex={0}
+  type="button"
+>
+  Click me
+</button>
+`;
+
+exports[`Storyshots Card Primary 1`] = `
+<div
+  className="card"
+/>
+`;
+
+exports[`Storyshots Input Input With Label 1`] = `
+<div
+  className="input-wrapper"
+>
+  <label>
+    Label
+  </label>
+  <input
+    className="input-field"
+    placeholder="Placeholder"
+    tabIndex={0}
+  />
+</div>
+`;
+
+exports[`Storyshots Input Input With Placeholder 1`] = `
+<div
+  className="input-wrapper"
+>
+  <label />
+  <input
+    className="input-field"
+    placeholder="Placeholder"
+    tabIndex={0}
+  />
+</div>
+`;
+
+exports[`Storyshots Input Primary 1`] = `
+<div
+  className="input-wrapper"
+>
+  <label />
+  <input
+    className="input-field"
+    tabIndex={0}
+  />
+</div>
+`;
+
+exports[`Storyshots Modal Modal Default 1`] = `
+<button
+  onClick={[Function]}
+  type="button"
+>
+  open
+</button>
+`;
+
+exports[`Storyshots Typography Color Error 1`] = `
+<div
+  className="typography--variant-paragraph typography--color-error"
+>
+  Parahraph Source Sans Pro Light 16px
+</div>
+`;
+
+exports[`Storyshots Typography Variant Header 1 1`] = `
+<div
+  className="typography--variant-h1 typography--color-primary"
+>
+  H1 Source Sans Pro Light 48px
+</div>
+`;
+
+exports[`Storyshots Typography Variant Header 2 1`] = `
+<div
+  className="typography--variant-h2 typography--color-primary"
+>
+  H2 Header Source Sans Pro Semibold 21px
+</div>
+`;
+
+exports[`Storyshots Typography Variant Paragraph 1`] = `
+<div
+  className="typography--variant-paragraph typography--color-primary"
+>
+  Parahraph Source Sans Pro Light 16px
+</div>
+`;

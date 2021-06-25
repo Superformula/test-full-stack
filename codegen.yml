@@ -1,0 +1,5 @@
+schema: https://bjyx82su0i.execute-api.us-east-1.amazonaws.com/dev/graphql
+generates:
+  ./src/types.d.ts:
+    plugins:
+      - typescript
