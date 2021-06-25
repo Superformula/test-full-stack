@@ -14,11 +14,10 @@
     justify-content: center;
     align-items: center;
     opacity: 0;
-    z-index: -1;
+    transition: opacity 300ms;
 
     &-visible {
       opacity: 1;
-      z-index: 10;
     }
   }
 
@@ -47,8 +46,9 @@
 
     will-change: transform;
 
+    animation: moveitoutside 300ms ease forwards;
+
     &-visible {
-      opacity: 1;
       animation: moveit 900ms ease forwards;
     }
   }
@@ -73,4 +73,8 @@
   100% {
     transform: translateY(0) scale3d(1, 1, 1);
   }
+}
+
+@keyframes moveitoutside {
+  100% { transform: translateY(-100vh) }
 }

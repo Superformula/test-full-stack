@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import './Modal.scss';
 import classnames from 'classnames';
 import ReactDOM from 'react-dom';
+import { CSSTransition } from 'react-transition-group';
 import { Typography } from '../typograph/Typography';
 
 interface ModalProps {
@@ -12,27 +13,43 @@ interface ModalProps {
 
 export const Modal: React.FC<ModalProps> = ({
   children, isOpen, title, footer,
-}) => (isOpen ? ReactDOM.createPortal(
-  <div className={classnames('modal-overlay', { 'modal-overlay-visible': isOpen })}>
-    {isOpen && (
-    <div className={classnames('modal-wrapper', { 'modal-wrapper-visible': isOpen })}>
-      <div className="modal-wrapper-header">
-        <Typography variant="h1">
-          {title}
-        </Typography>
-      </div>
+}) => {
+  const portalRoot = document.getElementById('modal-root')!;
 
-      <div className="modal-wrapper-content">
-        {children}
-      </div>
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'scroll';
+    };
+  }, [isOpen]);
 
-      {footer && (
-      <div className="modal-wrapper-footer">
-        {footer}
+  return ReactDOM.createPortal((
+    <CSSTransition
+      in={isOpen}
+      timeout={300}
+      unmountOnExit
+    >
+      <div className={classnames('modal-overlay', { 'modal-overlay-visible': isOpen })}>
+        <div className={classnames('modal-wrapper', { 'modal-wrapper-visible': isOpen, 'modal-wrapper-not-visible': !isOpen })}>
+          <div className="modal-wrapper-header">
+            <Typography variant="h1">
+              {title}
+            </Typography>
+          </div>
+
+          <div className="modal-wrapper-content">
+            {children}
+          </div>
+
+          {footer && (
+          <div className="modal-wrapper-footer">
+            {footer}
+          </div>
+          )}
+        </div>
       </div>
-      )}
-    </div>
-    )}
-  </div>,
-  document.getElementById('modal-root')!,
-) : null);
+    </CSSTransition>
+  ), portalRoot);
+};
